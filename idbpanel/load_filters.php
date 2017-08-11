@@ -178,12 +178,12 @@ function insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_
 		if($sql_insert_category)
 		{
 			if($filt_sub_child == "parent")
-			{
-				$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_id,'child',$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);
+			{  // change  made by punit 10August2017
+				/*$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_id,'child',$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);*/
 			}
 			elseif($filt_sub_child == "child")
-			{
-				$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_parent,$cat_id,$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);				
+			{	// change  made by punit 10August2017
+				/*$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_parent,$cat_id,$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);	*/			
 			}
 			else
 			{	

@@ -195,7 +195,7 @@ ul>li.orange, .label-orange {
 	background:#F27C66
 }
 .theme-orange a {
-	color:#F27C66
+	color:#4c6589;
 }
 .theme-orange .btn {
 	color:#333
@@ -217,7 +217,7 @@ ul>li.orange, .label-orange {
 	background:#935b05
 }
 .theme-orange #navigation {
-	background:#F27C66
+	background:#314555
 }
 .theme-orange #navigation .toggle-mobile {
 	background:#FAAA94
@@ -241,25 +241,25 @@ ul>li.orange, .label-orange {
 	background:#fff
 }
 .theme-orange #navigation .main-nav>li.open>a {
-	background:#FAAA94
+	background:#4c6589
 }
 .theme-orange #navigation .main-nav>li>a:hover {
-	background:#FAAA94
+	background:#4c6589
 }
 .theme-orange #navigation .user .icon-nav>li>a:hover {
-	background:#FAAA94
+	background:#4c6589
 }
 .theme-orange #navigation .user .dropdown.open {
-	background:#FAAA94
+	background:#4c6589
 }
 .theme-orange #navigation .user .dropdown>a:hover {
-	background:#FAAA94
+	background:#4c6589
 }
 .theme-orange #navigation .dropdown-menu {
-	border-color:#F27C66
+	border-color:#4c6589
 }
 .theme-orange #navigation .dropdown-menu>li>a:hover {
-	background:#F27C66
+	background:#4c6589
 }
 .theme-orange .search-form .search-pane button[type="submit"] {
 	background:#F27C66

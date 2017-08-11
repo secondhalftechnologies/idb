@@ -30,7 +30,7 @@ elseif(isset($_POST['password']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Indian Dava Bazar :: Admin Panel</title>
-<link rel="shortcut icon" href="img/logo.ico">
+<!--<link rel="shortcut icon" href="img/logo.ico">-->
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Bootstrap responsive -->
@@ -56,11 +56,11 @@ elseif(isset($_POST['password']))
 	}
 </style>
 </head>    
-<body class="login theme-orange" data-theme="theme-orange" style="background-color:#fff !important;">
+<body class="login theme-orange" data-theme="theme-orange" style="background-color:#314555 !important;">
 <div class="wrapper" style="margin-top:15%;">
 	<div class="login-body" style="background-color:transparent">    
             <div align="center" style="padding:20px 0;"><a href="javascript:void(0);">INDIAN DAVA BAZAR<!--<img src="images/logo.png" height="120" style="height:100px" />--></a></div>
-			<form method='post' class='form-validate' id="frm_login" onsubmit="return clientside_validate();">
+			<form method='post' action="#" class='form-validate' id="frm_login">
 				<div class="control-group">
 					<div class="pw controls">
 						<input type="text" name="userid" id="userid" placeholder="Email" class="input-block-level" data-rule-required="true" data-rule-email="true" style="border-right:inset;border-top:inset;border-color:#E7E7E7;">
@@ -81,8 +81,7 @@ elseif(isset($_POST['password']))
     </div>
 </div>        
 	<script type="text/javascript">
-		function clientside_validate()
-		{
+		
 			$('#frm_login').on('submit', function(e) 
 			{
 				e.preventDefault();
@@ -103,7 +102,7 @@ elseif(isset($_POST['password']))
 					});
 				}				
 			});
-		}			
+					
 	</script>
     </body>
 </html>

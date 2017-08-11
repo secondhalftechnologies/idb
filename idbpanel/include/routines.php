@@ -1077,7 +1077,7 @@ function navigation_menu()
 	?>
     	<div id="navigation">
 			<div class="container-fluid" >
-				<a href="view_dashboard.php?pag=Dashboard" id="brand"><img src="img/logo.png" style="height:40px;"></a>
+				<a href="view_dashboard.php?pag=Dashboard" id="brand">IDB<!--<img src="img/logo.png" style="height:40px;">--></a>
 				<!-- main menu -->
             	<?php 
 					$filepath = "include/admin_menu.php";

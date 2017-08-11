@@ -102,7 +102,9 @@ function insertCatogery($uid,$db_con,$cat_name,$cat_description,$cat_parent,$cat
 			
 			if($cat_parent == "parent")
 			{
-				$response_array = insertCatogery($uid,$db_con,"none",$cat_description,$cat_id,$cat_status,$cat_meta_description,$cat_meta_tags,$cat_meta_title,$response_array);			
+				// Change by punit 10 august 2017
+				
+				/*$response_array = insertCatogery($uid,$db_con,"none",$cat_description,$cat_id,$cat_status,$cat_meta_description,$cat_meta_tags,$cat_meta_title,$response_array);*/			
 			}			
 			if(isset($obj->error_id) && (isset($obj->insert_req)) != "")			
 			{
