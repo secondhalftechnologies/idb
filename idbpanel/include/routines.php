@@ -16,7 +16,7 @@ if ($_SERVER['HTTP_HOST'] == "localhost" || preg_match("/^192\.168\.0.\d+$/",$_S
 	$dbname = "idb2017";
 	$dbuser = "root";
 	$dbpass = "";
-	$BaseFolder = "http://192.168.0.126/idb/idbpanel/";	}
+	$BaseFolder = "http://localhost/idb/idbpanel/";	}
 else
 {
 	$dbname = "kumar7_idb2017";
