@@ -1,0 +1,1366 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"$",
+				"$timeout\tAngularJS"
+			],
+			[
+				"postbyc",
+				"post_farms_by_ca"
+			],
+			[
+				"postbyca",
+				"POST_BY_CA"
+			],
+			[
+				"CONS",
+				"console"
+			],
+			[
+				"delete_farm",
+				"delete_farms"
+			],
+			[
+				"put_far",
+				"put_farms"
+			],
+			[
+				"post_farm",
+				"post_farms"
+			],
+			[
+				"POST",
+				"POST"
+			],
+			[
+				"post",
+				"post_farmers"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"me",
+				"menuContent"
+			],
+			[
+				"add",
+				"addfarm"
+			],
+			[
+				"tu",
+				"true"
+			],
+			[
+				"ion",
+				"ion-js-tabs\tion-js-tabs"
+			],
+			[
+				"io",
+				"ion-js-pane\tion-js-pane"
+			],
+			[
+				"H",
+				"max-height"
+			],
+			[
+				"s",
+				"success"
+			],
+			[
+				"$loca",
+				"$location\tAngularJS"
+			],
+			[
+				"re",
+				"readValue"
+			],
+			[
+				"farm",
+				"farm_token"
+			],
+			[
+				"$lo",
+				"$location\tAngularJS"
+			],
+			[
+				"read",
+				"readValue"
+			],
+			[
+				"farmt",
+				"farmtoken"
+			],
+			[
+				"$root",
+				"$rootScope\tAngularJS"
+			],
+			[
+				"r",
+				"remove"
+			],
+			[
+				"ng",
+				"ng-click\tAngularJS"
+			],
+			[
+				"S",
+				"Successful"
+			],
+			[
+				"Su",
+				"success"
+			],
+			[
+				"$ht",
+				"$http\tAngularJS"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"$http",
+				"verbose_$http\tAngularJS"
+			],
+			[
+				"ng-d",
+				"ng-disabled\tAngularJS"
+			],
+			[
+				"ng-s",
+				"ng-submit\tAngularJS"
+			],
+			[
+				"hide",
+				"hideSheet"
+			],
+			[
+				"impor",
+				"important"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"ng-r",
+				"ng-repeat\tAngularJS"
+			],
+			[
+				"col",
+				"col"
+			],
+			[
+				"paddin",
+				"padding-right"
+			],
+			[
+				"ion-ra",
+				"ion-item-radio\tion-item-radio"
+			],
+			[
+				"$t",
+				"$translate"
+			],
+			[
+				"tr",
+				"translate"
+			],
+			[
+				"ion-na",
+				"ion-js-nav-back-button\tion-js-nav-back-button"
+			],
+			[
+				"ion-n",
+				"ion-js-nav-bar\tion-js-nav-bar"
+			],
+			[
+				"menu",
+				"menuspan"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"imop",
+				"ion-form-placeholder-label\tion-form-placeholder-label"
+			],
+			[
+				"box",
+				"box-shadow"
+			],
+			[
+				"bord",
+				"border-color"
+			],
+			[
+				"ng-cl",
+				"ng-click\tAngularJS"
+			],
+			[
+				"ma",
+				"max-width"
+			],
+			[
+				"te",
+				"text-center"
+			],
+			[
+				"ye",
+				"yellow1"
+			],
+			[
+				"i",
+				"ion-js-pane\tion-js-pane"
+			],
+			[
+				"$sc",
+				"$scope\tAngularJS"
+			],
+			[
+				"co",
+				"controller\tAngularJS"
+			],
+			[
+				"par",
+				"$parse\tAngularJS"
+			],
+			[
+				"if",
+				"ifelse\tif … else …"
+			],
+			[
+				"ion-",
+				"ion-js-view\tion-js-view"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "category-grid-2.html",
+			"settings":
+			{
+				"buffer_size": 123141,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "category-grid.html",
+			"settings":
+			{
+				"buffer_size": 136106,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "checkout.html",
+			"settings":
+			{
+				"buffer_size": 67943,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "compare.html",
+			"settings":
+			{
+				"buffer_size": 67057,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "contact.html",
+			"settings":
+			{
+				"buffer_size": 61317,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "faq.html",
+			"settings":
+			{
+				"buffer_size": 71185,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index-2.html",
+			"settings":
+			{
+				"buffer_size": 162830,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index-3.html",
+			"settings":
+			{
+				"buffer_size": 142469,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "single-product-sidebar.html",
+			"settings":
+			{
+				"buffer_size": 99179,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "single-product.html",
+			"settings":
+			{
+				"buffer_size": 124914,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "terms.html",
+			"settings":
+			{
+				"buffer_size": 65299,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "track-your-order.html",
+			"settings":
+			{
+				"buffer_size": 63444,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wishlist.html",
+			"settings":
+			{
+				"buffer_size": 66524,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "404.html",
+			"settings":
+			{
+				"buffer_size": 49756,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "about.html",
+			"settings":
+			{
+				"buffer_size": 68899,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "authentication.html",
+			"settings":
+			{
+				"buffer_size": 62173,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blog-post.html",
+			"settings":
+			{
+				"buffer_size": 80675,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blog-fullwidth.html",
+			"settings":
+			{
+				"buffer_size": 69925,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "cart.html",
+			"settings":
+			{
+				"buffer_size": 67221,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blog.html",
+			"settings":
+			{
+				"buffer_size": 81253,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"PHP Code Sniffer: ",
+				"PHP Code Sniffer: Turn Execute On Save Off"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: s",
+				"Package Control: Discover Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 484.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/wamp/www/idb"
+	],
+	"file_history":
+	[
+		"/D/wamp/www/idb/blog.html",
+		"/D/wamp/www/idb/404.html",
+		"/D/wamp/www/idb/template/mediacenter-html/blog-fullwidth.html",
+		"/D/wamp/www/idb/blog-fullwidth.html",
+		"/D/wamp/www/idb/about.html",
+		"/D/wamp/www/idb/index.html",
+		"/D/wamp/www/app/op1/devdactic-image-upload/www/index.html",
+		"/D/wamp/www/app/op1/app-camera/www/js/app.js",
+		"/D/wamp/www/planeteducate/olddatatill_13june 2017/09-02-2017/edupanel/.htaccess",
+		"/D/wamp/www/app/op1/app-camera/www/index.html",
+		"/D/wamp/www/opencart/plugins/FixFilter_OC2x_1.00en/FixFilter OC2x 1.00en/fix_filter.ocmod.xml",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/app.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/cahome.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/menu.html",
+		"/D/wamp/www/kanvaskloset/op1/shop/.htaccess",
+		"/E/gitserver/index.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/home.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/AppCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/FarmersCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/ForgetpinCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/LoginCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/services.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/cropslist.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/loading.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/login.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/FarmCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/index.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/GrowListCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/LoadingCtrl.js",
+		"/D/wamp/www/apps/real/www/js/app.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/addfarm.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/CaMyinfoCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/registerfarm.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/forgetpin.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/farm.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/MyinfoCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/camyinfo.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/myinfo.html",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/RegisterFarmCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/js/controllers/HomeCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/farmers.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/index.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/FarmCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/farm.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/services.js",
+		"/D/wamp/www/apps/gyankisan/gyanKisanCA/www/templates/addfarmer.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/AppCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/growlist.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/registerfarm.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/home.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/app.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/RegisterFarmCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/menu.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/farmerInfo.html",
+		"/D/wamp/www/mystudycentre/masterminds/new/index.php",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/cropslist.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/shortlist.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/crops.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/addfarm.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/ShortListCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/CropListCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/GrowListCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/tabs.html",
+		"/D/wamp/www/apps/real/www/templates/login.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/registermap.html",
+		"/D/wamp/www/apps/real/www/templates/tabs.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/tab.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/RegisterMapCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/login.html",
+		"/D/wamp/www/beinghuman/shop/catalog/view/theme/fastor/template/custompage/storelocator.tpl",
+		"/D/wamp/www/beinghuman/shop/catalog/view/theme/fastor/template/custompage/storelocator - Copy.tpl",
+		"/D/wamp/www/beinghuman/shop/catalog/view/theme/fastor/template/custompage/storelocator_1.tpl",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/ForgetpinCtrl.js",
+		"/D/wamp/www/beinghuman/shop/admin/model/catalog/product.php",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/forgetpin.html",
+		"/D/wamp/www/dapperact/Sansita-Italic/fonts.css",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/LoginCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/config.xml",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/ionic-localforage-starter/IonicLocalForage-master/www/js/app.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/ionic-localforage-starter/IonicLocalForage-master/www/index.html",
+		"//Praful-pc/d/wamp/www/app/gyankisan/www/templates/login.html",
+		"/D/wamp/www/mystudycentre/masterminds/new/FAQ/index.php",
+		"/D/wamp/www/beinghuman/22May2017/float-panel/float-panel/demo1.html",
+		"/D/wamp/www/beinghuman/22May2017/float-panel/float-panel/float-panel.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/lib/ionic/css/ionic.css",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/HomeCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/templates/components.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/CropsCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/templates/extensions.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/templates/menu.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/js/controllers/AppCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/home1.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/guest.html",
+		"/D/wamp/www/apps/gyankisan/sln4mop-develop/slnfarmer/website_config.php",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/language.json",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/GuestCtrl.js",
+		"/D/Desktop/nagpur.json",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/TranslateCtrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/mask.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/angular-translate-master/angular-translate-master/demo/ex1_basic_usage.htm",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/angular-translate-master/angular-translate-master/src/service/translate.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/angular-translate-master/angular-translate-master/src/translate.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/angular-translate-master/angular-translate-master/demo/index.htm",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/data/angular-translate-master/angular-translate-master/demo/server_routes.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/popover.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/popover.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/js/controllers/Home1Ctrl.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/templates/menu1.html",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www/css/style.css",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/js/app.js",
+		"/D/wamp/www/apps/gyankisan/gyankisan/www1/js/test.js",
+		"/D/wamp/www/apps/rvip/bower.json",
+		"/D/wamp/www/office/connection.php",
+		"/D/wamp/www/StackSlider/connection.php",
+		"/D/oldwamp/apps/phpmyadmin3.5.1/config.inc.php",
+		"/D/wamp/bin/php/php5.5.12/php.ini",
+		"/D/wamp/www/index.html",
+		"/D/wamp/www/index.php",
+		"/D/wamp/bin/mysql/mysql5.6.17/my.ini",
+		"/D/oldwamp/bin/mysql/mysql5.5.24/my.ini",
+		"/D/oldwamp/bin/php/php5.4.3/php.ini",
+		"/D/wamp/bin/apache/apache2.4.9/wampserver.conf",
+		"/D/wamp-back/bin/apache/apache2.2.22/conf/extra/httpd-vhosts.conf",
+		"/D/wamp/bin/apache/apache2.4.9/conf/extra/httpd-vhosts.conf",
+		"/D/wamp/www/mystudycentre/masterminds/new/mm_header.php",
+		"/D/wamp/www/acrefin/acrefinpanel/emi.php",
+		"/D/wamp/www/acrefin/acrefinpanel/acrefinfrm_1.php",
+		"/D/Desktop/new.php"
+	],
+	"find":
+	{
+		"height": 54.0
+	},
+	"find_in_files":
+	{
+		"height": 100.0,
+		"where_history":
+		[
+			"D:\\wamp\\www\\idb"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"<!-- Mirrored from transvelo.github.io/mediacenter-html/blog-fullwidth.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Aug 2017 04:27:35 GMT -->\n<!-- Added by HTTrack --><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" /><!-- /Added by HTTrack -->",
+			"cordovaFileTransfer",
+			"delete_farmers",
+			"caresetpin",
+			"put_farmers",
+			"Api",
+			"get_farms_by_ca",
+			"get_farms",
+			"get_farmers",
+			"get_farms_by_farmer",
+			"get_farmers",
+			"put_my_information",
+			"frm_forgetotp",
+			"frm_Login",
+			"Pin",
+			"pin",
+			"Pin",
+			"pin",
+			"Pin",
+			"pin",
+			"frm_forgetPin",
+			"frm_Login",
+			"frm_forgetPin",
+			".bottomSheetdemoBasicUsage",
+			"fab",
+			"#2196F3",
+			"2196F3",
+			"max_file_uploads",
+			"upload_max",
+			"post_max",
+			"max_e",
+			"short",
+			"mm_",
+			"val"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 13,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "category-grid-2.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 123141,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								123132,
+								123132
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 39976.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "category-grid.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 136106,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								136097,
+								136097
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 44204.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "checkout.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67943,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67934,
+								67934
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 23684.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "compare.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67057,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67048,
+								67048
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 22943.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "contact.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 61317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								61308,
+								61308
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 21266.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "faq.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 71185,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								71176,
+								71176
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 24862.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "index-2.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 162830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								162821,
+								162821
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 52665.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "index-3.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 142469,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								142460,
+								142460
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 49547.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "single-product-sidebar.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 99179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								99170,
+								99170
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 49298.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "single-product.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 124914,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								124905,
+								124905
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 42228.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "terms.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 65299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								65290,
+								65290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 21170.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "track-your-order.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 63444,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								63435,
+								63435
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 20700.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "wishlist.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 66524,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								66515,
+								66515
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 21854.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 19,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "404.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 49756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								49747,
+								49747
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 19668.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "about.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 68899,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								68890,
+								68890
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 23361.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "authentication.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 62173,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								62164,
+								62164
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 21734.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "blog-post.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 80675,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								80666,
+								80666
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 27541.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "blog-fullwidth.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 69925,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								69916,
+								69916
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 23627.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "cart.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67221,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67212,
+								67212
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 23456.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "blog.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 81253,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								81244,
+								81244
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 27493.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 98.0
+	},
+	"pinned_build_system": "",
+	"project": "idb.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ionic",
+				"gyankisan\\www\\lib\\ionic\\css\\ionic.css"
+			],
+			[
+				"mm",
+				"new\\mm_testimonals.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 262.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

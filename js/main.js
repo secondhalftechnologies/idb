@@ -262,16 +262,19 @@ function counter(){
 function scroll_top (){
   $("body").append("<div id='scroll-top'><i class='fa fa-angle-up'></i></div>")
   $('#scroll-top').on( 'click', function() {
-      $('html, body').animate({scrollTop: 0});
+	  //$('html, body').animate({scrollTop: 0});
+	  // START : After pagination go to the TOP
+		$('html, body').animate({scrollTop: 0}, 1500);
+		// END : After pagination go to the TOP
       return false;
   });
-  if( $(window).scrollTop() > 700 ) {
+  if( $(window).scrollTop() > 400 ) {
     $('#scroll-top').fadeIn();
   } else {
     $('#scroll-top').fadeOut();
   } 
   $(window).scroll(function(){
-    if( $(window).scrollTop() > 700 ) {
+    if( $(window).scrollTop() > 400 ) {
       $('#scroll-top').fadeIn();
     } else {
       $('#scroll-top').fadeOut();

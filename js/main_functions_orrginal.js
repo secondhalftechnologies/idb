@@ -1,17 +1,30 @@
 // JavaScript Document
-if(location.hostname == 'localhost' || location.hostname == '127.0.0.1' || location.hostname == '192.168.1.245')
+if(location.hostname == 'localhost' || location.hostname == '127.0.0.1' || location.hostname == '192.168.1.249')
 {
 	//var base_url = window.location.origin+"/planeteducate/";	
-	var base_url = "http://localhost/idb/";
+	var base_url = "http://192.168.1.249/planeteducate_sm/";
 }
 else
 {
 	var base_url = window.location.origin+"/";
 }
 
+
+//var base_url = "http://192.168.1.249/planeteducate_sm/";
 function ToggleMyDiv(div_id)
 {
 	$("#"+div_id).slideToggle();
+}
+function TogglpayWay(req)
+{
+	 if(req=="hide")
+	 {
+	$("#payment_way").slideUp();
+	 }
+	 else
+	 {
+	 $("#payment_way").slideDown();
+	 }
 }
 function div_swap(div_open,div_close)
 {
@@ -136,7 +149,9 @@ function viewCart(cart_id)
 		error: function (request, status, error) 
 		{
 			$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-			$('#error_model').modal('toggle');
+			$('#error_model').modal({
+										backdrop: 'static'
+								  });
 			loading_hide();				
 		},
 		complete: function()
@@ -168,14 +183,18 @@ function removeItem(cart_id)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				}
 			},
 			error: function (request, status, error)
 			{
 				loading_hide();
 				$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-				$('#error_model').modal('toggle');
+				$('#error_model').modal({
+										backdrop: 'static'
+								  });
 			},
 			complete: function()
 			{
@@ -187,6 +206,12 @@ function addToCart(prod_id)
 		loading_show();
 		var	cust_session		= $("#cust_session").val();
 		var user_prod_quentity 	= $.trim($("#user_prod_quentity"+prod_id).val());
+		// done by satish for product quantity validation
+		if(user_prod_quentity >10)
+		{
+			user_prod_quentity = 10;
+		}
+		/// done by satish end
 		if(user_prod_quentity == "" || typeof user_prod_quentity == "undefined")
 		{
 			user_prod_quentity = 1;
@@ -207,7 +232,7 @@ function addToCart(prod_id)
 				contentType: "application/json; charset=utf-8",						
 				async:false,
 				success: function(response) 
-				{
+				{ 
 					data = JSON.parse(response);
 					if(data.Success == "Success") 
 					{						
@@ -221,14 +246,18 @@ function addToCart(prod_id)
 					{
 						$("#cart-count").html(data.count);						
 						$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						loading_hide();						
 					}
 				},
 				error: function (request, status, error) 
 				{
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					loading_hide();					
 				},
 				complete: function()
@@ -273,13 +302,20 @@ function checkMobileUser(mobile_txt,cust_mobile_num,req_page,mobile_error_span)
 							$("#"+mobile_error_span).html(data.resp);
 							$("#"+mobile_txt).val("");							
 							loading_hide();
+							$("#model_body").html('<span style="style="color:#F00;">Mobile number already exist.</span>');							
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
+							return false;
 						}
 					},
 					error: function (request, status, error) 
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -319,14 +355,18 @@ function updateState(country_id,state_sel_id)
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					}
 				},
 				error: function (request, status, error) 
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				},
 				complete: function()
 				{
@@ -341,6 +381,11 @@ function updateCity(state_id,city_sel_id)
 			if(state_val == "")
 			{
 				//location.href="/";
+				loading_hide();
+				$('#'+city_sel_id).select2("val","");
+				$('#'+city_sel_id).select2('refresh')
+				
+			
 			}
 			else
 			{
@@ -365,14 +410,18 @@ function updateCity(state_id,city_sel_id)
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						}
 					},
 					error: function (request, status, error) 
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -407,7 +456,8 @@ function checkEmailUser(email_txt,cust_email,req_page,email_error_span)
 						{
 							$("#"+email_txt).css("border-color", "#00FF00");				
 							$("#"+email_error_span).html("");										
-							$("#"+email_error_span).slideUp();							
+							$("#"+email_error_span).slideUp();
+														
 							loading_hide();	
 						} 
 						else 
@@ -423,7 +473,9 @@ function checkEmailUser(email_txt,cust_email,req_page,email_error_span)
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -467,6 +519,11 @@ function checkStrength(password_field,password_error_span)
 			$('#'+password_error_span).removeClass()
 			$('#'+password_error_span).addClass('short')
 			$('#'+password_error_span).html('Too short');
+		}
+		if (password.length < 8) 
+		{
+			$('#'+ password_error_span).html(" ");
+			return false; 
 		}		
 		if (password.length > 7) strength += 1		
 		//If password contains both lower and uppercase characters, increase strength value.
@@ -504,43 +561,106 @@ function checkStrength(password_field,password_error_span)
 	}		
 $('#user_register').on('submit', function(e) 
 {
-	//alert();
 			e.preventDefault();
 			if ($('#user_register').valid())
 			{
-				//loading_show();
-				$.ajax({
-						url: "includes/main.php?",
+				loading_show();
+				var cust_fname 			= $.trim($("#cust_fname_register").val());
+				var cust_lname 			= $.trim($("#cust_lname_register").val());
+				var cust_email 			= $.trim($("#cust_email_register").val());
+				var cust_mobile_num	 	= $.trim($("#cust_mobile_num_register").val());
+				
+				var cust_address 		= $.trim($("#cust_address_register").val());
+				var cust_country		= $.trim($("#cust_country_register").val());
+				var cust_state 			= $.trim($("#cust_state_register").val());
+				var cust_city 			= $.trim($("#cust_city_register").val());
+				var cust_pincode 		= $.trim($("#cust_pincode_register").val());
+		
+				var cust_password 		= $.trim($("#cust_password_register").val());
+				var cust_cpassword 		= $.trim($("#cust_cpassword_register").val());
+				
+				var cust_type 			= $('input:radio[name=cust_type]:checked').val();
+				var cust_Agreement 		= $('input:checkbox[name=Agreement]:checked').val();
+				
+				/*alert('hi : '+cust_Agreement);
+				return false;*/
+				
+				var cli_browser_info	= navigator.userAgent;
+				var cli_ip_address		= "";
+				//IPINFO DOES NOT SUPPORT SSL FOR FREE
+				//$.get("https://ipinfo.io", function(response) 
+				//{
+        		//	cli_ip_address		= response.ip ;
+        			cli_ip_address		= "0.0.0.0";
+				//}, "jsonp");
+				
+				
+				
+				if(cust_fname == "" || cust_lname == "" || cust_email == "" || cust_mobile_num =="" || cust_password == "" || cust_cpassword == "" || typeof cust_type == "undefined" || typeof cust_Agreement == "undefined")
+				{		
+					$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');									
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
+					loading_hide();			
+				}
+				else
+				{
+					
+					
+					$('input[name="reg_submit_reg"]').attr('disabled', 'true');
+					var sendInfo 		= {"cust_fname":cust_fname,"cust_lname":cust_lname,"cust_email":cust_email,"cust_mobile_num":cust_mobile_num,"cust_address":cust_address,"cust_country":cust_country,"cust_state":cust_state,"cust_city":cust_city,"cust_pincode":cust_pincode,"cust_password":cust_password, "cust_type":cust_type, "cli_browser_info":cli_browser_info,"cli_ip_address":cli_ip_address,"user_register":1}
+					var user_reg 	= JSON.stringify(sendInfo);				
+					$.ajax({
+						url: base_url+"includes/main.php",
 						type: "POST",
-						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-						contentType: false,       // The content type used when sending data to the server.
-						cache: false,             // To unable request pages to be cached
-						processData:false,        // To send DOMDocument or non processed data file it is set to false
+						data: user_reg,
+						async:false,						
+						contentType: "application/json; charset=utf-8",						
 						success: function(response) 
-						{   
+						{
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{
-								  alert("Successfull");
+								//$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+								//$('#error_model').modal('toggle');								
+								loading_hide();
+								//$('button.close-popup').on('click', function() 
+								//{
+									var redirect_to = $("#redirect_to").val();
+									if(redirect_to != "")
+									{
+										window.location.href = base_url+redirect_to;										
+									}
+									else
+									{
+										//window.location.href = base_url+"page-profile";
+										window.location.href = base_url+"user-mobile-verify";
+									}
+								//});	
 							} 
 							else 
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');	
-								loading_hide();						
+							{	
+								loading_hide();
+								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+								$('#error_model').modal({
+										backdrop: 'static'
+								  });
 							}
 						},
 						error: function (request, status, error) 
 						{
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');						
 							loading_hide();
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						},
 						complete: function()
 						{
-							loading_hide();
-							//alert("complete");
-						}
-					});
+           				}
+		    		});
+				}
 			}
 		});
 		
@@ -573,14 +693,18 @@ function logout_session(session_value)
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					}
 				},
 				error: function (request, status, error) 
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				},
 				complete: function()
 				{
@@ -607,7 +731,9 @@ $('#user_login').on('submit', function(e)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');							
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				}
 				else
 				{
@@ -615,7 +741,7 @@ $('#user_login').on('submit', function(e)
 					var sendInfo 	= {"cust_email":cust_email,"cust_password":cust_password,"cli_browser_info":cli_browser_info,"cli_ip_address":cli_ip_address,"user_login":1}
 					var userlogin 	= JSON.stringify(sendInfo);				
 					$.ajax({
-						url: "includes/main.php",
+						url: base_url+"includes/main.php",
 						type: "POST",
 						data: userlogin,
 						contentType: "application/json; charset=utf-8",						
@@ -626,14 +752,21 @@ $('#user_login').on('submit', function(e)
 							if(data.Success == "Success") 
 							{
 								var redirect_to = $("#redirect_to").val();
+								
+							
 								if(redirect_to != "")
 								{
 									window.location.href = base_url+redirect_to;										
 								}
+								//  start : done by satish 12042017
+								else if(data.redirect_url !="")
+								{  	
+								   window.location.href =base_url+data.redirect_url;
+								}
 								else
 								{
 									window.location.href = base_url+"page-profile";
-								}
+								}//  end : done by satish 12042017
 								return false;								
 								/*$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
 								$('#error_model').modal('toggle');								
@@ -656,14 +789,18 @@ $('#user_login').on('submit', function(e)
 							{
 								loading_hide();
 								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-								$('#error_model').modal('toggle');
+								$('#error_model').modal({
+										backdrop: 'static'
+								  });
 							}
 						},
 						error: function (request, status, error) 
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						},
 						complete: function()
 						{							
@@ -683,7 +820,9 @@ $('#forget_pass').on('submit', function(e)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">Please enter email id.</span>');							
-					$('#error_model').modal('toggle');									
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });									
 				}
 				else
 				{
@@ -717,7 +856,9 @@ $('#forget_pass').on('submit', function(e)
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						  	$('#error_model').modal('toggle');
+						  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						},
 						complete: function()
 						{
@@ -766,7 +907,9 @@ function updateCoupon()
 	else if(user_coupon_code == "")
 	{
 		$("#model_body").html('<span style="style="color:#F00;">Coupon Code empty.</span>');
-		$('#error_model').modal('toggle');
+		$('#error_model').modal({
+										backdrop: 'static'
+								  });
 		loading_hide();
 	}
 	else
@@ -783,16 +926,23 @@ function updateCoupon()
 			{
 				data = JSON.parse(response);
 				if(data.Success == "Success") 
-				{								
+				{	
+				   		
+				   	get_cart_detail();						
 					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
 					//$('#error_model').modal('toggle');
 					$('#error_model').modal({
 						backdrop: 'static'
 					});
-					
+					$('#coupon_code1').css('pointer-events','none');
+						$('#coupon_code1').css('opacity','0.5');
+						$('#div_before_appied').css('display','none');
+						$('#div_after_appied').css('display','block');
+						 $("#coupon_code1").val(user_coupon_code);
 					loading_hide();
 					$('button.close-popup').on('click', function()
 					{	
+													
 						//viewCart('cart_page');
 						viewCart('content');
 					});	
@@ -800,10 +950,10 @@ function updateCoupon()
 					//$("#cart_page").slideUp();
 					//viewCart('cart_page');
 					//$("#cart_page").slideDown();
+				
 				} 
 				else 
-				{						
-					loading_hide();
+				{		loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
 					//$('#error_model').modal('toggle');
 					$('#error_model').modal({
@@ -872,7 +1022,7 @@ function getAddressData(address_data,page_type)
 		});
 	}}
 function placeOrder()
-{  alert();
+{
 		loading_show();
 		var cust_session		= $("#cust_session").val();		// Customer Email ID will be fetched
 		var add_id 				= "";
@@ -893,19 +1043,22 @@ function placeOrder()
 		{
 			pay_online_mode		= 0;	
 		}
-		alert(pay_online_mode);
 		var ord_comment 		= $.trim($("textarea#ord_comment").val());
 		if(cust_session == "" || add_id == "")
 		{			
 			loading_hide();
 			$("#model_body").html('<span style="style="color:#F00;">Please select Address.</span>');
-			$('#error_model').modal('toggle');
+			$('#error_model').modal({
+										backdrop: 'static'
+								  });
 		}
 		else if(payment_mode == "" )
 		{
 			loading_hide();
 			$("#model_body").html('<span style="style="color:#F00;">Please Select palyment Mode</span>');
-			$('#error_model').modal('toggle');
+			$('#error_model').modal({
+										backdrop: 'static'
+								  });
 		}
 		else
 		{
@@ -932,10 +1085,17 @@ function placeOrder()
 							{
 								window.location.href = ""+data.paymentData;									
 							}
-							else if(typeof data.url == "undefined")
+							else if(data.url=="paytm")
+							{   
+								$("#payment_info").html(data.paymentData);
+								document.getElementById("frm_paytm").submit();
+							}
+							else
 							{
 								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-								$('#error_model').modal('toggle');														
+								$('#error_model').modal({
+										backdrop: 'static'
+								  });														
 								loading_hide();
 								$('button.close-popup').on('click', function() 
 								{
@@ -944,18 +1104,36 @@ function placeOrder()
 								});								
 							}	
 						} 
-						else 
+						else if(data.Success == "fail")
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
+						}
+						else if(data.Success == 'couponExpired')
+						{
+							loading_hide();
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
+							
+							$('button.close-popup').on('click', function() 
+							{
+								location.reload();
+								return false;
+							});		
 						}
 					},
 					error: function (request, status, error) 
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -967,6 +1145,7 @@ $('#add_form').on('submit', function(e)
 		e.preventDefault();
 		if ($('#add_form').valid())
 		{
+			
 			loading_show();
 			var	cust_session		= $.trim($("#cust_session").val());
 			var add_address_type 	= $.trim($("#add_address_type_new_address").val());
@@ -975,12 +1154,13 @@ $('#add_form').on('submit', function(e)
 			var cust_state 			= $.trim($("#cust_state_new_address").val());
 			var cust_city 			= $.trim($("#cust_city_new_address").val());
 			var cust_pincode 		= $.trim($("#cust_pincode_new_address").val());
-			
 			if(cust_address == "" || cust_country == "" || cust_state == "" || cust_city =="" || cust_pincode == "" || add_address_type == "")
 			{
 				loading_hide();
 				$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');							
-				$('#error_model').modal('toggle');									
+				$('#error_model').modal({
+										backdrop: 'static'
+								  });									
 			}
 			else
 			{
@@ -994,7 +1174,8 @@ $('#add_form').on('submit', function(e)
 					contentType: "application/json; charset=utf-8",						
 					async:false,					
 					success: function(response) 
-					{
+					{   
+					     
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{
@@ -1003,6 +1184,9 @@ $('#add_form').on('submit', function(e)
 							//alert(sPage);
 							if(sPage == "page-profile")
 							{
+								//$("#add_form").removeClass('form-validate');
+								
+								
 								$("#new-address-block").slideUp();
 								$("#address_data").slideDown();
 								$('input[name="check"]').prop('checked', false);
@@ -1012,10 +1196,11 @@ $('#add_form').on('submit', function(e)
 								/*$( '#add_form' ).each(function(){
 									this.reset();
 								});*/
-								$("#add_form")[0].reset();
+								 
 							}
 							else
 							{
+								//
 								$("#new-address-block").slideUp();
 								$("#select-address-block").slideDown();
 								//getAddressData('select-address-main');
@@ -1026,14 +1211,18 @@ $('#add_form').on('submit', function(e)
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						}
 					},
 					error: function (request, status, error) 
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');							
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });							
 					},
 					complete: function()
 					{
@@ -1079,7 +1268,9 @@ function showOrders(order_id)
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -1100,7 +1291,7 @@ function getOrdersList()
 				var sendInfo 		= {"cust_session":cust_session,"get_orders":1}
 				var users_orders 	= JSON.stringify(sendInfo);				
 				$.ajax({
-					url: base_url+"includes/main.php",
+					url:"includes/main.php",
 					type: "POST",
 					data: users_orders,
 					contentType: "application/json; charset=utf-8",						
@@ -1116,6 +1307,8 @@ function getOrdersList()
 						} 
 						else 
 						{	
+						    $("#order_list").html(data.resp);
+							$("#users_orders").slideDown();	
 							loading_hide();
 						}
 					},
@@ -1123,7 +1316,9 @@ function getOrdersList()
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					},
 					complete: function()
 					{
@@ -1144,7 +1339,9 @@ $('#change_pass').on('submit', function(e)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');							
-					$('#error_model').modal('toggle');									
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });									
 				}
 				else
 				{
@@ -1163,7 +1360,9 @@ $('#change_pass').on('submit', function(e)
 							if(data.Success == "Success") 
 							{
 								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');								
+								$('#error_model').modal({
+								backdrop: 'static'
+								});							
 								loading_hide();
 								$('button.close-popup').on('click', function() 
 								{
@@ -1174,15 +1373,21 @@ $('#change_pass').on('submit', function(e)
 							else 
 							{
 								loading_hide();
+								$("#cust_password_old_change_pass").val("");
+$("#cust_password_old_error").html(" ");
 								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-								$('#error_model').modal('toggle');
+								$('#error_model').modal({
+										backdrop: 'static'
+								  });
 							  }
 						  },
 						error: function (request, status, error) 
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						  	$('#error_model').modal('toggle');
+						  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						},
 						complete: function()
 						{
@@ -1195,10 +1400,10 @@ $('#user_update_info').on('submit', function(e)
 {			
 			e.preventDefault();
 			if ($('#user_update_info').valid())
-			{
+			{  
 				loading_show();
 				$.ajax({
-					url: base_url+"includes/main.php",
+					url:base_url+"includes/main.php",
 					type: "POST",
 					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 					contentType: false,       // The content type used when sending data to the server.
@@ -1206,10 +1411,10 @@ $('#user_update_info').on('submit', function(e)
 					processData:false,        // To send DOMDocument or non processed data file it is set to false
 					async:true,
 					success: function(response) 
-					{
+					{   
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
-						{
+						{ $('html, body').animate({scrollTop: 0}, 1500);	
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
 							//$('#error_model').modal('toggle');								
 							$('#error_model').modal({
@@ -1219,7 +1424,9 @@ $('#user_update_info').on('submit', function(e)
 							loading_hide();
 							$('button.close-popup').on('click', function() 
 							{
-								location.reload();
+								//location.reload();
+								//window.location.href=base_url+'page-profile';
+location.reload();$('html, body').animate({scrollTop: 0}, 1500);	
 					    		return false;
 							});	
 						} 
@@ -1227,14 +1434,18 @@ $('#user_update_info').on('submit', function(e)
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						  }
 					  },
 					error: function (request, status, error) 
 					{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						  	$('#error_model').modal('toggle');
+						  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						},
 					complete: function()
 					{
@@ -1301,7 +1512,7 @@ $('#user_update_info').on('submit', function(e)
 				}
 			}
 		});*/
-function addressSelect(address_id)
+function addressSelect(address_id, city_id)
 {
 			var idArray = [];
 			$('.my-address-box').each(function () 
@@ -1310,6 +1521,45 @@ function addressSelect(address_id)
 				{
 					$("#"+address_id).removeClass("alt");
 					$("#"+address_id).html('<i class="fa fa-check"></i>Delivery will be on this address');
+
+var losd_setSession	= '1';
+					
+					var sendInfo	= {"losd_setSession":losd_setSession,"address_id":address_id, "city_id":city_id};
+					var set_session	= JSON.stringify(sendInfo);
+					
+					$.ajax({
+						url: base_url+"includes/main.php",
+						type: "POST",
+						data: set_session,
+						contentType: "application/json; charset=utf-8",						
+						async:false,			
+						success: function(response) 
+						{  
+							data = JSON.parse(response);
+							if(data.Success == "Success") 
+							{
+								$('#div_cod').html(data.resp);
+								loading_hide();
+							} 
+							else if(data.Success == "fail") 
+							{
+								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+								$('#error_model').modal({
+									backdrop: 'static'
+								});
+								loading_hide();
+							}
+						},
+						error: function (request, status, error) 
+						{
+							  loading_hide();
+						},
+						complete: function()
+						{
+							loading_hide();
+						}
+					});
+
 				}
 				else
 				{
@@ -1349,6 +1599,7 @@ function changeQuantity(cart_id,flag)
 {		
 	loading_show();
 	var cart_id = parseInt(cart_id);
+	
 	var sendInfo 	= {"cart_id":cart_id,"flag":flag,"update_prod_quentity":1}
 	var cpass 	= JSON.stringify(sendInfo);				
 	$.ajax({
@@ -1358,7 +1609,7 @@ function changeQuantity(cart_id,flag)
 		contentType: "application/json; charset=utf-8",						
 		async:false,			
 		success: function(response) 
-		{
+		{  
 			data = JSON.parse(response);
 			if(data.Success == "Success") 
 			{
@@ -1391,19 +1642,25 @@ $('#reset_password').on('submit', function(e)
 			if ($('#reset_password').valid())
 			{
 				loading_show();
-				var cust_session		= $("#cust_session").val();			
+				var cust_session		= $("#cust_session_1").val();			
 				var cust_password_new	= $.trim($("#cust_password_new_reset").val());
+				
+				
 				if(cust_session == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">Url expired...</span>');
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+					backdrop: 'static'
+				});
 					loading_hide();											
 					window.location.href = "/"
 				}
 				else if(cust_password_new == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">Please provide Password...</span>');
-					$('#error_model').modal('toggle');
+					$('#error_model').modal({
+					backdrop: 'static'
+				});
 					loading_hide();
 				}
 				else
@@ -1423,7 +1680,9 @@ $('#reset_password').on('submit', function(e)
 							if(data.Success == "Success") 
 							{
 								  $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								  $('#error_model').modal('toggle');								
+								  $('#error_model').modal({
+					backdrop: 'static'
+				});								
 								  loading_hide();
 								  $('button.close-popup').on('click', function() 
 								  {
@@ -1435,14 +1694,18 @@ $('#reset_password').on('submit', function(e)
 							{
 								loading_hide();
 								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-								$('#error_model').modal('toggle');
+								$('#error_model').modal({
+					backdrop: 'static'
+				});
 							}
 						},
 						error: function (request, status, error) 
 						{
 							loading_hide();
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+					backdrop: 'static'
+				});
 						},
 						complete: function()
 						{							
@@ -1454,16 +1717,17 @@ $('#reset_password').on('submit', function(e)
 /* Buy Now Function call*/
 function buyNow(prod_id)
 {
+	//alert('Hi');
 	loading_show();
 	addToCart(prod_id); // product add to cart 
 	cust_session = $.trim($("#cust_session").val());
 	if(cust_session == "")
 	{
-		window.location.href='/planeteducate/page-cart.php';//add planeteducate in url by Tariq-22-09-2016		
+		window.location.href=base_url+'page-cart.php';//add planeteducate in url by Tariq-22-09-2016		
 	}
 	else
 	{
-		window.location.href='/planeteducate/page-checkout.php';//add planeteducate in url by Tariq-22-09-2016		
+		window.location.href=base_url+'page-checkout.php';//add planeteducate in url by Tariq-22-09-2016		
 	}
 	loading_hide();
 }
@@ -1490,7 +1754,9 @@ $('#user_contact').on('submit', function(e)
 			if(conct_name == "" || conct_email == "" || conct_mobile_num == "" || conct_sub == "" || conct_msg == "")
 			{
 				$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');							
-				$('#error_model').modal('toggle');
+				$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				loading_hide();			
 			}
 			else
@@ -1510,7 +1776,9 @@ $('#user_contact').on('submit', function(e)
 						if(data.Success == "Success") 
 						{
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 							$('button.close-popup').on('click', function() 
 							{
 								location.reload();
@@ -1521,7 +1789,9 @@ $('#user_contact').on('submit', function(e)
 						else 
 						{
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
+							$('#error_model').modal({
+										backdrop: 'static'
+								  });
 							loading_hide();						
 						}
 					},
@@ -1529,7 +1799,9 @@ $('#user_contact').on('submit', function(e)
 					{
 	
 						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 						loading_hide();					
 					},
 					complete: function()
@@ -1555,7 +1827,9 @@ $('#comment-form').on('submit', function(e)
 		{
 			loading_hide();
 			$("#model_body").html('<span style="style="color:#F00;">Please Login.</span>');							
-			$('#error_model').modal('toggle');									
+			$('#error_model').modal({
+										backdrop: 'static'
+								  });									
 		}
 		else
 		{
@@ -1578,7 +1852,9 @@ $('#comment-form').on('submit', function(e)
 					else 
 					{
 						$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-				  		$('#error_model').modal('toggle');													
+				  		$('#error_model').modal({
+										backdrop: 'static'
+								  });													
 						loading_hide();
 					}
 				},
@@ -1586,7 +1862,9 @@ $('#comment-form').on('submit', function(e)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-				  	$('#error_model').modal('toggle');
+				  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				},
 				complete: function()
 				{
@@ -1604,7 +1882,9 @@ function submitThreadReview(review_id)
 	{
 		loading_hide();
 		$("#model_body").html('<span style="style="color:#F00;">Please Comment first </span>');							
-		$('#error_model').modal('toggle');									
+		$('#error_model').modal({
+										backdrop: 'static'
+								  });								
 	}
 	else
 	{
@@ -1626,7 +1906,9 @@ function submitThreadReview(review_id)
 				else 
 				{
 					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-			  		$('#error_model').modal('toggle');													
+			  		$('#error_model').modal({
+										backdrop: 'static'
+								  });											
 					loading_hide();
 				}
 		  	},
@@ -1634,7 +1916,9 @@ function submitThreadReview(review_id)
 			{
 				loading_hide();
 				$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-			  	$('#error_model').modal('toggle');
+			  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 			},
 			complete: function()
 			{
@@ -1676,7 +1960,9 @@ function getSuggestion(search_text)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-				  	$('#error_model').modal('toggle');
+				  	$('#error_model').modal({
+										backdrop: 'static'
+								  });
 				},
 				complete: function()
 				{
@@ -1812,7 +2098,7 @@ function sendVerificationCode_m(userEmail, verifyType)
 	var send_code	= JSON.stringify(sendInfo);
 	
 	$.ajax({
-			url: base_url+"includes/main.php",
+			url: "includes/main.php",
 			type: "POST",
 			data: send_code,
 			async:false,						
@@ -1824,7 +2110,10 @@ function sendVerificationCode_m(userEmail, verifyType)
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-					$('#error_model').modal('toggle');								
+					$('#error_model').modal({
+						backdrop: 'static'
+					});	
+												
 				} 
 				else if(data.Success == "fail")
 				{	
@@ -2028,7 +2317,9 @@ $('#edit_form').on('submit', function(e)
 		{
 			loading_hide();
 			$("#model_body").html('<span style="style="color:#F00;">Please fill all data.</span>');							
-			$('#error_model').modal('toggle');									
+			$('#error_model').modal({
+										backdrop: 'static'
+								  });								
 		}
 		else
 		{
@@ -2068,14 +2359,18 @@ $('#edit_form').on('submit', function(e)
 					{
 						loading_hide();
 						$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-						$('#error_model').modal('toggle');
+						$('#error_model').modal({
+										backdrop: 'static'
+								  });
 					}
 				},
 				error: function (request, status, error) 
 				{
 					loading_hide();
 					$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-					$('#error_model').modal('toggle');							
+					$('#error_model').modal({
+										backdrop: 'static'
+								  });							
 				},
 				complete: function()
 				{
@@ -2087,3 +2382,143 @@ $('#edit_form').on('submit', function(e)
 // ================================================================================================================
 // EDIT : Edit Address from table [DN by Prathamesh on 25-10-2016]
 // ================================================================================================================
+// ================================================================================================================
+// START : Remove Avatar [DN by satish on 21-12-2016]
+// ================================================================================================================
+function remove_avatar(cust_id)
+{
+	
+	loading_show();
+	
+	var sendInfo			= {"cust_id":cust_id, "remove_avatar":1};
+	var loadEditAddress		= JSON.stringify(sendInfo);
+	
+	$.ajax({
+			url: base_url+"includes/main.php",
+			type: "POST",
+			data: loadEditAddress,
+			async:false,						
+			contentType: "application/json; charset=utf-8",						
+			success: function(response) 
+			{
+				data = JSON.parse(response);
+				if(data.Success == "Success") 
+				{
+				location.reload();
+				return false;
+				
+				} 
+				else if(data.Success == "fail")
+				{	
+					loading_hide();
+					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+					//$('#error_model').modal('toggle');
+					$('#error_model').modal({
+						backdrop: 'static'
+					});
+				}
+			
+			},
+			error: function (request, status, error) 
+			{
+				loading_hide();
+				$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+				//$('#error_model').modal('toggle');
+				$('#error_model').modal({
+					backdrop: 'static'
+				});
+			},
+			complete: function()
+			{
+			}
+		});
+}
+// ================================================================================================================
+// END: Remove Avatar [DN by satish on 21-12-2016]
+// ================================================================================================================
+
+//////////////////////-------------added by satish 18-01-2017----------------///////////////
+function removeCoupon()
+{  
+       
+	loading_show();
+	
+	var user_coupon_code	= $("#coupon_code1").val();	
+	var cust_session 		= $("#cust_session").val();	
+	
+	//alert(user_coupon_code+'<==>'+cust_session);
+	//return false;
+
+	if(cust_session == "")
+	{
+		window.location.href	= "/page-profile";
+	}
+	else if(user_coupon_code == "")
+	{
+		$("#model_body").html('<span style="style="color:#F00;">Coupon Code empty.</span>');
+		$('#error_model').modal('toggle');
+		loading_hide();
+	}
+	else
+	{					
+		var sendInfo 		= {"user_coupon_code":user_coupon_code,"cust_session":cust_session,"remove_coupon":1,}
+		var update_coupon 	= JSON.stringify(sendInfo);			
+		$.ajax({
+			url: base_url+"includes/main.php",
+			type: "POST",
+			data: update_coupon,
+			contentType: "application/json; charset=utf-8",						
+			async:false,						
+			success: function(response) 
+			{
+				data = JSON.parse(response);
+				if(data.Success == "Success") 
+				{	
+				   	get_cart_detail();						
+					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+					//$('#error_model').modal('toggle');
+					$('#error_model').modal({
+						backdrop: 'static'
+					});
+					$('#div_before_appied').css('display','block');
+					$('#div_after_appied').css('display','none');
+					$("#coupon_code").val("");	
+					loading_hide();
+					$('button.close-popup').on('click', function()
+					{	
+												
+						//viewCart('cart_page');
+						viewCart('content');
+											});	
+													
+					//$("#cart_page").slideUp();
+					//viewCart('cart_page');
+					//$("#cart_page").slideDown();
+				} 
+				else 
+				{						
+					loading_hide();
+					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+					//$('#error_model').modal('toggle');
+					$('#error_model').modal({
+						backdrop: 'static'
+					});
+				}
+			},
+			error: function (request, status, error) 
+			{
+				loading_hide();
+				$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+				//$('#error_model').modal('toggle');
+				$('#error_model').modal({
+					backdrop: 'static'
+				});
+			},
+			complete: function()
+			{
+			}
+		});	
+	}				
+}
+////////////////////---------------------added by satish ---------------------------------////////////////	
+
