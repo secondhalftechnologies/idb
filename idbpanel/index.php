@@ -56,10 +56,10 @@ elseif(isset($_POST['password']))
 	}
 </style>
 </head>    
-<body class="login theme-orange" data-theme="theme-orange" style="background-color:#314555 !important;">
+<body class="login theme-orange" data-theme="theme-orange" style="background-color:#fff !important;">
 <div class="wrapper" style="margin-top:15%;">
 	<div class="login-body" style="background-color:transparent">    
-            <div align="center" style="padding:20px 0;"><a href="javascript:void(0);">INDIAN DAVA BAZAR<!--<img src="images/logo.png" height="120" style="height:100px" />--></a></div>
+            <div align="center" style="padding:20px 0;"><a href="javascript:void(0);"><img src="images/logo.png" height="120" style="height:100px" /></a></div>
 			<form method='post' action="#" class='form-validate' id="frm_login">
 				<div class="control-group">
 					<div class="pw controls">

@@ -1,4 +1,4 @@
-<ul class='main-nav' style="margin-top:10px !important">
+<ul class='main-nav'>
 
 <!--    <li class="active">
         <a href="home.php?pag=home">

@@ -195,13 +195,13 @@ ul>li.orange, .label-orange {
 	background:#F27C66
 }
 .theme-orange a {
-	color:#4c6589;
+	color:#206020;
 }
 .theme-orange .btn {
 	color:#333
 }
 .theme-orange .btn.btn-primary {
-	background:#329EA9;
+	background:#08A048;
 	color:#fff
 }
 .theme-orange .btn.btn-inverse, .theme-orange .btn.btn-success, .theme-orange .btn.btn-danger {
@@ -217,7 +217,7 @@ ul>li.orange, .label-orange {
 	background:#935b05
 }
 .theme-orange #navigation {
-	background:#314555
+	background:#339933
 }
 .theme-orange #navigation .toggle-mobile {
 	background:#FAAA94
@@ -241,25 +241,25 @@ ul>li.orange, .label-orange {
 	background:#fff
 }
 .theme-orange #navigation .main-nav>li.open>a {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange #navigation .main-nav>li>a:hover {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange #navigation .user .icon-nav>li>a:hover {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange #navigation .user .dropdown.open {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange #navigation .user .dropdown>a:hover {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange #navigation .dropdown-menu {
-	border-color:#4c6589
+	border-color:#206020
 }
 .theme-orange #navigation .dropdown-menu>li>a:hover {
-	background:#4c6589
+	background:#206020
 }
 .theme-orange .search-form .search-pane button[type="submit"] {
 	background:#F27C66
@@ -479,56 +479,56 @@ ul>li.red, .label-red {
 	border-color:#e51400
 }
 ul>li.green, .label-green {
-	background:#329EA9
+	background:#08A048
 }
 .progress.small .bar.bar-green {
-	background:#329EA9
+	background:#08A048
 }
 .box.box-color.green .box-title {
-	background:#329EA9 !important
+	background:#08A048 !important
 }
 .box.box-color.green .box-title .actions>a:hover {
-	color:#329EA9
+	color:#08A048
 }
 .box.box-color.green .form-wizard .wizard-steps li.active .single-step .title {
-	background:#329EA9
+	background:#08A048
 }
 .box.box-color.green .btn.btn-primary {
-	background:#329EA9
+	background:#08A048
 }
 .box.box-bordered.box-color.green .box-title {
-	border-color:#329EA9 !important
+	border-color:#08A048 !important
 }
 .box.box-bordered.box-color.green .box-content {
-	border-color:#329EA9 !important
+	border-color:#08A048 !important
 }
 .box.box-bordered.box-color.green .slimScrollDiv {
-	border-bottom:2px solid #329EA9
+	border-bottom:2px solid #08A048
 }
 .theme-green .form-wizard .wizard-steps li.active .single-step .title {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .btn.btn-primary {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green.login {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green a {
-	color:#329EA9
+	color:#08A048
 }
 .theme-green .btn {
 	color:#333
 }
 .theme-green .btn.btn-primary {
-	background:#329EA9;
+	background:#08A048;
 	color:#fff
 }
 .theme-green .btn.btn-inverse, .theme-green .btn.btn-success, .theme-green .btn.btn-danger {
 	color:#fff
 }
 .theme-green.locked {
-	background:#329EA9 !important
+	background:#08A048 !important
 }
 .theme-green.locked .pull-left a {
 	background:#FAAA94
@@ -543,7 +543,7 @@ ul>li.green, .label-green {
 	background:#FAAA94
 }
 .theme-green #navigation .mobile-nav.open {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green #navigation .mobile-nav.open>li.active>a {
 	background:#133913
@@ -579,13 +579,13 @@ ul>li.green, .label-green {
 	border-color:#FAAA94
 }
 .theme-green #navigation .dropdown-menu>li>a:hover {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .search-form .search-pane button[type="submit"] {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .messages>li.insert .submit button {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .messages>li.right .name {
 	color:#000
@@ -603,40 +603,40 @@ ul>li.green, .label-green {
 	border-left:7px solid #b3e6b3
 }
 .theme-green .letterbox .letter>li.active {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .calendar .fc-content .fc-event .fc-event-inner {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .calendar .fc-button.fc-state-active {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .calendar .fc-button.fc-state-active:hover {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .table.table-user tr.alpha td.alpha-val span {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .tagsinput#textfield_tagsinput .tag, .theme-green .ms-container .multi-custom-header, .theme-green .slider .ui-slider-handle, .theme-green .form-wizard .wizard-steps li.active .single-step .title, .theme-green .user-list h4, .theme-green .nav.nav-pills>li.active>a, .theme-green .nav.nav-list>li.active>a, .theme-green .table.table-colored-header thead th, .theme-green .table.table-colored-header thead td, .theme-green .dataTables_wrapper .dataTables_paginate>span>a.paginate_active, .theme-green .elfinder-navbar .ui-state-active, .theme-green .pagination.pagination-custom li.active a:hover, .theme-green .pagination.pagination-custom li.active a {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green .elfinder-navbar .ui-state-active {
-	border-color:#329EA9
+	border-color:#08A048
 }
 .theme-green #main .box .box-title .tabs>li.active>a {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green #main .box.box-color .box-title {
-	background:#329EA9
+	background:#08A048
 }
 .theme-green #main .box.box-color .box-title .tabs>li.active>a {
-	color:#329EA9
+	color:#08A048
 }
 .theme-green #main .box.box-bordered.box-color .box-title {
-	border-color:#329EA9
+	border-color:#08A048
 }
 .theme-green #main .box.box-bordered.box-color .box-content {
-	border-color:#329EA9
+	border-color:#08A048
 }
 ul>li.lime, .label-lime {
 	background:#8cbf26
@@ -1923,7 +1923,7 @@ ul>li.darkblue, .label-darkblue {
 }
 ul>li.lightred, .label-lightred {
 /*	background:#e63a3a*/
-	background:#4c6589;	
+	background:#206020;	
 }
 .progress.small .bar.bar-lightred {
 	background:#e63a3a

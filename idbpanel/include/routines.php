@@ -16,7 +16,8 @@ if ($_SERVER['HTTP_HOST'] == "localhost" || preg_match("/^192\.168\.0.\d+$/",$_S
 	$dbname = "idb2017";
 	$dbuser = "root";
 	$dbpass = "";
-	$BaseFolder = "http://localhost/idb/idbpanel/";	}
+	$BaseFolder = "http://localhost/idb/idbpanel/";	
+}
 else
 {
 	$dbname = "kumar7_idb2017";
@@ -414,8 +415,8 @@ function spamcheck($field)
 }
 function get_mail_headers()
 {
-	$headers = "From: \"Mystudycentre\" <support@mystudycentre.com>\n";
-	$headers .= "Return-Path: <support@mystudycentre.com>\n";
+	$headers = "From: \"indiandavabazar\" <support@indiandavabazar.com>\n";
+	$headers .= "Return-Path: <support@indiandavabazar.com>\n";
 	$headers .= "MIME-Version: 1.0\n";
 	$headers .= "Content-Type: text/HTML; charset=ISO-8859-1\n"; 
 	return $headers;
@@ -558,7 +559,7 @@ function headerdata($feature_name)
 		<!-- Apple devices fullscreen -->
 		<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />	
 		<title><?php echo $feature_name; ?></title>
-	    <link rel="shortcut icon" href="img/logo.ico">
+	    <!--<link rel="shortcut icon" href="img/logo.ico">-->
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<!-- Bootstrap responsive -->
