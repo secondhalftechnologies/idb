@@ -18,7 +18,7 @@ $error_path 		= "images/no-image.jpg";
 if ($_SERVER['HTTP_HOST'] == "localhost" || preg_match("/^192\.168\.0.\d+$/",$_SERVER['HTTP_HOST']) || preg_match("/^prem$/",$_SERVER['HTTP_HOST']))
 {
 	$server_set = 0;
-	$dbname 	= "db_idb";
+	$dbname 	= "idb2017";
 	$dbuser 	= "root";
 	$dbpass 	= "";
 	$BaseFolder = "http://localhost/idb";	

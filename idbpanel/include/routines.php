@@ -57,7 +57,9 @@ if (isset($_POST['jsubmit']) && isset($_POST['emailid']) && isset($_POST['passwo
 		$row_login = mysqli_fetch_array($result_login);
 		$db_password = $row_login['password'];
 		$salt_value = $row_login['salt_value'];
-		$user_pass = md5($password.$salt_value);	
+		$user_pass = md5($password.$salt_value);
+		
+		
 		if(strcmp($db_password,$user_pass) == 0)
 		{
 			$_SESSION['panel_user'] = array();		
@@ -1524,4 +1526,100 @@ function make_thumb($img_name,$filename,$new_w,$new_h)
 	imagedestroy($dst_img);
 	imagedestroy($src_img);
 }
+
+/////=====================Start : Added By Satish 21082017==================//
+
+function insert($table, $variables = array() )
+{
+			//Make sure the array isn't empty
+	global $db_con;
+	if( empty( $variables ) )
+	{
+		return false;
+		exit;
+	}
+	
+	$sql = "INSERT INTO ". $table;
+	$fields = array();
+	$values = array();
+	foreach( $variables as $field => $value )
+	{
+		$fields[] = $field;
+		$values[] = "'".$value."'";
+	}
+	$fields = ' (' . implode(', ', $fields) . ')';
+	$values = '('. implode(', ', $values) .')';
+	
+	$sql .= $fields .' VALUES '. $values;
+
+	$result		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+	
+	if($result)
+	{
+		return mysqli_insert_id($db_con);
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function update($table, $variables = array(), $where,$not_where_array=array(),$and_like_array=array(),$or_like_array=array())
+{
+	//Make sure the array isn't empty
+	global $db_con;
+	if( empty( $variables ) )
+	{
+		return false;
+		exit;
+	}
+	
+	$sql = "UPDATE ". $table .' SET ';
+	$fields = array();
+	$values = array();
+	
+	foreach($variables as $field => $value )
+	{   
+		$sql  .= $field ."='".$value."' ,";
+	}
+	$sql   =chop($sql,',');
+	
+	$sql .=" WHERE 1 = 1 ";
+	//==Check Where Condtions=====//
+	if(!empty($where))
+	{
+		foreach($where as $field1 => $value1 )
+		{   
+			$sql  .= " AND ".$field1 ."='".$value1."' ";
+		}
+	}
+
+	$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+	
+	if($result)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function quit($msg,$Success="")
+{
+	if($Success ==1)
+	{
+		$Success="Success";
+	}
+	else
+	{
+		$Success="fail";
+	}
+	echo json_encode(array("Success"=>$Success,"resp"=>$msg));
+	exit();
+}
+
+/////=====================End : Added By Satish 21082017==================//
+
 ?>

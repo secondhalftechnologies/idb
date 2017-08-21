@@ -9696,7 +9696,7 @@ if(isset($_POST['registration']) && $_POST['registration']==1)
 		$file_size =$_FILES['file']['size'];
         if($file_size > 5242880 &&  $file_size !=0) // file size
 		{
-			$errors[]='File size must be less than 5 MB';
+			quit('Image size should be less than 5 MB');
 		}
 		
 		$file_name                    = explode('.',$_FILES['file']['name']);

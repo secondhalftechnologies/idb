@@ -65,12 +65,12 @@
                                     
                                     <div class="field-row">
                                         <label>Password</label>
-                                        <input type="text" class="le-input" id="txt_password" name="txt_password">
+                                        <input type="password" class="le-input" id="txt_password" name="txt_password">
                                     </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
                                         <label>Confirm Password</label>
-                                        <input type="text" class="le-input" id="txt_password" name="txt_password">
+                                        <input type="password" class="le-input" id="txt_cpassword" name="txt_cpassword">
                                     </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
@@ -78,8 +78,106 @@
                                         <input type="text" class="le-input" id="txt_license_num" name="txt_license_num">
                                     </div><!-- /.field-row -->
                                     
+                                    <div class="field-row">
+                                        <label>License Document</label>
+                                        <input type="file" class="le-input" id="file_license_pdf" name="file_license_pdf" required>
+                                    </div><!-- /.field-row -->
+                                    
+                                     <div class="field-row">
+                                        <label>License Expiry Date</label>
+                                        <input type="text" class="le-input" id="txt_expiry_date" name="txt_expiry_date" required>
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>PAN number</label>
+                                        <input type="text" class="le-input" id="txt_pan_num" name="txt_pan_num">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>GST number</label>
+                                        <input type="text" class="le-input" id="txt_gst_num" name="txt_gst_num">
+                                    </div><!-- /.field-row -->
+                <!--///////////////////////////==Start : Bank Details Satish:21082017===///////////////////////-->                     
+                                    <h2 class="bordered">Bank Details</h2>
+                                    
+                                    <div class="field-row">
+                                        <label>Bank Name</label>
+                                        <input type="text" class="le-input" id="txt_bank_name" name="txt_bank_name">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="le-input" id="txt_branch_name" name="txt_branch_name">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Account Number</label>
+                                        <input type="text" class="le-input" id="txt_acc_num" name="txt_acc_num">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>IFSC</label>
+                                        <input type="text" class="le-input" id="txt_ifsc" name="txt_ifsc">
+                                    </div><!-- /.field-row -->
+                                    
+                                    
+                                    <div class="field-row">
+                                        <label>MICR</label>
+                                        <input type="text" class="le-input" id="txt_micr" name="txt_micr">
+                                    </div><!-- /.field-row -->
+                                    
+                                     
+                                    
+                                    <div class="field-row">
+                                         <div class="payment-method-option">
+                                        <input class="le-radio" name="txt_user_type" value="buyer" type="radio"><i class="fake-box"></i>
+                                        <div class="radio-label bold ">Buyer</div>
+                                        
+                                         &nbsp;&nbsp;<input class="le-radio" name="txt_user_type" value="vendor" type="radio"><i class="fake-box"></i>
+                                        <div class="radio-label bold ">Vendor</div>
+                                        </div>
+                                    </div>
+                                    
+               <!--///////////////////////////==End : Bank Details Satish:21082017===///////////////////////-->
+               
+                <!--///////////////////////////==Start : Address Details Satish:21082017===///////////////////////-->                     
+                                    <h2 class="bordered">Address Details</h2>
+                                    
+                                    <div class="field-row">
+                                        <label>Country</label>
+                                        <select class="le-input" name="txt_country">
+                                        	<option value="">Select Country</option>
+                                            <option value="India">India</option>
+                                        </select>
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>State</label>
+                                        <select class="le-input" name="txt_state">
+                                        	<option value="">Select State</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Gujrat">Gujrat</option>
+                                        </select>
+                                    </div><!-- /.field-row -->
+                                    
+                                    
+                                    <div class="field-row">
+                                        <label>Pincode</label>
+                                        <input type="text" class="le-input" id="txt_pincode" name="txt_pincode">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Area</label>
+                                        <textarea type="text" class="le-input" id="txt_area" name="txt_area"></textarea>
+                                    </div><!-- /.field-row -->
+                                    
+              <!--///////////////////////////==Address : Bank Details Satish:21082017===///////////////////////-->
+               
+               
+                                    
                                     <div class="buttons-holder">
-                                        <button type="submit" id="btn_submit" name="btn_submit" class="le-button huge" >Sign Up</button>
+                                        <button type="submit" id="btn_submit" name="btn_submit" class="le-button huge" value="frm-submit" >Sign Up</button>
                                     </div><!-- /.buttons-holder -->
                                 </form>
 
@@ -132,6 +230,49 @@
 
 		  	});
 		})
+		
+		
+		$('#frm_register').on('submit', function(e) 
+        {
+			e.preventDefault();
+			/*if ($('#frm_register').valid())
+			{*/
+				$.ajax({
+					url: "includes/common.php?",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+						success: function(response) 
+						{   data = JSON.parse(response);
+					        if(data.Success == "Success") 
+							{  
+							  alert(data.resp);
+							  location.reload();
+							} 
+							else 
+							{   
+							   alert(data.resp);
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+							$('#error_model').modal('toggle');						
+							loading_hide();
+						},
+						complete: function()
+						{
+							//alert("complete");
+							loading_hide();
+						}
+				    });
+			/*}*/
+		});
+		
+
 		</script>
 
     </body>
