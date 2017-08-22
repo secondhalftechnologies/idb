@@ -86,8 +86,8 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 </div>
                                 </div>
                                 <?php
-										$add = checkFunctionalityRight($filename,0);
-										$edit = checkFunctionalityRight($filename,1);
+										$add = 0;//checkFunctionalityRight($filename,0);
+										$edit = 0;//checkFunctionalityRight($filename,1);
 										if(($add) || ($edit))
 										{
 											?>                                  
@@ -845,7 +845,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			if($add || $edit)
 			{
 			?>
-		   	loadData1();			
+		 //  	loadData1();			
 			<?php
 			}
 			?>
@@ -1028,17 +1028,6 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var filt_sub_child		= $.trim($('select[name="filt_sub_child"]').val());
 				var cat_status 			= $('input[name=cat_status]:checked', '#frm_add_cat').val();
 				
-				var levels_data = "";
-				$("input[name='level_parent']:checked").each(function ()
-				{
-					var parent_level= parseInt($(this).attr("id"));
-					var child_level = [];
-					$("input[name="+parent_level+"level_child]:checked").each(function ()
-					{
-						child_level.push(parseInt($(this).attr("id")));
-					});
-					levels_data = levels_data+"("+parent_level+":"+child_level+")*";
-				});			
 				if(cat_name == "" && cat_parent == "" && filt_sub_child == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">PLease fill all * fileds.</span>');
@@ -1049,7 +1038,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{ 
 					e.preventDefault();
 					$('input[name="reg_submit_add"]').attr('disabled', 'true');
-					var sendInfo 		= {"filt_sub_child":filt_sub_child,"levels_data":levels_data,"cat_name":cat_name, "cat_description":cat_description, "cat_parent":cat_parent,"filt_meta_tags":filt_meta_tags,"filt_meta_description":filt_meta_description,"filt_meta_title":filt_meta_title,"cat_status":cat_status,"insert_req":"1"};
+					var sendInfo 		= {"filt_sub_child":filt_sub_child,"cat_name":cat_name, "cat_description":cat_description, "cat_parent":cat_parent,"filt_meta_tags":filt_meta_tags,"filt_meta_description":filt_meta_description,"filt_meta_title":filt_meta_title,"cat_status":cat_status,"insert_req":"1"};
 					var cat_insert = JSON.stringify(sendInfo);				
 					$.ajax({
 						url: "load_filters.php",
@@ -1099,18 +1088,6 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var filt_sub_child		= $.trim($('select[name="filt_sub_child"]').val());				
 				var cat_status 			= $('input[name=cat_status]:checked', '#frm_edit_cat').val()	
 
-				var levels_data = "";
-				$("input[name='level_parent']:checked").each(function ()
-				{
-					var parent_level= parseInt($(this).attr("id"));
-					var child_level = [];
-					$("input[name="+parent_level+"level_child]:checked").each(function ()
-					{
-						child_level.push(parseInt($(this).attr("id")));
-					});
-					levels_data = levels_data+"("+parent_level+":"+child_level+")*";
-				});					
-										
 				if(cat_name == "" && cat_parent == "" && filt_sub_child == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">PLease fill all * fileds.</span>');
@@ -1121,7 +1098,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{
 					e.preventDefault();
 					$('input[name="reg_submit_edit"]').attr('disabled', 'true');
-					var sendInfo 		= {"filt_sub_child":filt_sub_child,"levels_data":levels_data,"cat_id":cat_id,"cat_name":cat_name, "cat_description":cat_description, "cat_parent":cat_parent,"cat_status":cat_status,"update_req":"1"};
+					var sendInfo 		= {"filt_sub_child":filt_sub_child,"cat_id":cat_id,"cat_name":cat_name, "cat_description":cat_description, "cat_parent":cat_parent,"cat_status":cat_status,"update_req":"1"};
 					var cat_insert = JSON.stringify(sendInfo);				
 					$.ajax({
 						url: "load_filters.php",

@@ -83,8 +83,8 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 </div>
                                 </div>
                                 <?php
-										$add = checkFunctionalityRight($filename,0);
-										$edit = checkFunctionalityRight($filename,1);
+										$add = 0;//checkFunctionalityRight($filename,0);
+										$edit =0;// checkFunctionalityRight($filename,1);
 										if(($add) || ($edit))
 										{
 											?>                                  
@@ -508,7 +508,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			if(($add) || ($edit))
 			{
 			?>
-			loadData1();
+			//loadData1();
 			<?php
 			}
 			?>

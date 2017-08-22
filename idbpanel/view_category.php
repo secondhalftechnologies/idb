@@ -87,8 +87,8 @@
                                 </div>
                           	</div>
                             <?php
-							$add = checkFunctionalityRight($filename,0);
-							$edit = checkFunctionalityRight($filename,1);
+							$add = 0;//checkFunctionalityRight($filename,0);
+							$edit =0;//checkFunctionalityRight($filename,1);
 							if(($add) || ($edit))
 							{
 								?>
@@ -628,7 +628,7 @@
 			if($add || $edit)
 			{
 			?>
-		   	loadErrorData();			
+		   	//loadErrorData();			
 			<?php
 			}
 			?>

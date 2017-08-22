@@ -99,7 +99,7 @@ function updateFilterLevel($filter_data,$level_data,$filtlevel_status)
 		}		
 	}
 }*/
-function insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_sub_child,$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array,$levels_data)
+function insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_sub_child,$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array)
 {
 	
 	global $obj, $datetime;
@@ -177,65 +177,7 @@ function insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_
 		$result_insert_category = mysqli_query($db_con,$sql_insert_category) or die(mysqli_error($db_con));
 		if($sql_insert_category)
 		{
-			if($filt_sub_child == "parent")
-			{  // change  made by punit 10August2017
-				/*$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_id,'child',$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);*/
-			}
-			elseif($filt_sub_child == "child")
-			{	// change  made by punit 10August2017
-				/*$response_array = insertFilter($uid,$db_con,"none",$cat_description,$cat_parent,$cat_id,$cat_status,$filt_meta_description,$filt_meta_tags,$filt_meta_title,$response_array);	*/			
-			}
-			else
-			{	
-				$levels_data_1 = explode("*",$levels_data);			
-				foreach($levels_data_1 as $levels_cmbn_id)
-				{			
-					$levels_data_in_bracket = explode(":",$levels_cmbn_id);					
-					$parent_id	= str_replace("(","",$levels_data_in_bracket[0]);
-					$child_id	= str_replace(")","",$levels_data_in_bracket[1]);		
-					$sql_check_exists 		= " SELECT * FROM `tbl_filter_level` WHERE `filterlevel_filt_child_id` =  '".$cat_id."' and filterlevel_level_parent_id = '".$parent_id."' and filterlevel_filt_parent_id = '".$cat_parent."' ";
-					$result_check_exists 	= mysqli_query($db_con,$sql_check_exists) or die(mysqli_error($db_con));
-					$num_rows_check_exists 	= mysqli_num_rows($result_check_exists);
-					if($num_rows_check_exists == 0)
-					{
-						if(trim($parent_id) != "" && trim($child_id) != "")
-						{
-							$sql_add_filt_level = " INSERT INTO `tbl_filter_level`(`filterlevel_filt_parent_id`,`filterlevel_filt_child_id`, `filterlevel_level_parent_id`, `filterlevel_level_child_id`,";
-							$sql_add_filt_level .= " `filterlevel_created_by`, `filterlevel_created`) VALUES ('".$cat_parent."','".$cat_id."','".$parent_id."','".$child_id."','".$uid."','".$datetime."') ";
-							$result_add_filt_level = mysqli_query($db_con,$sql_add_filt_level) or die(mysqli_error($db_con));
-							if($result_add_filt_level)
-							{
-								$response_array = array("Success"=>"Success","resp"=>"Data Inserted Successfully");
-							}	
-							else
-							{
-								$response_array = array("Success"=>"Success","resp"=>"Data Inserted but level not inserted");							
-							}
-						}
-					}
-					else
-					{
-						$response_array = array("Success"=>"Success","resp"=>"Level already exists.");
-					}					
-				}
-			}
-			if(isset($obj->error_id) && (isset($obj->insert_req)) != "")			
-			{
-				$sql_delete_error_cat = "DELETE FROM `tbl_error_data` WHERE `error_id`='".$obj->error_id."'";
-				$res_delete_error_cat = mysqli_query($db_con, $sql_delete_error_cat) or die(mysqli_error($db_con));				
-				if($res_delete_error_cat)
-				{
-					$response_array = array("Success"=>"Success","resp"=>"Error Data Updated Successfully");
-				}
-				else
-				{
-					$response_array = array("Success"=>"Success","resp"=>"Data Inserted Successfully but Error Data not deleted");												
-				}
-			}
-			else
-			{
-				$response_array = array("Success"=>"Success","resp"=>"Data Inserted Successfully");					
-			}
+			$response_array = array("Success"=>"Success","resp"=>"Filter Added Successfully.");					
 		}
 		else
 		{
@@ -1024,56 +966,7 @@ if((isset($obj->load_add_cat_part)) != "" && isset($obj->load_add_cat_part))
 		$data .= '<label name = "radiotest" ></label>';
 		$data .= '</div>';
 		$data .= '</div><!--Status-->';		
-		$data .= '<div class="control-group span12" ';
-		if($cat_id != "" && $req_type != "add")
-		{
-			if($row_cat_data['filt_type'] == "parent")
-			{
-				$data .= ' style="display:none" ';				
-			}
-		}
-		$data .= ' id="level_assign">';
-		$data .= '<label>Select Level</label>';
-		$data .= '<div class="controls">';
-		$sql_get_parent_levels 			= " select * from tbl_level where cat_type = 'parent' and cat_status != 0 ";
-		$result_get_parent_levels 		= mysqli_query($db_con,$sql_get_parent_levels) or die(mysqli_error($db_con));
-		while($row_get_parent_levels 	= mysqli_fetch_array($result_get_parent_levels))
-		{
-			$data .= '<div style="float:left;border:1px solid #BBBBBB;margin:2px;padding:10px;">';
-			$data .= '<input type="checkbox" id="'.$row_get_parent_levels['cat_id'].'level_parent" name="level_parent" class="css-checkbox" ';
-			if($cat_id != "" && $req_type == "view")
-			{
-				$data .= ' disabled="disabled"';					
-			}			
-			if(in_array($row_get_parent_levels['cat_id'],$filtlevel_level_parent))
-			{
-				$data .= ' checked';
-			}
-			$data .= '>';
-			$data .= ucwords($row_get_parent_levels['cat_name']).'<label for="'.$row_get_parent_levels['cat_id'].'level_parent" class="css-label" ></label>';
-					
-			$sql_get_child_levels = " select * from tbl_level where cat_type = '".$row_get_parent_levels['cat_id']."' ";//and cat_name != 'none' ";
-			$result_get_child_levels = mysqli_query($db_con,$sql_get_child_levels) or die(mysqli_error($db_con));			
-			$data .= '<div style="margin:20px;">';			
-			while($row_get_child_levels = mysqli_fetch_array($result_get_child_levels))
-			{
-				$data .= '<input type="checkbox" id="'.$row_get_child_levels['cat_id'].'level_child" name="'.$row_get_parent_levels['cat_id'].'level_child" class="css-checkbox"';
-				if($cat_id != "" && $req_type == "view")
-				{
-					$data .= ' disabled="disabled"';					
-				}
-				if(in_array($row_get_child_levels['cat_id'],$filtlevel_level_child))
-				{
-					$data .= ' checked';
-				}
-				$data .= '>';
-				$data .= ucwords($row_get_child_levels['cat_name']).'<label for="'.$row_get_child_levels['cat_id'].'level_child" class="css-label"></label>';
-			}
-			$data .= '</div>';			
-			$data .= '</div>';			
-		}
-		$data .= '</div>';
-		$data .= '</div>';						
+							
 		$data .= '<div class="form-actions">';
 		if($cat_id == "" && $req_type == "add")
 		{
@@ -1117,13 +1010,12 @@ if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 	$filt_meta_description	= strtolower(mysqli_real_escape_string($db_con,$obj->filt_meta_description));
 	$filt_meta_title			= strtolower(mysqli_real_escape_string($db_con,$obj->filt_meta_title));
 	$filt_meta_tags			= strtolower(mysqli_real_escape_string($db_con,$obj->filt_meta_tags));
-	$levels_data			= $obj->levels_data;
 
 	$response_array = array();	
 	
 	if($cat_name != "" && $cat_parent != "" && $cat_status != "" && $filt_sub_child != "")
 	{
-	$response_array = insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_sub_child,$cat_status,$filt_meta_description,  $filt_meta_tags,$filt_meta_title,$response_array,$levels_data);
+	$response_array = insertFilter($uid,$db_con,$cat_name,$cat_description,$cat_parent,$filt_sub_child,$cat_status,$filt_meta_description,  $filt_meta_tags,$filt_meta_title,$response_array);
 	}
 	else
 	{
@@ -1143,7 +1035,7 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 	$filt_meta_title			= mysqli_real_escape_string($db_con,$obj->filt_meta_title);
 	$filt_meta_tags			= mysqli_real_escape_string($db_con,$obj->filt_meta_tags);
 	$cat_slug 				= strtolower(str_replace(" ","-",$cat_name));
-	$levels_data			= $obj->levels_data;	 
+
 	$change_flag			= 1;
 	$response_array = array();	
 	if($cat_name != "" && $cat_parent != "" && $cat_status != "" && $filt_sub_child != "")
@@ -1155,12 +1047,16 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 		if($num_rows_check_cat == 0)
 		{
 			$sql_get_self_data 		= "Select * from tbl_filters where `filt_id` = '".$cat_id."' ";
+			
 			$result_get_self_data 	= mysqli_query($db_con,$sql_get_self_data) or die(mysqli_error($db_con));
 			$rows_get_self_data 	= mysqli_fetch_array($result_get_self_data);	
 			if($change_flag == 1)
 			{
+				
+				
 				$sql_update_category = " UPDATE `tbl_filters` SET `filt_name`='".$cat_name."',`filt_description`='".$cat_description."', ";	
 				$sql_update_category .= " `filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";
+				
 				$result_update_category = mysqli_query($db_con,$sql_update_category) or die(mysqli_error($db_con));
 				if($result_update_category)
 				{
@@ -1168,10 +1064,12 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 					if($rows_get_self_data['filt_type'] == "parent" && $rows_get_self_data['filt_sub_child'] == "parent")
 					{
 						/*update self status*/						
-						$sql_update_filt_status .= " filt_status = '".$curr_status."' ";
+						$sql_update_filt_status .= " filt_status = '".$cat_status."' , ";
 						/*update self status*/
 						/* update child status according to parent status*/
 						$sql_update_chid_status = " UPDATE `tbl_filters` SET filt_status = '".$curr_status."' ,`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_type` = '".$cat_id."' ";
+						
+						
 						$result_update_chid_status = mysqli_query($db_con,$sql_update_chid_status) or die(mysqli_error($db_con));
 						/* update child status according to parent status*/						
 					}
@@ -1212,14 +1110,16 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 						}
 						if($parent_status_flag == 1)
 						{
-							$sql_update_filt_status .= " filt_status = 0 ";
+							$sql_update_filt_status .= " filt_status = 0 , ";
 						}						
 						else
 						{
-							$sql_update_filt_status .= " filt_status = '".$curr_status."' ";
+							$sql_update_filt_status .= " filt_status = '".$curr_status."' , ";
 						}
 					}
-					$sql_update_filt_status .= " `filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";					
+					
+					$sql_update_filt_status .= " `filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";	
+					//echo json_encode(array("Success"=>'fail',"resp"=>$sql_update_filt_status));exit();				
 					$result_update_filt_status = mysqli_query($db_con,$sql_update_filt_status) or die(mysqli_error($db_con));
 					if($result_update_filt_status)
 					{			
@@ -1238,282 +1138,8 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 				$change_flag = 0;				
 				$response_array = array("Success"=>"fail","resp"=>"Filters Flag Not Assigned");				
 			}
-			/*if($change_flag == 1)						
-			{
-				if($rows_get_self_data['filt_type'] == "parent")
-				{			
-					if($rows_get_self_data['filt_type'] != $cat_parent)
-					{
-						$sql_get_new_parent_data	= "SELECT * from tbl_filters where filt_id = '".$cat_parent."' ";
-						$result_get_new_parent_data = mysqli_query($db_con,$sql_get_new_parent_data) or die(mysqli_error($db_con));
-						$row_get_new_parent_data 	= mysqli_fetch_array($result_get_new_parent_data);
-						$num_rows_get_new_parent_data = mysqli_num_rows($result_get_new_parent_data);
-						if($num_rows_get_new_parent_data != 0)
-						{
-							$sql_get_child 		= "select * from tbl_filters where `filt_type` = '".$cat_id."'";				
-							$result_get_child 	= mysqli_query($db_con,$sql_get_child) or die(mysqli_error($db_con));
-							$num_rows_get_child = mysqli_num_rows($result_get_child);											
-							if($num_rows_get_child != 0)
-							{
-								while($row_get_child = mysqli_fetch_array($result_get_child))					
-								{
-									$sql_update_child_cat = "UPDATE `tbl_filters` SET `filt_status`= '".$row_get_new_parent_data['filt_status']."',`filt_type`= '".$row_get_new_parent_data['filt_id']."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$row_get_child['filt_id']."' ";						
-									$result_update_child_cat = mysqli_query($db_con,$sql_update_child_cat) or die(mysqli_error($db_con));
-									if($result_update_child_cat)
-									{
-										$change_flag = 1;
-									}
-									else
-									{
-										$change_flag = 0;
-										$response_array = array("Success"=>"fail","resp"=>"Sub-Filters ".$row_get_child['filt_name']." Not Updated");
-									}																				
-								}							
-							}
-							else
-							{
-								$change_flag = 1;
-								$response_array = array("Success"=>"fail","resp"=>"Filters has No Sub-Filters");								
-							}
-							if($change_flag == 1)
-							{
-								$sql_update_parent_cat = " UPDATE `tbl_filters` SET `filt_status`= '".$row_get_new_parent_data['filt_status']."',`filt_type`= '".$row_get_new_parent_data['filt_id']."'";
-								$sql_update_parent_cat .= " ,`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";
-								$result_update_parent_cat = mysqli_query($db_con,$sql_update_parent_cat) or die(mysqli_error($db_con));
-								if($result_update_parent_cat)
-								{
-									$change_flag = 1;
-								}
-								else
-								{
-									$change_flag = 0;
-									$response_array = array("Success"=>"fail","resp"=>"Filters Not Updated");
-								}																								
-							}
-							else
-							{
-								$change_flag = 0;
-								$response_array = array("Success"=>"fail","resp"=>"Filters Not Updated");																
-							}
-						}
-						else
-						{
-							$change_flag = 0;
-							$response_array = array("Success"=>"fail","resp"=>"Filters Was Parent.Now child but New Parent Not Exist");
-						}
-					}
-					elseif($rows_get_self_data['filt_type'] == $cat_parent)
-					{
-						if($rows_get_self_data['filt_status'] == $cat_status)
-						{
-							$change_flag = 1;	
-						}
-						elseif($rows_get_self_data['filt_status'] != $cat_status)
-						{
-							$sql_get_child 		= "select * from tbl_filters where `filt_type` = '".$cat_id."'";				
-							$result_get_child 	= mysqli_query($db_con,$sql_get_child) or die(mysqli_error($db_con));
-							$num_rows_get_child = mysqli_num_rows($result_get_child);											
-							if($num_rows_get_child != 0)
-							{
-								while($row_get_child = mysqli_fetch_array($result_get_child))					
-								{
-									$sql_update_child_cat = "UPDATE `tbl_filters` SET `filt_status`= '".$cat_status."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$row_get_child['filt_id']."' ";						
-									$result_update_child_cat = mysqli_query($db_con,$sql_update_child_cat) or die(mysqli_error($db_con));
-									if($result_update_child_cat)
-									{
-										$change_flag = 1;
-									}
-									else
-									{
-										$change_flag = 0;
-										$response_array = array("Success"=>"fail","resp"=>"Sub-Filters ".$row_get_child['filt_name']."Not Updated");
-									}																				
-								}							
-							}
-							else
-							{
-								$change_flag = 1;
-								$response_array = array("Success"=>"fail","resp"=>"Filters Does Not Exist");								
-							}
-							if($change_flag == 1)
-							{
-								$sql_update_parent_cat = "UPDATE `tbl_filters` SET `filt_status`= '".$cat_status."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";
-								$result_update_parent_cat = mysqli_query($db_con,$sql_update_parent_cat) or die(mysqli_error($db_con));
-								if($result_update_parent_cat)
-								{
-									$change_flag = 1;
-								}
-								else
-								{
-									$change_flag = 0;									
-									$response_array = array("Success"=>"fail","resp"=>"Filters Not Updated");								
-								}																								
-							}
-							else
-							{
-								$change_flag = 0;
-								$response_array = array("Success"=>"fail","resp"=>"Filters Not Updated");																							
-							}												
-						}
-					}
-					else
-					{
-						$change_flag = 0;						
-						$response_array = array("Success"=>"fail","resp"=>"Filters Type :".$rows_get_self_data['filt_type']);
-					}
-				}
-				if($rows_get_self_data['filt_type'] != "parent" && $rows_get_self_data['filt_sub_child'] == "child")
-				{
-					if($rows_get_self_data['filt_type'] == "parent" && $rows_get_self_data['filt_sub_child'] != $filt_sub_child)
-					{
-					}
-					else
-					{
-					}
-				}
-				elseif($rows_get_self_data['filt_type'] != "parent")
-				{
-					if($rows_get_self_data['filt_type'] != $cat_parent)
-					{
-						$sql_update_child_cat = "UPDATE `tbl_filters` SET `filt_status`= '".$cat_status."',`filt_type`= '".$cat_parent."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";
-						$result_update_child_cat = mysqli_query($db_con,$sql_update_child_cat) or die(mysqli_error($db_con));
-						if($result_update_child_cat)
-						{
-							$change_flag = 1;
-						}
-						else
-						{
-							$change_flag = 0;
-							$response_array = array("Success"=>"fail","resp"=>"Filters not Updated :".$cat_id);					
-						}						
-					}
-					elseif($rows_get_self_data['cat_type'] == $cat_parent)
-					{
-						$sql_get_child_parent_data	= "SELECT * from tbl_filters where filt_id = '".$cat_parent."' ";
-						$result_get_child_parent_data = mysqli_query($db_con,$sql_get_child_parent_data) or die(mysqli_error($db_con));
-						$row_get_child_parent_data 	= mysqli_fetch_array($result_get_child_parent_data);
-						$num_rows_get_child_parent_data = mysqli_num_rows($result_get_child_parent_data);	
-						if($num_rows_get_child_parent_data != 0)
-						{
-							$sql_update_child_cat = "UPDATE `tbl_filters` SET `filt_type`= '".$row_get_child_parent_data['filt_id']."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";						
-							$result_update_child_cat = mysqli_query($db_con,$sql_update_child_cat) or die(mysqli_error($db_con));
-							if($result_update_child_cat)
-							{
-								$change_flag = 1;
-							}
-							else
-							{
-								$change_flag = 0;
-								$response_array = array("Success"=>"fail","resp"=>"Filters not Updated :".$cat_id);					
-							}
-							if($row_get_child_parent_data['filt_status'] != 0)																				
-							{
-								$sql_update_child_cat = "UPDATE `tbl_filters` SET `filt_status`= '".$cat_status."',`filt_type`= '".$row_get_child_parent_data['filt_id']."',`filt_modified`='".$datetime."',`filt_modifiedby`='".$uid."' WHERE `filt_id` = '".$cat_id."' ";						
-								$result_update_child_cat = mysqli_query($db_con,$sql_update_child_cat) or die(mysqli_error($db_con));
-								if($result_update_child_cat)
-								{
-									$change_flag = 1;
-								}
-								else
-								{
-									$change_flag = 0;
-									$response_array = array("Success"=>"fail","resp"=>"Filters not Updated :".$cat_id);					
-								}								
-							}
-							else
-							{
-								$change_flag = 0;
-								$response_array = array("Success"=>"fail","resp"=>"Filters not Updated :".$cat_id."Parent Inactive");									
-							}
-						}
-						else
-						{
-							$response_array = array("Success"=>"fail","resp"=>"Filters parent does not esit for :".$cat_parent);					
-						}									
-						
-					}
-				}
-				else
-				{
-					$change_flag = 0;					
-					$response_array = array("Success"=>"fail","resp"=>" Self Filters Type :".$rows_get_self_data['cat_type']);					
-				}
-			}
-			else
-			{
-				$change_flag = 0;				
-				$response_array = array("Success"=>"fail","resp"=>"Filters Not Updated");
-			}			*/			
-			$parent_list	= array();
-			$levels_data_1 = explode("*",$levels_data);			
-			foreach($levels_data_1 as $levels_cmbn_id)
-			{			
-				$levels_data_in_bracket = explode(":",$levels_cmbn_id);					
-				$parent_id	= trim(str_replace("(","",$levels_data_in_bracket[0]));
-				if($parent_id != "")
-				{
-					array_push($parent_list,$parent_id);
-				}
-				$child_id	= (str_replace(")","",$levels_data_in_bracket[1]));
-				$sql_check_exists 		= " SELECT * FROM `tbl_filter_level` WHERE `filterlevel_filt_child_id` =  '".$cat_id."' and filterlevel_level_parent_id = '".$parent_id."' and filterlevel_filt_parent_id = '".$cat_parent."' ";
-				$result_check_exists 	= mysqli_query($db_con,$sql_check_exists) or die(mysqli_error($db_con));
-				$num_rows_check_exists 	= mysqli_num_rows($result_check_exists);
-				if($num_rows_check_exists == 0)
-				{
-					if(trim($parent_id) != "" && trim($child_id) != "")
-					{
-						$sql_add_filt_level = " INSERT INTO `tbl_filter_level`(`filterlevel_filt_parent_id`,`filterlevel_filt_child_id`, `filterlevel_level_parent_id`, `filterlevel_level_child_id`,";
-						$sql_add_filt_level .= " `filterlevel_created_by`, `filterlevel_created`) VALUES ('".$cat_parent."','".$cat_id."','".$parent_id."','".$child_id."','".$uid."','".$datetime."') ";
-						$result_add_filt_level = mysqli_query($db_con,$sql_add_filt_level) or die(mysqli_error($db_con));
-						if($result_add_filt_level)
-						{
-							$response_array = array("Success"=>"Success","resp"=>"Data Inserted Successfully");
-						}	
-						else
-						{
-							$response_array = array("Success"=>"Success","resp"=>"Data Inserted but level not inserted");							
-						}
-					}
-				}
-				else
-				{
-					if(trim($parent_id) != "" && trim($child_id) != "")
-					{
-						//$row_check_exists 	= mysqli_fetch_array($result_check_exists);
-						//if($row_check_exists['filterlevel_level_child_id'] == $child_id)
-						{
 							
-						}
-						//else
-						{
-							$sql_add_filt_level = " UPDATE `tbl_filter_level` SET `filterlevel_level_child_id`= '".$child_id."',`filterlevel_modified`='".$datetime."',`filterlevel_modified_by`= '".$uid."' ";
-							$sql_add_filt_level .= " where `filterlevel_filt_child_id` =  '".$cat_id."' and filterlevel_level_parent_id = '".$parent_id."' and filterlevel_filt_parent_id = '".$cat_parent."' ";
-							$result_add_filt_level = mysqli_query($db_con,$sql_add_filt_level) or die(mysqli_error($db_con));
-							if($result_add_filt_level)
-							{
-								$response_array = array("Success"=>"Success","resp"=>"Data Inserted Successfully");
-							}	
-							else
-							{
-								$response_array = array("Success"=>"Success","resp"=>"Data Inserted but level not inserted");							
-							}
-						}
-					}
-				}									
-			}
-			if(sizeof($parent_list) != 0)
-			{
-				$sql_delete_old 	= " DELETE FROM `tbl_filter_level` WHERE `filterlevel_level_parent_id` NOT IN (".implode(",",$parent_list).") and filterlevel_filt_child_id = '".$cat_id."' and filterlevel_filt_parent_id = '".$cat_parent."' ";
-				$result_delete_old 	= mysqli_query($db_con,$sql_delete_old) or die(mysqli_error($db_con));
-				if($result_delete_old)
-				{
-					
-				}
-				else
-				{
-					
-				}
-			}		
+			$parent_list	= array();
 		}		
 		else
 		{
