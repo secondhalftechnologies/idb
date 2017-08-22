@@ -11,7 +11,7 @@ RewriteRule index$ index.php [NC,L]
 RewriteRule error-404$ error.php [NC,L]
 RewriteRule page-profile$ page-userprofile.php [NC,L]
 
-RewriteRule ^page-login$ authentication.php [NC,L]
+RewriteRule ^page-login$ page-login.php [NC,L]
 RewriteRule ^page-register$ authentication.php [NC,L]
 
 # C (chained with next rule)

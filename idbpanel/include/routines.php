@@ -364,7 +364,7 @@ function year_month_date($ymd)
 }
 function logoutUser()
 {
-	$_SESSION['panel_user'] = array();
+	session_destroy(); 
 	header("Location: ".$BaseFolder);
 	exit(0);		
 }

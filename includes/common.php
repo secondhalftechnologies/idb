@@ -1,8 +1,10 @@
 <?php
 
 include('db_con.php');
+$json 				= file_get_contents('php://input'); // get json request
+$obj 				= json_decode($json); // general object which converts json request to php object
 
-
+////////////////==Start : Registration Satish:21082017================//////
 if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 {
 	$response_array      = array();
@@ -120,4 +122,72 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 		quit('Mobile Number or Email already registered...!');
 	}
 }
+////////////////==End : Registration Satish:21082017================//////
+
+////////////////==Start : Login Satish:21082017================//////
+if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user login
+{
+	$cust_email 		 = trim(mysqli_real_escape_string($db_con,$obj->txt_email));
+	$cust_password_login = trim($obj->txt_password);
+	$cli_browser_info	 = trim(mysqli_real_escape_string($db_con,$obj->cli_browser_info));
+	$cli_ip_address 	 = trim(mysqli_real_escape_string($db_con,$obj->cli_ip_address));	
+	
+	if($cust_email == "" || $cust_password_login == "" )
+	{
+		quit("Please Provide Email and Password.");
+	}
+	else
+	{
+		$sql_get_user_login 	= "SELECT * FROM `tbl_customer` WHERE `cust_email` like '".$cust_email."' ";
+		$result_get_user_login	= mysqli_query($db_con,$sql_get_user_login) or die(mysqli_error($db_con));
+		$num_rows_get_user_login= mysqli_num_rows($result_get_user_login);
+		//
+		if($num_rows_get_user_login == 1)
+		{
+			$row_get_user_login			= mysqli_fetch_array($result_get_user_login);
+			/* data base password */
+			$cust_password_db_login		= trim($row_get_user_login['cust_password']);
+			/* data base password */
+			/* database salt*/
+			$cust_salt_value_db_login	= trim($row_get_user_login['cust_salt']);
+			/* database salt*/
+			/*md5(old pwd + salt )*/
+			$cust_password_user_login	= trim(md5($cust_salt_value_db_login.$cust_password_login));
+			/*md5(old pwd + salt )*/	
+			
+			if($cust_password_user_login == $cust_password_db_login)
+			{
+				$cust_id				= $row_get_user_login['cust_id'];
+				
+				$data['cli_custid']       = $cust_id;	
+				$data['cli_browser_info'] = $cli_browser_info;	
+				$data['cli_ip_address']   = $cli_ip_address;	
+				$data['cli_created']      = $datetime;	
+				
+				insert('tbl_customer_login_info',$data);		
+				
+				$cust_mobile_status	= $row_get_user_login['cust_mobilestatus'];
+				
+				$_SESSION['front_panel'] = $row_get_user_login;
+				quit('Success',1);
+				if($cust_mobile_status != 1)
+				{
+					//quit('Mobile Number not Verified..');
+				}
+				
+				quit('Success',1);
+			}				
+			else
+			{
+				quit("Incorrect Login Details.");
+			}
+		}
+		else
+		{
+			quit('Incorrect Login Details.');
+		}
+	}
+}
+////////////////==End : Login Satish:21082017================//////
+
 ?>

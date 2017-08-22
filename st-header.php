@@ -67,8 +67,30 @@
 			                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dollar (US)</a></li>
 			                    </ul>
 			                </li>
-			                <li><a href="authentication.html">Register</a></li>
-			                <li><a href="authentication.html">Login</a></li>
+                            <?php
+							
+							    if(isset($_SESSION['front_panel']))
+								{?>
+                                
+                                 <li><a href="page-logout.php"><?php echo $_SESSION['front_panel']['cust_name'] ?></a></li>                    <?php
+								 
+									if(checkExist('tbl_cadmin_users',array('email'=>$_SESSION['front_panel']['cust_email'])))
+									{?>
+										<li><a target="_blank" href="idbpanel/page-redirect.php">Admin Panel</a></li>
+							  <?php }
+									 
+									?>
+			                
+						  <?php }
+								else
+								{
+							    ?>     
+                                    <li><a href="authentication.html">Register</a></li>
+                                    <li><a href="authentication.html">Login</a></li>
+                               <?php
+							    }
+							
+							   ?>
 			            </ul>
 			        </div><!-- /.col -->
 			    </div><!-- /.container -->

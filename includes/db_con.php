@@ -842,6 +842,41 @@ function update($table, $variables = array(), $where,$not_where_array=array(),$a
 	}
 }
 
+
+function checkExist($table ,$where)
+{
+	global $db_con;
+	if($table=="")
+	{
+		quit('Table name can not be blank');
+	}
+	$sql = " SELECT * FROM ". $table ;
+	$fields = array();
+	$values = array();
+	
+	
+	$sql .=" WHERE 1 = 1 ";
+	//==Check Where Condtions=====//
+	if(!empty($where))
+	{
+		foreach($where as $field1 => $value1 )
+		{   
+			$sql  .= " AND ".$field1 ."='".$value1."' ";
+		}
+	}
+	$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+	$num            = mysqli_num_rows($result);
+	if($num > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
 function quit($msg,$Success="")
 {
 	if($Success ==1)
@@ -856,5 +891,16 @@ function quit($msg,$Success="")
 	exit();
 }
 
-
+if(isset($_POST['logout']))
+{
+	header('Content-type: application/json');
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Methods: GET");
+	header("Access-Control-Allow-Methods: GET, OPTIONS");
+	header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding");
+	session_destroy();
+	$_SESSION['front_panel']= array();
+	echo 11;
+	return 11;
+}
 ?>
