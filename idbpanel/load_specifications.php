@@ -213,7 +213,7 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 			$data .= '<input type="hidden" id="error_id" value="'.$spec_id.'">';
 		}	                                                         		
 		$data .= '<div class="control-group">';
-		$data .= '<label for="tasktitel" class="control-label">Specification Name <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+		$data .= '<label for="tasktitel" class="control-label">Composition Name <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
 		$data .= '<input type="text" id="spec_name" name="spec_name" class="input-large" data-rule-required="true" ';
 		if($spec_id != "" && $req_type == "edit")
@@ -358,7 +358,7 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
     	  		$spec_data .= '<tr>';
          		$spec_data .= '<th>Sr. No.</th>';
 				$spec_data .= '<th>Id</th>';
-				$spec_data .= '<th>Specification Name</th>';
+				$spec_data .= '<th>Composition Name</th>';
 				$spec_data .= '<th>Created By</th>';
 				$spec_data .= '<th>Created</th>';
 				$spec_data .= '<th>Modified By</th>';

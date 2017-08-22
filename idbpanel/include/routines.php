@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("../includes/sess.php");
 error_reporting(1);
 ini_set('display_errors','on');
 ini_set('memory_limit','-1');
