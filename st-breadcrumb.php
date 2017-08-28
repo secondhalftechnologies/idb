@@ -1,10 +1,12 @@
+ 
+ 
  <div class="animate-dropdown">
                 <!-- ========================================= BREADCRUMB ========================================= -->
                 <div id="top-mega-nav">
                     <div class="container">
                         <nav>
                             <ul class="inline">
-                                <li class="dropdown le-dropdown">
+                              <!--  <li class="dropdown le-dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-list"></i> shop by department
                                     </a>
@@ -20,7 +22,7 @@
                                         <li><a href="#">Motherboard &amp; CPU Combos</a></li>
                                         <li><a href="#">Motherboard Components</a></li>
                                     </ul>
-                                </li>
+                                </li>-->
 
                                 <li class="breadcrumb-nav-holder">
                                     <ul>

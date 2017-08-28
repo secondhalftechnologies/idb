@@ -1,5 +1,5 @@
 <!-- ============================================================= TOP NAVIGATION ============================================================= -->
-			<nav class="top-bar animate-dropdown">
+			<!--<nav class="top-bar animate-dropdown">
 			    <div class="container">
 			        <div class="col-xs-12 col-sm-6 no-margin">
 			            <ul>
@@ -45,7 +45,7 @@
 			                    </ul>
 			                </li>
 			            </ul>
-			        </div><!-- /.col -->
+			        </div>
 
 			        <div class="col-xs-12 col-sm-6 no-margin">
 			            <ul class="right">
@@ -92,18 +92,18 @@
 							
 							   ?>
 			            </ul>
-			        </div><!-- /.col -->
-			    </div><!-- /.container -->
-			</nav><!-- /.top-bar -->
+			        </div>
+			    </div>
+			</nav>-->
 			<!-- ============================================================= TOP NAVIGATION : END ============================================================= -->
 
 			<!-- ============================================================= HEADER ============================================================= -->
 			<header>
-    			<div class="container no-padding">
+    			<div class="container-fluid no-padding">
 					<div class="col-xs-12 col-md-3 logo-holder">
 						<!-- ============================================================= LOGO ============================================================= -->
 						<div class="logo">
-							<a href="index-2.html">
+							<a href="index.html">
 							<!--<img alt="logo" src="assets/images/logo.svg" width="233" height="54"/>-->
 							<!--<object id="sp" type="image/svg+xml" data="assets/images/logo.svg" width="233" height="54"></object>-->
 								<svg width="233px" height="54px" viewBox="0 0 233 54" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -132,24 +132,22 @@
 					</div><!-- /.logo-holder -->
 
 					<div class="col-xs-12 col-md-6 top-search-holder no-margin">
-						<div class="contact-row">
+						<!--<div class="contact-row">
 							<div class="phone inline">
 								<i class="fa fa-phone"></i> (+800) 123 456 7890
 							</div>
 							<div class="contact inline">
 								<i class="fa fa-envelope"></i> contact@<span class="le-color">oursupport.com</span>
 							</div>
-						</div><!-- /.contact-row -->
+						</div>--><!-- /.contact-row -->
 						<!-- ============================================================= SEARCH AREA ============================================================= -->
 						<div class="search-area">
 						    <form>
 						        <div class="control-group">
-						            <input class="search-field" placeholder="Search for item" />
-
 						            <ul class="categories-filter animate-dropdown">
 						                <li class="dropdown">
 
-						                    <a class="dropdown-toggle"  data-toggle="dropdown" href="category-grid.html">all categories</a>
+						                    <a class="dropdown-toggle"  data-toggle="dropdown" href="category-grid.html">all</a>
 
 						                    <ul class="dropdown-menu" role="menu" >
 						                        <li role="presentation"><a role="menuitem" tabindex="-1" href="category-grid.html">laptops</a></li>
@@ -160,7 +158,7 @@
 						                    </ul>
 						                </li>
 						            </ul>
-
+                                    <input class="search-field" placeholder="Search for item" />
 						            <a class="search-button" href="#" ></a>
 
 						        </div>
@@ -269,6 +267,283 @@
 						<!-- ============================================================= SHOPPING CART DROPDOWN : END ============================================================= -->
 					</div><!-- /.top-cart-row -->
 				</div><!-- /.container -->
+                <div class="container-fluid no-padding">
+                  <div class="col-xs-12 col-md-3 no-padding">
+                  	<li class="dropdown le-dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-list"></i> shop by Category
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Computer Cases & Accessories</a></li>
+                                        <li><a href="#">CPUs, Processors</a></li>
+                                        <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+                                        <li><a href="#">Graphics, Video Cards</a></li>
+                                        <li><a href="#">Interface, Add-On Cards</a></li>
+                                        <li><a href="#">Laptop Replacement Parts</a></li>
+                                        <li><a href="#">Memory (RAM)</a></li>
+                                        <li><a href="#">Motherboards</a></li>
+                                        <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+                                        <li><a href="#">Motherboard Components</a></li>
+                                    </ul>
+                                </li>
+                  </div>
+                  <div class="col-xs-12 col-md-9 no-padding" style="  margin: 0 0 0 -44px;">
+                  <nav id="top-megamenu-nav" class="megamenu-vertical animate-dropdown">
+				    <div class="yamm navbar" style="min-height:0px;">
+				            <div class="navbar-header">
+				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mc-horizontal-menu-collapse">
+				                    <span class="sr-only">Toggle navigation</span>
+				                    <span class="icon-bar"></span>
+				                    <span class="icon-bar"></span>
+				                    <span class="icon-bar"></span>
+				                </button>
+				            </div><!-- /.navbar-header -->
+				            <div class="collapse navbar-collapse" id="mc-horizontal-menu-collapse">
+				                <ul class="nav navbar-nav">
+				                    <li class="dropdown">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Raw</a>
+				                        <ul class="dropdown-menu">
+				                            <li>
+												<div class="yamm-content">
+												    <div class="row">
+												       <div class="col-xs-12 col-sm-4">
+												            <h2>Laptops &amp; Notebooks</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound </a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Computers &amp; Laptops</h2>
+												            <ul>
+												                <li><a href="#">Computer Cases &amp; Accessories</a></li>
+												                <li><a href="#">CPUs, Processors</a></li>
+												                <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+												                <li><a href="#">Graphics, Video Cards</a></li>
+												                <li><a href="#">Interface, Add-On Cards</a></li>
+												                <li><a href="#">Laptop Replacement Parts</a></li>
+												                <li><a href="#">Memory (RAM)</a></li>
+												                <li><a href="#">Motherboards</a></li>
+												                <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+												                <li><a href="#">Motherboard Components &amp; Accs</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Dekstop Parts</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound</a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+												    </div><!-- /.row -->
+												</div><!-- /.yamm-content -->
+											</li>
+				                        </ul>
+				                    </li>
+
+				                    <li class="dropdown">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Formulation</a>
+				                        <ul class="dropdown-menu">
+				                            <li>
+												<div class="yamm-content">
+												    <div class="row">
+												       <div class="col-xs-12 col-sm-4">
+												            <h2>Laptops &amp; Notebooks</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound </a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Computers &amp; Laptops</h2>
+												            <ul>
+												                <li><a href="#">Computer Cases &amp; Accessories</a></li>
+												                <li><a href="#">CPUs, Processors</a></li>
+												                <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+												                <li><a href="#">Graphics, Video Cards</a></li>
+												                <li><a href="#">Interface, Add-On Cards</a></li>
+												                <li><a href="#">Laptop Replacement Parts</a></li>
+												                <li><a href="#">Memory (RAM)</a></li>
+												                <li><a href="#">Motherboards</a></li>
+												                <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+												                <li><a href="#">Motherboard Components &amp; Accs</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Dekstop Parts</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound</a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+												    </div><!-- /.row -->
+												</div><!-- /.yamm-content -->
+											</li>
+				                        </ul>
+				                    </li>
+
+				                    <li class="dropdown">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Surgical</a>
+				                        <ul class="dropdown-menu">
+				                            <li><a href="#">Computer Cases &amp; Accessories</a></li>
+				                            <li><a href="#">CPUs, Processors</a></li>
+				                            <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+				                            <li><a href="#">Graphics, Video Cards</a></li>
+				                            <li><a href="#">Interface, Add-On Cards</a></li>
+				                            <li><a href="#">Laptop Replacement Parts</a></li>
+				                            <li><a href="#">Memory (RAM)</a></li>
+				                            <li><a href="#">Motherboards</a></li>
+				                            <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+				                        </ul>
+				                    </li>
+
+				                    <li class="dropdown">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Games &amp; Consoles</a>
+				                        <ul class="dropdown-menu">
+				                            <li>
+												<div class="yamm-content">
+												    <div class="row">
+												       <div class="col-xs-12 col-sm-4">
+												            <h2>Laptops &amp; Notebooks</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound </a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Computers &amp; Laptops</h2>
+												            <ul>
+												                <li><a href="#">Computer Cases &amp; Accessories</a></li>
+												                <li><a href="#">CPUs, Processors</a></li>
+												                <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+												                <li><a href="#">Graphics, Video Cards</a></li>
+												                <li><a href="#">Interface, Add-On Cards</a></li>
+												                <li><a href="#">Laptop Replacement Parts</a></li>
+												                <li><a href="#">Memory (RAM)</a></li>
+												                <li><a href="#">Motherboards</a></li>
+												                <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+												                <li><a href="#">Motherboard Components &amp; Accs</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+
+												        <div class="col-xs-12 col-sm-4">
+												            <h2>Dekstop Parts</h2>
+												            <ul>
+												                <li><a href="#">Power Supplies Power</a></li>
+												                <li><a href="#">Power Supply Testers Sound</a></li>
+												                <li><a href="#">Sound Cards (Internal)</a></li>
+												                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+												                <li><a href="#">Other</a></li>
+												            </ul>
+												        </div><!-- /.col -->
+												    </div><!-- /.row -->
+												</div><!-- /.yamm-content -->
+											</li>
+				                        </ul>
+				                    </li>
+
+				                    <li class="dropdown yamm-fw">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Gadgets</a>
+				                        <ul class="dropdown-menu">
+				                            <li>
+				                                <div class="yamm-content">
+				                                    <div class="row">
+				                                       <div class="col-xs-12 col-sm-3">
+				                                            <h2>Laptops &amp; Notebooks</h2>
+				                                            <ul>
+				                                                <li><a href="#">Power Supplies Power</a></li>
+				                                                <li><a href="#">Power Supply Testers Sound </a></li>
+				                                                <li><a href="#">Sound Cards (Internal)</a></li>
+				                                                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+				                                                <li><a href="#">Other</a></li>
+				                                            </ul>
+				                                        </div><!-- /.col -->
+
+				                                        <div class="col-xs-12 col-sm-3">
+				                                            <h2>Computers &amp; Laptops</h2>
+				                                            <ul>
+				                                                <li><a href="#">Computer Cases &amp; Accessories</a></li>
+				                                                <li><a href="#">CPUs, Processors</a></li>
+				                                                <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
+				                                                <li><a href="#">Graphics, Video Cards</a></li>
+				                                                <li><a href="#">Interface, Add-On Cards</a></li>
+				                                                <li><a href="#">Laptop Replacement Parts</a></li>
+				                                                <li><a href="#">Memory (RAM)</a></li>
+				                                                <li><a href="#">Motherboards</a></li>
+				                                                <li><a href="#">Motherboard &amp; CPU Combos</a></li>
+				                                                <li><a href="#">Motherboard Components &amp; Accs</a></li>
+				                                            </ul>
+				                                        </div><!-- /.col -->
+
+				                                        <div class="col-xs-12 col-sm-3">
+				                                            <h2>Desktop Parts</h2>
+				                                            <ul>
+				                                                <li><a href="#">Power Supplies Power</a></li>
+				                                                <li><a href="#">Power Supply Testers Sound</a></li>
+				                                                <li><a href="#">Sound Cards (Internal)</a></li>
+				                                                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+				                                                <li><a href="#">Other</a></li>
+				                                            </ul>
+				                                        </div><!-- /.col -->
+
+				                                        <div class="col-xs-12 col-sm-3">
+				                                            <h2>Laptops &amp; Notebooks</h2>
+				                                            <ul>
+				                                                <li><a href="#">Power Supplies Power</a></li>
+				                                                <li><a href="#">Power Supply Testers Sound </a></li>
+				                                                <li><a href="#">Sound Cards (Internal)</a></li>
+				                                                <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+				                                                <li><a href="#">Other</a></li>
+				                                            </ul>
+				                                        </div><!-- /.col -->
+				                                    </div><!-- /.row -->
+				                                </div><!-- /.yamm-content -->
+				                            </li>
+				                        </ul>
+				                    </li><!-- /.yamm-fw -->
+
+				                    <li class="dropdown">
+				                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Phones &amp; Tablets</a>
+				                        <ul class="dropdown-menu">
+				                            <li><a href="#">Motherboard Components &amp; Accs</a></li>
+				                            <li><a href="#">Power Supplies Power</a></li>
+				                            <li><a href="#">Power Supply TestersSound </a></li>
+				                            <li><a href="#">Sound Cards (Internal)</a></li>
+				                            <li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>
+				                            <li><a href="#">Other</a></li>
+				                        </ul>
+				                    </li>
+
+				                    
+
+				                    
+				                </ul><!-- /.navbar-nav -->
+				            </div><!-- /.navbar-collapse -->
+				        </div>
+				</nav>
+                  </div>
+                </div>
+                
 
 			</header>
 			<!-- ============================================================= HEADER : END ============================================================= -->

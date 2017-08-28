@@ -53,6 +53,16 @@
                                     </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
+                                         <div class="payment-method-option">
+                                        <input class="le-radio" name="txt_user_type" value="buyer" type="radio"><i class="fake-box"></i>
+                                        <div class="radio-label bold ">Buyer</div>
+                                        
+                                         &nbsp;&nbsp;<input class="le-radio" name="txt_user_type" value="vendor" type="radio"><i class="fake-box"></i>
+                                        <div class="radio-label bold ">Vendor</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="field-row">
                                         <label for="name">Name</label>
                                         <input type="text" class="le-input" id="txt_name" name="txt_name">
                                     </div><!-- /.field-row -->
@@ -132,15 +142,7 @@
                                     
                                      
                                     
-                                    <div class="field-row">
-                                         <div class="payment-method-option">
-                                        <input class="le-radio" name="txt_user_type" value="buyer" type="radio"><i class="fake-box"></i>
-                                        <div class="radio-label bold ">Buyer</div>
-                                        
-                                         &nbsp;&nbsp;<input class="le-radio" name="txt_user_type" value="vendor" type="radio"><i class="fake-box"></i>
-                                        <div class="radio-label bold ">Vendor</div>
-                                        </div>
-                                    </div>
+                                    
                                     
                <!--///////////////////////////==End : Bank Details Satish:21082017===///////////////////////-->
                

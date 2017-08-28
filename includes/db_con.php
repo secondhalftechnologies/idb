@@ -29,10 +29,10 @@ else
 	$dbname = "kumar7_idb2017";
 	$dbuser = "kumar7_idb2017";
 	$dbpass = "Tech@!2017";	
-	$BaseFolder = "http://www.kumar7.com/idbpanel";	
+	$BaseFolder = "http://www.kumar7.com";	
 }
 $db_con = mysqli_connect("localhost",$dbuser, $dbpass) or die("Can not connect to Database");
-$cookie_name		= "planet_educate_cart"; // cookie will be set with this name on planet educate users when not logged in
+$cookie_name		= "indian_dava_cart"; // cookie will be set with this name on planet educate users when not logged in
 $min_order_value 	= 500; // this variable to set min order value for shipping charges
 $shipping_charge	= 49;
 if($db_con)

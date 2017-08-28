@@ -155,6 +155,7 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			$cust_password_user_login	= trim(md5($cust_salt_value_db_login.$cust_password_login));
 			/*md5(old pwd + salt )*/	
 			
+			//quit($cust_password_user_login);
 			if($cust_password_user_login == $cust_password_db_login)
 			{
 				$cust_id				= $row_get_user_login['cust_id'];
@@ -179,12 +180,12 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			}				
 			else
 			{
-				quit("Incorrect Login Details.");
+				quit("Incorrect Login Details.1");
 			}
 		}
 		else
 		{
-			quit('Incorrect Login Details.');
+			quit('Incorrect Login Details.2');
 		}
 	}
 }
