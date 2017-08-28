@@ -4,7 +4,7 @@ include("include/routines.php");
 
 if(isset($_SESSION['front_panel']))
 {
-	$sql_check = " SELECT * FROM tbl_cadmin_users WHERE email ='".$_SESSION['front_panel']['cust_email']."' ";
+	$sql_check = " SELECT * FROM tbl_cadmin_users WHERE email ='".$_SESSION['front_panel']['cust_email']."'  AND status=1 ";
 	$res_check = mysqli_query($db_con,$sql_check) or die(mysqli_error($db_con));
 	echo $num_check = mysqli_num_rows($res_check);
 	if($num_check==1)

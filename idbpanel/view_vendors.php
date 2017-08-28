@@ -455,7 +455,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{							
-							//loadCustomersData();
+							loadCustomersData();
 							loading_hide();
 						} 
 						else

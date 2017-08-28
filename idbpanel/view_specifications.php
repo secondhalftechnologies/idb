@@ -39,7 +39,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec">                
 				<?php 
 				/* this function used to add navigation menu to the page*/ 
-				breadcrumbs($home_url,$home_name,'View Specification',$filename,$feature_name); 
+				breadcrumbs($home_url,$home_name,'View Compositions',$filename,$feature_name); 
 				/* this function used to add navigation menu to the page*/ 
 				?>          
                         <div class="row-fluid">
@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Specifications</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Composition</button>
   											<?php		
 										}
 									?>                                      
@@ -92,7 +92,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Excel Bulk Upload For Specification
+                                            Excel Bulk Upload For Composition
                                         </h3>
                                        
                                     </div> <!-- header title-->
@@ -124,7 +124,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Wrong Entries For Specification
+                                            Wrong Entries For Compositions
                                         </h3>
                                        
                                     </div> <!-- header title-->
@@ -158,7 +158,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_add_spec" style="display:none">                
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Add Specifications',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Add Composition',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>           
                     <div class="row-fluid">
@@ -167,7 +167,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Specifications
+                                            Add Composition
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
@@ -184,7 +184,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_edit_spec" style="display:none">   
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Edit Specifications',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Edit Composition',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>                                    
                     <div class="row-fluid">
@@ -193,7 +193,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Specifications
+                                            Edit Composition
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
@@ -210,7 +210,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				<div class="container-fluid" id="div_error_spec" style="display:none">   
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Edit Error Specifications',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Edit Error Composition',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>                                    
                     <div class="row-fluid">
@@ -219,7 +219,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Error Specifications
+                                            Edit Error Composition
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
@@ -236,7 +236,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec_details" style="display:none">                
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'View Specifications Details',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'View Composition Details',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>        
                     <div class="row-fluid">
@@ -245,7 +245,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Specification  Details
+                                            Compositions  Details
                                         </h3>
                                         <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>       
                                     </div> <!-- header title-->

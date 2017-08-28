@@ -157,6 +157,8 @@ if((isset($_REQUEST['update_req'])) == "1" && isset($_REQUEST['update_req']))
 	echo json_encode($response_array);		
 }
 
+
+
 if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_parts))
 {
 	$cust_id 		= mysqli_real_escape_string($db_con,$obj->cust_id);
@@ -332,9 +334,7 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 				$data .= '<input '.$disabled.' type="submit"  class="btn-success"  value="Update" />';
 				$data .= '</div>';	
 				$data .= '</div>';	
-			
 			}
-			
 			quit($data,1);
 		}
 	}
@@ -534,6 +534,8 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 	echo json_encode($response_array);	
 }
 
+
+
 if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 {
 	$vendor_id				= $obj->cust_id;
@@ -544,10 +546,80 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$sql_check_parent 		= "Select * from tbl_vendor where `vendor_id` = '".$vendor_id."' ";
 	$result_check_parent 	= mysqli_query($db_con,$sql_check_parent) or die(mysqli_error($db_con));
 	$row_check_parent 		= mysqli_fetch_array($result_check_parent);
+	$data['email']          = $row_check_parent['vendor_email'];
 	
 	if($curr_status==1)
-	{
+	{   ///////////////////////////////////////////////////////////////////////////
+		///=========Start Insertion For Panel Login Satish 24082017==============//
+		$sql_check_user = " SELECT * FROM tbl_cadmin_users WHERE email like '".$row_check_parent['vendor_email']."'";
+		$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
+		$num_check_user = mysqli_num_rows($res_check_user);
+		if($num_check_user==0)
+		{
+			$data['fullname']         = $row_check_parent['vendor_name'];
+			$data['userid']           = $row_check_parent['vendor_email'];
+			$data['email_status']     = $row_check_parent['vendor_emailstatus'];
+			$data['mobile_num']       = $row_check_parent['vendor_mobile'];
+			$data['sms_status']       = $row_check_parent['vendor_mobilestatus'];
+			$data['password']         = $row_check_parent['vendor_password'];
+			$data['salt_value']       = $row_check_parent['vendor_salt'];
+			$data['utype']      	  = 2;
+			/*
+			$data['state']     	      = $row_check_parent['vendor_name'];
+			$data['city']             = $row_check_parent['vendor_email'];
+			*/
+			$data['tbl_users_owner']  = 1;
+			$data['created']          = $datetime;
+			$data['created_by']       = $uid;
+			$data['status']           = 1;
+			insert('tbl_cadmin_users',$data);
+		}
+		else
+		{
+			update('tbl_cadmin_users',array('status'=>$curr_status),$data);
+		}
+		///=========End Insertion For Panel Lgin Satish 24082017==============//
+		////////////////////////////////////////////////////////////////////////
 		
+		
+		
+		
+		//////////////////////////////////////////////////////////////////////////
+		///=========Start Insertion For Buyer Login Satish 24082017==============//
+		$cdata['cust_vendorid']        =$row_check_parent['vendor_id'];
+		$sql_check_user  = " SELECT * FROM tbl_customer   ";
+		$sql_check_user .= " WHERE cust_email like '".$row_check_parent['vendor_email']."' ";
+		$sql_check_user .= "        or cust_vendorid='".$cdata['cust_vendorid']."' ";
+		$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
+		$num_check_user = mysqli_num_rows($res_check_user);
+		
+		if($num_check_user==0)
+		{
+			$cdata['cust_name']         = $row_check_parent['vendor_name'];
+			$cdata['cust_email']        = $row_check_parent['vendor_email'];
+			$cdata['cust_emailstatus']  = $row_check_parent['vendor_emailstatus'];
+			$cdata['cust_mobile']       = $row_check_parent['vendor_mobile'];
+			$cdata['cust_mobilestatus'] = $row_check_parent['vendor_mobilestatus'];
+			$cdata['cust_password']     = $row_check_parent['vendor_password'];
+			$cdata['cust_salt']         = $row_check_parent['vendor_salt'];
+			$cdata['cust_pan']          = $row_check_parent['vendor_pan'];
+			$cdata['cust_gst']      	= $row_check_parent['vendor_gst'];
+			$cdata['cust_status']       = $curr_status;
+			$cdata['cust_created']      = $datetime;
+			$cdata['cust_created_by']   = $uid;
+			
+			insert('tbl_customer',$cdata);
+		}
+		else
+		{
+			update('tbl_customer',array('cust_status'=>$curr_status),array('cust_vendorid'=>$row_check_parent['vendor_id']));
+		}
+		///=========End Insertion For Buyer Lgin Satish 24082017==============//
+		////////////////////////////////////////////////////////////////////////
+	}
+	else
+	{
+		update('tbl_customer',array('cust_status'=>$curr_status),array('cust_vendorid'=>$row_check_parent['vendor_id']));
 	}
 	
 	$sql_update_status 		= " UPDATE `tbl_vendor` SET `vendor_status`= '".$curr_status."' ,`vendor_modified` = '".$datetime."' ,`vendor_modified_by` = '".$uid."' WHERE `vendor_id`='".$vendor_id."' ";
@@ -564,9 +636,9 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 
 if((isset($obj->delete_customers)) == "1" && isset($obj->delete_customers))
 {
-	$response_array = array();		
-	$ar_customers_id 		= $obj->customers;
-	$del_flag 		= 0; 
+	$response_array     = array();		
+	$ar_customers_id 	= $obj->customers;
+	$del_flag 		    = 0; 
 	foreach($ar_customers_id as $cust_id)	
 	{
 		$sql_delete_customers		= " DELETE FROM `tbl_customer` WHERE `cust_id` = '".$cust_id."' ";

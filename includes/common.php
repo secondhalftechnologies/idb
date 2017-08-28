@@ -145,6 +145,10 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 		if($num_rows_get_user_login == 1)
 		{
 			$row_get_user_login			= mysqli_fetch_array($result_get_user_login);
+			if($row_get_user_login['cust_status']==0)
+			{
+				quit('Something went wrong...!');
+			}
 			/* data base password */
 			$cust_password_db_login		= trim($row_get_user_login['cust_password']);
 			/* data base password */
