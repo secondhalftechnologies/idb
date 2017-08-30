@@ -1,8 +1,10 @@
+
 <?php
 	include("includes/db_con.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+	
 
 <head>
 		<!-- Meta -->
@@ -45,14 +47,12 @@
                                             <option value="doctors">Doctors</option>
                                             <option value="hospitals">Hospitals</option>
                                             <option value="wholesalers">Wholesalers/Retailers</option>
+                                            
                                         </select>
-                                    </div><!-- User Group -->
+                                        
+                                    </div><!-- /.field-row -->
                                     
-                                    <!-- ===================================================================================== -->
-                                    <!-- START : Comment this part according to the requirments [dn by Prathamesh on 28082017] -->
-                                    <!-- ===================================================================================== -->
-                                    
-                                    <!--<div class="field-row">
+                                    <div class="field-row">
                                          <div class="payment-method-option">
                                         <input class="le-radio" name="txt_user_type" value="buyer" type="radio"><i class="fake-box"></i>
                                         <div class="radio-label bold ">Buyer</div>
@@ -60,40 +60,131 @@
                                          &nbsp;&nbsp;<input class="le-radio" name="txt_user_type" value="vendor" type="radio"><i class="fake-box"></i>
                                         <div class="radio-label bold ">Vendor</div>
                                         </div>
-                                    </div>-->
-                                    
-                                    <!-- ===================================================================================== -->
-                                    <!-- END : Comment this part according to the requirments [dn by Prathamesh on 28082017] -->
-                                    <!-- ===================================================================================== -->
+                                    </div>
                                     
                                     <div class="field-row">
-                                        <label for="name">Contact Persone</label>
+                                        <label for="name">Name</label>
                                         <input type="text" class="le-input" id="txt_name" name="txt_name">
-                                    </div><!-- Contact Persone -->
+                                    </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
                                         <label>Email</label>
                                         <input type="text" class="le-input" id="txt_email" name="txt_email">
-                                    </div><!-- Email -->
+                                    </div><!-- /.field-row -->
 									
                                     <div class="field-row">
                                         <label>Mobile</label>
                                         <input type="text" class="le-input" id="txt_mobile" name="txt_mobile">
-                                    </div><!-- Mobile -->
+                                    </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
                                         <label>Password</label>
                                         <input type="password" class="le-input" id="txt_password" name="txt_password">
-                                    </div><!-- Password -->
+                                    </div><!-- /.field-row -->
                                     
                                     <div class="field-row">
                                         <label>Confirm Password</label>
                                         <input type="password" class="le-input" id="txt_cpassword" name="txt_cpassword">
-                                    </div><!-- Confirm Password -->
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>License number</label>
+                                        <input type="text" class="le-input" id="txt_license_num" name="txt_license_num">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>License Document</label>
+                                        <input type="file" class="le-input" id="file_license_pdf" name="file_license_pdf" required>
+                                    </div><!-- /.field-row -->
+                                    
+                                     <div class="field-row">
+                                        <label>License Expiry Date</label>
+                                        <input type="text" class="le-input" id="txt_expiry_date" name="txt_expiry_date" required>
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>PAN number</label>
+                                        <input type="text" class="le-input" id="txt_pan_num" name="txt_pan_num">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>GST number</label>
+                                        <input type="text" class="le-input" id="txt_gst_num" name="txt_gst_num">
+                                    </div><!-- /.field-row -->
+                <!--///////////////////////////==Start : Bank Details Satish:21082017===///////////////////////-->                     
+                                    <h2 class="bordered">Bank Details</h2>
+                                    
+                                    <div class="field-row">
+                                        <label>Bank Name</label>
+                                        <input type="text" class="le-input" id="txt_bank_name" name="txt_bank_name">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="le-input" id="txt_branch_name" name="txt_branch_name">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Account Number</label>
+                                        <input type="text" class="le-input" id="txt_acc_num" name="txt_acc_num">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>IFSC</label>
+                                        <input type="text" class="le-input" id="txt_ifsc" name="txt_ifsc">
+                                    </div><!-- /.field-row -->
+                                    
+                                    
+                                    <div class="field-row">
+                                        <label>MICR</label>
+                                        <input type="text" class="le-input" id="txt_micr" name="txt_micr">
+                                    </div><!-- /.field-row -->
+                                    
+                                     
+                                    
+                                    
+                                    
+               <!--///////////////////////////==End : Bank Details Satish:21082017===///////////////////////-->
+               
+                <!--///////////////////////////==Start : Address Details Satish:21082017===///////////////////////-->                     
+                                    <h2 class="bordered">Address Details</h2>
+                                    
+                                    <div class="field-row">
+                                        <label>Country</label>
+                                        <select class="le-input" name="txt_country">
+                                        	<option value="">Select Country</option>
+                                            <option value="India">India</option>
+                                        </select>
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>State</label>
+                                        <select class="le-input" name="txt_state">
+                                        	<option value="">Select State</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Gujrat">Gujrat</option>
+                                        </select>
+                                    </div><!-- /.field-row -->
+                                    
+                                    
+                                    <div class="field-row">
+                                        <label>Pincode</label>
+                                        <input type="text" class="le-input" id="txt_pincode" name="txt_pincode">
+                                    </div><!-- /.field-row -->
+                                    
+                                    <div class="field-row">
+                                        <label>Area</label>
+                                        <textarea type="text" class="le-input" id="txt_area" name="txt_area"></textarea>
+                                    </div><!-- /.field-row -->
+                                    
+              <!--///////////////////////////==Address : Bank Details Satish:21082017===///////////////////////-->
+               
+               
                                     
                                     <div class="buttons-holder">
                                         <button type="submit" id="btn_submit" name="btn_submit" class="le-button huge" value="frm-submit" >Sign Up</button>
-                                    </div><!-- Submit -->
+                                    </div><!-- /.buttons-holder -->
                                 </form>
 
                                 <h2 class="semi-bold">Sign up today and you'll be able to :</h2>
