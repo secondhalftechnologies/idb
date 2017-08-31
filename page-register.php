@@ -45,8 +45,12 @@
                                         	<option value="">Select Usergroup</option>
                                             <option value="doctors">Doctors</option>
                                             <option value="hospitals">Hospitals</option>
+<<<<<<< HEAD
                                             <option value="wholesalers">Chemist/Retailers</option>
                                             <option value="trader">Trader</option>
+=======
+                                            <option value="wholesalers">Wholesalers/Retailers</option>
+>>>>>>> 09f5ca767dcd275196876a9bbacc28f705f81988
                                         </select>
                                     </div><!-- User Group -->
                                     
