@@ -9,6 +9,7 @@ Rewritebase /idb/
 
 RewriteRule index$ index.php [NC,L]
 RewriteRule error-404$ error.php [NC,L]
+RewriteRule success$ page-reg-success.php [NC,L]
 RewriteRule page-profile$ page-userprofile.php [NC,L]
 
 RewriteRule ^page-login$ page-login.php [NC,L]

@@ -625,6 +625,8 @@ function footerData()
 	    <script src="assets/js/wow.min.js"></script>
         <script src="assets/js/buttons.js"></script>
 		<script src="assets/js/scripts.js"></script>
+        
+        <script src="../js/jquery.validate.min.js"></script>
 
 		<!-- For demo purposes – can be removed on production -->
 		<script src="switchstylesheet/switchstylesheet.js"></script>
