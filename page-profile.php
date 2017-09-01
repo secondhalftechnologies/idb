@@ -276,18 +276,21 @@
                   Basic Information
                   <form role="form" class="register-form cf-style-1" id="frm_profile" name="frm_profile">
                     <div class="field-row">
-                      <label for="name">Contact Persone's Name</label>
-                      <input type="text" class="le-input" id="txt_name" name="txt_name">
+                      <label class="col-md-3 col-xs-12" for="name">Contact Persone's Name</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_name" name="txt_name">
+                      <div class="clearfix"></div>
                     </div><!-- Contact Persone's Name -->
 
                     <div class="field-row">
-                      <label for="name">Email</label>
-                      <input type="text" class="le-input" id="txt_email" name="txt_email">
+                      <label class="col-md-3 col-xs-12" for="name">Email</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_email" name="txt_email">
+                      <div class="clearfix"></div>
                     </div><!-- Email -->
 
                     <div class="field-row">
-                      <label for="name">Mobile</label>
-                      <input type="text" class="le-input" id="txt_mobile" name="txt_mobile">
+                      <label class="col-md-3 col-xs-12" for="name">Mobile</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile">
+                      <div class="clearfix"></div>
                     </div><!-- Mobile -->                    
 
                     <div class="buttons-holder">
