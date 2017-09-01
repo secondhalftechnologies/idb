@@ -17,6 +17,8 @@
 	    <title>Register - Indian Dava Bazar</title>
 
 		<?php include('st-head.php'); ?>
+        
+        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" title="selectbox">
 	</head>
 
 	<body>
@@ -40,61 +42,46 @@
                                 <form role="form" class="register-form cf-style-1" id="frm_register" name="frm_register">
                                     <input type="hidden" id="txt_user_type" name="txt_user_type" value="">
                                     <div class="field-row">
-                                        <label>Usergroup</label>
-                                        <select class="le-input" name="txt_usergrp">
+                                        <label class="col-md-3  col-xs-12">Usergroup</label>
+                                        <select class="col-md-9 col-xs-12 selectpicker" name="txt_usergrp">
                                         	<option value="">Select Usergroup</option>
                                             <option value="doctors">Doctors</option>
                                             <option value="hospitals">Hospitals</option>
-<<<<<<< HEAD
                                             <option value="wholesalers">Chemist/Retailers</option>
                                             <option value="trader">Trader</option>
-=======
-                                            <option value="wholesalers">Wholesalers/Retailers</option>
->>>>>>> 09f5ca767dcd275196876a9bbacc28f705f81988
                                         </select>
+                                        <div class="clearfix"></div>
                                     </div><!-- User Group -->
                                     
-                                    <!-- ===================================================================================== -->
-                                    <!-- START : Comment this part according to the requirments [dn by Prathamesh on 28082017] -->
-                                    <!-- ===================================================================================== -->
-                                    
-                                    <!--<div class="field-row">
-                                         <div class="payment-method-option">
-                                        <input class="le-radio" name="txt_user_type" value="buyer" type="radio"><i class="fake-box"></i>
-                                        <div class="radio-label bold ">Buyer</div>
-                                        
-                                         &nbsp;&nbsp;<input class="le-radio" name="txt_user_type" value="vendor" type="radio"><i class="fake-box"></i>
-                                        <div class="radio-label bold ">Vendor</div>
-                                        </div>
-                                    </div>-->
-                                    
-                                    <!-- ===================================================================================== -->
-                                    <!-- END : Comment this part according to the requirments [dn by Prathamesh on 28082017] -->
-                                    <!-- ===================================================================================== -->
-                                    
                                     <div class="field-row">
-                                        <label for="name">Contact Persone</label>
-                                        <input type="text" class="le-input" id="txt_name" name="txt_name">
+                                    	
+                                        <label class="col-md-3  col-xs-12" for="name">Contact Person</label>
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name">
+                                        <div class="clearfix"></div>
                                     </div><!-- Contact Persone -->
                                     
                                     <div class="field-row">
-                                        <label>Email</label>
-                                        <input type="text" class="le-input" id="txt_email" name="txt_email">
+                                        <label class="col-md-3  col-xs-12">Email</label>
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email">
+                                    	<div class="clearfix"></div>
                                     </div><!-- Email -->
 									
                                     <div class="field-row">
-                                        <label>Mobile</label>
-                                        <input type="text" class="le-input" id="txt_mobile" name="txt_mobile">
+                                        <label class="col-md-3 col-xs-12">Mobile</label>
+                                        <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile">
+                                    	<div class="clearfix"></div>
                                     </div><!-- Mobile -->
                                     
                                     <div class="field-row">
-                                        <label>Password</label>
-                                        <input type="password" class="le-input" id="txt_password" name="txt_password">
+                                        <label class="col-md-3  col-xs-12">Password</label>
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password">
+                                    	<div class="clearfix"></div>
                                     </div><!-- Password -->
                                     
                                     <div class="field-row">
-                                        <label>Confirm Password</label>
-                                        <input type="password" class="le-input" id="txt_cpassword" name="txt_cpassword">
+                                        <label class="col-md-3 col-xs-12" >Confirm Password</label>
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword">
+                                    	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
                                     
                                     <div class="buttons-holder">
@@ -111,8 +98,7 @@
                                 </ul>
 
                             </section><!-- /.register -->
-
-                        </div>
+						</div>
                         
                         <div class="col-md-2">
                            &nbsp;
@@ -127,6 +113,8 @@
        	</div><!-- /.wrapper -->
 
 		<?php include('st-javascript.php'); ?>
+        
+        <script src="assets/js/bootstrap-select.min.js"></script>
         
         <script type="text/javascript">
 		$(document).ready(function() 

@@ -500,7 +500,7 @@ label.error {
   background-color: #ececec;
   border: none;
   color: #3D3D3D;
-  width: 100%;
+ /* width: 100%;*/
   padding: 5px;
   transition: 0.3s ease; }
   .le-input:focus, .inline-input input:focus, .le-input:hover, .inline-input input:hover {
@@ -2580,7 +2580,7 @@ header {
   font-size: 14px;
   color: #3D3D3D; }
 .field-row input {
-  width: 100%; }
+  /*width: 100%;*/ }
 
 .comment-item {
   margin-bottom: 20px; }
