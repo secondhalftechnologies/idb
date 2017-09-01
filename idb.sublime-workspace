@@ -247,6 +247,15 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/D/wamp/www/apps/govinena/oldbackup/version1/SLN4FV1_1/AndroidManifest.xml",
+			"settings":
+			{
+				"buffer_size": 7090,
+				"encoding": "Hexadecimal",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -502,8 +511,37 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/D/wamp/www/apps/govinena/oldbackup/version1/SLN4FV1_1/AndroidManifest.xml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7090,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
