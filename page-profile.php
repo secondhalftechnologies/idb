@@ -1,5 +1,58 @@
 <?php
 	include("includes/db_con.php");
+
+  // ============================================================================
+  // START : Hard Coding For testing the session Session not yet defined 
+  // Dn By Prathamesh on 01 Aug 2017
+  // ============================================================================
+  // $logged_user_type  = $_SESSION[]['cust_type'];
+
+  $org_details      = '';
+  $logged_user_type = 'doctors';
+  // $logged_user_type = 'hospitals';
+  // $logged_user_type = 'wholesalers';
+  // $logged_user_type = 'trader';
+
+  if($logged_user_type == 'doctors')
+  {
+    $contact_persone  = 'Doctor\'s';
+    $org_menu_title   = 'Clinic';
+    $org_details      = 'Clinic';
+    $var_urDoc        = 'Doctor Practice';
+  }
+  elseif ($logged_user_type == 'hospitals') 
+  {
+    $contact_persone  = 'Hospital\'s';
+    $org_menu_title   = 'Hospital';
+    $org_details      = 'Hospital';
+    $var_urDoc        = 'Hospital';
+    $var_urDoc1       = 'Renewal 1';
+    $var_urDoc2       = 'Renewal 2';
+  }
+  elseif ($logged_user_type == 'wholesalers')
+  {
+    $contact_persone  = 'Chemist\'s';
+    $org_menu_title   = 'Chemist';
+    $org_details      = 'Chemist';
+    $var_urDoc        = '20 B';
+    $var_urDoc1       = '21 B';
+    $var_urDoc2       = '21 C';
+  }
+  else
+  {
+    $contact_persone  = 'Contact Persone\'s';
+    $org_menu_title   = 'Company';
+    $org_details      = 'Company';
+    $var_urDoc        = '20 B';
+    $var_urDoc1       = '21 B';
+    $var_urDoc2       = '21 C';
+  }
+
+  // ============================================================================
+  // END : Hard Coding For testing the session Session not yet defined 
+  // Dn By Prathamesh on 01 Aug 2017
+  // ============================================================================
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +70,7 @@
             <title>Register - Indian Dava Bazar</title>
 
 		<?php include('st-head.php'); ?>
+    <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" title="selectbox">
 		<style type="text/css">
       .cls_mainmenu
       {
@@ -152,7 +206,7 @@
       ::-webkit-scrollbar {
         display: none;
       }
-		</style>
+    </style>
 	</head>
 
 	<body>
@@ -175,7 +229,7 @@
                           <a  href="javascript:void(0);" onclick="showDiv('profile');">Profile</a>
                         </li>
                         <li>
-                          <a  href="javascript:void(0);" onclick="showDiv('comp_info');">Company Information</a>
+                          <a  href="javascript:void(0);" onclick="showDiv('comp_info');"><?php echo $org_menu_title; ?> Information</a>
                         </li>
                         <li>
                           <a  href="javascript:void(0);" onclick="showDiv('urDoc');"> Upload Required Documents </a>
@@ -276,7 +330,7 @@
                   Basic Information
                   <form role="form" class="register-form cf-style-1" id="frm_profile" name="frm_profile">
                     <div class="field-row">
-                      <label class="col-md-3 col-xs-12" for="name">Contact Persone's Name</label>
+                      <label class="col-md-3 col-xs-12" for="name"><?php echo $contact_persone; ?> Name</label>
                       <input type="text" class="le-input col-md-9 col-xs-12" id="txt_name" name="txt_name">
                       <div class="clearfix"></div>
                     </div><!-- Contact Persone's Name -->
@@ -302,18 +356,155 @@
                   Company Details
                   <form role="form" class="register-form cf-style-1" id="frm_comp_info" name="frm_comp_info">
                     <div class="field-row">
-                      <label for="name">Company Name</label>
-                      <input type="text" class="le-input" id="txt_comp_name" name="txt_comp_name">
+                      <label class="col-md-3 col-xs-12" for="name"><?php echo $org_details ?> Name</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_comp_name" name="txt_comp_name">
+                      <div class="clearfix"></div>
                     </div><!-- Company Name -->
 
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Primary Email</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_email" name="txt_pri_email">
+                      <label class="col-md-3 col-xs-12" for="name">Secondary Email</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_sec_email" name="txt_sec_email">
+                      <div class="clearfix"></div>
+                    </div><!-- Primary and Secondary Email -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Primary Phone Number</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone">
+                      <label class="col-md-3 col-xs-12" for="name">Alternate Phone Number</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone">
+                      <div class="clearfix"></div>
+                    </div><!-- Primary and Secondary Phone Number -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Website</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_website" name="txt_website">
+                      <div class="clearfix"></div>
+                    </div><!-- Website -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Beneficiary Name</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_beneficiary_name" name="txt_beneficiary_name">
+                      <div class="clearfix"></div>
+                    </div><!-- Beneficiary Name -->
                     
+                    Address Details
+                    
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Billing Address</label>
+                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address"></textarea>
+                      <div class="clearfix"></div>
+                    </div><!-- Billing Address -->
+
+                    <div class="field-row">
+                      <label class="col-md-3  col-xs-12">Billing State</label>
+                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state">
+                        <option value="">Select Billing State</option>
+                        <option value="">State 1</option>
+                        <option value="">State 2</option>
+                        <option value="">State 3</option>
+                      </select>
+                      <div class="clearfix"></div>
+                    </div><!-- Billing State -->
+
+                    <div class="field-row">
+                      <label class="col-md-3  col-xs-12">Billing City</label>
+                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city">
+                        <option value="">Select Billing City</option>
+                        <option value="">City 1</option>
+                        <option value="">City 2</option>
+                        <option value="">City 3</option>
+                      </select>
+                    </div><!-- Billing City -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Billing Pincode</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode">
+                      <div class="clearfix"></div>
+                    </div><!-- Billing Pincode -->
+
+                    <div style="margin-left:1%;">
+                      <input id="address_check" name="address_check" onclick="same_as_bill();" class="css-checkbox" value="CHK" type="checkbox">
+                      <label for="address_check" class="css-label" style="margin:12px;font-size:15px;">Same As Billing Details</label>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Shipping Address</label>
+                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address"></textarea>
+                      <div class="clearfix"></div>
+                    </div><!-- Shipping Address -->
+
+                    <div class="field-row">
+                      <label class="col-md-3  col-xs-12">Shipping State</label>
+                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state">
+                        <option value="">Select Billing State</option>
+                        <option value="">State 1</option>
+                        <option value="">State 2</option>
+                        <option value="">State 3</option>
+                      </select>
+                      <div class="clearfix"></div>
+                    </div><!-- Shipping State -->
+
+                    <div class="field-row">
+                      <label class="col-md-3  col-xs-12">Shipping City</label>
+                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city">
+                        <option value="">Select Billing City</option>
+                        <option value="">City 1</option>
+                        <option value="">City 2</option>
+                        <option value="">City 3</option>
+                      </select>
+                    </div><!-- Shipping City -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Shipping Pincode</label>
+                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode">
+                      <div class="clearfix"></div>
+                    </div><!-- Shipping Pincode -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Description</label>
+                      <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description"></textarea>
+                      <div class="clearfix"></div>
+                    </div><!-- Shipping Address -->
+
+                    <div class="buttons-holder">
+                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                    </div><!-- Submit -->
                   </form>
                 </div>
                 <div class="cls_mainmenu" id="urDoc">
                   Upload Required Documents
+                  <form role="form" class="register-form cf-style-1" id="frm_urDoc" name="frm_comp_info">
+                    <?php
+                    if($logged_user_type == 'doctors')
+                    {
+                      ?>
+                      
+                      <?php
+                    }
+                    elseif ($logged_user_type == 'hospitals') 
+                    {
+                      ?>
+
+                      <?php
+                    }
+                    elseif ($logged_user_type == 'wholesalers' || $logged_user_type == 'trader') 
+                    {
+                      ?>
+
+                      <?php
+                    }
+                    ?>
+                    <div class="buttons-holder">
+                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                    </div><!-- Submit -->
+                  </form>
                 </div>
                 <div class="cls_mainmenu" id="pan_info">
                   PAN Information
+
                 </div>
                 <div class="cls_mainmenu" id="gst_info">
                   GST Information
@@ -329,12 +520,13 @@
 			<?php include('st-footer.php'); ?>
 		</div>
       <?php include('st-javascript.php'); ?>
+      <script src="assets/js/bootstrap-select.min.js"></script>
       <script type="text/javascript">
-            function showDiv(divId)
-            {
-                  $('.cls_mainmenu').removeClass('active');
-                  $('#'+divId).addClass('active');
-            }
+        function showDiv(divId)
+        {
+              $('.cls_mainmenu').removeClass('active');
+              $('#'+divId).addClass('active');
+        }
       </script>
   </body>
 </html>
