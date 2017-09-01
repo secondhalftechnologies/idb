@@ -9,11 +9,11 @@ Rewritebase /idb/
 
 RewriteRule index$ index.php [NC,L]
 RewriteRule error-404$ error.php [NC,L]
-RewriteRule success$ page-reg-success.php [NC,L]
-RewriteRule page-profile$ page-userprofile.php [NC,L]
+RewriteRule success$ page-success.php [NC,L]
+RewriteRule page-profile$ page-profile.php [NC,L]
 
 RewriteRule ^page-login$ page-login.php [NC,L]
-RewriteRule ^page-register$ authentication.php [NC,L]
+RewriteRule ^page-register$ page-register.php [NC,L]
 
 # C (chained with next rule)
 # CO=cookie (set specified cookie)

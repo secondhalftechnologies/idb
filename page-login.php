@@ -28,11 +28,11 @@
                 <div class="container">
                     <div class="row">
 
-						<div class="col-md-2">
+						<div class="col-md-3">
                         &nbsp;
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <section class="section sign-in inner-right-xs">
                                 <h2 class="bordered">Sign In</h2>
                                 <p>Hello, Welcome to your account</p>
@@ -76,7 +76,7 @@
                             </section><!-- /.sign-in -->
                         </div><!-- /.col -->
                         
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                         &nbsp;
                         </div>
 

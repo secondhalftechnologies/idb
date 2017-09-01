@@ -1,5 +1,6 @@
 <?php
 	include("includes/db_con.php");
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,11 +33,11 @@
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                            &nbsp;
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <section class="section register">
                                 <h2 class="bordered">Create New Account</h2>
                                 <form role="form" class="register-form cf-style-1" id="frm_register" name="frm_register">
@@ -100,7 +101,7 @@
                             </section><!-- /.register -->
 						</div>
                         
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                            &nbsp;
                         </div>
 
@@ -119,7 +120,10 @@
         <script type="text/javascript">
 		$(document).ready(function() 
 		{ 	
+			var baseurll = '<?php echo $BaseFolder; ?>';
+			
 		
+			
 			$("select[name = txt_usergrp]").change(function()
 			{
 				var selected = $("option:selected", this).text().trim();
@@ -169,18 +173,18 @@
 							{  
 							  	alert(data.resp);
 							  	//location.reload();
-							  	location.href	= "http://localhost/idb/success";
+							  	location.href	= baseurll + "/success";
 							} 
 							else 
 							{   
 							   	alert(data.resp);
-							   	location.href	= "http://localhost/idb/error-404";
+							   	location.href	= baseurll + "/error-404";
 							}
 						},
 						error: function (request, status, error) 
 						{
 							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');						
+							$('#error_model').modal('toggle');	
 							loading_hide();
 						},
 						complete: function()
