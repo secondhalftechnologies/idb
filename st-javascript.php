@@ -52,7 +52,6 @@
 		<script src="assets/js/jquery-1.10.2.min.js"></script>
 		<script src="assets/js/jquery-migrate-1.2.1.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="http://maps.google.com/maps/api/js?key=AIzaSyDDZJO4F0d17RnFoi1F2qtw4wn6Wcaqxao&amp;sensor=false&amp;language=en"></script>		<script src="assets/js/gmap3.min.js"></script>
 		<script src="assets/js/bootstrap-hover-dropdown.min.js"></script>
 		<script src="assets/js/owl.carousel.min.js"></script>
 		<script src="assets/js/css_browser_selector.min.js"></script>
@@ -63,7 +62,6 @@
 	    <script src="assets/js/jquery.prettyPhoto.min.js"></script>
 	    <script src="assets/js/jquery.customSelect.min.js"></script>
 	    <script src="assets/js/wow.min.js"></script>
-		<script src="assets/js/buttons.js"></script>
 		<script src="assets/js/scripts.js"></script>
 
 		<!-- For demo purposes – can be removed on production -->
