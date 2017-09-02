@@ -39,7 +39,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec">
 				<?php
 				/* this function used to add navigation menu to the page*/
-				breadcrumbs($home_url,$home_name,'View Compositions',$filename,$feature_name);
+				breadcrumbs($home_url,$home_name,'View Form Factors',$filename,$feature_name);
 				/* this function used to add navigation menu to the page*/
 				?>
                         <div class="row-fluid">
@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Composition</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Form Factors</button>
   											<?php
 										}
 									?>
@@ -193,7 +193,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Composition
+                                            Edit Form Factor
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
@@ -449,14 +449,17 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							if(req_type == "add")
 							{
 								$("#div_add_spec_part").html(data.resp);
+                                $('#ddl_parent_cat').select2();
 							}
 							else if(req_type == "edit")
 							{
 								$("#div_edit_spec_part").html(data.resp);
+                                $('#ddl_parent_cat').select2();
 							}
 							else if(req_type == "error")
 							{
 								$("#div_error_spec_part").html(data.resp);
+                                $('#ddl_parent_cat').select2();
 							}
 							else if(req_type == "view")
 							{
@@ -656,7 +659,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							if(data.Success == "Success")
 							{
 								//$("#req_resp").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								window.location.assign("view_Form Factorss.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -684,20 +687,23 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			if ($('#frm_spec_add').valid())
 			{
 				loading_show();
-				var spec_name 		= $.trim($("#spec_name").val());
+                var ddl_parent_cat  = $('#ddl_parent_cat').val();
+				var spec_name 		= $.trim($("#form_factor_name").val());
 				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_add').val()
-				if(spec_name == "" && spec_status == "")
-				{
-					$("#model_body").html('<span style="style="color:#F00;">Please fill details</span>');
-					$('#error_model').modal('toggle');
-					loading_hide();
-				}
-				else
-				{
-					e.preventDefault();
-					$('input[name="reg_submit_add"]').attr('disabled', 'true');
-					var sendInfo 	= {"spec_name":spec_name,"spec_status":spec_status,"insert_req":"1"};
-					var spec_insert = JSON.stringify(sendInfo);
+
+                if(spec_name == "" && spec_status == "")
+                {
+                    $("#model_body").html('<span style="style="color:#F00;">Please fill details</span>');
+                    $('#error_model').modal('toggle');
+                    loading_hide();
+                }
+                else
+                {
+                    e.preventDefault();
+                    $('input[name="reg_submit_add"]').attr('disabled', 'true');
+                    var sendInfo    = {"spec_name":spec_name,"spec_status":spec_status, "ddl_parent_cat":ddl_parent_cat,"insert_req":"1"};
+                    var spec_insert = JSON.stringify(sendInfo);
+                    //alert(ddl_parent_cat+'<=>'+spec_name+'<=>'+spec_status);
 					$.ajax({
 						url: "load_form_factor.php",
 						type: "POST",
@@ -705,10 +711,10 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 						contentType: "application/json; charset=utf-8",
 						success: function(response)
 						{
-							data = JSON.parse(response);
-							if(data.Success == "Success")
+                            data = JSON.parse(response);
+                            if(data.Success == "Success")
 							{
-								window.location.assign("view_Form Factorss.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_form_factors.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -737,7 +743,8 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			if ($('#frm_spec_edit').valid())
 			{
 				var spec_id			= $.trim($('#spec_id').val());
-				var spec_name 		= $.trim($('input[name="spec_name"]').val());
+                var ddl_parent_cat  = $('#ddl_parent_cat').val();
+				var spec_name 		= $.trim($('input[name="form_factor_name"]').val());
 				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_edit').val()
 				if(parent == 1)
 				{
@@ -747,7 +754,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{
 					e.preventDefault();
 					$('input[name="reg_submit"]').attr('disabled', 'true');
-					var sendInfo 		= {"spec_id":spec_id,"spec_name":spec_name,"spec_status":spec_status,"update_req":"1"};
+					var sendInfo 		= {"spec_id":spec_id,"spec_name":spec_name,"spec_status":spec_status,"ddl_parent_cat":ddl_parent_cat,"update_req":"1"};
 					var spec_insert = JSON.stringify(sendInfo);
 					$.ajax({
 						url: "load_form_factor.php?",
@@ -759,7 +766,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success")
 							{
-								window.location.assign("view_Form Factorss.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -813,7 +820,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success")
 							{
-								window.location.assign("view_Form Factorss.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
