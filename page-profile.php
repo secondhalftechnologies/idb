@@ -1,6 +1,6 @@
 <?php
-	// include("includes/db_con.php");
-
+	 include("includes/db_con.php");
+   include("includes/city-state-country-helper.php");
   // ============================================================================
   // START : Hard Coding For testing the session Session not yet defined 
   // Dn By Prathamesh on 01 Aug 2017
@@ -383,12 +383,6 @@
                       <div class="clearfix"></div>
                     </div><!-- Website -->
 
-                    <div class="field-row">
-                      <label class="col-md-3 col-xs-12" for="name">Beneficiary Name</label>
-                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_beneficiary_name" name="txt_beneficiary_name">
-                      <div class="clearfix"></div>
-                    </div><!-- Beneficiary Name -->
-                    
                     Address Details
                     
                     <div class="field-row">
@@ -400,10 +394,18 @@
                     <div class="field-row">
                       <label class="col-md-3  col-xs-12">Billing State</label>
                       <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state">
-                        <option value="">Select Billing State</option>
-                        <option value="">State 1</option>
-                        <option value="">State 2</option>
-                        <option value="">State 3</option>
+                        <?php
+                        // =======================================================
+                        // start : query for getting the all active states only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        // send city id from session if state id is already exist in the database
+                        echo getActiveStates(IN-MM);
+                        // =======================================================
+                        // end : query for getting the all active state only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        ?>
                       </select>
                       <div class="clearfix"></div>
                     </div><!-- Billing State -->
@@ -411,10 +413,18 @@
                     <div class="field-row">
                       <label class="col-md-3  col-xs-12">Billing City</label>
                       <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city">
-                        <option value="">Select Billing City</option>
-                        <option value="">City 1</option>
-                        <option value="">City 2</option>
-                        <option value="">City 3</option>
+                        <?php
+                        // =======================================================
+                        // start : query for getting the all active cities only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        // send city id from session if city id is already exist in the database
+                        echo getActiveCities(805);
+                        // =======================================================
+                        // end : query for getting the all active cities only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        ?>
                       </select>
                     </div><!-- Billing City -->
 
@@ -439,10 +449,18 @@
                     <div class="field-row">
                       <label class="col-md-3  col-xs-12">Shipping State</label>
                       <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state">
-                        <option value="">Select Billing State</option>
-                        <option value="">State 1</option>
-                        <option value="">State 2</option>
-                        <option value="">State 3</option>
+                        <?php
+                        // =======================================================
+                        // start : query for getting the all active states only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        // send city id from session if state id is already exist in the database
+                        echo getActiveStates(IN-MM);
+                        // =======================================================
+                        // end : query for getting the all active state only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        ?>
                       </select>
                       <div class="clearfix"></div>
                     </div><!-- Shipping State -->
@@ -450,10 +468,18 @@
                     <div class="field-row">
                       <label class="col-md-3  col-xs-12">Shipping City</label>
                       <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city">
-                        <option value="">Select Billing City</option>
-                        <option value="">City 1</option>
-                        <option value="">City 2</option>
-                        <option value="">City 3</option>
+                        <?php
+                        // =======================================================
+                        // start : query for getting the all active cities only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        // send city id from session if city id is already exist in the database
+                        echo getActiveCities(805);
+                        // =======================================================
+                        // end : query for getting the all active cities only
+                        // dn by prathamesh on 04092017
+                        // =======================================================
+                        ?>
                       </select>
                     </div><!-- Shipping City -->
 
@@ -611,10 +637,13 @@
         $('#frm_profile').on('submit', function(e) 
         {
           e.preventDefault();
+          if($('#frm_profile').valid())
+          {
+
+          }
         });
 
         $('#frm_comp_info').on('submit', function(e) 
-        
         {
           e.preventDefault();
         });
@@ -638,12 +667,6 @@
         {
           e.preventDefault();
         });
-
-        
-        
-        
-        
-        
       </script>
   </body>
 </html>
