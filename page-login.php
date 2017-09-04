@@ -59,20 +59,12 @@
                                 <form role="form" class="login-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_login" name="frm_login" >
                                     <div class="field-row control-group controls">
                                         <label>Email</label>
-<<<<<<< HEAD
-                                        <input type="email" name="txt_email" id="txt_email" class="le-input col-md-12  col-xs-12" required>
-=======
                                         <input autocomplete="off" type="email" name="txt_email" id="txt_email" class=" le-input col-md-12 col-xs-12"  data-rule-required="true">
->>>>>>> b01c1fc1fe81214414950c6fbee756f428879108
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row control-group controls">
-                                    <label>Password</label>
-<<<<<<< HEAD
-                                    <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12  col-xs-12"required>
-=======
-                                    <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12 col-xs-12" data-rule-required="true">
->>>>>>> b01c1fc1fe81214414950c6fbee756f428879108
+                                        <label>Password</label>
+                                        <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12 col-xs-12" data-rule-required="true">
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row clearfix">

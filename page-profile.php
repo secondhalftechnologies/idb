@@ -1,5 +1,5 @@
 <?php
-	include("includes/db_con.php");
+	// include("includes/db_con.php");
 
   // ============================================================================
   // START : Hard Coding For testing the session Session not yet defined 

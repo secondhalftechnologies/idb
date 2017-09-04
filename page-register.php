@@ -1,6 +1,5 @@
 <?php
 	include("includes/db_con.php");
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,17 +17,15 @@
 	    <title>Register - Indian Dava Bazar</title>
 
 		<?php include('st-head.php'); ?>
-        
+        <?php include('st-validator-css.php'); ?>
         <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" title="selectbox">
 	</head>
 
 	<body>
 		<div class="wrapper">
 		<?php  include('st-header.php'); ?>
-        
         <?php  include('st-breadcrumb.php'); ?>
-        
-            <!-- ========================================= MAIN ========================================= -->
+        	<!-- ========================================= MAIN ========================================= -->
             <main id="authentication" class="inner-bottom-md">
                 <div class="container">
                     <div class="row">
@@ -40,11 +37,11 @@
                         <div class="col-md-6">
                             <section class="section register">
                                 <h2 class="bordered">Create New Account</h2>
-                                <form role="form" class="register-form cf-style-1" id="frm_register" name="frm_register">
+                                <form role="form" class="register-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_register" name="frm_register">
                                     <input type="hidden" id="txt_user_type" name="txt_user_type" value="">
-                                    <div class="field-row">
-                                        <label class="col-md-3  col-xs-12">Usergroup</label>
-                                        <select class="col-md-9 col-xs-12 selectpicker" name="txt_usergrp">
+                                    <div class="field-row control-group controls">
+                                        <label class="col-md-3  col-xs-12">Usergroup<span style="color:#F00">*</span></label>
+                                        <select class="col-md-9 col-xs-12 selectpicker" name="txt_usergrp" data-rule-required="true">
                                         	<option value="">Select Usergroup</option>
                                             <option value="doctors">Doctors</option>
                                             <option value="hospitals">Hospitals</option>
@@ -54,34 +51,34 @@
                                         <div class="clearfix"></div>
                                     </div><!-- User Group -->
                                     
-                                    <div class="field-row">
+                                    <div class="field-row  control-group controls">
                                     	
                                         <label class="col-md-3  col-xs-12" for="name">Contact Person<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name">
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name" data-rule-required="true">
                                         <div class="clearfix"></div>
                                     </div><!-- Contact Persone -->
                                     
-                                    <div class="field-row">
+                                    <div class="field-row  control-group controls">
                                         <label class="col-md-3  col-xs-12">Email<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email">
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email" data-rule-required="true" data-rule-email="true">
                                     	<div class="clearfix"></div>
                                     </div><!-- Email -->
 									
-                                    <div class="field-row">
+                                    <div class="field-row  control-group controls">
                                         <label class="col-md-3 col-xs-12">Mobile<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile">
+                                        <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile" data-rule-required="true">
                                     	<div class="clearfix"></div>
                                     </div><!-- Mobile -->
                                     
-                                    <div class="field-row">
+                                    <div class="field-row control-group controls">
                                         <label class="col-md-3  col-xs-12">Password<span style="color:#F00">*</span></label>
-                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password">
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password" data-rule-required="true">
                                     	<div class="clearfix"></div>
                                     </div><!-- Password -->
                                     
-                                    <div class="field-row">
+                                    <div class="field-row control-group controls">
                                         <label class="col-md-3 col-xs-12" >Confirm Password<span style="color:#F00">*</span></label>
-                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword">
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword" data-rule-required="true">
                                     	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
                                     
@@ -109,95 +106,86 @@
                 </div><!-- /.container -->
             </main><!-- /.authentication -->
             <!-- ========================================= MAIN : END ========================================= -->
-
-       	<?php include('st-footer.php'); ?>
+		<?php include('st-footer.php'); ?>
        	</div><!-- /.wrapper -->
 
 		<?php include('st-javascript.php'); ?>
-        
+        <?php include('st-validator-js.php'); ?>
         <script src="assets/js/bootstrap-select.min.js"></script>
-        
         <script type="text/javascript">
-		
-		var baseurll = '<?php echo $BaseFolder; ?>';
-		
-		$(document).ready(function() 
-		{ 	
-			$("select[name = txt_usergrp]").change(function()
+			var baseurll = '<?php echo $BaseFolder; ?>';
+			
+			$(document).ready(function() 
+			{ 	
+				$("select[name = txt_usergrp]").change(function()
+				{
+					var selected = $("option:selected", this).text().trim();
+					
+					if(selected == "Doctors")
+					{
+						$("label[for = name]").html('Doctor\'s Name<span style="color:#F00">*</span>');
+						$('#txt_user_type').val('buyer');
+					}
+					else if(selected == "Hospitals")
+					{
+						$("label[for = name]").html('Hospital\'s Name<span style="color:#F00">*</span>');
+						$('#txt_user_type').val('buyer');  
+					} 
+					else if(selected == "Chemist/Retailers")
+					{
+						$("label[for = name]").html('Chemist\'s Name<span style="color:#F00">*</span>'); 
+						$('#txt_user_type').val('buyer');
+					}
+					else if(selected == "Trader")
+					{
+						$("label[for = name]").html('Trader\'s Name<span style="color:#F00">*</span>');	
+						$('#txt_user_type').val('vendor');
+					}
+	
+				});
+			})
+			
+			$('#frm_register').on('submit', function(e) 
 			{
-				var selected = $("option:selected", this).text().trim();
-				
-				if(selected == "Doctors")
+				e.preventDefault();
+				if ($('#frm_register').valid())
 				{
-					$("label[for = name]").html('Doctor\'s Name<span style="color:#F00">*</span>');
-					$('#txt_user_type').val('buyer');
-				}
-				else if(selected == "Hospitals")
-				{
-					$("label[for = name]").html('Hospital\'s Name<span style="color:#F00">*</span>');
-					$('#txt_user_type').val('buyer');  
-				} 
-				else if(selected == "Chemist/Retailers")
-				{
-					$("label[for = name]").html('Chemist\'s Name<span style="color:#F00">*</span>'); 
-					$('#txt_user_type').val('buyer');
-				}
-				else if(selected == "Trader")
-				{
-					$("label[for = name]").html('Trader\'s Name<span style="color:#F00">*</span>');	
-					$('#txt_user_type').val('vendor');
-				}
-
-		  	});
-		})
-		
-		
-		$('#frm_register').on('submit', function(e) 
-        {
-        	e.preventDefault();
-			if ($('#frm_register').valid())
-			{
-				$.ajax({
-					url: "includes/common.php?",
-					type: "POST",
-					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-					contentType: false,       // The content type used when sending data to the server.
-					cache: false,             // To unable request pages to be cached
-					processData:false,        // To send DOMDocument or non processed data file it is set to false
-					async:true,						
-						success: function(response) 
-						{   data = JSON.parse(response);
-					        if(data.Success == "Success") 
-							{  
-							  	alert(baseurll);
-							  	//location.reload();
-							  	location.href	= baseurll + "/success";
-							} 
-							else 
-							{   
-							   	alert(data.resp);
-							   	location.href	= baseurll + "/error-404";
+					$.ajax({
+						url: "includes/common.php?",
+						type: "POST",
+						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+						contentType: false,       // The content type used when sending data to the server.
+						cache: false,             // To unable request pages to be cached
+						processData:false,        // To send DOMDocument or non processed data file it is set to false
+						async:true,						
+							success: function(response) 
+							{   data = JSON.parse(response);
+								if(data.Success == "Success") 
+								{  
+									//alert(baseurll);
+									//location.reload();
+									location.href	= baseurll + "/success";
+								} 
+								else 
+								{   
+									alert(data.resp);
+									location.href	= baseurll + "/error-404";
+								}
+							},
+							error: function (request, status, error) 
+							{
+								$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+								$('#error_model').modal('toggle');	
+								loading_hide();
+							},
+							complete: function()
+							{
+								//alert("complete");
+								loading_hide();
 							}
-						},
-						error: function (request, status, error) 
-						{
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');	
-							loading_hide();
-						},
-						complete: function()
-						{
-							//alert("complete");
-							loading_hide();
-						}
-				    });
-			}
-		});
-		
-
+						});
+				}
+			});
 		</script>
-
     </body>
-
 </html>
-
