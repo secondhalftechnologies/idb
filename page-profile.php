@@ -504,13 +504,93 @@
                 </div>
                 <div class="cls_mainmenu" id="pan_info">
                   PAN Information
+                  <form role="form" class="register-form cf-style-1" id="frm_pan_info" name="frm_pan_info" enctype="multipart/form-data" method="post">
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Pan Number</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no">
+                      <div class="clearfix"></div>
+                    </div><!-- Pan Number -->
 
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                      <input type="file" name="file_pan_image" id="file_pan_image">
+                      <input type="submit" value="Upload Image" name="submit">  
+                      <div class="clearfix"></div>
+                    </div><!-- Pan Image -->
+
+                    <div class="buttons-holder">
+                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                    </div><!-- Submit -->
+                  </form>
                 </div>
                 <div class="cls_mainmenu" id="gst_info">
                   GST Information
+                  <form role="form" class="register-form cf-style-1" id="frm_gst_info" name="frm_gst_info" enctype="multipart/form-data" method="post">
+                    
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">GST Number</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no">
+                      <div class="clearfix"></div>
+                    </div><!-- GST Number -->                    
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                      <input type="file" name="file_gst_image" id="file_gst_image">
+                      <input type="submit" value="Upload Image" name="submit">  
+                      <div class="clearfix"></div>
+                    </div><!-- GST Image -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                      <input type="file" name="file_gst_ack_image" id="file_gst_ack_image">
+                      <input type="submit" value="Upload Image" name="submit">  
+                      <div class="clearfix"></div>
+                    </div><!-- GST Ackg Image -->
+
+                    <div class="buttons-holder">
+                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                    </div><!-- Submit -->
+                  </form>
                 </div>
                 <div class="cls_mainmenu" id="bank_info">
                   Bank Information
+                  <form role="form" class="register-form cf-style-1" id="frm_bank_info" name="frm_bank_info" enctype="multipart/form-data" method="post">
+                    
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Bank Name</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
+                      <div class="clearfix"></div>
+                    </div><!-- Bank Name -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Bank Address</label>
+                      <textarea id="txt_bank_address" name="txt_bank_address"></textarea>
+                      <div class="clearfix"></div>
+                    </div><!-- Bank Address -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Bank Account Number</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
+                      <div class="clearfix"></div>
+                    </div><!-- Bank Account Number -->
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Bank IFSC Code</label>
+                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code">
+                      <div class="clearfix"></div>
+                    </div><!-- Bank IFSC CODE -->     
+
+                    <div class="field-row">
+                      <label class="col-md-3 col-xs-12" for="name">Bank Image</label>
+                      <input type="file" name="file_bank_image" id="file_bank_image">
+                      <input type="submit" value="Upload Image" name="submit">  
+                      <div class="clearfix"></div>
+                    </div><!-- GST Ackg Image -->
+
+                    <div class="buttons-holder">
+                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                    </div><!-- Submit -->               
+                  </form>
                 </div>
         			</div>
            </div>
@@ -527,6 +607,44 @@
               $('.cls_mainmenu').removeClass('active');
               $('#'+divId).addClass('active');
         }
+
+        $('#frm_profile').on('submit', function(e) 
+        {
+          e.preventDefault();
+        });
+
+        $('#frm_comp_info').on('submit', function(e) 
+        
+        {
+          e.preventDefault();
+        });
+
+        $('#frm_urDoc').on('submit', function(e) 
+        {
+          e.preventDefault();
+        });
+
+        $('#frm_pan_info').on('submit', function(e) 
+        {
+          e.preventDefault();
+        });
+
+        $('#frm_gst_info').on('submit', function(e) 
+        {
+          e.preventDefault();
+        });
+
+        $('#frm_bank_info').on('submit', function(e) 
+        {
+          e.preventDefault();
+        });
+
+        
+        
+        
+        
+        
       </script>
   </body>
 </html>
+
