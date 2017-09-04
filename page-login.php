@@ -16,6 +16,7 @@
 	    <title>Login - Indian Dava Bazar</title>
 
 		<?php include('st-head.php'); ?>
+        <?php include('st-validator-css.php'); ?>
 	</head>
 
 	<body>
@@ -47,16 +48,23 @@
                                         </div>
                                     </div>
                                 </div>-->
+                                
+                                <!--To Validate the form, 
+                                		---add 2 files (st-validator-css.php,st-validator-js.php)
+                                        ---In form element, Add class(form-horizontal form-bordered form-validate)
+                                        ---In input div element, Add class(control-group controls) 
+                                        ---In input element, data-rule-validation
+                                -->
 
-                                <form role="form" class="login-form cf-style-1" id="frm_login" name="frm_login">
-                                    <div class="field-row">
+                                <form role="form" class="login-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_login" name="frm_login" >
+                                    <div class="field-row control-group controls">
                                         <label>Email</label>
-                                        <input type="email" name="txt_email" id="txt_email" class="le-input" required>
+                                        <input autocomplete="off" type="email" name="txt_email" id="txt_email" class=" le-input col-md-12 col-xs-12"  data-rule-required="true">
                                     </div><!-- /.field-row -->
 
-                                    <div class="field-row">
+                                    <div class="field-row control-group controls">
                                     <label>Password</label>
-                                    <input type="password" name="txt_password" id="txt_password" class="le-input"required>
+                                    <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12 col-xs-12" data-rule-required="true">
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row clearfix">
@@ -68,8 +76,8 @@
                                         </span>
                                     </div>
 
-                                    <div class="buttons-holder">
-                                        <button type="submit" class="le-button huge">Secure Sign In</button>
+                                    <div class="buttons-holder form-actions">
+                                        <button id="Submit" name="Submit" type="submit" class="le-button huge">Secure Sign In</button>
                                     </div><!-- /.buttons-holder -->
                                 </form><!-- /.cf-style-1 -->
 
@@ -89,55 +97,59 @@
        	</div><!-- /.wrapper -->
 
 		<?php include('st-javascript.php'); ?>
-		<!-- For demo purposes – can be removed on production : End -->
+        <?php include('st-validator-js.php'); ?>
 		<script type="text/javascript">
         	$('#frm_login').on('submit', function(e) {
-			e.preventDefault();
-			var txt_email		= $('#txt_email').val();
-			var txt_password	= $('#txt_password').val();
-			var cli_browser_info	= navigator.userAgent;
-			var cli_ip_address		= "";
-			$.getJSON("http://jsonip.com/?callback=?", function (data) 
-			{
-				console.log(data);
-				cli_ip_address		= data.ip;
-			});	
-			
-			
-			var sendInfo 	= {"cli_browser_info":cli_browser_info,"cli_ip_address":cli_ip_address,"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
-			
-			var esn_edit	= JSON.stringify(sendInfo);				
-			$.ajax({
-				url: "includes/common.php",
-				type: "POST",
-				data: esn_edit,
-				contentType: "application/json; charset=utf-8",						
-				success: function(response) 
+				if($('#frm_login').valid())
 				{
+					e.preventDefault();
+					var txt_email		= $('#txt_email').val();
+					var txt_password	= $('#txt_password').val();
+					var cli_browser_info	= navigator.userAgent;
+					var cli_ip_address		= "";
+					$.getJSON("http://jsonip.com/?callback=?", function (data) 
+					{
+						console.log(data);
+						cli_ip_address		= data.ip;
+					});	
 					
-					data = JSON.parse(response);
-					alert(data);
-					if(data.Success == "Success") 
-					{
-						 window.location.href="index.php?";
-						return false;
-					} 
-					else 
-					{
-						alert(data.resp);
-					}
-				},
-				error: function (request, status, error) 
-				{
-					alert(request.responseText);
-				},
-				complete: function()
-				{
-					//loading_hide();	
-				}
-			});
-				
+					
+					var sendInfo 	= {"cli_browser_info":cli_browser_info,"cli_ip_address":cli_ip_address,"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
+					
+					var esn_edit	= JSON.stringify(sendInfo);				
+					$.ajax({
+						url: "includes/common.php",
+						type: "POST",
+						data: esn_edit,
+						contentType: "application/json; charset=utf-8",						
+						success: function(response) 
+						{
+							
+							data = JSON.parse(response);
+							alert(data);
+							if(data.Success == "Success") 
+							{
+								 window.location.href="index.php?";
+								return false;
+							} 
+							else 
+							{
+								alert(data.resp);
+							}
+						},
+						error: function (request, status, error) 
+						{
+							alert(request.responseText);
+						},
+						complete: function()
+						{
+							//loading_hide();	
+						}
+					});
+						
 			
+		
+				}
 		});
         </script>
     </body>
