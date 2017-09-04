@@ -8,9 +8,9 @@
   // $logged_user_type  = $_SESSION[]['cust_type'];
 
   $org_details      = '';
-  $logged_user_type = 'wholesalers';
+  $logged_user_type = 'doctors';
   // $logged_user_type = 'hospitals';
-  // $logged_user_type = 'wholesalers';
+  // $logged_user_type = 'chemist';
   // $logged_user_type = 'trader';
 
   if($logged_user_type == 'doctors')

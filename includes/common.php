@@ -14,7 +14,7 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 	{  
 		$type                = "cust_";
 		$table_name          = 'tbl_customer';
-		$data['	cust_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
+		$data['cust_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
 		//quit($table_name);
 	}
 	else
@@ -48,13 +48,31 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 		
 		//if(move_uploaded_file($_FILES['file_license_pdf']['tmp_name'],$dir))
 		//{
-			$res                          = insert($table_name,$data);
-			$cust_id 					  = mysqli_insert_id($db_con);
+			$cust_id                          			= insert($table_name,$data);
+			
+			// =====================================================================================================
+			// START : getting fields value for inserting into tbl_customer_login_info Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+			$data_login_details['cli_custid']			= $cust_id;
+			$data_login_details['cli_user_type']		= $data['cust_type'];
+			$data_login_details['cli_ip_address']		= get_client_ip();
+			$data_login_details['cli_browser_info']		= get_browser_info();
+			$data_login_details['cli_session_id']		= session_id();
+			$data_login_details['cli_session_status']	= '1';
+			$data_login_details['cli_created']			= $datetime;
+			
+			$cust_login_info_id                       	= insert('tbl_customer_login_info',$data_login_details);
+			// =====================================================================================================
+			// END : getting fields value for inserting into tbl_customer_login_info Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+			
+			
+			/*$cust_id 					  = mysqli_insert_id($db_con);*/
 			//$ldata['lic_custid']          = $cust_id;
 			//$bdata['bank_custid']         = $cust_id;
 			//$adata['add_custid']		  = $cust_id;
 			
-			if($res)
+			if($cust_id && $cust_login_info_id)
 			{
 				//$res     = insert('tbl_licenses',$ldata);
 				//$res     = insert('tbl_bank_details',$bdata);

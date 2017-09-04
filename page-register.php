@@ -56,31 +56,31 @@
                                     
                                     <div class="field-row">
                                     	
-                                        <label class="col-md-3  col-xs-12" for="name">Contact Person</label>
+                                        <label class="col-md-3  col-xs-12" for="name">Contact Person<span style="color:#F00">*</span></label>
                                         <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name">
                                         <div class="clearfix"></div>
                                     </div><!-- Contact Persone -->
                                     
                                     <div class="field-row">
-                                        <label class="col-md-3  col-xs-12">Email</label>
+                                        <label class="col-md-3  col-xs-12">Email<span style="color:#F00">*</span></label>
                                         <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email">
                                     	<div class="clearfix"></div>
                                     </div><!-- Email -->
 									
                                     <div class="field-row">
-                                        <label class="col-md-3 col-xs-12">Mobile</label>
+                                        <label class="col-md-3 col-xs-12">Mobile<span style="color:#F00">*</span></label>
                                         <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile">
                                     	<div class="clearfix"></div>
                                     </div><!-- Mobile -->
                                     
                                     <div class="field-row">
-                                        <label class="col-md-3  col-xs-12">Password</label>
+                                        <label class="col-md-3  col-xs-12">Password<span style="color:#F00">*</span></label>
                                         <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password">
                                     	<div class="clearfix"></div>
                                     </div><!-- Password -->
                                     
                                     <div class="field-row">
-                                        <label class="col-md-3 col-xs-12" >Confirm Password</label>
+                                        <label class="col-md-3 col-xs-12" >Confirm Password<span style="color:#F00">*</span></label>
                                         <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword">
                                     	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
@@ -118,34 +118,33 @@
         <script src="assets/js/bootstrap-select.min.js"></script>
         
         <script type="text/javascript">
+		
+		var baseurll = '<?php echo $BaseFolder; ?>';
+		
 		$(document).ready(function() 
 		{ 	
-			var baseurll = '<?php echo $BaseFolder; ?>';
-			
-		
-			
 			$("select[name = txt_usergrp]").change(function()
 			{
 				var selected = $("option:selected", this).text().trim();
 				
 				if(selected == "Doctors")
 				{
-					$("label[for = name]").text("Doctor's Name");
+					$("label[for = name]").html('Doctor\'s Name<span style="color:#F00">*</span>');
 					$('#txt_user_type').val('buyer');
 				}
 				else if(selected == "Hospitals")
 				{
-					$("label[for = name]").text("Hospital's Name");
+					$("label[for = name]").html('Hospital\'s Name<span style="color:#F00">*</span>');
 					$('#txt_user_type').val('buyer');  
 				} 
 				else if(selected == "Chemist/Retailers")
 				{
-					$("label[for = name]").text("Chemist's Name"); 
+					$("label[for = name]").html('Chemist\'s Name<span style="color:#F00">*</span>'); 
 					$('#txt_user_type').val('buyer');
 				}
 				else if(selected == "Trader")
 				{
-					$("label[for = name]").text("Trader's Name");	
+					$("label[for = name]").html('Trader\'s Name<span style="color:#F00">*</span>');	
 					$('#txt_user_type').val('vendor');
 				}
 
@@ -156,8 +155,8 @@
 		$('#frm_register').on('submit', function(e) 
         {
         	e.preventDefault();
-			/*if ($('#frm_register').valid())
-			{*/
+			if ($('#frm_register').valid())
+			{
 				$.ajax({
 					url: "includes/common.php?",
 					type: "POST",
@@ -168,10 +167,9 @@
 					async:true,						
 						success: function(response) 
 						{   data = JSON.parse(response);
-					        alert(data.Success);
-							if(data.Success == "Success") 
+					        if(data.Success == "Success") 
 							{  
-							  	alert(data.resp);
+							  	alert(baseurll);
 							  	//location.reload();
 							  	location.href	= baseurll + "/success";
 							} 
@@ -193,7 +191,7 @@
 							loading_hide();
 						}
 				    });
-			/*}*/
+			}
 		});
 		
 

@@ -51,12 +51,12 @@
                                 <form role="form" class="login-form cf-style-1" id="frm_login" name="frm_login">
                                     <div class="field-row">
                                         <label>Email</label>
-                                        <input type="email" name="txt_email" id="txt_email" class="le-input" required>
+                                        <input type="email" name="txt_email" id="txt_email" class="le-input col-md-12  col-xs-12" required>
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row">
                                     <label>Password</label>
-                                    <input type="password" name="txt_password" id="txt_password" class="le-input"required>
+                                    <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12  col-xs-12"required>
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row clearfix">
