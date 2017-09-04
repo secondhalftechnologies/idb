@@ -48,7 +48,7 @@
                                         	<option value="">Select Usergroup</option>
                                             <option value="doctors">Doctors</option>
                                             <option value="hospitals">Hospitals</option>
-                                            <option value="wholesalers">Chemist/Retailers</option>
+                                            <option value="chemist">Chemist/Retailers</option>
                                             <option value="trader">Trader</option>
                                         </select>
                                         <div class="clearfix"></div>
@@ -140,7 +140,7 @@
 				} 
 				else if(selected == "Chemist/Retailers")
 				{
-					$("label[for = name]").text("Wholesaler's Name"); 
+					$("label[for = name]").text("Chemist's Name"); 
 					$('#txt_user_type').val('buyer');
 				}
 				else if(selected == "Trader")

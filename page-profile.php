@@ -8,7 +8,7 @@
   // $logged_user_type  = $_SESSION[]['cust_type'];
 
   $org_details      = '';
-  $logged_user_type = 'doctors';
+  $logged_user_type = 'wholesalers';
   // $logged_user_type = 'hospitals';
   // $logged_user_type = 'wholesalers';
   // $logged_user_type = 'trader';
@@ -29,7 +29,7 @@
     $var_urDoc1       = 'Renewal 1';
     $var_urDoc2       = 'Renewal 2';
   }
-  elseif ($logged_user_type == 'wholesalers')
+  elseif ($logged_user_type == 'chemist')
   {
     $contact_persone  = 'Chemist\'s';
     $org_menu_title   = 'Chemist';
@@ -184,7 +184,7 @@
         background: rgba(203, 228, 205, 0.6) !important;
         color: #4f7351;
         text-indent: 30px;
-        height: 325px;
+        height: auto;
         -webkit-transition: height 0.8s;
         transition: height 0.8s;
         -webkit-transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -490,7 +490,7 @@
 
                       <?php
                     }
-                    elseif ($logged_user_type == 'wholesalers' || $logged_user_type == 'trader') 
+                    elseif ($logged_user_type == 'chemist' || $logged_user_type == 'trader') 
                     {
                       ?>
 
