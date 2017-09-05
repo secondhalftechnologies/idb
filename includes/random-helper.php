@@ -7,7 +7,7 @@
 			{
 				$characters = '0123456789';
 			}
-			elseif($type == 'email')
+			elseif($type == 'email' || $type == 'salt')
 			{
 				$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';	
 			}

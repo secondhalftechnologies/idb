@@ -44,9 +44,11 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 		quit('Password and Confirm Password not matched...!');
 	}
 	
-	$salt   = generateRandomString(6);
-	$data[$type.'salt']        = $salt;
-	$data[$type.'password']   = md5($data[$type.'password'].$salt);
+	$salt   = generateRandomString(5, 'salt');
+	$data[$type.'salt']        	= trim($salt);
+	$data[$type.'password']   	= trim(md5($data[$type.'password'].$data[$type.'salt']));
+	
+	//quit($data[$type.'password'].'<==>'.$data[$type.'salt'].'<==>'.$data[$type.'password']);
 	
 	$sql_check_user =" SELECT * FROM ".$table_name." WHERE ".$type."email='".$data[$type.'email']."' or ".$type."mobile='".$data[$type.'mobile']."'";
  	$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
@@ -201,7 +203,7 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			
 			if($row_get_user_login['cust_status']==0)
 			{
-				quit('Something went wrong...!');
+				quit('You are not yet activeted');
 			}
 			/* data base password */
 			$cust_password_db_login		= trim($row_get_user_login['cust_password']);
@@ -210,10 +212,9 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			$cust_salt_value_db_login	= trim($row_get_user_login['cust_salt']);
 			/* database salt*/
 			/*md5(old pwd + salt )*/
-			$cust_password_user_login	= trim(md5($cust_salt_value_db_login.$cust_password_login));
+			$cust_password_user_login	= trim(md5($cust_password_login.$cust_salt_value_db_login));
 			/*md5(old pwd + salt )*/	
 			
-			//quit($cust_password_user_login);
 			if($cust_password_user_login == $cust_password_db_login)
 			{
 				$cust_id				= $row_get_user_login['cust_id'];

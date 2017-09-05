@@ -22,11 +22,12 @@
 			
 			// Query for checking the duplicate Mobile Number
 			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['cust_mobile']), array("cust_id"=>$where_arr['cust_id']));
-			if(!$num_duplicate_email_id)
+			
+			if($num_duplicate_email_id)
 			{
 				quit('Ooppsss, Email already exist in system please another email-id!');	
 			}
-			if(!$num_duplicate_mobile)
+			if($num_duplicate_mobile)
 			{
 				quit('Ooppsss, Mobile Number already exist in system please another mobile number!');	
 			}
@@ -50,6 +51,9 @@
 				$cust_email_query	= " SELECT * FROM tbl_customer WHERE 1=1 ";
 				$cust_email_status	= randomString($cust_email_query, 'cust_emailstatus', 5, 'email');
 				
+				// Query for updating the user email verification code
+				$res_update_user_email_verification_code	= update('tbl_customer', array('cust_emailstatus' => $cust_email_status), $where_arr);
+
 				// =====================================================================================================
 				// START : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
 				// =====================================================================================================
@@ -153,9 +157,6 @@
 					quit('Ooppsss, Something went wrong!', 0);
 				}
 			}
-			
-			
-			
 		}
 		else
 		{

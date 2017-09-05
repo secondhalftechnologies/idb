@@ -350,7 +350,7 @@
                                         <input type="hidden" name="hid_frm_profile" id="hid_frm_profile" value="1">
                                         
                                         <div class="field-row">
-                                            <label class="col-md-3 col-xs-12" for="name"><?php echo $contact_persone; ?> Name</label>
+                                            <label class="col-md-3 col-xs-12" for="name"><?php echo $contact_persone; ?> Name<span style="color:#F00">*</span></label>
                                             <input type="text" class="le-input col-md-9 col-xs-12" id="txt_name" name="txt_name" 
 											<?php 
 												if($logged_username != '')
@@ -371,7 +371,7 @@
                                         </div><!-- Contact Persone's Name -->
                                         
                                         <div class="field-row">
-                                            <label class="col-md-3 col-xs-12" for="name">Email</label>
+                                            <label class="col-md-3 col-xs-12" for="name">Email<span style="color:#F00">*</span></label>
                                             <input type="text" class="le-input col-md-9 col-xs-12" id="txt_email" name="txt_email"
                                             <?php
                                             if($logged_emailid != '')
@@ -392,7 +392,7 @@
                                         </div><!-- Email -->
                                         
                                         <div class="field-row">
-                                            <label class="col-md-3 col-xs-12" for="name">Mobile</label>
+                                            <label class="col-md-3 col-xs-12" for="name">Mobile<span style="color:#F00">*</span></label>
                                             <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile"
                                             <?php
                                             	if($logged_mobilenum != '')
