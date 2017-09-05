@@ -260,8 +260,8 @@
                                         </div>
                                         <span></span>
                                   </label>
-                                    <input id='jobs' type='checkbox'>
-                                    <label for='jobs'>
+                                  <input id='jobs' type='checkbox'>
+                                  <label for='jobs'>
                                     <p>Upcoming Jobs</p>
                                     <div class='lil_arrow'></div>
                                     <div class='content'>
@@ -423,22 +423,22 @@
                                   Company Details
                                   <form role="form" class="register-form cf-style-1" id="frm_comp_info" name="frm_comp_info">
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name"><?php echo $org_details ?> Name</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_comp_name" name="txt_comp_name">
+                                      <label class="col-md-3 col-xs-12" for="name"><?php echo $org_details ?> Name<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_comp_name" name="txt_comp_name" data-rule-required="true">
                                       <div class="clearfix"></div>
                                     </div><!-- Company Name -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Primary Email</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_email" name="txt_pri_email">
+                                      <label class="col-md-3 col-xs-12" for="name">Primary Email<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_email" name="txt_pri_email" data-rule-required="true" data-rule-email="true">
                                       <label class="col-md-3 col-xs-12" for="name">Secondary Email</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_sec_email" name="txt_sec_email">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_sec_email" name="txt_sec_email" data-rule-email="true">
                                       <div class="clearfix"></div>
                                     </div><!-- Primary and Secondary Email -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Primary Phone Number</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone">
+                                      <label class="col-md-3 col-xs-12" for="name">Primary Phone Number<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone" data-rule-required="true">
                                       <label class="col-md-3 col-xs-12" for="name">Alternate Phone Number</label>
                                       <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone">
                                       <div class="clearfix"></div>
@@ -453,21 +453,21 @@
                                     Address Details
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Billing Address</label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address"></textarea>
+                                      <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Address -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Billing State</label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state">
+                                      <label class="col-md-3  col-xs-12">Billing State<span style="color:#F00">*</span></label>
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onclick="getCities(this.value, this.id);" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active states only
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if state id is already exist in the database
-                                        echo getActiveStates(IN-MM);
+                                        echo getActiveStates('IN-MM');
                                         // =======================================================
                                         // end : query for getting the all active state only
                                         // dn by prathamesh on 04092017
@@ -478,8 +478,8 @@
                                     </div><!-- Billing State -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Billing City</label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city">
+                                      <label class="col-md-3  col-xs-12">Billing City<span style="color:#F00">*</span></label>
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active cities only
@@ -496,8 +496,8 @@
                                     </div><!-- Billing City -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Billing Pincode</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode">
+                                      <label class="col-md-3 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true">
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Pincode -->
                 
@@ -508,21 +508,21 @@
                                     </div>
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Shipping Address</label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address"></textarea>
+                                      <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Address -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Shipping State</label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state">
+                                      <label class="col-md-3  col-xs-12">Shipping State<span style="color:#F00">*</span></label>
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active states only
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if state id is already exist in the database
-                                        echo getActiveStates(IN-MM);
+                                        echo getActiveStates('IN-MM');
                                         // =======================================================
                                         // end : query for getting the all active state only
                                         // dn by prathamesh on 04092017
@@ -533,8 +533,8 @@
                                     </div><!-- Shipping State -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Shipping City</label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city">
+                                      <label class="col-md-3  col-xs-12">Shipping City<span style="color:#F00">*</span></label>
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active cities only
@@ -551,14 +551,14 @@
                                     </div><!-- Shipping City -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Shipping Pincode</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode">
+                                      <label class="col-md-3 col-xs-12" for="name">Shipping Pincode<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true">
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Pincode -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Description</label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description"></textarea>
+                                      <label class="col-md-3 col-xs-12" for="name">Description<span style="color:#F00">*</span></label>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description" data-rule-required="true"></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Address -->
                 
@@ -702,6 +702,52 @@
         {
 			$('.cls_mainmenu').removeClass('active');
 			$('#'+divId).addClass('active');
+        }
+
+        function getCities(state_id, select_id)
+        {
+        	alert(state_id);
+        	return false;
+
+        	var getStatesCity	= '1';
+
+        	var sendInfo		= {"state_id":state_id, "getStatesCity":getStatesCity};
+        	var getStateCities	= JSON.stringify(sendInfo); 
+
+        	$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: getStateCities, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							//$('#'+select_id).prop('selectedIndex',0);
+							//$('#'+select_id).html(data.resp);
+							//$('#'+select_id).selectpicker();
+						} 
+						else 
+						{   
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
         }
         
         $('#frm_profile').on('submit', function(e) 

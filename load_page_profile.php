@@ -3,6 +3,7 @@
 	include('includes/query-helper.php');
 	include('includes/random-helper.php');
 	include('includes/email-helper.php');
+	include('includes/city-state-country-helper.php');
 	
 	// ===============================================================================
 	// START : From Profile Dn By Prathamesh On 05-Sep-2017
@@ -166,4 +167,20 @@
 	// ===============================================================================
 	// END : From Profile Dn By Prathamesh On 05-Sep-2017
 	// ===============================================================================
+
+	if((isset($obj->getStatesCity)) == '1' && (isset($obj->getStatesCity)))
+	{
+		$state_id	= $obj->state_id;
+		$data    	= '';
+		if($state_id != '')
+		{
+			$data 	= getStatesCity($state_id);
+
+			quit(utf8_encode($data), 1);
+		}
+		else
+		{
+			quit('Ooppsss, Something went wrong', 0);
+		}
+	}
 ?>
