@@ -1,8 +1,10 @@
 <?php
 
 include('db_con.php');
-$json 				= file_get_contents('php://input'); // get json request
-$obj 				= json_decode($json); // general object which converts json request to php object
+include('login-info-helper.php');
+include('query-helper.php');
+include('random-helper.php');
+include('email-helper.php');
 
 ////////////////==Start : Registration Satish:21082017================//////
 if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
@@ -12,15 +14,16 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 	
 	if($txt_user_type=='buyer')
 	{  
-		$type                = "cust_";
-		$table_name          = 'tbl_customer';
+		$type              	= "cust_";
+		$table_name         = 'tbl_customer';
 		$data['cust_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
 		//quit($table_name);
 	}
 	else
 	{
-		$type       ="vendor_";
+		$type       = "vendor_";
 		$table_name = 'tbl_vendor';
+		$data['cust_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
 	}
 	
 	$data[$type.'name']     = mysqli_real_escape_string($db_con,$_POST['txt_name']);
@@ -28,7 +31,7 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 	
 	$random_string			= '';
 	$cust_email_query		= " SELECT * FROM ".$table_name." WHERE 1=1 ";
-	$cust_email_status		= randomString($cust_email_query, $type.'emailstatus',5);
+	$cust_email_status		= randomString($cust_email_query, $type.'emailstatus', 5, 'email');
 	$data[$type.'emailstatus']   = $cust_email_status;
 	
 	$data[$type.'mobile']   = mysqli_real_escape_string($db_con,$_POST['txt_mobile']);
@@ -174,8 +177,8 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 {
 	$cust_email 		 = trim(mysqli_real_escape_string($db_con,$obj->txt_email));
 	$cust_password_login = trim($obj->txt_password);
-	$cli_browser_info	 = trim(mysqli_real_escape_string($db_con,$obj->cli_browser_info));
-	$cli_ip_address 	 = trim(mysqli_real_escape_string($db_con,$obj->cli_ip_address));	
+	$cli_browser_info	 = get_browser_info();
+	$cli_ip_address 	 = get_client_ip();	
 	
 	if($cust_email == "" || $cust_password_login == "" )
 	{
@@ -186,10 +189,16 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 		$sql_get_user_login 	= "SELECT * FROM `tbl_customer` WHERE `cust_email` like '".$cust_email."' ";
 		$result_get_user_login	= mysqli_query($db_con,$sql_get_user_login) or die(mysqli_error($db_con));
 		$num_rows_get_user_login= mysqli_num_rows($result_get_user_login);
-		//
+		
 		if($num_rows_get_user_login == 1)
 		{
 			$row_get_user_login			= mysqli_fetch_array($result_get_user_login);
+			
+			if($row_get_user_login['cust_emailstatus'] != 1)
+			{
+				quit('verification_fail',0);	
+			}
+			
 			if($row_get_user_login['cust_status']==0)
 			{
 				quit('Something went wrong...!');

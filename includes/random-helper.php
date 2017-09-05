@@ -25,10 +25,12 @@
 		}		
 	}
 	
-	function randomString($query,$length,$type)
+	function randomString($query,$col_name,$length,$type)
 	{
 		global $db_con;
+		
 		$random_string = generateRandomString($length, $type);
+		$query	= $query." AND ".$col_name." = '".$random_string."' ";
 		
 		if($random_string != "")
 		{
@@ -41,12 +43,12 @@
 			}
 			else
 			{
-				randomString($query,$col_name,$length);
+				randomString($query,$col_name,$length,$type);
 			}
 		}
 		else
 		{
-			randomString($query,$col_name,$length);
+			randomString($query,$col_name,$length,$type);
 		}
 	}
 ?>

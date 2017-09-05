@@ -64,6 +64,15 @@
 			}
 		}
 	
+		//==Check Not Where Condtions=====//
+		if(!empty($not_where_array))
+		{
+			foreach($not_where_array as $field2 => $value2 )
+			{   
+				$sql  .= " AND ".$field2 ."!='".$value2."' ";
+			}
+		}
+		
 		$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
 		
 		if($result)
@@ -76,7 +85,9 @@
 		}
 	}
 	
-	function checkExist($table ,$where)
+	
+	
+	function isExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{
 		global $db_con;
 		if($table=="")
@@ -89,6 +100,7 @@
 		
 		
 		$sql .=" WHERE 1 = 1 ";
+		
 		//==Check Where Condtions=====//
 		if(!empty($where))
 		{
@@ -97,11 +109,21 @@
 				$sql  .= " AND ".$field1 ."='".$value1."' ";
 			}
 		}
+		
+		//==Check Not Where Condtions=====//
+		if(!empty($not_where_array))
+		{
+			foreach($not_where_array as $field2 => $value2)
+			{   
+				$sql  .= " AND ".$field2 ."!='".$value2."' ";
+			}
+		}
+		
 		$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
 		$num            = mysqli_num_rows($result);
 		if($num > 0)
 		{
-			return true;
+			return $num;
 		}
 		else
 		{

@@ -99,22 +99,16 @@
 		<?php include('st-javascript.php'); ?>
         <?php include('st-validator-js.php'); ?>
 		<script type="text/javascript">
-        	$('#frm_login').on('submit', function(e) {
+        	var baseurll = '<?php echo $BaseFolder; ?>';
+			
+			$('#frm_login').on('submit', function(e) {
 				if($('#frm_login').valid())
 				{
 					e.preventDefault();
 					var txt_email		= $('#txt_email').val();
 					var txt_password	= $('#txt_password').val();
-					var cli_browser_info	= navigator.userAgent;
-					var cli_ip_address		= "";
-					$.getJSON("http://jsonip.com/?callback=?", function (data) 
-					{
-						console.log(data);
-						cli_ip_address		= data.ip;
-					});	
 					
-					
-					var sendInfo 	= {"cli_browser_info":cli_browser_info,"cli_ip_address":cli_ip_address,"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
+					var sendInfo 	= {"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
 					
 					var esn_edit	= JSON.stringify(sendInfo);				
 					$.ajax({
@@ -124,17 +118,21 @@
 						contentType: "application/json; charset=utf-8",						
 						success: function(response) 
 						{
-							
 							data = JSON.parse(response);
-							alert(data);
 							if(data.Success == "Success") 
 							{
-								 window.location.href="index.php?";
-								return false;
+								location.href	= baseurll + "/page-profile";
 							} 
 							else 
 							{
-								alert(data.resp);
+								if(data.resp == 'verification_fail')
+								{
+									alert('Please do your Email Verification first');		
+								}
+								else
+								{
+									alert(data.resp);	
+								}
 							}
 						},
 						error: function (request, status, error) 
