@@ -218,6 +218,19 @@
 			::-webkit-scrollbar {
 			display: none;
 			}
+			.update_success{
+				background:#6C6; 
+				max-height:50px; 
+				height:50px; 
+				border-radius:10px; 
+				color:#fff; 
+				font-family:'Courier New', Courier, monospace; 
+				font-size:20px; 
+				font-weight:600;
+				text-align:center;
+				padding:10px;
+			}
+			
     	</style>
 	</head>
 
@@ -340,9 +353,10 @@
                                 </div>
         		  			</div>
         					<div class="col-md-9">
-                				<div id="div_success" class="col-md-12" >
-                                    
+                				<div id="div_success" class="col-md-12" style="height:50px;" >
+                                   &nbsp;
                                 </div>
+                               
                                 <div class="clearfix"></div>
                             	<div class="cls_mainmenu active" id="profile">
                                     Basic Information
@@ -905,8 +919,11 @@
 							}
 							else
 							{
-								$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 							}
+							
+							setTimeout(function(){ $('#div_success').html('').fadeIn(5000); }, 3000);
+							
 						} 
 						else 
 						{   
