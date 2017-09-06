@@ -18,6 +18,53 @@
 	$logged_emailid		= $_SESSION['front_panel']['cust_email'];
 	$logged_mobilenum	= $_SESSION['front_panel']['cust_mobile'];
 	
+	// ==============================================================================================================================
+	// START : getting the Company Data from the tbl_company_master table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
+	// ==============================================================================================================================
+	// Query for Getting all the information of the company for respective user-id
+	$sql_get_comp_info	= " SELECT * FROM `tbl_company_master` WHERE `comp_user_id`='".$logged_uid."' ";
+	$res_get_comp_info	= mysqli_query($db_con, $sql_get_comp_info) or die(mysqli_error($db_con));
+	$num_get_comp_info	= mysqli_num_rows($res_get_comp_info);
+	
+	$comp_name			= '';
+	$comp_pri_email		= '';
+	$comp_sec_email		= '';
+	$comp_pri_phone		= '';
+	$comp_sec_phone		= '';
+	$comp_website		= '';
+	$comp_bill_address	= '';
+	$comp_bill_state	= '';
+	$comp_bill_city		= '';
+	$comp_bill_pincode	= '';
+	$comp_ship_address	= '';
+	$comp_ship_state	= '';
+	$comp_ship_city		= '';
+	$comp_ship_pincode	= '';
+	$comp_descp			= '';
+	
+	if($num_get_comp_info != 0)
+	{
+		$row_get_comp_info	= mysqli_fetch_array($res_get_comp_info);
+		$comp_name			= $row_get_comp_info['comp_name'];
+		$comp_pri_email		= $row_get_comp_info['comp_pri_email'];
+		$comp_sec_email		= $row_get_comp_info['comp_sec_email'];
+		$comp_pri_phone		= $row_get_comp_info['comp_pri_phone'];
+		$comp_sec_phone		= $row_get_comp_info['comp_sec_phone'];
+		$comp_website		= $row_get_comp_info['comp_website'];
+		$comp_bill_address	= $row_get_comp_info['comp_bill_address'];
+		$comp_bill_state	= $row_get_comp_info['comp_bill_state'];
+		$comp_bill_city		= $row_get_comp_info['comp_bill_city'];
+		$comp_bill_pincode	= $row_get_comp_info['comp_bill_pincode'];
+		$comp_ship_address	= $row_get_comp_info['comp_ship_address'];
+		$comp_ship_state	= $row_get_comp_info['comp_ship_state'];
+		$comp_ship_city		= $row_get_comp_info['comp_ship_city'];
+		$comp_ship_pincode	= $row_get_comp_info['comp_ship_pincode'];
+		$comp_descp			= $row_get_comp_info['comp_descp'];
+	}
+	// ==============================================================================================================================
+	// END : getting the Company Data from the tbl_company_master table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
+	// ==============================================================================================================================
+	
 	$org_details      	= '';
 	
 	if($logged_user_type == 'doctors')
@@ -214,6 +261,19 @@
 			::-webkit-scrollbar {
 			display: none;
 			}
+			.update_success{
+				background:#6C6; 
+				max-height:50px; 
+				height:50px; 
+				border-radius:10px; 
+				color:#fff; 
+				font-family:'Courier New', Courier, monospace; 
+				font-size:20px; 
+				font-weight:600;
+				text-align:center;
+				padding:10px;
+			}
+			
     	</style>
 	</head>
 
@@ -234,7 +294,7 @@
                                         <div class='content'>
                                             <ul>
                                                 <li>
-                                                	<a  href="javascript:void(0);" onclick="showDiv('profile');">Profile</a>
+                                                	<a  href="javascript:void(0);" onclick="showDiv('profile');">Login Information</a>
                                                 </li>
                                                 <li>
                                                 	<a  href="javascript:void(0);" onclick="showDiv('comp_info');">
@@ -257,22 +317,22 @@
                                         </div>
                                         <span></span>
                                   </label>
-                                  <input id='jobs' type='checkbox'>
-                                  <label for='jobs'>
+                                    <input id='jobs' type='checkbox'>
+                                    <label for='jobs'>
                                     <p>Upcoming Jobs</p>
                                     <div class='lil_arrow'></div>
                                     <div class='content'>
-                                      <ul>
-                                        <li>
-                                          <a href='#'>Weekly Forecast</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Timescales</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Quotes</a>
-                                        </li>
-                                      </ul>
+                                    <ul>
+                                    <li>
+                                    <a href='#'>Weekly Forecast</a>
+                                    </li>
+                                    <li>
+                                    <a href='#'>Timescales</a>
+                                    </li>
+                                    <li>
+                                    <a href='#'>Quotes</a>
+                                    </li>
+                                    </ul>
                                     </div>
                                     <span></span>
                                     </label>
@@ -281,17 +341,17 @@
                                     <p>Events & Task Management</p>
                                     <div class='lil_arrow'></div>
                                     <div class='content'>
-                                      <ul>
-                                        <li>
-                                          <a href='#'>Calendar</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Important Dates</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Someting Event related</a>
-                                        </li>
-                                      </ul>
+                                    <ul>
+                                    <li>
+                                      <a href='#'>Calendar</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Important Dates</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Someting Event related</a>
+                                    </li>
+                                    </ul>
                                     </div>
                                     <span></span>
                                     </label>
@@ -300,17 +360,17 @@
                                     <p>Invoicing & financial</p>
                                     <div class='lil_arrow'></div>
                                     <div class='content'>
-                                      <ul>
-                                        <li>
-                                          <a href='#'>Invoicing Templates</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Invoice Archives</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Send Invoice</a>
-                                        </li>
-                                      </ul>
+                                    <ul>
+                                    <li>
+                                      <a href='#'>Invoicing Templates</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Invoice Archives</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Send Invoice</a>
+                                    </li>
+                                    </ul>
                                     </div>
                                     <span></span>
                                     </label>
@@ -319,32 +379,30 @@
                                     <p>System Settings</p>
                                     <div class='lil_arrow'></div>
                                     <div class='content'>
-                                      <ul>
-                                        <li>
-                                          <a href='#'>User Settings</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Edit Profile</a>
-                                        </li>
-                                        <li>
-                                          <a href='#'>Do something cool</a>
-                                        </li>
-                                      </ul>
+                                    <ul>
+                                    <li>
+                                      <a href='#'>User Settings</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Edit Profile</a>
+                                    </li>
+                                    <li>
+                                      <a href='#'>Do something cool</a>
+                                    </li>
+                                    </ul>
                                     </div>
                                     <span></span>
                                     </label>
                                 </div>
         		  			</div>
         					<div class="col-md-9">
-                				<div id="div_success" class="col-md-12" style="height:50px;display:none" >
-                                    
-                                </div>
-                                <div id="div_success1" class="col-md-12" style="height:50px;display:block" >
+                				<div id="div_success" class="col-md-12" style="height:50px;" >
                                     &nbsp;
                                 </div>
+                               
                                 <div class="clearfix"></div>
                             	<div class="cls_mainmenu active" id="profile">
-                                    Basic Information
+                                    Login Information
                                     <form role="form" class="register-form cf-style-1" id="frm_profile" name="frm_profile">
                                     	<input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                         <input type="hidden" name="hid_frm_profile" id="hid_frm_profile" value="1">
@@ -422,31 +480,124 @@
                                 <div class="cls_mainmenu" id="comp_info">
                                   Company Details
                                   <form role="form" class="register-form cf-style-1" id="frm_comp_info" name="frm_comp_info">
+                                    <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
+                                    <input type="hidden" name="hid_frm_comp_info" id="hid_frm_comp_info" value="1">
+                                    
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"><?php echo $org_details ?> Name<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_comp_name" name="txt_comp_name" data-rule-required="true">
+                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_comp_name" name="txt_comp_name" data-rule-required="true" 
+										<?php
+                                        if($comp_name != '')
+										{
+											?>
+											value="<?php echo ucwords($comp_name); ?>"
+											<?php	
+										}	
+										else
+										{
+											?>
+											placeholder="Ex. ABC Pvt. Ltd."
+											<?php	
+										}
+										?>                                   
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Company Name -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Primary Email<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_email" name="txt_pri_email" data-rule-required="true" data-rule-email="true">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_email" name="txt_pri_email" data-rule-required="true" data-rule-email="true"
+                                      	<?php
+										if($logged_emailid != '')
+										{
+											?>
+											value="<?php echo $logged_emailid; ?>"
+											<?php
+										}
+										else
+										{
+											?>
+											placeholder="Ex. email@something.com";
+											<?php
+										}
+										?>
+                                      >
                                       <label class="col-md-3 col-xs-12" for="name">Secondary Email</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_sec_email" name="txt_sec_email" data-rule-email="true">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_sec_email" name="txt_sec_email" data-rule-email="true"
+                                     	<?php
+										if($comp_sec_email != '')
+										{
+											?>
+											value="<?php echo $comp_sec_email; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="Ex. email@something.com"
+											<?php	
+										}
+									  	?> 
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Primary and Secondary Email -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Primary Phone Number<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone" data-rule-required="true">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone" data-rule-required="true"
+                                      	<?php
+											if($logged_mobilenum != '')
+											{
+												?>
+												value="<?php echo $logged_mobilenum; ?>"
+												<?php	
+											}
+											else
+											{
+												?>
+												placeholder="Ex. 1234567890";
+												<?php
+											}
+										?>
+                                      >
                                       <label class="col-md-3 col-xs-12" for="name">Alternate Phone Number</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone"
+                                      	<?php
+										if($comp_sec_phone != '')
+										{
+											?>
+											value="<?php echo $comp_sec_phone; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="Ex. 1234567890"
+											<?php	
+										}
+									  	?>
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Primary and Secondary Phone Number -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Website</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_website" name="txt_website">
+                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_website" name="txt_website"
+                                      	<?php
+										if($comp_website != '')
+										{
+											?>
+											value="<?php echo $comp_website; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="Ex. www.something.com"
+											<?php	
+										}
+									  	?>
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Website -->
                 
@@ -454,20 +605,27 @@
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"></textarea>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true">
+                                      	<?php
+										if($comp_bill_address != '')
+										{
+											echo $comp_bill_address;
+										}
+										?>
+                                      </textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Address -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3  col-xs-12">Billing State<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onChange="getCities(this.value, this.id);" data-rule-required="true">
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onChange="getCities(this.value, this.id, 'txt_bill_city');" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active states only
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if state id is already exist in the database
-                                        echo getActiveStates('IN-MM');
+                                        echo getActiveStates($comp_bill_state);
                                         // =======================================================
                                         // end : query for getting the all active state only
                                         // dn by prathamesh on 04092017
@@ -486,7 +644,7 @@
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if city id is already exist in the database
-                                        echo getActiveCities(805);
+                                        echo getActiveCities($comp_bill_city);
                                         // =======================================================
                                         // end : query for getting the all active cities only
                                         // dn by prathamesh on 04092017
@@ -497,7 +655,22 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true"
+                                      	<?php
+										if($comp_bill_pincode != '')
+										{
+											?>
+											value="<?php echo $comp_bill_pincode; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="6 Digit Pincode"
+											<?php	
+										}
+									  	?>
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Pincode -->
                 
@@ -509,7 +682,14 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"></textarea>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true">
+                                      	<?php
+										if($comp_ship_address != '')
+										{
+											echo $comp_ship_address;
+										}
+										?>
+                                      </textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Address -->
                 
@@ -522,7 +702,7 @@
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if state id is already exist in the database
-                                        echo getActiveStates('IN-MM');
+                                        echo getActiveStates($comp_ship_state);
                                         // =======================================================
                                         // end : query for getting the all active state only
                                         // dn by prathamesh on 04092017
@@ -541,7 +721,7 @@
                                         // dn by prathamesh on 04092017
                                         // =======================================================
                                         // send city id from session if city id is already exist in the database
-                                        echo getActiveCities(805);
+                                        echo getActiveCities($comp_ship_city);
                                         // =======================================================
                                         // end : query for getting the all active cities only
                                         // dn by prathamesh on 04092017
@@ -552,7 +732,22 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Shipping Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true">
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true"
+                                      	<?php
+										if($comp_ship_pincode != '')
+										{
+											?>
+											value="<?php echo $comp_ship_pincode; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="6 Digit Pincode"
+											<?php	
+										}
+									  	?>
+                                      >
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Pincode -->
                 
@@ -560,7 +755,7 @@
                                       <label class="col-md-3 col-xs-12" for="name">Description<span style="color:#F00">*</span></label>
                                       <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description" data-rule-required="true"></textarea>
                                       <div class="clearfix"></div>
-                                    </div><!-- Shipping Address -->
+                                    </div><!-- Description -->
                 
                                     <div class="buttons-holder">
                                       <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
@@ -569,7 +764,7 @@
                                 </div>	<!--Company Details-->
                                 <div class="cls_mainmenu" id="urDoc">
                                   Upload Required Documents
-                                  <form role="form" class="register-form cf-style-1" id="frm_urDoc" name="frm_comp_info">
+                                  <form role="form" class="register-form cf-style-1" id="frm_urDoc" name="frm_urDoc">
                                     <?php
                                     if($logged_user_type == 'doctors')
                                     {
@@ -704,11 +899,11 @@
 			$('#'+divId).addClass('active');
         }
 
-        function getCities(state_id, select_id)
+        function getCities(state_id, select_id, city_select_id)
         {
         	var getStatesCity	= '1';
 
-        	var sendInfo		= {"state_id":state_id, "getStatesCity":getStatesCity};
+        	var sendInfo		= {"state_id":state_id, "city_select_id":city_select_id, "getStatesCity":getStatesCity};
         	var getStateCities	= JSON.stringify(sendInfo); 
 
         	$.ajax({
@@ -724,10 +919,10 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
-							alert(data.resp+'<==>#'+select_id);
-							//$('#'+select_id).prop('selectedIndex',0);
-							$('#'+select_id).html(data.resp);
-							//$('#'+select_id).selectpicker();
+							$('#'+city_select_id).prop('selectedIndex',0);
+							$('#'+city_select_id).html(data.resp);
+							$('#'+city_select_id).selectpicker('refresh');
+							
 						} 
 						else 
 						{   
@@ -748,6 +943,55 @@
 				});
         }
         
+		function same_as_bill()   //done by monika
+		{
+			if($("#address_check").prop('checked') == true)
+			{
+				var comp_bill_address	= $('#txt_billing_address').val();
+				var comp_ship_address	= $('#txt_shipping_address').val(comp_bill_address);
+				$('#txt_shipping_address').prop('readonly', true);
+				
+				/* state select change*/
+				var bill_state = $("#txt_bill_state").val();
+				$("#txt_shipping_state").val(bill_state);
+				$("#txt_shipping_state").prop("readonly",true); // disable  state select
+				$("#txt_shipping_state").selectpicker('refresh'); 				
+				/* state select change*/
+				/* City select change*/				
+				getCities(bill_state,'txt_bill_state','txt_shipping_city');
+				stopExecution();
+			}
+			else if($("#address_check").prop('checked') == false)
+			{
+				$('#txt_shipping_address').prop("readonly",false);
+				$('#txt_shipping_state').prop("readonly",false);
+				$('#txt_shipping_city').prop("readonly",false);
+				$('#txt_shipping_pincode').prop("readonly",false);
+				
+				$('#txt_shipping_address').val('');
+				$('#txt_shipping_state').prop('selectedIndex',0);
+				$('#txt_shipping_state').selectpicker('refresh');
+				$('#txt_shipping_city').prop('selectedIndex',0);
+				$('#txt_shipping_city').selectpicker('refresh');
+				$('#txt_shipping_pincode').val('');
+			}						
+		}
+		
+		function stopExecution()
+		{
+			setTimeout(continueExecution, 1000) //wait ten seconds before continuing
+		}
+		
+		function continueExecution()
+		{
+			perm_city = $("#txt_bill_city").val();
+			$("#txt_shipping_city").val(perm_city);
+			$("#txt_shipping_city").prop("readonly",true); // disable city select
+			$('#txt_shipping_city').selectpicker('refresh');
+			$("#txt_shipping_pincode").prop("readonly",true); // disable pincode
+			$("#txt_shipping_pincode").val($("#txt_bill_pincode").val());				
+		}
+		
         $('#frm_profile').on('submit', function(e) 
         {
 			e.preventDefault();
@@ -772,8 +1016,11 @@
 							}
 							else
 							{
-								$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 							}
+							
+							setTimeout(function(){ $('#div_success').html('').fadeIn(5000); }, 3000);
+							
 						} 
 						else 
 						{   
@@ -800,7 +1047,47 @@
 			e.preventDefault();
 			if($('#frm_comp_info').valid())
 			{
-			
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							if(data.resp == 'email_verufication')
+							{
+								location.href	= baseurll + "/success";			
+							}
+							else
+							{
+								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
+							}
+							
+							setTimeout(function(){ $('#div_success').html('').fadeIn(5000); }, 3000);
+						} 
+						else 
+						{   
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
 			}
         });
         

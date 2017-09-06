@@ -61,14 +61,15 @@
 		return $ddl_state_data;
 	}
 
-	function getStatesCity($state_id)
+	function getStatesCity($state_id, $city_select_id)
 	{
 		global $db_con;
 		$ddl_state_data	= '';
 		$sql_get_states_city	= " SELECT * FROM `tbl_city` WHERE state_id='".$state_id."' AND `status`='1' ";
 		$res_get_states_city	= mysqli_query($db_con, $sql_get_states_city) or die(mysqli_error());
 		$num_get_states_city	= mysqli_num_rows($res_get_states_city);
-
+		
+		//$ddl_state_data	.= '<select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="'.$city_select_id.'" id="'.$city_select_id.'" data-rule-required="true">';
 		if($num_get_states_city != 0)
 		{
 			$ddl_state_data	.= '<option value="">Select City</option>';
@@ -83,6 +84,7 @@
 		{
 			$ddl_state_data	.= '<option value="">No match found</option>';
 		}
+		//$ddl_state_data	.= '</select>';
 
 		return $ddl_state_data;
 	}

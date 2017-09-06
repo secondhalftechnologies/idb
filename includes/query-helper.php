@@ -1,7 +1,8 @@
 <?php
+	// Query For Insert
 	function insert($table, $variables = array() )
 	{
-				//Make sure the array isn't empty
+		//Make sure the array isn't empty
 		global $db_con;
 		if( empty( $variables ) )
 		{
@@ -34,6 +35,7 @@
 		}
 	}
 	
+	// Query For Update
 	function update($table, $variables = array(), $where,$not_where_array=array(),$and_like_array=array(),$or_like_array=array())
 	{
 		//Make sure the array isn't empty
@@ -85,8 +87,7 @@
 		}
 	}
 	
-	
-	
+	// Select Query For getting the Record count
 	function isExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{
 		global $db_con;
@@ -131,6 +132,7 @@
 		}
 	}
 	
+	// For Compile
 	function quit($msg,$Success="")
 	{
 		if($Success ==1)

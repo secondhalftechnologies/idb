@@ -12,7 +12,15 @@
 		$dbname 	= "idb2017";
 		$dbuser 	= "root";
 		$dbpass 	= "";
-		$BaseFolder = "http://localhost/idb";	
+		if($_SERVER['HTTP_HOST'] == "localhost")
+		{
+			$BaseFolder = "http://localhost/idb";		
+		}
+		else
+		{
+			$BaseFolder = "http://192.168.0.13/idb";	
+		}
+		
 	}
 	else
 	{

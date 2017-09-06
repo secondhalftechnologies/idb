@@ -201,7 +201,7 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 				quit('verification_fail',0);	
 			}
 			
-			if($row_get_user_login['cust_status']==0)
+			if($row_get_user_login['cust_status'] == 0)
 			{
 				quit('You are not yet activeted');
 			}
