@@ -172,6 +172,10 @@
 	// END : From Profile Dn By Prathamesh On 05-Sep-2017
 	// ===============================================================================
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 	// ===============================================================================
 	// START : From Company Information Dn By Prathamesh On 06-Sep-2017
 	// ===============================================================================
@@ -200,10 +204,17 @@
 		if($data['comp_pri_email'] != '' && $data['comp_pri_phone'] != '' && $data['comp_name'] != '' && $data['comp_website'] != '' && $data['comp_bill_address'] != '' && $data['comp_bill_state'] != '' && $data['comp_bill_city'] != '' && $data['comp_bill_pincode'] != '' && $data['comp_ship_address'] != '' && $data['comp_ship_state'] != '' && $data['comp_ship_city'] != '' && $data['comp_ship_pincode'] != '' && $data['comp_descp'] != '' && $data['comp_user_id'] != '')
 		{
 			// Query for checking the duplicate email id
+<<<<<<< HEAD
 			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['comp_pri_email']), array("cust_id"=>$where_arr['comp_user_id']));
 			
 			// Query for checking the duplicate Mobile Number
 			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['comp_pri_phone']), array("cust_id"=>$where_arr['comp_user_id']));
+=======
+			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['cust_email']), array("cust_id"=>$where_arr['cust_id']));
+			
+			// Query for checking the duplicate Mobile Number
+			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['cust_mobile']), array("cust_id"=>$where_arr['cust_id']));
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 			
 			if($num_duplicate_email_id)
 			{
@@ -221,10 +232,13 @@
 			
 			if($num_get_comp_info != 0)
 			{
+<<<<<<< HEAD
 				$data['comp_status']		= '2';
 				$data['comp_modified_date']	= $datetime;
 				$data['comp_modified_by']	= '';
 				
+=======
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 				// Update Query
 				// Query For update the User's Basic Information
 				$res_update_user_company	= update('tbl_company_master', $data, $where_arr);
@@ -243,7 +257,11 @@
 						$cust_email_status	= randomString($cust_email_query, 'cust_emailstatus', 5, 'email');
 						
 						// Query for updating the user email verification code
+<<<<<<< HEAD
 						$res_update_user_email_verification_code	= update('tbl_customer', array('cust_emailstatus' => $cust_email_status, "cust_modified"=>$datetime), $where_arr);
+=======
+						$res_update_user_email_verification_code	= update('tbl_customer', array('cust_emailstatus' => $cust_email_status), $where_arr);
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 		
 						// =====================================================================================================
 						// START : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
@@ -356,10 +374,13 @@
 			}
 			else
 			{
+<<<<<<< HEAD
 				$data['comp_status']		= '2';
 				$data['comp_created_date']	= $datetime;
 				$data['comp_created_by']	= '';
 				
+=======
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 				// Insert Query
 				// Query For update the User's Basic Information
 				$res_update_user_company	= insert('tbl_company_master', $data);
@@ -383,6 +404,10 @@
 	// END : From Company Information Dn By Prathamesh On 06-Sep-2017
 	// ===============================================================================
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 	if((isset($obj->getStatesCity)) == '1' && (isset($obj->getStatesCity)))
 	{
 		$state_id	= $obj->state_id;
@@ -399,4 +424,342 @@
 			quit('Ooppsss, Something went wrong', 0);
 		}
 	}
+	
+	// ===============================================================================
+	// START : Pan Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
+	if((isset($_POST['add_pan_req']))== '1' && (isset($_POST['add_pan_req'])))
+	{
+		$data['pan_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['pan_no']      = mysqli_real_escape_string($db_con,$_POST['txt_pan_no']);
+		$data['pan_created'] = $datetime;
+		
+		if($data['pan_no']=="" || !isset($_FILES['file_pan_image']['name']))
+		{
+			quit('Pan Number and Image is required...!');
+		}
+		
+		$pan_image_size      = $_FILES['file_pan_image']['size'];
+		if($pan_image_size > 5242880 &&  $pan_image_size !=0) // file size
+		{
+			quit('Image size should be less than 5 MB');
+		}
+		
+		$pan_image_name               = explode('.',$_FILES['file_pan_image']['name']);
+		$pan_image_name               = date('dhyhis').'_'.$data['hid_userid'].'.'.$pan_image_name[1];
+		$data['pan_image']            = $pan_image_name;
+		
+		$dir                          = 'idbpanel/documents/pan/'.$pan_image_name;
+		
+		if(move_uploaded_file($_FILES['file_pan_image']['tmp_name'],$dir))
+		{
+			$res                          = insert('tbl_pans',$data);
+			
+			if($res)
+			{
+				quit('Added Successfully...!',1);
+			}
+			else
+			{
+				quit('fail');
+			}
+		}
+		
+	}
+	
+	
+	if((isset($_POST['update_pan_req']))== '1' && (isset($_POST['update_pan_req'])))
+	{
+		$where_arr['pan_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['pan_no']           = mysqli_real_escape_string($db_con,$_POST['txt_pan_no']);
+		$data['pan_modified']     = $datetime;
+		$data['pan_status']       = 0;
+		if($data['pan_no']=="")
+		{
+			quit('Pan Number is required...!');
+		}
+		
+		
+		if(isset($_FILES['file_pan_image']['name']) && $_FILES['file_pan_image']['name']!="")
+		{
+			$pan_image_size      = $_FILES['file_pan_image']['size'];
+			if($pan_image_size > 5242880 &&  $pan_image_size !=0) // file size
+			{
+				quit('Image size should be less than 5 MB');
+			}
+			
+			$pan_image_name               = explode('.',$_FILES['file_pan_image']['name']);
+			$pan_image_name               = date('dhyhis').'_'.$where_arr['pan_userid'].'.'.$pan_image_name[1];
+			$data['pan_image']            = $pan_image_name;
+			
+			$dir                          = 'idbpanel/documents/pan/'.$pan_image_name;
+			if(move_uploaded_file($_FILES['file_pan_image']['tmp_name'],$dir))
+			{
+				$res                          = update('tbl_pans',$data,$where_arr);
+				
+				if($res)
+				{
+					quit('Update Successfully...!',1);
+				}
+				else
+				{
+					quit('fail');
+				}
+			}
+			
+		}
+		else
+		{
+			 update('tbl_pans',$data,$where_arr);
+			 quit('Update Successfully...!',1);
+		}
+		
+		
+	}
+	
+	// ===============================================================================
+	// End : Pan Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
+	
+	
+	// ===============================================================================
+	// START : GST Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
+	if((isset($_POST['add_gst_req']))== '1' && (isset($_POST['add_gst_req'])))
+	{
+		$data['gst_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['gst_no']      = mysqli_real_escape_string($db_con,$_POST['txt_gst_no']);
+		$data['gst_created'] = $datetime;
+		
+		if($data['gst_no']=="" || !isset($_FILES['file_gst_image']['name']) || !isset($_FILES['file_gst_ack_image']['name']))
+		{
+			quit('GST Number and Image is required...!');
+		}
+		
+		if($_FILES['file_gst_image']['name']=="" || $_FILES['file_gst_ack_image']['name']=="")
+		{
+			quit('Image is required...!');
+		}
+		$gst_image_size      = $_FILES['file_gst_image']['size'];
+		$gst_ack_image_size  = $_FILES['file_gst_ack_image']['size'];
+		if($gst_image_size > 5242880 &&  $gst_image_size !=0) // file size
+		{
+			quit('GST Image size should be less than 5 MB');
+		}
+		
+		
+		if($gst_ack_image_size > 5242880 &&  $gst_ack_image_size !=0) // file size
+		{
+			quit('GST Acknowledgement size should be less than 5 MB');
+		}
+		
+		$gst_image_name               = explode('.',$_FILES['file_gst_image']['name']);
+		$gst_image_name               = date('dhyhis').'_'.$data['gst_userid'].'.'.$gst_image_name[1];
+		$data['gst_image']            = $gst_image_name;
+		
+		$gst_ack_image_name           = explode('.',$_FILES['file_gst_ack_image']['name']);
+		$gst_ack_image_name           = date('dhyhis').'_ACK'.$data['gst_userid'].'.'.$gst_ack_image_name[1];
+		$data['gst_ack_image']            = $gst_ack_image_name;
+		
+		$dir                          = 'idbpanel/documents/gst/'.$gst_image_name;
+		$dir1                         = 'idbpanel/documents/gst/'.$gst_ack_image_name;
+		
+		if(move_uploaded_file($_FILES['file_gst_image']['tmp_name'],$dir))
+		{
+			if(move_uploaded_file($_FILES['file_gst_ack_image']['tmp_name'],$dir1))
+		    {
+				$res                          = insert('Added Successfully...!',$data);
+			    if($res)
+				{
+					quit('Success',1);
+				}
+				else
+				{
+					quit('Something went wrong...!');
+				}
+			}
+			else
+			{
+				quit('Something went wrong...!');
+			}
+			
+		}
+		else
+		{
+			quit('Something went wrong...!');
+		}
+	}
+	
+	if((isset($_POST['update_gst_req']))== '1' && (isset($_POST['update_gst_req'])))
+	{
+		$where_arr['gst_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['gst_no']           = mysqli_real_escape_string($db_con,$_POST['txt_gst_no']);
+		$data['gst_modified']     = $datetime;
+		$data['gst_status']       = 0;
+		if($data['gst_no']=="")
+		{
+			quit('GST Number is required...!');
+		}
+		
+		
+		if($_FILES['file_gst_image']['name']!="")
+		{
+			$gst_image_size      = $_FILES['file_gst_image']['size'];
+			if($gst_image_size > 5242880 &&  $gst_image_size !=0) // file size
+			{
+				quit('GST Image size should be less than 5 MB');
+			}
+			
+			$gst_image_name               = explode('.',$_FILES['file_gst_image']['name']);
+			$gst_image_name               = date('dhyhis').'_'.$where_arr['gst_userid'].'.'.$gst_image_name[1];
+			$dir                          = 'idbpanel/documents/gst/'.$gst_image_name;
+			
+			if(move_uploaded_file($_FILES['file_gst_image']['tmp_name'],$dir))
+		    {
+				$data['gst_image']            = $gst_image_name;
+			}
+		}
+		
+		if($_FILES['file_gst_ack_image']['name']!="")
+		{
+			$gst_image_size      = $_FILES['file_gst_ack_image']['size'];
+			if($gst_image_size > 5242880 &&  $gst_image_size !=0) // file size
+			{
+				quit('GST Image size should be less than 5 MB');
+			}
+			
+			$file_gst_ack_image               = explode('.',$_FILES['file_gst_ack_image']['name']);
+			$file_gst_ack_image               = date('dhyhis').'_ACL'.$where_arr['gst_userid'].'.'.$file_gst_ack_image[1];
+			$dir1                             = 'idbpanel/documents/gst/'.$file_gst_ack_image;
+			
+			if(move_uploaded_file($_FILES['file_gst_ack_image']['tmp_name'],$dir1))
+		    {
+				$data['gst_ack_image']        = $file_gst_ack_image;
+			}
+		}
+		
+		
+		$res                          = update('Update Successfully...!',$data,$where_arr);
+		if($res)
+		{
+		 	quit('Success',1);
+		}
+		else
+		{
+			quit('Something went wrong...!');
+		}
+	}
+	
+	// ===============================================================================
+	// End : GST Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
+	
+	// ===============================================================================
+	// START : Bank Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
+	if((isset($_POST['add_bank_req']))== '1' && (isset($_POST['add_bank_req'])))
+	{
+		$data['bank_userid']   = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['bank_name']     = mysqli_real_escape_string($db_con,$_POST['txt_bank_name']);
+		$data['bank_username'] = mysqli_real_escape_string($db_con,$_POST['txt_bank_username']);
+		$data['bank_branch']   = mysqli_real_escape_string($db_con,$_POST['txt_bank_address']);
+		$data['bank_acc_no']   = mysqli_real_escape_string($db_con,$_POST['txt_bank_accno']);
+		$data['bank_ifsc']     = mysqli_real_escape_string($db_con,$_POST['txt_ifsc_code']);
+		$data['bank_created']  = $datetime;
+		
+		if($data['bank_userid']=="" || $data['bank_acc_no']=="" ||  $data['bank_ifsc']=="" || $data['bank_name']=="" || $_FILES['file_bank_image']['name']=="")
+		{
+			quit('All fields are mandotory...!');
+		}
+		
+		if($_FILES['file_bank_image']['name']=="" || $_FILES['file_bank_image']['name']=="")
+		{
+			quit('Image is required...!');
+		}
+		
+		$bank_image_size      = $_FILES['file_bank_image']['size'];
+		
+		if($bank_image_size > 5242880 &&  $bank_image_size !=0) // file size
+		{
+			quit('GST Image size should be less than 5 MB');
+		}
+		
+		$bank_image_name               = explode('.',$_FILES['file_bank_image']['name']);
+		$bank_image_name               = date('dhyhis').'_'.$data['bank_userid'].'.'.$bank_image_name[1];
+		$data['bank_image']            = $bank_image_name;
+		
+		$dir                          = 'idbpanel/documents/banks/'.$bank_image_name;
+		
+		if(move_uploaded_file($_FILES['file_bank_image']['tmp_name'],$dir))
+		{
+			$res                          = insert('tbl_bank_details',$data);
+			if($res)
+			{
+				quit('Added Successfully...!',1);
+			}
+			else
+			{
+				quit('Something went wrong...!');
+			}
+		}
+		else
+		{
+			quit('Something went wrong...!');
+		}
+	}
+	
+	
+	if((isset($_POST['update_bank_req']))== '1' && (isset($_POST['update_bank_req'])))
+	{
+		$where_arr['bank_userid']   = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['bank_name']     = mysqli_real_escape_string($db_con,$_POST['txt_bank_name']);
+		$data['bank_username'] = mysqli_real_escape_string($db_con,$_POST['txt_bank_username']);
+		$data['bank_branch']   = mysqli_real_escape_string($db_con,$_POST['txt_bank_address']);
+		$data['bank_acc_no']   = mysqli_real_escape_string($db_con,$_POST['txt_bank_accno']);
+		$data['bank_ifsc']     = mysqli_real_escape_string($db_con,$_POST['txt_ifsc_code']);
+		$data['bank_created']  = $datetime;
+		
+		if($where_arr['bank_userid']=="" || $data['bank_acc_no']=="" ||  $data['bank_ifsc']=="" || $data['bank_name']=="" )
+		{
+			quit('All fields are mandotory...!');
+		}
+		
+		if(isset($_FILES['file_bank_image']['name']) && $_FILES['file_bank_image']['name']!="")
+		{
+			$bank_image_size      = $_FILES['file_bank_image']['size'];
+			if($bank_image_size > 5242880 &&  $bank_image_size !=0) // file size
+			{
+				quit('Image size should be less than 5 MB');
+			}
+			
+			$bank_image_name               = explode('.',$_FILES['file_bank_images']['name']);
+			$bank_image_name               = date('dhyhis').'_'.$where_arr['bank_userid'].'.'.$bank_image_name[1];
+			$data['bank_image']             = $bank_image_name;
+			
+			$dir                          = 'idbpanel/documents/bank/'.$bank_image_name;
+			if(move_uploaded_file($_FILES['file_bank_image']['tmp_name'],$dir))
+			{
+				$res                          = update('tbl_bank_details',$data,$where_arr);
+				
+				if($res)
+				{
+					quit('Update Successfully...!',1);
+				}
+				else
+				{
+					quit('fail');
+				}
+			}
+			
+		}
+		else
+		{
+			 update('tbl_bank_details',$data,$where_arr);
+			 quit('Update Successfully...!',1);
+		}
+	}
+	
+	// ===============================================================================
+	// End : Bank Information Dn By Satish On 06-Sep-2017
+	// ===============================================================================
 ?>
