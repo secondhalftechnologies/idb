@@ -10,6 +10,7 @@
 	}
 	
 	include("includes/city-state-country-helper.php");
+	include('includes/query-helper.php');
 	// ============================================================================
 	// START : Hard Coding For testing the session Session not yet defined 
 	// Dn By Prathamesh on 01 Aug 2017
@@ -595,19 +596,59 @@
                                     </div><!-- Submit -->
                                   </form>
                                 </div>	<!--Upload Required Documents-->
+                                
+                                
+                               	<!--=======================Start : Pan Information Dn By Satish 06092017=============================================-->
+                                
                                 <div class="cls_mainmenu" id="pan_info">
                                   PAN Information
-                                  <form role="form" class="register-form cf-style-1" id="frm_pan_info" name="frm_pan_info" enctype="multipart/form-data" method="post">
+                                  <?php
+								  
+								  //  Check Record and return single row
+								  $panRow = checkExist('tbl_pans',array('pan_userid'=>$logged_uid));
+								  if(!$panRow) // for add and update in single form 
+								  {
+									  $frm_pan_name      = 'frm_pan_info';
+									  $frm_pan_request   = 'add_pan_req';
+									  $required          = 'data-rule-required="true"';
+								  }
+								  else
+								  {
+									  $frm_pan_name      = 'frm_update_pan_info';
+									  $frm_pan_request   = 'update_pan_req';
+									  $required          = '';
+								  }
+								  ?>
+                                  
+                                  <form role="form" class="register-form cf-style-1" id="<?php echo $frm_pan_name; ?>" name="<?php echo $frm_pan_name; ?>" enctype="multipart/form-data" method="post">
+                                  <input type="hidden" name="<?php echo $frm_pan_request; ?>" value="1">
+                                  <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Pan Number</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no">
+                                      <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true">
+                                      
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Number -->
-                
+                                    
+                                   
+									
+                                     <?php
+									 if($panRow)
+									 {
+									 ?>
                                     <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/pan/<?php echo $panRow['pan_image'];?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Pan Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                    
                                       <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
-                                      <input type="file" name="file_pan_image" id="file_pan_image">
-                                      <input type="submit" value="Upload Image" name="submit">  
+                                      <input accept="image/jpeg" type="file" name="file_pan_image" id="file_pan_image" data-rule-requied="true" <?php echo $required;?>>
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Image -->
                 
@@ -615,26 +656,75 @@
                                       <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
                                     </div><!-- Submit -->
                                   </form>
+                                 
+									  
                                 </div>	<!--PAN Information-->
+                                
+                               <!--=======================End : Pan Information Dn By Satish 06092017=============================================-->
+                               
+                               	<!--=======================Start : GST Information Dn By Satish 06092017=============================================-->
+                                
                                 <div class="cls_mainmenu" id="gst_info">
                                   GST Information
-                                  <form role="form" class="register-form cf-style-1" id="frm_gst_info" name="frm_gst_info" enctype="multipart/form-data" method="post">
-                                    
+                                  <?php
+								   //  Check Record and return single row
+								  $gstRow = checkExist('tbl_gst',array('gst_userid'=>$logged_uid));
+								  if(!$gstRow)// for add and update in single form 
+								  {
+									  $frm_gst_name      = 'frm_gst_info';
+									  $frm_gst_request   = 'add_gst_req';
+								  }
+								  else
+								  {
+									  $frm_gst_name      = 'frm_update_gst_info';
+									  $frm_gst_request   = 'update_gst_req';
+								  }
+								  ?>
+                                  <form role="form" class="register-form cf-style-1" id="<?php echo $frm_gst_name; ?>" name="<?php echo $frm_gst_name;?>" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="<?php echo $frm_gst_request; ?>" value="1">
+                                    <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
+                                   
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Number</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no">
+                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no">
                                       <div class="clearfix"></div>
                                     </div><!-- GST Number -->                    
                 
+                					 <?php
+									 if($gstRow)
+									 {
+									 ?>
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/gst/<?php echo $gstRow['gst_image'];?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Pan Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">GST Image</label>
                                       <input type="file" name="file_gst_image" id="file_gst_image">
                                       <input type="submit" value="Upload Image" name="submit">  
                                       <div class="clearfix"></div>
                                     </div><!-- GST Image -->
-                
+                						
+                                      <?php
+									 if($gstRow)
+									 {
+									 ?>
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/gst/<?php echo $gstRow['gst_ack_image'];?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Pan Image -->
+                                    <?php 
+									 }
+									 ?>
+                                        
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Image</label>
                                       <input type="file" name="file_gst_ack_image" id="file_gst_ack_image">
                                       <input type="submit" value="Upload Image" name="submit">  
                                       <div class="clearfix"></div>
@@ -645,38 +735,77 @@
                                     </div><!-- Submit -->
                                   </form>
                                 </div>	<!--GST Information-->
+                                
+                              <!--=======================End : GST Information Dn By Satish 06092017=============================================-->
+                              
+                              
+                             <!--=======================Start : Bank Information Dn By Satish 06092017=============================================-->
                                 <div class="cls_mainmenu" id="bank_info">
                                   Bank Information
-                                  <form role="form" class="register-form cf-style-1" id="frm_bank_info" name="frm_bank_info" enctype="multipart/form-data" method="post">
+                                  <?php
+								 //  Check Record and return single row
+								  $bankRow = checkExist('tbl_bank_details',array('bank_userid'=>$logged_uid));
+								  if(!$bankRow)// for add and update in single form 
+								  {
+									  $frm_bank_name      = 'frm_bank_info';
+									  $frm_bank_request   = 'add_bank_req';
+								  }
+								  else
+								  {
+									  $frm_bank_name      = 'frm_update_bank_info';
+									  $frm_bank_request   = 'update_bank_req';
+								  }
+								  ?>
+                                  <form role="form" class="register-form cf-style-1" id="<?php echo $frm_bank_name; ?>" name="<?php echo $frm_bank_name; ?>" enctype="multipart/form-data" method="post">
+                                   <input type="hidden" name="<?php echo $frm_bank_request; ?>" value="1">
+                                    <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
+                                    
+                                     <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">Account Holder Name</label>
+                                      <input value="<?php echo @$bankRow['bank_username'] ?>" type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_username" name="txt_bank_username">
+                                      <div class="clearfix"></div>
+                                    </div><!-- Bank Name -->
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank Name</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
+                                      <input value="<?php echo @$bankRow['bank_name'] ?>" type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Name -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank Address</label>
-                                      <textarea id="txt_bank_address" name="txt_bank_address"></textarea>
+                                      <textarea  id="txt_bank_address" name="txt_bank_address"><?php echo @$bankRow['bank_branch'] ;?></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Address -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank Account Number</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
+                                      <input type="text" value="<?php echo @$bankRow['bank_acc_no'] ?>"  class="le-input col-md-9 col-xs-12" id="txt_bank_accno" name="txt_bank_accno">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Account Number -->
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank IFSC Code</label>
-                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code">
+                                      <input type="text" value="<?php echo @$bankRow['bank_ifsc'] ?>" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank IFSC CODE -->     
-                
+                					
+                                      <?php
+									 if($bankRow)
+									 {
+									 ?>
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/banks/<?php echo $bankRow['bank_image'];?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Pan Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">Bank Check Image</label>
                                       <input type="file" name="file_bank_image" id="file_bank_image">
-                                      <input type="submit" value="Upload Image" name="submit">  
                                       <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image -->
                 
@@ -685,6 +814,8 @@
                                     </div><!-- Submit -->               
                                   </form>
                                 </div>	<!--Bank Information-->
+                             <!--=======================End : Pan Information Dn By Satish 06092017=============================================-->
+                             
         					</div>
            				</div>
 					</div>
@@ -815,32 +946,265 @@
 			}
         });
         
+		//============================Start : Pan  Information==========================//
+		
         $('#frm_pan_info').on('submit', function(e) 
         {
         	e.preventDefault();
 			if($('#frm_pan_info').valid())
 			{
 				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						} 
+						else 
+						{   
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			
 			}
         });
         
+		 $('#frm_update_pan_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_update_pan_info').valid())
+			{
+				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			
+			}
+        });
+		
+		
+		//============================End Add Form Information==========================//
+		
+		//============================Start GST Information================================================//
+		
         $('#frm_gst_info').on('submit', function(e) 
         {
         	e.preventDefault();
 			if($('#frm_gst_info').valid())
 			{
-				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);s
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
 			}
         });
-        
+      
+	   $('#frm_update_gst_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_update_gst_info').valid())
+			{
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			}
+        });
+	  
+	  
+	  //==============================End GST Information================================================//
+	  
+	    
         $('#frm_bank_info').on('submit', function(e) 
         {
         	e.preventDefault();
 			if($('#frm_bank_info').valid())
 			{
-					
+				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+				
 			}
         });
+		
+		$('#frm_update_bank_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_update_bank_info').valid())
+			{
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);	
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			}
+        });
+		
         </script>
 	</body>
 </html>
