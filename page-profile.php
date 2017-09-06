@@ -1,9 +1,6 @@
 <?php
 	include("includes/db_con.php");
    	
-	echo isset($_SESSION['front_panel']);
-	//exit();
-	
 	if(!isset($_SESSION['front_panel']))
 	{
 		header("Location:".$BaseFolder."/page-login");
@@ -339,8 +336,11 @@
                                 </div>
         		  			</div>
         					<div class="col-md-9">
-                				<div id="div_success" class="col-md-12" >
+                				<div id="div_success" class="col-md-12" style="height:50px;display:none" >
                                     
+                                </div>
+                                <div id="div_success1" class="col-md-12" style="height:50px;display:block" >
+                                    &nbsp;
                                 </div>
                                 <div class="clearfix"></div>
                             	<div class="cls_mainmenu active" id="profile">
@@ -460,7 +460,7 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3  col-xs-12">Billing State<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onclick="getCities(this.value, this.id);" data-rule-required="true">
+                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onChange="getCities(this.value, this.id);" data-rule-required="true">
                                         <?php
                                         // =======================================================
                                         // start : query for getting the all active states only
@@ -706,9 +706,6 @@
 
         function getCities(state_id, select_id)
         {
-        	alert(state_id);
-        	return false;
-
         	var getStatesCity	= '1';
 
         	var sendInfo		= {"state_id":state_id, "getStatesCity":getStatesCity};
@@ -727,8 +724,9 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
+							alert(data.resp+'<==>#'+select_id);
 							//$('#'+select_id).prop('selectedIndex',0);
-							//$('#'+select_id).html(data.resp);
+							$('#'+select_id).html(data.resp);
 							//$('#'+select_id).selectpicker();
 						} 
 						else 

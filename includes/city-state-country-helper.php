@@ -65,7 +65,7 @@
 	{
 		global $db_con;
 		$ddl_state_data	= '';
-		$sql_get_states_city	= " SELECT * FROM `tbl_city` WHERE state_id='".$state_id."' ";
+		$sql_get_states_city	= " SELECT * FROM `tbl_city` WHERE state_id='".$state_id."' AND `status`='1' ";
 		$res_get_states_city	= mysqli_query($db_con, $sql_get_states_city) or die(mysqli_error());
 		$num_get_states_city	= mysqli_num_rows($res_get_states_city);
 
