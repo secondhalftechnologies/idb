@@ -172,10 +172,7 @@
 	// END : From Profile Dn By Prathamesh On 05-Sep-2017
 	// ===============================================================================
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 	// ===============================================================================
 	// START : From Company Information Dn By Prathamesh On 06-Sep-2017
 	// ===============================================================================
@@ -204,17 +201,17 @@
 		if($data['comp_pri_email'] != '' && $data['comp_pri_phone'] != '' && $data['comp_name'] != '' && $data['comp_website'] != '' && $data['comp_bill_address'] != '' && $data['comp_bill_state'] != '' && $data['comp_bill_city'] != '' && $data['comp_bill_pincode'] != '' && $data['comp_ship_address'] != '' && $data['comp_ship_state'] != '' && $data['comp_ship_city'] != '' && $data['comp_ship_pincode'] != '' && $data['comp_descp'] != '' && $data['comp_user_id'] != '')
 		{
 			// Query for checking the duplicate email id
-<<<<<<< HEAD
+
 			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['comp_pri_email']), array("cust_id"=>$where_arr['comp_user_id']));
 			
 			// Query for checking the duplicate Mobile Number
 			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['comp_pri_phone']), array("cust_id"=>$where_arr['comp_user_id']));
-=======
+
 			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['cust_email']), array("cust_id"=>$where_arr['cust_id']));
 			
 			// Query for checking the duplicate Mobile Number
 			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['cust_mobile']), array("cust_id"=>$where_arr['cust_id']));
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
+
 			
 			if($num_duplicate_email_id)
 			{
@@ -232,13 +229,11 @@
 			
 			if($num_get_comp_info != 0)
 			{
-<<<<<<< HEAD
+
 				$data['comp_status']		= '2';
 				$data['comp_modified_date']	= $datetime;
 				$data['comp_modified_by']	= '';
 				
-=======
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 				// Update Query
 				// Query For update the User's Basic Information
 				$res_update_user_company	= update('tbl_company_master', $data, $where_arr);
@@ -257,11 +252,8 @@
 						$cust_email_status	= randomString($cust_email_query, 'cust_emailstatus', 5, 'email');
 						
 						// Query for updating the user email verification code
-<<<<<<< HEAD
 						$res_update_user_email_verification_code	= update('tbl_customer', array('cust_emailstatus' => $cust_email_status, "cust_modified"=>$datetime), $where_arr);
-=======
 						$res_update_user_email_verification_code	= update('tbl_customer', array('cust_emailstatus' => $cust_email_status), $where_arr);
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 		
 						// =====================================================================================================
 						// START : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
@@ -374,13 +366,10 @@
 			}
 			else
 			{
-<<<<<<< HEAD
 				$data['comp_status']		= '2';
 				$data['comp_created_date']	= $datetime;
 				$data['comp_created_by']	= '';
 				
-=======
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 				// Insert Query
 				// Query For update the User's Basic Information
 				$res_update_user_company	= insert('tbl_company_master', $data);
@@ -404,10 +393,6 @@
 	// END : From Company Information Dn By Prathamesh On 06-Sep-2017
 	// ===============================================================================
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 30ac3a28e3d10cdaf4238e5247ab02d35be2d43f
 	if((isset($obj->getStatesCity)) == '1' && (isset($obj->getStatesCity)))
 	{
 		$state_id	= $obj->state_id;
@@ -446,7 +431,7 @@
 		}
 		
 		$pan_image_name               = explode('.',$_FILES['file_pan_image']['name']);
-		$pan_image_name               = date('dhyhis').'_'.$data['hid_userid'].'.'.$pan_image_name[1];
+		$pan_image_name               = date('dhyhis').'_'.$data['pan_userid'].'.'.$pan_image_name[1];
 		$data['pan_image']            = $pan_image_name;
 		
 		$dir                          = 'idbpanel/documents/pan/'.$pan_image_name;
@@ -568,7 +553,7 @@
 		{
 			if(move_uploaded_file($_FILES['file_gst_ack_image']['tmp_name'],$dir1))
 		    {
-				$res                          = insert('Added Successfully...!',$data);
+				$res                          = insert('tbl_gst',$data);
 			    if($res)
 				{
 					quit('Success',1);
