@@ -639,7 +639,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Pan Number</label>
-                                      <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true">
+                                      <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true" minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Number -->
@@ -662,7 +662,7 @@
                                     <div class="field-row">
                                     
                                       <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
-                                      <input accept="image/jpeg" type="file" name="file_pan_image" id="file_pan_image" data-rule-requied="true" <?php echo $required;?>>
+                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_pan_image" id="file_pan_image" data-rule-requied="true" <?php echo $required;?>>
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Image -->
                 
@@ -687,11 +687,13 @@
 								  {
 									  $frm_gst_name      = 'frm_gst_info';
 									  $frm_gst_request   = 'add_gst_req';
+									  $required          ='data-rule-required="true"';
 								  }
 								  else
 								  {
 									  $frm_gst_name      = 'frm_update_gst_info';
 									  $frm_gst_request   = 'update_gst_req';
+									  $required          ="";
 								  }
 								  ?>
                                   <form role="form" class="register-form cf-style-1" id="<?php echo $frm_gst_name; ?>" name="<?php echo $frm_gst_name;?>" enctype="multipart/form-data" method="post">
@@ -719,9 +721,8 @@
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Image</label>
-                                      <input type="file" name="file_gst_image" id="file_gst_image">
-                                      <input type="submit" value="Upload Image" name="submit">  
-                                      <div class="clearfix"></div>
+                                      <input type="file" accept="image/jpeg,image/png,image/jpg" name="file_gst_image" id="file_gst_image" <?php echo $required;?>>
+                                       <div class="clearfix"></div>
                                     </div><!-- GST Image -->
                 						
                                       <?php
@@ -739,9 +740,8 @@
                                         
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Image</label>
-                                      <input type="file" name="file_gst_ack_image" id="file_gst_ack_image">
-                                      <input type="submit" value="Upload Image" name="submit">  
-                                      <div class="clearfix"></div>
+                                      <input type="file" name="file_gst_ack_image" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image" <?php echo $required;?>>
+                                     <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image -->
                 
                                     <div class="buttons-holder">
@@ -763,11 +763,13 @@
 								  {
 									  $frm_bank_name      = 'frm_bank_info';
 									  $frm_bank_request   = 'add_bank_req';
+									  $required           = 'data-rule-required="true"';
 								  }
 								  else
 								  {
 									  $frm_bank_name      = 'frm_update_bank_info';
 									  $frm_bank_request   = 'update_bank_req';
+									  $required           = '';
 								  }
 								  ?>
                                   <form role="form" class="register-form cf-style-1" id="<?php echo $frm_bank_name; ?>" name="<?php echo $frm_bank_name; ?>" enctype="multipart/form-data" method="post">
@@ -800,7 +802,7 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank IFSC Code</label>
-                                      <input type="text" value="<?php echo @$bankRow['bank_ifsc'] ?>" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code">
+                                      <input type="text" value="<?php echo @$bankRow['bank_ifsc'] ?>" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code" minlength="11" maxlength="11">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank IFSC CODE -->     
                 					
@@ -819,7 +821,7 @@
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Bank Check Image</label>
-                                      <input type="file" name="file_bank_image" id="file_bank_image">
+                                      <input type="file" accept="image/jpeg,image/png,image/jpg" name="file_bank_image" id="file_bank_image" <?php echo $required;?>>
                                       <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image -->
                 
