@@ -4,16 +4,16 @@ checkuser();
 chkRights(basename($_SERVER['PHP_SELF']));
 
 // This is for dynamic title, bread crum, etc.
-$title = "View Form Factors";
+$title = "View Packing";
 $path_parts   		= pathinfo(__FILE__);
 $filename 	  		= $path_parts['filename'].".php";
-$sql_feature 			= "select * from tbl_admin_features where af_page_url = '".$filename."'";
+$sql_feature 		= "select * from tbl_admin_features where af_page_url = '".$filename."'";
 $result_feature 	= mysqli_query($db_con,$sql_feature) or die(mysqli_error($db_con));
 $row_feature  		= mysqli_fetch_row($result_feature);
 $feature_name 		= $row_feature[1];
 $home_name    		= "Home";
 $home_url 	  		= "view_dashboard.php?pag=Dashboard";
-$utype						= $_SESSION['panel_user']['utype'];
+$utype				= $_SESSION['panel_user']['utype'];
 $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 ?>
 <!doctype html>
@@ -39,7 +39,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec">
 				<?php
 				/* this function used to add navigation menu to the page*/
-				breadcrumbs($home_url,$home_name,'View Form Factors',$filename,$feature_name);
+				breadcrumbs($home_url,$home_name,'View Packing',$filename,$feature_name);
 				/* this function used to add navigation menu to the page*/
 				?>
                         <div class="row-fluid">
@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Form Factors</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Packing</button>
   											<?php
 										}
 									?>
@@ -92,7 +92,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Excel Bulk Upload For Form Factor
+                                            Excel Bulk Upload For Packing
                                         </h3>
 
                                     </div> <!-- header title-->
@@ -124,7 +124,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Wrong Entries For Form Factor
+                                            Wrong Entries For Packing
                                         </h3>
 
                                     </div> <!-- header title-->
@@ -158,7 +158,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_add_spec" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'Add Form Factor',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'Add Packing',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -167,7 +167,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Form Factor
+                                            Add Packing
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
@@ -184,7 +184,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_edit_spec" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'Edit Form Factor',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'Edit Packing',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -210,7 +210,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				<div class="container-fluid" id="div_error_spec" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'Edit Error Form Factor',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'Edit Error Packing',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -219,7 +219,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Error Form Factor
+                                            Edit Error Packing
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
@@ -236,7 +236,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec_details" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'View Form Factor Details',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'View Packing Details',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -245,7 +245,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Form Factor Details
+                                            Packing  Details
                                         </h3>
                                         <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
@@ -284,7 +284,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"batch":batch, "delete_spec":1};
 				var del_spec 	= JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_packing.php",
 					type: "POST",
 					data: del_spec,
 					contentType: "application/json; charset=utf-8",
@@ -335,7 +335,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo = {"row_limit":row_limit, "search_text":search_text, "load_spec":load_spec, "page":page};
 				var spec_load = JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_packing.php",
 					type: "POST",
 					data: spec_load,
 					contentType: "application/json; charset=utf-8",
@@ -382,7 +382,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"spec_id":spec_id, "curr_status":curr_status, "change_status":change_status};
 				var spec_status 	= JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_packing.php",
 					type: "POST",
 					data: spec_status,
 					contentType: "application/json; charset=utf-8",
@@ -437,7 +437,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			var sendInfo = {"spec_id":spec_id,"req_type":req_type,"load_spec_parts":1};
 			var cat_load = JSON.stringify(sendInfo);
 			$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_packing.php?",
 					type: "POST",
 					data: cat_load,
 					contentType: "application/json; charset=utf-8",
@@ -552,7 +552,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo_error 		= {"row_limit1":row_limit1, "search_text1":search_text1, "load_error":load_error, "page1":page1,"cat_parent1":cat_parent1};
 				var cat_load_error = JSON.stringify(sendInfo_error);
 				$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_packing.php?",
 					type: "POST",
 					data: cat_load_error,
 					contentType: "application/json; charset=utf-8",
@@ -606,7 +606,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var del_cat 	= JSON.stringify(sendInfo);
 
 				$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_packing.php?",
 					type: "POST",
 					data: del_cat,
 					contentType: "application/json; charset=utf-8",
@@ -647,7 +647,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				loading_show();
 				$.ajax({
-						url: "load_form_factor.php?",
+						url: "load_packing.php?",
 						type: "POST",
 						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 						contentType: false,       // The content type used when sending data to the server.
@@ -659,7 +659,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							if(data.Success == "Success")
 							{
 								//$("#req_resp").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_packing.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -688,7 +688,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				loading_show();
                 var ddl_parent_cat  = $('#ddl_parent_cat').val();
-				var spec_name 		= $.trim($("#form_factor_name").val());
+				var spec_name 		= $.trim($("#packing_name").val());
 				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_add').val()
 
                 if(spec_name == "" && spec_status == "")
@@ -705,7 +705,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                     var spec_insert = JSON.stringify(sendInfo);
                     //alert(ddl_parent_cat+'<=>'+spec_name+'<=>'+spec_status);
 					$.ajax({
-						url: "load_form_factor.php",
+						url: "load_packing.php",
 						type: "POST",
 						data: spec_insert,
 						contentType: "application/json; charset=utf-8",
@@ -714,7 +714,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                             data = JSON.parse(response);
                             if(data.Success == "Success")
 							{
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_packing.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -744,7 +744,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				var spec_id			= $.trim($('#spec_id').val());
                 var ddl_parent_cat  = $('#ddl_parent_cat').val();
-				var spec_name 		= $.trim($('input[name="form_factor_name"]').val());
+				var spec_name 		= $.trim($('input[name="packing_name"]').val());
 				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_edit').val()
 				if(parent == 1)
 				{
@@ -757,7 +757,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 					var sendInfo 		= {"spec_id":spec_id,"spec_name":spec_name,"spec_status":spec_status,"ddl_parent_cat":ddl_parent_cat,"update_req":"1"};
 					var spec_insert = JSON.stringify(sendInfo);
 					$.ajax({
-						url: "load_form_factor.php?",
+						url: "load_packing.php?",
 						type: "POST",
 						data: spec_insert,
 						contentType: "application/json; charset=utf-8",
@@ -766,7 +766,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success")
 							{
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_packing.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else
@@ -811,7 +811,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 					var sendInfo 	= {"error_id":error_id,"spec_name":spec_name,"spec_status":spec_status,"insert_req":"1"};
 					var spec_insert = JSON.stringify(sendInfo);
 					$.ajax({
-						url: "load_form_factor.php",
+						url: "load_packing.php",
 						type: "POST",
 						data: spec_insert,
 						contentType: "application/json; charset=utf-8",
@@ -820,7 +820,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success")
 							{
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_packing.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							}
 							else

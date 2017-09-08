@@ -39,6 +39,11 @@ $min_order_value 	= 500; // this variable to set min order value for shipping ch
 $shipping_charge	= 49;
 // Done By satish 28042017//
 $shipping_charge	= 0;
+
+$json 			= file_get_contents('php://input');
+$obj 			= json_decode($json);
+$response_array = array();
+
 // Done By satish //
 if (isset($_SESSION['panel_user']['email']) && strlen($_SESSION['panel_user']['email']) > 0) 
 {

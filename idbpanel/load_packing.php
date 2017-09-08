@@ -10,12 +10,12 @@ function insertFormFactor($spec_name,$cat_id,$status,$response_array)
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
-	$sql_check_spec 	 = " select * from tbl_form_factor where form_factor_name like '".$spec_name."' AND cat_id = '".$cat_id."' ";
+	$sql_check_spec 	 = " select * from tbl_packing where packing_name like '".$spec_name."' AND cat_id = '".$cat_id."' ";
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{	
-		$sql_insert_spec	= " INSERT INTO `tbl_form_factor`(`cat_id`, `form_factor_name`, `status`, `created_date`, `created_by`) ";
+		$sql_insert_spec	= " INSERT INTO `tbl_packing`(`cat_id`, `packing_name`, `status`, `created_date`, `created_by`) ";
 		$sql_insert_spec	.=" VALUES ('".$cat_id."', '".$spec_name."', '".$status."', '".$datetime."', '".$uid."') ";
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
@@ -45,7 +45,7 @@ function insertFormFactor($spec_name,$cat_id,$status,$response_array)
 	}
 	else
 	{
-		$response_array = array("Success"=>"fail","resp"=>"Form Factor <b>".ucwords($spec_name)."</b> already Exist");
+		$response_array = array("Success"=>"fail","resp"=>"Packing Value <b>".ucwords($spec_name)."</b> already Exist");
 	}
 	return $response_array;
 }
@@ -89,13 +89,13 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		}
 		else if($spec_id != "" && $req_type == "edit")
 		{
-			$sql_spec_data 	= "Select * from tbl_form_factor where id = '".$spec_id."' ";
+			$sql_spec_data 	= "Select * from tbl_packing where id = '".$spec_id."' ";
 			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
 			$row_spec_data		= mysqli_fetch_array($result_spec_data);
 		}
 		else if($spec_id != "" && $req_type == "view")
 		{
-			$sql_spec_data 	= "Select * from tbl_form_factor where id = '".$spec_id."' ";
+			$sql_spec_data 	= "Select * from tbl_packing where id = '".$spec_id."' ";
 			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
 			$row_spec_data		= mysqli_fetch_array($result_spec_data);
 		}
@@ -190,12 +190,12 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		$data .= '</div>';
 
 		$data .= '<div class="control-group">';
-		$data .= '<label for="tasktitel" class="control-label">Form Factor Name <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+		$data .= '<label for="tasktitel" class="control-label">Packing Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" id="form_factor_name" name="form_factor_name" class="input-large" data-rule-required="true" ';
+		$data .= '<input type="text" id="packing_name" name="packing_name" class="input-large" data-rule-required="true" ';
 		if($spec_id != "" && $req_type == "edit")
 		{
-			$data .= ' value="'.ucwords($row_spec_data['form_factor_name']).'"';
+			$data .= ' value="'.ucwords($row_spec_data['packing_name']).'"';
 		}
 		elseif($spec_id != "" && $req_type == "error")
 		{
@@ -203,18 +203,18 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		}
 		elseif($spec_id != "" && $req_type == "view")
 		{
-			$data .= ' value="'.ucwords($row_spec_data['form_factor_name']).'" disabled';
+			$data .= ' value="'.ucwords($row_spec_data['packing_name']).'" disabled';
 		}
 		$data .= '/>';
 		$data .= '</div>';
-		$data .= '</div> <!-- Specification Name -->';
+		$data .= '</div> <!-- packing Name -->';
 		$data .= '<div class="control-group">';
 		$data .= '<label for="radio" class="control-label">Status<span style="color:#F00;font-size:20px;">*</span></label>';
 		$data .= '<div class="controls">';
 		if($spec_id != "" && $req_type == "error")
 		{
 			$data .= '<input type="radio" name="spec_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_form_factor.php",3);
+			$dis	= checkFunctionalityRight("view_packing.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -249,7 +249,7 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		else
 		{
 			$data .= '<input type="radio" name="spec_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_form_factor.php",3);
+			$dis	= checkFunctionalityRight("view_packing.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -312,9 +312,9 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start_offset  += $page * $per_page;
 		$start 			= $page * $per_page;
 
-		$sql_load_data  = " SELECT tbm.*,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.created_by) AS name_form_factor_created_by, ";
-		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.modified_by) AS name_form_factor_modified_by, tc.cat_name ";
-		$sql_load_data  .= " FROM `tbl_form_factor` AS tbm INNER JOIN tbl_category AS tc ";
+		$sql_load_data  = " SELECT tbm.*,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.created_by) AS name_packing_created_by, ";
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.modified_by) AS name_packing_modified_by, tc.cat_name ";
+		$sql_load_data  .= " FROM `tbl_packing` AS tbm INNER JOIN tbl_category AS tc ";
 		$sql_load_data  .= " 	ON tbm.cat_id = tc.cat_id ";
 		$sql_load_data  .= " WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
@@ -323,10 +323,11 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		}
 		if($search_text != "")
 		{
-			$sql_load_data .= " AND (tbm.form_factor_name like '%".$search_text."%' or tbm.created_date like '%".$search_text."%' or tbm.modified_date like '%".$search_text."%')";
+			$sql_load_data .= " AND (tbm.packing_name like '%".$search_text."%' or tbm.created_date like '%".$search_text."%' or  tbm.modified_date like '%".$search_text."%')";
 		}
 		$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);
-		$sql_load_data .=" ORDER BY tbm.form_factor_name ASC LIMIT $start, $per_page ";
+		//$sql_load_data .=" ORDER BY tbm.packing_name ASC LIMIT $start, $per_page ";
+		$sql_load_data .=" ORDER BY tbm.id ASC LIMIT $start, $per_page ";
 		$result_load_data = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));
 		if($result_load_data)
 		{
@@ -339,22 +340,22 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
          		$spec_data .= '<th>Sr. No.</th>';
 				$spec_data .= '<th>Id</th>';
 				$spec_data .= '<th>Category Name</th>';
-				$spec_data .= '<th>Form Factor Name</th>';
+				$spec_data .= '<th>Packing Value</th>';
 				$spec_data .= '<th>Created By</th>';
 				$spec_data .= '<th>Created Date</th>';
 				$spec_data .= '<th>Modified By</th>';
 				$spec_data .= '<th>Modified Date</th>';
-				$dis = checkFunctionalityRight("view_form_factor.php",3);
+				$dis = checkFunctionalityRight("view_packing.php",3);
 				if($dis)
 				{
 					$spec_data .= '<th>Status</th>';
 				}
-				$edit = checkFunctionalityRight("view_form_factor.php",1);
+				$edit = checkFunctionalityRight("view_packing.php",1);
 				if($edit)
 				{
 					$spec_data .= '<th>Edit</th>';
 				}
-				$delete = checkFunctionalityRight("view_form_factor.php",2);
+				$delete = checkFunctionalityRight("view_packing.php",2);
 				if($delete)
 				{
 					$spec_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
@@ -368,12 +369,12 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 					$spec_data .= '<td>'.++$start_offset.'</td>';
 					$spec_data .= '<td>'.$row_load_data['id'].'</td>';
 					$spec_data .= '<td>'.$row_load_data['cat_name'].'</td>';
-					$spec_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['form_factor_name']).'" class="btn-link" id="'.$row_load_data['id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
-					$spec_data .= '<td>'.$row_load_data['name_form_factor_created_by'].'</td>';
+					$spec_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['packing_name']).'" class="btn-link" id="'.$row_load_data['id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
+					$spec_data .= '<td>'.$row_load_data['name_packing_created_by'].'</td>';
 					$spec_data .= '<td>'.$row_load_data['created_date'].'</td>';
 					if($row_load_data['modified_by'] != '')
 					{
-						$spec_data .= '<td>'.$row_load_data['name_form_factor_modified_by'].'</td>';
+						$spec_data .= '<td>'.$row_load_data['name_packing_modified_by'].'</td>';
 					}
 					else
 					{
@@ -389,7 +390,7 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 						$spec_data .= '<td>Not Yet Modified</td>';		
 					}
 					
-					$dis = checkFunctionalityRight("view_form_factor.php",3);
+					$dis = checkFunctionalityRight("view_packing.php",3);
 					if($dis)
 					{
 						$spec_data .= '<td style="text-align:center">';
@@ -403,13 +404,13 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 						}
 						$spec_data .= '</td>';
 					}
-					$edit = checkFunctionalityRight("view_form_factor.php",1);
+					$edit = checkFunctionalityRight("view_packing.php",1);
 					if($edit)
 					{
 						$spec_data .= '<td style="text-align:center">';
 						$spec_data .= '<input type="button" value="Edit" id="'.$row_load_data['id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';
 					}
-					$delete = checkFunctionalityRight("view_form_factor.php",2);
+					$delete = checkFunctionalityRight("view_packing.php",2);
 					if($delete)
 					{
 						$spec_data .= '<td><div class="controls" align="center">';
@@ -446,7 +447,7 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$spec_id				= $obj->spec_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();
-	$sql_update_status 		= " UPDATE `tbl_form_factor` SET `status`= '".$curr_status."' ,`modified_date` = '".$datetime."' ,`modified_by` = '".$uid."' WHERE `id` like '".$spec_id."' ";
+	$sql_update_status 		= " UPDATE `tbl_packing` SET `status`= '".$curr_status."' ,`modified_date` = '".$datetime."' ,`modified_by` = '".$uid."' WHERE `id` like '".$spec_id."' ";
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -468,13 +469,13 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 	$response_array 	= array();
 	if($spec_name != "" && $spec_id != "" && $spec_status != "")
 	{
-		$sql_check_spec 		= " select * from tbl_form_factor where form_factor_name like '".$spec_name."' and `id` != '".$spec_id."' ";
+		$sql_check_spec 		= " select * from tbl_packing where packing_name like '".$spec_name."' and `id` != '".$spec_id."' ";
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{
-			$sql_update_spec	= " UPDATE `tbl_form_factor` ";
-			$sql_update_spec  	.= " 	SET `form_factor_name`='".$spec_name."', ";
+			$sql_update_spec	= " UPDATE `tbl_packing` ";
+			$sql_update_spec  	.= " 	SET `packing_name`='".$spec_name."', ";
 			$sql_update_spec  	.= " 		`cat_id`='".$ddl_parent_cat."', ";
 			$sql_update_spec  	.= " 		`status`='".$spec_status."', ";
 			$sql_update_spec  	.= " 		`modified_date`='".$datetime."', ";
@@ -492,7 +493,7 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 		}
 		else
 		{
-			$response_array 	= array("Success"=>"fail","resp"=>"Form Factor ".$spec_name." already Exist");
+			$response_array 	= array("Success"=>"fail","resp"=>"Packing value ".$spec_name." already Exist");
 		}
 	}
 	else
@@ -509,7 +510,7 @@ if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 	$del_flag 		= 0;
 	foreach($ar_spec_id as $spec_id)
 	{
-		$sql_delete_spec		= " DELETE FROM `tbl_form_factor` WHERE `id` = '".$spec_id."' ";
+		$sql_delete_spec		= " DELETE FROM `tbl_packing` WHERE `id` = '".$spec_id."' ";
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));
 		if($result_delete_spec)
 		{
@@ -549,7 +550,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_created_by) as created_by_name, ";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_modified_by) as modified_by_name ";
 		$sql_load_data  .= " FROM `tbl_error_data`  ";
-		$sql_load_data  .= " WHERE error_module_name='form_factor' ";
+		$sql_load_data  .= " WHERE error_module_name='packing' ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND error_created_by='".$uid."' ";
@@ -573,9 +574,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
     	 	$spec_data .= '<thead>';
     	  	$spec_data .= '<tr>';
          	$spec_data .= '<th>Sr. No.</th>';
-			$spec_data .= '<th>Form Factor Name</th>';
-			//$spec_data .= '<th>Description</th>';
-			//$spec_data .= '<th>Parent</th>';
+			$spec_data .= '<th>Packing Name</th>';
 			$spec_data .= '<th>Created</th>';
 			$spec_data .= '<th>Created By</th>';
 			$spec_data .= '<th>Modified</th>';
@@ -598,7 +597,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				$spec_data .= '<tr>';
 				$spec_data .= '<td>'.++$start_offset.'</td>';
 				$spec_data .= '<td>';
-					$sql_chk_name_already_exist	= " SELECT `form_factor_name` FROM `tbl_form_factor` WHERE `form_factor_name`='".$er_spec_name."' ";
+					$sql_chk_name_already_exist	= " SELECT `packing_name` FROM `tbl_packing` WHERE `packing_name`='".$er_spec_name."' ";
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 
