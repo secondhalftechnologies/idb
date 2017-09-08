@@ -793,7 +793,7 @@ else
 								  }
 								  else
 								  {
-									  $frm_lic_name      = 'frm_update_lic_info';
+									  $frm_lic_name      = 'frm_lic_info';
 									  $frm_lic_request   = 'update_doctor_lic_req';
 									  $required          = '';
 								  }
@@ -845,7 +845,7 @@ else
 								  }
 								  else
 								  {
-									  $frm_lic_name      = 'frm_update_lic_info';
+									  $frm_lic_name      = 'frm_lic_info';
 									  $frm_lic_request   = 'update_hospital_lic_req';
 									  $required          = '';
 								  }
@@ -856,7 +856,7 @@ else
                                   <!--=========================Start : Hospital License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Hospital License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_number_hospital']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -867,7 +867,7 @@ else
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_hospital_image']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -884,7 +884,7 @@ else
                                     <div class="field-row">
                                     
                                       <label class="col-md-3 col-xs-12" for="name">License Expiry Date</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" >
+                                      <input valuw="<?php echo @$lic_hospital_expdate; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                <!--=========================End Hospital License Number===================================-->
@@ -892,7 +892,7 @@ else
                                <!--=========================Start : Renewal 1 License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 1 License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal1_lic_no" name="txt_renewal1_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo $licRow['lic_number_renewal1']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal1_lic_no" name="txt_renewal1_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -903,7 +903,7 @@ else
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_renewal1_image']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -920,7 +920,7 @@ else
                                     <div class="field-row">
                                     
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 1 Expiry Date</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal1_date" id="lic_renewal1_date" data-rule-requied="true" >
+                                      <input value="<?php echo @$licRow['lic_renewal1_expdate']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal1_date" id="lic_renewal1_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                <!--=========================End : Renewal 1 License Number===================================-->
@@ -928,7 +928,7 @@ else
                                <!--=========================Start : Renewal 2 License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 2 License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal2_lic_no" name="txt_renewal2_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_number_renewal2']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal2_lic_no" name="txt_renewal2_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -939,7 +939,7 @@ else
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_renewal2_image']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -956,7 +956,7 @@ else
                                     <div class="field-row">
                                     
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 1 Expiry Date</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal2_date" id="lic_renewal2_date" data-rule-requied="true" >
+                                      <input value="<?php echo @$licRow['lic_renewal2_expdate']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal2_date" id="lic_renewal2_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                <!--=========================End : Renewal 2 License Number===================================-->
@@ -965,14 +965,118 @@ else
                                     elseif ($logged_user_type == 'chemist' || $logged_user_type == 'trader') 
                                     {
                                       ?>
-                
+                						 <?php
+									  //  Check Record and return single row
+								  $licRow = checkExist('tbl_chemist_license',array('lic_userid'=>$logged_uid));
+								  if(!$licRow) // for add and update in single form 
+								  {
+									  $frm_lic_name      = 'frm_chemist_lic_info';
+									  $frm_lic_request   = 'add_chemist_lic_req';
+									  $required          = 'data-rule-required="true"';
+								  }
+								  else
+								  {
+									  $frm_lic_name      = 'frm_update_chemist_lic_info';
+									  $frm_lic_request   = 'update_chemist_lic_req';
+									  $required          = '';
+								  }
+								  ?>     
+                               <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
+                                  <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
+                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
+                                  <!--=========================Start : 20B License Number===================================-->
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
+                                      <input type="text" value="<?php echo @$licRow['lic_20B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="10" maxlength="10" >
+                                  
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Number -->
+                                    
+                                   <?php
+									 if($licRow)
+									 {
+									 ?>
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_20B_image']; ?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Image</label>
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20b_image" id="file_lic_20b_image"  >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                               <!--=========================End 20B License Number===================================-->
+                               
+                               <!--=========================Start : 20B License Number===================================-->
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
+                                      <input type="text" value="<?php echo @$licRow['lic_21B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="10" maxlength="10" >
+                                      
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Number -->
+                                    
+                                   <?php
+									 if($licRow)
+									 {
+									 ?>
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_21B_image']; ?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Image</label>
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21b_image" id="file_lic_21b_image" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                               <!--=========================End 21B License Number===================================-->
+                				
+                               <!--=========================Start : 21L License Number===================================-->
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
+                                      <input type="text" value="<?php echo @$licRow['lic_21C_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21c_lic_no" name="txt_21c_lic_no"  minlength="10" maxlength="10" >
+                                      
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Number -->
+                                    
+                                   <?php
+									 if($licRow && $licRow['lic_21C_image']!="")
+									 {
+									 ?>
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_21C_image']; ?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20B Image</label>
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21c_image" id="file_lic_21c_image" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                               <!--=========================End 21L License Number===================================-->
                                       <?php
                                     }
                                     ?>
+                                    
+                                    
                                     <div class="buttons-holder">
                                       <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
                                     </div><!-- Submit -->
                                   </form>
+                                  
                                 </div>	<!--Upload Required Documents-->
                                 
                                 
@@ -1719,11 +1823,103 @@ else
 				
 			}
         });
-		$('#frm_update_lic_info').on('submit', function(e) 
+		
+		
+		$('#frm_chemist_lic_info').on('submit', function(e) 
         {
         	e.preventDefault();
-			if($('#frm_update_lic_info').valid())
+			if($('#frm_chemist_lic_info').valid())
 			{
+				var B20_number =  $('#txt_20b_lic_no').val();
+				var B20_image  =  $('#file_lic_20b_image').val();
+				var B21_number =  $('#txt_21b_lic_no').val();
+				var B21_image  =  $('#file_lic_21b_image').val();
+				var C21_number =  $('#txt_21c_lic_no').val();
+				var C21_image  =  $('#file_lic_21c_image').val();
+				if(B20_number !="" ||  B20_image!="" ||  B21_number!="" ||  B21_image!="")    
+				{
+					if(B20_number =="" ||  B20_image =="" ||  B21_number =="" ||  B21_image =="")
+					{
+						alert('20B and 21B is required');
+						return false;
+					}
+				}
+				else
+				{
+					if(C21_number =="" ||  C21_image =="" )
+					{
+						alert('21C or 20B   is required');
+						return false;
+					}
+				}
+				
+				
+				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+				
+			}
+        });
+		
+		$('#frm_update_chemist_lic_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_update_chemist_lic_info').valid())
+			{
+				var B20_number =  $('#txt_20b_lic_no').val();
+				var B20_image  =  $('#file_lic_20b_image').val();
+				var B21_number =  $('#txt_21b_lic_no').val();
+				var B21_image  =  $('#file_lic_21b_image').val();
+				var C21_number =  $('#txt_21c_lic_no').val();
+				var C21_image  =  $('#file_lic_21c_image').val();
+				if(B20_number !=""  || B21_number!="" )    
+				{
+					if(B20_number =="" || B21_number =="" )
+					{
+						alert('20B and 21B is required');
+						return false;
+					}
+				}
+				else
+				{
+					if(C21_number =="" )
+					{
+						alert('21C or 20B   is required');
+						return false;
+					}
+				}
+				
+				
 				
 				$.ajax({
 					url: "load_page_profile.php",
