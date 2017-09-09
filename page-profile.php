@@ -948,14 +948,14 @@ else
 									 ?>
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 1 Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">Renewal 2 Image</label>
                                       <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_renewal2_image" id="file_renewal2_image" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     
                                     <div class="field-row">
                                     
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 1 Expiry Date</label>
+                                      <label class="col-md-3 col-xs-12" for="name">Renewal 2 Expiry Date</label>
                                       <input value="<?php echo @$licRow['lic_renewal2_expdate']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal2_date" id="lic_renewal2_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
@@ -1014,7 +1014,7 @@ else
                                
                                <!--=========================Start : 20B License Number===================================-->
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
+                                      <label class="col-md-3 col-xs-12" for="name">21B Licence Number</label>
                                       <input type="text" value="<?php echo @$licRow['lic_21B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
@@ -1034,7 +1034,7 @@ else
 									 ?>
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">20B Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">21B Image</label>
                                       <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21b_image" id="file_lic_21b_image" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
@@ -1042,7 +1042,7 @@ else
                 				
                                <!--=========================Start : 21L License Number===================================-->
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
+                                      <label class="col-md-3 col-xs-12" for="name">20C Licence Number</label>
                                       <input type="text" value="<?php echo @$licRow['lic_21C_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21c_lic_no" name="txt_21c_lic_no"  minlength="10" maxlength="10" >
                                       
                                       <div class="clearfix"></div>
@@ -1062,7 +1062,7 @@ else
 									 ?>
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">20B Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">20C Image</label>
                                       <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21c_image" id="file_lic_21c_image" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
