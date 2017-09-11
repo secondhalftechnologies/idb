@@ -263,6 +263,62 @@
 									// ====================================================================================
 									// END : DDL for Modified By Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Product Status Filter [Active/Inactive] [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_prod_status" id="ddl_prod_status" onChange="loadData();"  class = "select2-me ">
+                                    	<option value="" selected>All Products</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Product Status Filter [Active/Inactive] [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Stock Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_stock" id="ddl_stock" onChange="loadData();"  class = "select2-me">
+                                    	<option value="" selected>All Products</option>
+                                        <option value="1">In-Stock</option>
+                                        <option value="0">Out-Of-Stock</option>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Stock Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Image/No Image Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_image" id="ddl_image" onChange="loadData();"  class = "select2-me">
+                                    	<option value="" selected>All Products</option>
+                                        <option value="1">Has Image</option>
+                                        <option value="0">Has No Image</option>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Image/No Image Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Google Product Category Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_gpc" id="ddl_gpc" onChange="loadData();"  class = "select2-me">
+                                    	<option value="" selected>All Products</option>
+                                        <option value="1">Has Google Product Category</option>
+                                        <option value="0">Has No Google Product Category</option>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Google Product Category Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
 									?>
                                 </div>
                                 <div class="box-content nopadding">
@@ -271,9 +327,9 @@
                                         if($add)
                                         {
                                             ?>
-                                            <button type="button" class="btn-info" onClick="addMoreProd('','add')" >
+                                            <a href="<?php echo $BaseFolder; ?>add_products.php" class="btn-info" target="_self">
                                             	<i class="icon-plus"></i>&nbspAdd Products
-                                            </button>
+                                            </a>
                                             <?php
                                         }
                                     ?>
