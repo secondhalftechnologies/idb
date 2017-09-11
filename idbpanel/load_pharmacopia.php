@@ -203,7 +203,7 @@ if((isset($obj->load_pharmacopia_parts)) == "1" && isset($obj->load_pharmacopia_
 		$data .= '<div class="control-group">';
 		$data .= '<label for="tasktitel" class="control-label">Pharmacopia Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" step="0.01" id="pharmacopia_name" name="pharmacopia_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
+		$data .= '<input type="text" step="0.01" id="pharmacopia_name" name="pharmacopia_name" class="input-large" data-rule-required="true" ';
 		if($pharmacopia_id != "" && $req_type == "edit")
 		{
 			$data .= ' value="'.ucwords($row_pharmacopia_data['pharmacopia_name']).'"'; 

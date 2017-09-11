@@ -203,7 +203,7 @@ if((isset($obj->load_uow_parts)) == "1" && isset($obj->load_uow_parts))
 		$data .= '<div class="control-group">';
 		$data .= '<label for="tasktitel" class="control-label">Unit Of Weight Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" step="0.01" id="uow_name" name="uow_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
+		$data .= '<input type="text" step="0.01" id="uow_name" name="uow_name" class="input-large" data-rule-required="true"';
 		if($uow_id != "" && $req_type == "edit")
 		{
 			$data .= ' value="'.ucwords($row_uow_data['uow_name']).'"'; 
