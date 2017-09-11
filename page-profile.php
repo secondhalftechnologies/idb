@@ -467,7 +467,7 @@
 													<?php
 												}
 											?>
-                                            data-rule-required="true">
+                                            data-rule-required="true" data-rule-number="true" maxlength="10" size="10">
                                             <div class="clearfix"></div>
                                         </div><!-- Mobile -->                    
                                         
@@ -545,7 +545,7 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Primary Phone Number<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone" data-rule-required="true"
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_pri_phone" name="txt_pri_phone" data-rule-required="true" data-rule-number="true" maxlength="10" size="10"
                                       	<?php
 											if($logged_mobilenum != '')
 											{
@@ -562,7 +562,7 @@
 										?>
                                       >
                                       <label class="col-md-3 col-xs-12" for="name">Alternate Phone Number</label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone"
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_alt_phone" name="txt_alt_phone" data-rule-number="true" maxlength="10" size="10"
                                       	<?php
 										if($comp_sec_phone != '')
 										{
@@ -606,14 +606,12 @@
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true">
-                                      	<?php
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"><?php
 										if($comp_bill_address != '')
 										{
 											echo $comp_bill_address;
 										}
-										?>
-                                      </textarea>
+										?></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Address -->
                 
@@ -656,7 +654,7 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true"
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
                                       	<?php
 										if($comp_bill_pincode != '')
 										{
@@ -683,14 +681,12 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true">
-                                      	<?php
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"><?php
 										if($comp_ship_address != '')
 										{
 											echo $comp_ship_address;
 										}
-										?>
-                                      </textarea>
+										?></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Address -->
                 
@@ -733,7 +729,7 @@
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Shipping Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true"
+                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
                                       	<?php
 										if($comp_ship_pincode != '')
 										{
@@ -769,10 +765,7 @@
                                     <?php
                                     if($logged_user_type == 'doctors')
                                     {
-                                      ?>
-                                     
-                                  <?php
-								  
+                                      
 								  //  Check Record and return single row
 								  $licRow = checkExist('tbl_doctor_license',array('lic_userid'=>$logged_uid));
 								  if(!$licRow) // for add and update in single form 
@@ -793,7 +786,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -846,7 +839,7 @@
                                   <!--=========================Start : Hospital License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Hospital License Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_number_hospital']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_number_hospital']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -882,7 +875,7 @@
                                <!--=========================Start : Renewal 1 License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 1 License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number_renewal1']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal1_lic_no" name="txt_renewal1_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo $licRow['lic_number_renewal1']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal1_lic_no" name="txt_renewal1_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -918,7 +911,7 @@
                                <!--=========================Start : Renewal 2 License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Renewal 2 License Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_number_renewal2']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal2_lic_no" name="txt_renewal2_lic_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_number_renewal2']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal2_lic_no" name="txt_renewal2_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -977,7 +970,7 @@
                                   <!--=========================Start : 20B License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_20B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_20B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="12" maxlength="12" size="12" >
                                   
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1005,7 +998,7 @@
                                <!--=========================Start : 20B License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21B Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_21B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_21B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1033,7 +1026,7 @@
                                <!--=========================Start : 21L License Number===================================-->
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20C Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_21C_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21c_lic_no" name="txt_21c_lic_no"  minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$licRow['lic_21C_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21c_lic_no" name="txt_21c_lic_no"  minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1097,7 +1090,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Pan Number</label>
-                                      <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true" minlength="10" maxlength="10" >
+                                      <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true" minlength="10" maxlength="10" size="10">
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Number -->
@@ -1160,7 +1153,7 @@
                                    
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Number</label>
-                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no">
+                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true" maxlength="15" size="15">
                                       <div class="clearfix"></div>
                                     </div><!-- GST Number -->                    
                 
