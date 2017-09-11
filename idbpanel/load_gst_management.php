@@ -3,19 +3,19 @@ include("include/routines.php");
 $json 	= file_get_contents('php://input');
 $obj 	= json_decode($json);
 $uid	= $_SESSION['panel_user']['id'];
-$utype				= $_SESSION['panel_user']['utype'];
+$utype	= $_SESSION['panel_user']['utype'];
 
-function insertSpecification($spec_name,$spec_status,$response_array)
+function insertGst($gst_name,$gst_status,$response_array)
 {
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
-	$sql_check_spec 	 = " select * from tbl_composition where spec_name like '".$spec_name."' "; 
+	$sql_check_spec 	 = " select * from tbl_gst_master where gst_name like '".$gst_name."' "; 
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{
-		$sql_insert_spec 	= " INSERT INTO `tbl_composition`(`spec_name`,`spec_created_by`, `spec_created`,`spec_status`) VALUES ('".$spec_name."','".$uid."','".$datetime."','".$spec_status."') ";
+		$sql_insert_spec 	= " INSERT INTO `tbl_gst_master`(`gst_name`,`gst_created_by`, `gst_created`,`gst_status`) VALUES ('".$gst_name."','".$uid."','".$datetime."','".$gst_status."') ";
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
 		{
@@ -44,7 +44,7 @@ function insertSpecification($spec_name,$spec_status,$response_array)
 	}
 	else
 	{
-		$response_array = array("Success"=>"fail","resp"=>"Composition <b>".ucwords($spec_name)."</b> already Exist");
+		$response_array = array("Success"=>"fail","resp"=>"Specification <b>".ucwords($gst_name)."</b> already Exist");
 	}	
 	return $response_array;
 }
@@ -57,7 +57,7 @@ if(isset($_FILES['file']))
 	
 	set_include_path(get_include_path() . PATH_SEPARATOR . 'Classes/');
 	include 'PHPExcel/IOFactory.php';
-	$spec_id 	= 0;
+	$gst_id 	= 0;
 	$msg	= '';
 	$insertion_flag	= 0;
 	$response_array = array();
@@ -78,20 +78,20 @@ if(isset($_FILES['file']))
 	{
 		for($i=2;$i<=$arrayCount;$i++)
 		{
-			$spec_name 				= trim($allDataInSheet[$i]["A"]);
+			$gst_name 				= trim($allDataInSheet[$i]["A"]);
 			
-			$query = " SELECT `id`, `spec_id`, `spec_name`, `spec_status`, `spec_created_by`, `spec_created`, `spec_modified_by`, `spec_modified` 
-						FROM `tbl_composition` 
-						WHERE `spec_name`='".$spec_name."' " ;
+			$query = " SELECT `id`, `gst_id`, `gst_name`, `gst_status`, `gst_created_by`, `gst_created`, `gst_modified_by`, `gst_modified` 
+						FROM `tbl_gst_master` 
+						WHERE `gst_name`='".$gst_name."' " ;
 							
 			$sql 		= mysqli_query($db_con, $query) or die(mysqli_error($db_con));
 			$recResult 	= mysqli_fetch_array($sql);
 			
-			$existName 		= $recResult["spec_name"];
+			$existName 		= $recResult["gst_name"];
 			
 			if($existName=="" )
 			{
-				$response_array 	= insertSpecification($spec_name,$spec_status,$response_array);
+				$response_array 	= insertGst($gst_name,$gst_status,$response_array);
 				if($response_array)
 				{
 					$insertion_flag	= 1;	
@@ -104,7 +104,7 @@ if(isset($_FILES['file']))
 			else
 			{
 				// error data array
-				$error_data = array("spec_name"=>$spec_name);	
+				$error_data = array("gst_name"=>$gst_name);	
 				
 				$sql_get_last_record	= " SELECT * FROM `tbl_error_data` ORDER by `error_id` DESC LIMIT 0,1 ";
 				$res_get_last_record	= mysqli_query($db_con, $sql_get_last_record) or die(mysqli_error($db_con));
@@ -119,7 +119,7 @@ if(isset($_FILES['file']))
 					$error_id	= $row_get_last_record['error_id']+1;
 				}
 				
-				$error_module_name	= "composition";
+				$error_module_name	= "GST Managment";
 				$error_file			= $inputFileName;
 				$error_status		= '1';
 				$error_data_json	= json_encode($error_data);
@@ -151,12 +151,12 @@ if(isset($_FILES['file']))
 
 if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 {
-	$spec_name			= strtolower(mysqli_real_escape_string($db_con,$obj->spec_name));
-	$spec_status		= $obj->spec_status;
+	$gst_name			= strtolower(mysqli_real_escape_string($db_con,$obj->gst_name));
+	$gst_status		= $obj->gst_status;
 	$response_array 	= array();	
-	if($spec_name != "" && $spec_status != "")
+	if($gst_name != "" && $gst_status != "")
 	{
-		$response_array = insertSpecification($spec_name,$spec_status,$response_array);
+		$response_array = insertGst($gst_name,$gst_status,$response_array);
 	}
 	else
 	{
@@ -165,117 +165,117 @@ if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 	echo json_encode($response_array);		
 }
 
-if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
+if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 {
-	$spec_id = $obj->spec_id;
+	$gst_id = $obj->gst_id;
 	$req_type = $obj->req_type;
 	$response_array = array();
 	if($req_type != "")
 	{
-		if($spec_id != "" && $req_type == "error")
+		if($gst_id != "" && $req_type == "error")
 		{
-			$sql_error_data 	= " SELECT * FROM `tbl_error_data` WHERE `error_id` = '".$spec_id."' "; // this spec_id is error id from error table
+			$sql_error_data 	= " SELECT * FROM `tbl_error_data` WHERE `error_id` = '".$gst_id."' "; // this gst_id is error id from error table
 			$result_error_data 	= mysqli_query($db_con,$sql_error_data) or die(mysqli_error($db_con));
 			$row_error_data		= mysqli_fetch_array($result_error_data);	
-			$row_spec_data		= json_decode($row_error_data['error_data']);
+			$row_gst_data		= json_decode($row_error_data['error_data']);
 		}
-		else if($spec_id != "" && $req_type == "edit")
+		else if($gst_id != "" && $req_type == "edit")
 		{
-			$sql_spec_data 	= "Select * from tbl_composition where spec_id = '".$spec_id."' ";
-			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
-			$row_spec_data		= mysqli_fetch_array($result_spec_data);		
+			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
+			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
+			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
 		}	
-		else if($spec_id != "" && $req_type == "view")
+		else if($gst_id != "" && $req_type == "view")
 		{
-			$sql_spec_data 	= "Select * from tbl_composition where spec_id = '".$spec_id."' ";
-			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
-			$row_spec_data		= mysqli_fetch_array($result_spec_data);		
+			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
+			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
+			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
 		}			
 		$data = '';
-		if($spec_id != "" && $req_type == "edit")
+		if($gst_id != "" && $req_type == "edit")
 		{
-			$data .= '<input type="hidden" id="spec_id" value="'.$row_spec_data['spec_id'].'">';
+			$data .= '<input type="hidden" id="gst_id" value="'.$row_gst_data['gst_id'].'">';
 		}
-		elseif($spec_id != "" && $req_type == "error")
+		elseif($gst_id != "" && $req_type == "error")
 		{
-			$data .= '<input type="hidden" id="error_id" value="'.$spec_id.'">';
+			$data .= '<input type="hidden" id="error_id" value="'.$gst_id.'">';
 		}	                                                         		
 		$data .= '<div class="control-group">';
-		$data .= '<label for="tasktitel" class="control-label">Composition Name <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+		$data .= '<label for="tasktitel" class="control-label">GST Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" id="spec_name" name="spec_name" class="input-large" data-rule-required="true" ';
-		if($spec_id != "" && $req_type == "edit")
+		$data .= '<input type="text" step="0.01" id="gst_name" name="gst_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
+		if($gst_id != "" && $req_type == "edit")
 		{
-			$data .= ' value="'.ucwords($row_spec_data['spec_name']).'"'; 
+			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'"'; 
 		}
-		elseif($spec_id != "" && $req_type == "error")
+		elseif($gst_id != "" && $req_type == "error")
 		{
-			$data .= ' value="'.ucwords($row_spec_data->spec_name).'"'; 			
+			$data .= ' value="'.ucwords($row_gst_data->gst_name).'"'; 			
 		}
-		elseif($spec_id != "" && $req_type == "view")
+		elseif($gst_id != "" && $req_type == "view")
 		{
-			$data .= ' value="'.ucwords($row_spec_data['spec_name']).'" disabled';
+			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'" disabled';
 		}
-		$data .= '/>';
+		$data .= '/> %';
 		$data .= '</div>';
-		$data .= '</div> <!-- Specification Name -->';
+		$data .= '</div> <!-- GST Name -->';
 		$data .= '<div class="control-group">';
 		$data .= '<label for="radio" class="control-label">Status<span style="color:#F00;font-size:20px;">*</span></label>';
 		$data .= '<div class="controls">';
-		if($spec_id != "" && $req_type == "error")
+		if($gst_id != "" && $req_type == "error")
 		{
-			$data .= '<input type="radio" name="spec_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_specifications.php",3);
+			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
+			$dis	= checkFunctionalityRight("view_gst_management.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_spec_data->spec_status == 1)
+			if($row_gst_data->gst_status == 1)
 			{
 				$data .= 'checked';
 			}
 			$data .= '>Active';
-			$data .= '<input type="radio" name="spec_status" value="0" class="css-radio" data-rule-required="true"';
+			$data .= '<input type="radio" name="gst_status" value="0" class="css-radio" data-rule-required="true"';
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_spec_data->spec_status == 0)
+			if($row_gst_data->gst_status == 0)
 			{
 				$data .= 'checked';
 			}
 			$data .= '>Inactive';
 		}
-		elseif($spec_id != "" && $req_type == "view")
+		elseif($gst_id != "" && $req_type == "view")
 		{
-			if($row_spec_data['spec_status'] == 1)
+			if($row_gst_data['gst_status'] == 1)
 			{
 				$data .= '<label class="control-label" style="color:#30DD00">Active</label>';
 			}
-			if($row_spec_data['spec_status'] == 0)
+			if($row_gst_data['gst_status'] == 0)
 			{
 				$data .= '<label class="control-label" style="color:#E63A3A">Inactive</label>';
 			}
 		}			
 		else
 		{
-			$data .= '<input type="radio" name="spec_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_specifications.php",3);
+			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
+			$dis	= checkFunctionalityRight("view_gst_management.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_spec_data['spec_status'] == 1)
+			if($row_gst_data['gst_status'] == 1)
 			{
 				$data .= 'checked ';
 			}
 			$data .= '>Active';
-			$data .= '<input type="radio" name="spec_status" value="0" class="css-radio" data-rule-required="true"';
+			$data .= '<input type="radio" name="gst_status" value="0" class="css-radio" data-rule-required="true"';
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_spec_data['spec_status'] == 0)
+			if($row_gst_data['gst_status'] == 0)
 			{
 				$data .= 'checked';
 			}
@@ -286,15 +286,15 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		$data .= '</div>';
 		$data .= '</div><!--Status-->';
 		$data .= '<div class="form-actions">';
-		if($spec_id == "" && $req_type == "add")
+		if($gst_id == "" && $req_type == "add")
 		{
 			$data .= '<button type="submit" name="reg_submit_add" class="btn-success">Create</button>';			
 		}
-		elseif($spec_id != "" && $req_type == "edit")
+		elseif($gst_id != "" && $req_type == "edit")
 		{
 			$data .= '<button type="submit" name="reg_submit_edit" class="btn-success">Update</button>';			
 		}			
-		elseif($spec_id != "" && $req_type == "error")
+		elseif($gst_id != "" && $req_type == "error")
 		{
 			$data .= '<button type="submit" name="reg_submit_error" class="btn-success">Update</button>';						
 		}
@@ -323,96 +323,96 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start_offset  += $page * $per_page;
 		$start 			= $page * $per_page;
 			
-		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.spec_created_by) AS name_spec_created_by, ";
-		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.spec_modified_by) AS name_spec_modified_by FROM `tbl_composition` AS tbm WHERE 1=1 ";
+		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_created_by) AS name_gst_created_by, ";
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_modified_by) AS name_gst_modified_by FROM `tbl_gst_master` AS tbm WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
 		{
-			$sql_load_data  .= " AND spec_created_by='".$uid."' ";
+			$sql_load_data  .= " AND gst_created_by='".$uid."' ";
 		}
 		if($search_text != "")
 		{
-			$sql_load_data .= " AND (spec_id like '%".$search_text."%' or spec_name like '%".$search_text."%' or spec_created like '%".$search_text."%' or  spec_modified like '%".$search_text."%')";
+			$sql_load_data .= " AND (gst_id like '%".$search_text."%' or gst_name like '%".$search_text."%' or gst_created like '%".$search_text."%' or  gst_modified like '%".$search_text."%')";
 		}
 		$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);		
-		$sql_load_data .=" ORDER BY spec_name ASC LIMIT $start, $per_page ";
+		$sql_load_data .=" ORDER BY gst_id DESC LIMIT $start, $per_page ";
 		$result_load_data = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));
 		if($result_load_data)		
 		{
 			if(strcmp($data_count,"0") !== 0)
 			{		
-				$spec_data = "";	
-				$spec_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
-    	 		$spec_data .= '<thead>';
-    	  		$spec_data .= '<tr>';
-         		$spec_data .= '<th>Sr. No.</th>';
-				$spec_data .= '<th>Id</th>';
-				$spec_data .= '<th>Composition Name</th>';
-				$spec_data .= '<th>Created By</th>';
-				$spec_data .= '<th>Created</th>';
-				$spec_data .= '<th>Modified By</th>';
-				$spec_data .= '<th>Modified</th>';	
-				$dis = checkFunctionalityRight("view_specifications.php",3);
+				$gst_data = "";	
+				$gst_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
+    	 		$gst_data .= '<thead>';
+    	  		$gst_data .= '<tr>';
+         		$gst_data .= '<th>Sr. No.</th>';
+				$gst_data .= '<th>Id</th>';
+				$gst_data .= '<th>GST Value</th>';
+				$gst_data .= '<th>Created By</th>';
+				$gst_data .= '<th>Created</th>';
+				$gst_data .= '<th>Modified By</th>';
+				$gst_data .= '<th>Modified</th>';	
+				$dis = checkFunctionalityRight("view_gst_management.php",3);
 				if($dis)
 				{					
-					$spec_data .= '<th>Status</th>';											
+					$gst_data .= '<th>Status</th>';											
 				}
-				$edit = checkFunctionalityRight("view_specifications.php",1);
+				$edit = checkFunctionalityRight("view_gst_management.php",1);
 				if($edit)
 				{					
-					$spec_data .= '<th>Edit</th>';			
+					$gst_data .= '<th>Edit</th>';			
 				}	
-				$delete = checkFunctionalityRight("view_specifications.php",2);
+				$delete = checkFunctionalityRight("view_gst_management.php",2);
 				if($delete)
 				{					
-					$spec_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
+					$gst_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
 				}					
-          		$spec_data .= '</tr>';
-      			$spec_data .= '</thead>';
-      			$spec_data .= '<tbody>';
+          		$gst_data .= '</tr>';
+      			$gst_data .= '</thead>';
+      			$gst_data .= '<tbody>';
 				while($row_load_data = mysqli_fetch_array($result_load_data))
 				{
-	    		  	$spec_data .= '<tr>';				
-					$spec_data .= '<td>'.++$start_offset.'</td>';				
-					$spec_data .= '<td>'.$row_load_data['spec_id'].'</td>';
-					$spec_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['spec_name']).'" class="btn-link" id="'.$row_load_data['spec_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
-					$spec_data .= '<td>'.$row_load_data['name_spec_created_by'].'</td>';
-					$spec_data .= '<td>'.$row_load_data['spec_created'].'</td>';
-					$spec_data .= '<td>'.$row_load_data['name_spec_modified_by'].'</td>';
-					$spec_data .= '<td>'.$row_load_data['spec_modified'].'</td>';
-					$dis = checkFunctionalityRight("view_specifications.php",3);
+	    		  	$gst_data .= '<tr>';				
+					$gst_data .= '<td>'.++$start_offset.'</td>';				
+					$gst_data .= '<td>'.$row_load_data['gst_id'].'</td>';
+					$gst_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['gst_name']).'%" class="btn-link" id="'.$row_load_data['gst_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
+					$gst_data .= '<td>'.$row_load_data['name_gst_created_by'].'</td>';
+					$gst_data .= '<td>'.$row_load_data['gst_created'].'</td>';
+					$gst_data .= '<td>'.$row_load_data['name_gst_modified_by'].'</td>';
+					$gst_data .= '<td>'.$row_load_data['gst_modified'].'</td>';
+					$dis = checkFunctionalityRight("view_gst_management.php",3);
 					if($dis)
 					{					
-						$spec_data .= '<td style="text-align:center">';	
-						if($row_load_data['spec_status'] == 1)
+						$gst_data .= '<td style="text-align:center">';	
+						if($row_load_data['gst_status'] == 1)
 						{
-							$spec_data .= '<input type="button" value="Active" id="'.$row_load_data['spec_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
+							$gst_data .= '<input type="button" value="Active" id="'.$row_load_data['gst_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
 						}
 						else
 						{
-							$spec_data .= '<input type="button" value="Inactive" id="'.$row_load_data['spec_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+							$gst_data .= '<input type="button" value="Inactive" id="'.$row_load_data['gst_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
 						}
-						$spec_data .= '</td>';	
+						$gst_data .= '</td>';	
 					}
-					$edit = checkFunctionalityRight("view_specifications.php",1);
+					$edit = checkFunctionalityRight("view_gst_management.php",1);
 					if($edit)
 					{						
-						$spec_data .= '<td style="text-align:center">';
-						$spec_data .= '<input type="button" value="Edit" id="'.$row_load_data['spec_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
+						$gst_data .= '<td style="text-align:center">';
+						$gst_data .= '<input type="button" value="Edit" id="'.$row_load_data['gst_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
 					}
-					$delete = checkFunctionalityRight("view_specifications.php",2);
+					$delete = checkFunctionalityRight("view_gst_management.php",2);
 					if($delete)
 					{					
-						$spec_data .= '<td><div class="controls" align="center">';
-						$spec_data .= '<input type="checkbox"  id="batch'.$row_load_data['spec_id'].'" name="batch'.$row_load_data['spec_id'].'" value="'.$row_load_data['spec_id'].'"  class="css-checkbox batch">';
-						$spec_data .= '<label for="batch'.$row_load_data['spec_id'].'" class="css-label" style="color:#FFF"></label>';
-						$spec_data .= '</div></td>';										
+						$gst_data .= '<td><div class="controls" align="center">';
+						$gst_data .= '<input type="checkbox"  id="batch'.$row_load_data['gst_id'].'" name="batch'.$row_load_data['gst_id'].'" value="'.$row_load_data['gst_id'].'"  class="css-checkbox batch">';
+						$gst_data .= '<label for="batch'.$row_load_data['gst_id'].'" class="css-label" style="color:#FFF"></label>';
+						$gst_data .= '</div></td>';										
 					}
-	        	  	$spec_data .= '</tr>';															
+	        	  	$gst_data .= '</tr>';															
 				}	
-      			$spec_data .= '</tbody>';
-      			$spec_data .= '</table>';	
-				$spec_data .= $data_count;
-				$response_array = array("Success"=>"Success","resp"=>$spec_data);
+      			$gst_data .= '</tbody>';
+      			$gst_data .= '</table>';	
+				$gst_data .= $data_count;
+				$response_array = array("Success"=>"Success","resp"=>$gst_data);
 			}
 			else
 			{
@@ -433,10 +433,10 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 
 if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 {
-	$spec_id				= $obj->spec_id;
+	$gst_id				= $obj->gst_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();		
-	$sql_update_status 		= " UPDATE `tbl_composition` SET `spec_status`= '".$curr_status."' ,`spec_modified` = '".$datetime."' ,`spec_modified_by` = '".$uid."' WHERE `spec_id` like '".$spec_id."' ";
+	$sql_update_status 		= " UPDATE `tbl_gst_master` SET `gst_status`= '".$curr_status."' ,`gst_modified` = '".$datetime."' ,`gst_modified_by` = '".$uid."' WHERE `gst_id` like '".$gst_id."' ";
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -451,19 +451,19 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 
 if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 {
-	$spec_id			= $obj->spec_id;
-	$spec_name			= strtolower(mysqli_real_escape_string($db_con,$obj->spec_name));
-	$spec_status		= $obj->spec_status;
+	$gst_id			= $obj->gst_id;
+	$gst_name			= strtolower(mysqli_real_escape_string($db_con,$obj->gst_name));
+	$gst_status		= $obj->gst_status;
 	$response_array 	= array();
-	if($spec_name != "" && $spec_id != "" && $spec_status != "")
+	if($gst_name != "" && $gst_id != "" && $gst_status != "")
 	{
-		$sql_check_spec 		= " select * from tbl_composition where spec_name like '".$spec_name."' and `spec_id` != '".$spec_id."' "; 
+		$sql_check_spec 		= " select * from tbl_gst_master where gst_name like '".$gst_name."' and `gst_id` != '".$gst_id."' "; 
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{		
-			$sql_update_spec 	= " UPDATE `tbl_composition` SET `spec_name`='".$spec_name."',`spec_status`='".$spec_status."',";
-			$sql_update_spec  .= " `spec_modified`='".$datetime."',`spec_modified_by`='".$uid."' WHERE `spec_id` = '".$spec_id."' ";		
+			$sql_update_spec 	= " UPDATE `tbl_gst_master` SET `gst_name`='".$gst_name."',`gst_status`='".$gst_status."',";
+			$sql_update_spec  .= " `gst_modified`='".$datetime."',`gst_modified_by`='".$uid."' WHERE `gst_id` = '".$gst_id."' ";		
 			$result_update_spec = mysqli_query($db_con,$sql_update_spec) or die(mysqli_error($db_con));
 			if($result_update_spec)
 			{
@@ -476,7 +476,7 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 		}
 		else
 		{
-			$response_array 	= array("Success"=>"fail","resp"=>"Composition ".$spec_name." already Exist");			
+			$response_array 	= array("Success"=>"fail","resp"=>"Specification ".$gst_name." already Exist");			
 		}
 	}
 	else
@@ -489,11 +489,11 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 {
 	$response_array = array();		
-	$ar_spec_id 	= $obj->batch;
+	$ar_gst_id 	= $obj->batch;
 	$del_flag 		= 0; 
-	foreach($ar_spec_id as $spec_id)	
+	foreach($ar_gst_id as $gst_id)	
 	{
-		$sql_delete_spec		= " DELETE FROM `tbl_composition` WHERE `spec_id` = '".$spec_id."' ";
+		$sql_delete_spec		= " DELETE FROM `tbl_gst_master` WHERE `gst_id` = '".$gst_id."' ";
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));			
 		if($result_delete_spec)
 		{
@@ -533,7 +533,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_created_by) as created_by_name, ";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_modified_by) as modified_by_name ";
 		$sql_load_data  .= " FROM `tbl_error_data`  ";
-		$sql_load_data  .= " WHERE error_module_name='composition' ";
+		$sql_load_data  .= " WHERE error_module_name='specification' ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND error_created_by='".$uid."' ";
@@ -552,69 +552,69 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				
 		if(strcmp($data_count,"0") !== 0)
 		{		
-			$spec_data = "";	
-			$spec_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
-    	 	$spec_data .= '<thead>';
-    	  	$spec_data .= '<tr>';
-         	$spec_data .= '<th>Sr. No.</th>';
-			$spec_data .= '<th>Composition Name</th>';
-			//$spec_data .= '<th>Description</th>';
-			//$spec_data .= '<th>Parent</th>';
-			$spec_data .= '<th>Created</th>';
-			$spec_data .= '<th>Created By</th>';
-			$spec_data .= '<th>Modified</th>';
-			$spec_data .= '<th>Modified By</th>';
-			$spec_data .= '<th>Edit</th>';			
-			$spec_data .= '<th>
+			$gst_data = "";	
+			$gst_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
+    	 	$gst_data .= '<thead>';
+    	  	$gst_data .= '<tr>';
+         	$gst_data .= '<th>Sr. No.</th>';
+			$gst_data .= '<th>Specification Name</th>';
+			//$gst_data .= '<th>Description</th>';
+			//$gst_data .= '<th>Parent</th>';
+			$gst_data .= '<th>Created</th>';
+			$gst_data .= '<th>Created By</th>';
+			$gst_data .= '<th>Modified</th>';
+			$gst_data .= '<th>Modified By</th>';
+			$gst_data .= '<th>Edit</th>';			
+			$gst_data .= '<th>
 							<div style="text-align:center">
 								<input type="button"  value="Delete" onclick="multipleDelete_error();" class="btn-danger"/>
 							</div>
 						</th>';
-          	$spec_data .= '</tr>';
-      		$spec_data .= '</thead>';
-      		$spec_data .= '<tbody>';
+          	$gst_data .= '</tr>';
+      		$gst_data .= '</thead>';
+      		$gst_data .= '<tbody>';
 			while($row_load_data = mysqli_fetch_array($result_load_data))
 			{
-				$get_spec_rec	= json_decode($row_load_data['error_data']);
+				$get_gst_rec	= json_decode($row_load_data['error_data']);
 				
-				$er_spec_name	= $get_spec_rec->spec_name;
+				$er_gst_name	= $get_gst_rec->gst_name;
 				
-				$spec_data .= '<tr>';				
-				$spec_data .= '<td>'.++$start_offset.'</td>';				
-				$spec_data .= '<td>';
-					$sql_chk_name_already_exist	= " SELECT `spec_name` FROM `tbl_composition` WHERE `spec_name`='".$er_spec_name."' ";
+				$gst_data .= '<tr>';				
+				$gst_data .= '<td>'.++$start_offset.'</td>';				
+				$gst_data .= '<td>';
+					$sql_chk_name_already_exist	= " SELECT `gst_name` FROM `tbl_gst_master` WHERE `gst_name`='".$er_gst_name."' ";
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 					
 					if(strcmp($num_chk_name_already_exist,"0")===0)
 					{
-						$spec_data .= $er_spec_name;
+						$gst_data .= $er_gst_name;
 					}
 					else
 					{
-						$spec_data .= '<span style="color:#E63A3A;">'.$er_spec_name.' [Already Exist]</span>';
+						$gst_data .= '<span style="color:#E63A3A;">'.$er_gst_name.' [Already Exist]</span>';
 					}
-				$spec_data .= '</td>';
-				//$spec_data .= '<td>'.$row_load_data['cat_description'].'</td>';
+				$gst_data .= '</td>';
+				//$gst_data .= '<td>'.$row_load_data['cat_description'].'</td>';
 				
-				$spec_data .= '<td>'.$row_load_data['error_created'].'</td>';
-				$spec_data .= '<td>'.$row_load_data['created_by_name'].'</td>';
-				$spec_data .= '<td>'.$row_load_data['error_modified'].'</td>';
-				$spec_data .= '<td>'.$row_load_data['modified_by_name'].'</td>';
-				$spec_data .= '<td style="text-align:center">';
-				$spec_data .= '<input type="button" value="Edit" id="'.$row_load_data['error_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'error\');"></td>';						
-				$spec_data .= '<td>
+				$gst_data .= '<td>'.$row_load_data['error_created'].'</td>';
+				$gst_data .= '<td>'.$row_load_data['created_by_name'].'</td>';
+				$gst_data .= '<td>'.$row_load_data['error_modified'].'</td>';
+				$gst_data .= '<td>'.$row_load_data['modified_by_name'].'</td>';
+				$gst_data .= '<td style="text-align:center">';
+				$gst_data .= '<input type="button" value="Edit" id="'.$row_load_data['error_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'error\');"></td>';						
+				$gst_data .= '<td>
 								<div class="controls" align="center">';
-				$spec_data .= '		<input type="checkbox" value="'.$row_load_data['error_id'].'" id="error_batch'.$row_load_data['error_id'].'" name="error_batch'.$row_load_data['error_id'].'" class="css-checkbox error_batch">';
-				$spec_data .= '		<label for="error_batch'.$row_load_data['error_id'].'" class="css-label"></label>';
-				$spec_data .= '	</div>
+				$gst_data .= '		<input type="checkbox" value="'.$row_load_data['error_id'].'" id="error_batch'.$row_load_data['error_id'].'" name="error_batch'.$row_load_data['error_id'].'" class="css-checkbox error_batch">';
+				$gst_data .= '		<label for="error_batch'.$row_load_data['error_id'].'" class="css-label"></label>';
+				$gst_data .= '	</div>
 							  </td>';										
-	          	$spec_data .= '</tr>';															
+	          	$gst_data .= '</tr>';															
 			}	
-      		$spec_data .= '</tbody>';
-      		$spec_data .= '</table>';	
-			$spec_data .= $data_count;
-			$response_array = array("Success"=>"Success","resp"=>$spec_data);					
+      		$gst_data .= '</tbody>';
+      		$gst_data .= '</table>';	
+			$gst_data .= $data_count;
+			$response_array = array("Success"=>"Success","resp"=>$gst_data);					
 		}
 		else
 		{
@@ -628,14 +628,14 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 	
 	echo json_encode($response_array);
 }
-if((isset($obj->delete_spec_error)) == "1" && isset($obj->delete_spec_error))
+if((isset($obj->delete_gst_error)) == "1" && isset($obj->delete_gst_error))
 {
-	$ar_spec_id 		= $obj->batch;
+	$ar_gst_id 		= $obj->batch;
 	$response_array = array();	
 	$del_flag_error = 0; 
-	foreach($ar_spec_id as $spec_id)	
+	foreach($ar_gst_id as $gst_id)	
 	{
-		$sql_delete_cat_error	= " DELETE FROM `tbl_error_data` WHERE `error_id` = '".$spec_id."' ";
+		$sql_delete_cat_error	= " DELETE FROM `tbl_error_data` WHERE `error_id` = '".$gst_id."' ";
 		
 		$result_delete_cat_error= mysqli_query($db_con,$sql_delete_cat_error) or die(mysqli_error($db_con));			
 		if($result_delete_cat_error)

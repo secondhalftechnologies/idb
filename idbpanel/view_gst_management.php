@@ -4,7 +4,7 @@ checkuser();
 chkRights(basename($_SERVER['PHP_SELF']));
 
 // This is for dynamic title, bread crum, etc.
-$title = "View Composition";
+$title = "View GST";
 $path_parts   		= pathinfo(__FILE__);
 $filename 	  		= $path_parts['filename'].".php";
 $sql_feature 		= "select * from tbl_admin_features where af_page_url = '".$filename."'";
@@ -39,7 +39,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec">                
 				<?php 
 				/* this function used to add navigation menu to the page*/ 
-				breadcrumbs($home_url,$home_name,'View Compositions',$filename,$feature_name); 
+				breadcrumbs($home_url,$home_name,'View GST',$filename,$feature_name); 
 				/* this function used to add navigation menu to the page*/ 
 				?>          
                         <div class="row-fluid">
@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Composition</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd GST</button>
   											<?php		
 										}
 									?>                                      
@@ -92,7 +92,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Excel Bulk Upload For Composition
+                                            Excel Bulk Upload For GST
                                         </h3>
                                        
                                     </div> <!-- header title-->
@@ -124,7 +124,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Wrong Entries For Compositions
+                                            Wrong Entries For GST
                                         </h3>
                                        
                                     </div> <!-- header title-->
@@ -154,11 +154,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 <?php 	} ?>
                             </div>
                         </div>
-                    </div> <!-- View Specification-->          
+                    </div> <!-- View gst-->          
                 <div class="container-fluid" id="div_add_spec" style="display:none">                
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Add Composition',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Add gst',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>           
                     <div class="row-fluid">
@@ -167,24 +167,24 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Composition
+                                            Add GST
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">                                     
-                                    	<form id="frm_spec_add" class="form-horizontal form-bordered form-validate" >
-                                        	<div id="div_add_spec_part" class="data_container">
+                                    	<form id="frm_gst_add" class="form-horizontal form-bordered form-validate" >
+                                        	<div id="div_add_gst_part" class="data_container">
                                         	</div>                                    
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Add Specification -->
+                    </div> <!-- Add gst -->
                 <div class="container-fluid" id="div_edit_spec" style="display:none">   
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Edit Composition',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Edit GST',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>                                    
                     <div class="row-fluid">
@@ -193,24 +193,24 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Composition
+                                            Edit GST
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
-                                    	<form id="frm_spec_edit" class="form-horizontal form-bordered form-validate" >
-                                        	<div id="div_edit_spec_part" class="data_container">
+                                    	<form id="frm_gst_edit" class="form-horizontal form-bordered form-validate" >
+                                        	<div id="div_edit_gst_part" class="data_container">
                                         	</div>                                    
 										</form>                                    
     	                            </div>
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Edit Specification -->   
+                    </div> <!-- Edit gst -->   
 				<div class="container-fluid" id="div_error_spec" style="display:none">   
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'Edit Error Composition',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'Edit Error GST',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>                                    
                     <div class="row-fluid">
@@ -219,24 +219,24 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Error Composition
+                                            Edit Error GST
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                               
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
-                                    	<form id="frm_spec_error" class="form-horizontal form-bordered form-validate" >
-                                        	<div id="div_error_spec_part" class="data_container">
+                                    	<form id="frm_gst_error" class="form-horizontal form-bordered form-validate" >
+                                        	<div id="div_error_gst_part" class="data_container">
                                         	</div>                                    
 										</form>                                    
     	                            </div>
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Error Specification -->   
-                <div class="container-fluid" id="div_view_spec_details" style="display:none">                
+                    </div> <!-- Error gst -->   
+                <div class="container-fluid" id="div_view_gst_details" style="display:none">                
 					<?php 
 						/* this function used to add navigation menu to the page*/ 
-						breadcrumbs($home_url,$home_name,'View Composition Details',$filename,$feature_name); 
+						breadcrumbs($home_url,$home_name,'View gst Details',$filename,$feature_name); 
 						/* this function used to add navigation menu to the page*/ 
 					?>        
                     <div class="row-fluid">
@@ -245,20 +245,20 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Compositions  Details
+                                            GST Details
                                         </h3>
                                         <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>       
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
-                                    	<form id="frm_view_spec_details" class="form-horizontal form-bordered form-validate" >
-                                        	<div id="div_view_spec_details_part" class="data_container">
+                                    	<form id="frm_view_gst_details" class="form-horizontal form-bordered form-validate" >
+                                        	<div id="div_view_gst_details_part" class="data_container">
                                         	</div>                                    
 										</form>  
                                 	</div>
                                 </div>    
                             </div>
                         </div>
-                    </div> <!-- View Details Specification -->                        
+                    </div> <!-- View Details gst -->                        
                 </div>
             </div>
         </div>
@@ -284,7 +284,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"batch":batch, "delete_spec":1};
 				var del_spec 	= JSON.stringify(sendInfo);								
 				$.ajax({
-					url: "load_specifications.php",
+					url: "load_gst_management.php",
 					type: "POST",
 					data: del_spec,
 					contentType: "application/json; charset=utf-8",						
@@ -333,11 +333,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			else
 			{
 				var sendInfo = {"row_limit":row_limit, "search_text":search_text, "load_spec":load_spec, "page":page};
-				var spec_load = JSON.stringify(sendInfo);				
+				var gst_load = JSON.stringify(sendInfo);				
 				$.ajax({
-					url: "load_specifications.php",
+					url: "load_gst_management.php",
 					type: "POST",
-					data: spec_load,
+					data: gst_load,
 					contentType: "application/json; charset=utf-8",						
 					success: function(response) 
 					{
@@ -367,10 +367,10 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			    });
 			}
 		}
-		function changeStatus(spec_id,curr_status)
+		function changeStatus(gst_id,curr_status)
 		{
 			loading_show();
-			if(spec_id == "" && curr_status == "")
+			if(gst_id == "" && curr_status == "")
 			{
 				$("#model_body").html('<span style="style="color:#F00;"> User id or Status to change not available</span>');
 				$('#error_model').modal('toggle');
@@ -379,12 +379,12 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			else
 			{
 				change_status 	= 1;
-				var sendInfo 	= {"spec_id":spec_id, "curr_status":curr_status, "change_status":change_status};
-				var spec_status 	= JSON.stringify(sendInfo);								
+				var sendInfo 	= {"gst_id":gst_id, "curr_status":curr_status, "change_status":change_status};
+				var gst_status 	= JSON.stringify(sendInfo);								
 				$.ajax({
-					url: "load_specifications.php",
+					url: "load_gst_management.php",
 					type: "POST",
-					data: spec_status,
+					data: gst_status,
 					contentType: "application/json; charset=utf-8",						
 					success: function(response) 
 					{			
@@ -415,7 +415,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			    });						
 			}
 		}	
-		function addMoreSpec(spec_id,req_type)
+		function addMoreSpec(gst_id,req_type)
 		{
 			$('#div_view_spec').css("display", "none");
 			if(req_type == "add")
@@ -432,12 +432,12 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			}
 			else if(req_type == "view")
 			{
-				$('#div_view_spec_details').css("display", "block");				
+				$('#div_view_gst_details').css("display", "block");				
 			}							
-			var sendInfo = {"spec_id":spec_id,"req_type":req_type,"load_spec_parts":1};
+			var sendInfo = {"gst_id":gst_id,"req_type":req_type,"load_gst_parts":1};
 			var cat_load = JSON.stringify(sendInfo);
 			$.ajax({
-					url: "load_specifications.php?",
+					url: "load_gst_management.php?",
 					type: "POST",
 					data: cat_load,
 					contentType: "application/json; charset=utf-8",						
@@ -448,19 +448,19 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 						{
 							if(req_type == "add")
 							{
-								$("#div_add_spec_part").html(data.resp);
+								$("#div_add_gst_part").html(data.resp);
 							}
 							else if(req_type == "edit")
 							{
-								$("#div_edit_spec_part").html(data.resp);				
+								$("#div_edit_gst_part").html(data.resp);				
 							}	
 							else if(req_type == "error")
 							{
-								$("#div_error_spec_part").html(data.resp);				
+								$("#div_error_gst_part").html(data.resp);				
 							}
 							else if(req_type == "view")
 							{
-								$("#div_view_spec_details_part").html(data.resp);
+								$("#div_view_gst_details_part").html(data.resp);
 							}
 							loading_hide();
 						} 
@@ -549,7 +549,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo_error 		= {"row_limit1":row_limit1, "search_text1":search_text1, "load_error":load_error, "page1":page1,"cat_parent1":cat_parent1};
 				var cat_load_error = JSON.stringify(sendInfo_error);				
 				$.ajax({
-					url: "load_specifications.php?",
+					url: "load_gst_management.php?",
 					type: "POST",
 					data: cat_load_error,
 					contentType: "application/json; charset=utf-8",						
@@ -599,11 +599,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			else
 			{
 				//delete_catogery_error 	= 1;
-				var sendInfo 	= {"batch":batch, "delete_spec_error":1};
+				var sendInfo 	= {"batch":batch, "delete_gst_error":1};
 				var del_cat 	= JSON.stringify(sendInfo);	
 				
 				$.ajax({
-					url: "load_specifications.php?",
+					url: "load_gst_management.php?",
 					type: "POST",
 					data: del_cat,
 					contentType: "application/json; charset=utf-8",						
@@ -644,7 +644,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				loading_show();	
 				$.ajax({
-						url: "load_specifications.php?",
+						url: "load_gst_management.php?",
 						type: "POST",
 						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 						contentType: false,       // The content type used when sending data to the server.
@@ -656,7 +656,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							if(data.Success == "Success") 
 							{
 								//$("#req_resp").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								window.location.assign("view_specifications.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_gst_management.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							} 
 							else 
@@ -679,14 +679,14 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				    });
 			}
 		});		
-		$('#frm_spec_add').on('submit', function(e) {
+		$('#frm_gst_add').on('submit', function(e) {
 			e.preventDefault();
-			if ($('#frm_spec_add').valid())
+			if ($('#frm_gst_add').valid())
 			{
 				loading_show();	
-				var spec_name 		= $.trim($("#spec_name").val());
-				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_add').val()			
-				if(spec_name == "" && spec_status == "")
+				var gst_name 		= $.trim($("#gst_name").val());
+				var gst_status 	= $('input[name=gst_status]:checked', '#frm_gst_add').val()			
+				if(gst_name == "" && gst_status == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">Please fill details</span>');
 					$('#error_model').modal('toggle');
@@ -696,19 +696,20 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{
 					e.preventDefault();
 					$('input[name="reg_submit_add"]').attr('disabled', 'true');
-					var sendInfo 	= {"spec_name":spec_name,"spec_status":spec_status,"insert_req":"1"};
-					var spec_insert = JSON.stringify(sendInfo);				
+                    
+					var sendInfo 	= {"gst_name":gst_name,"gst_status":gst_status,"insert_req":"1"};
+					var gst_insert = JSON.stringify(sendInfo);				
 					$.ajax({
-						url: "load_specifications.php",
+						url: "load_gst_management.php",
 						type: "POST",
-						data: spec_insert,
+						data: gst_insert,
 						contentType: "application/json; charset=utf-8",						
 						success: function(response) 
 						{
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{
-								window.location.assign("view_specifications.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_gst_management.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							} 
 							else 
@@ -732,13 +733,13 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				}
 			}
 		});	/*Add spec*/	
-		$('#frm_spec_edit').on('submit', function(e) {
+		$('#frm_gst_edit').on('submit', function(e) {
 			e.preventDefault();
-			if ($('#frm_spec_edit').valid())
+			if ($('#frm_gst_edit').valid())
 			{
-				var spec_id			= $.trim($('#spec_id').val());
-				var spec_name 		= $.trim($('input[name="spec_name"]').val());
-				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_edit').val()			
+				var gst_id			= $.trim($('#gst_id').val());
+				var gst_name 		= $.trim($('input[name="gst_name"]').val());
+				var gst_status 	= $('input[name=gst_status]:checked', '#frm_gst_edit').val()			
 				if(parent == 1)
 				{
 					$("#req_resp").html('<span style="style="color:#F00;">Please select parent type</span>');
@@ -747,19 +748,19 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{
 					e.preventDefault();
 					$('input[name="reg_submit"]').attr('disabled', 'true');
-					var sendInfo 		= {"spec_id":spec_id,"spec_name":spec_name,"spec_status":spec_status,"update_req":"1"};
-					var spec_insert = JSON.stringify(sendInfo);				
+					var sendInfo 		= {"gst_id":gst_id,"gst_name":gst_name,"gst_status":gst_status,"update_req":"1"};
+					var gst_insert = JSON.stringify(sendInfo);				
 					$.ajax({
-						url: "load_specifications.php?",
+						url: "load_gst_management.php?",
 						type: "POST",
-						data: spec_insert,
+						data: gst_insert,
 						contentType: "application/json; charset=utf-8",						
 						success: function(response) 
 						{
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{								
-								window.location.assign("view_specifications.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_gst_management.php?pag=<?php echo $title; ?>");
 								loading_hide();									
 							} 
 							else 
@@ -783,15 +784,15 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				}
 			}
 		}); /* edit spec*/
-		$('#frm_spec_error').on('submit', function(e) {
+		$('#frm_gst_error').on('submit', function(e) {
 			e.preventDefault();
-			if ($('#frm_spec_error').valid())
+			if ($('#frm_gst_error').valid())
 			{
 				loading_show();	
-				var spec_name 		= $.trim($("#spec_name").val());
-				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_error').val();
+				var gst_name 		= $.trim($("#gst_name").val());
+				var gst_status 	= $('input[name=gst_status]:checked', '#frm_gst_error').val();
 				var error_id		= $("#error_id").val();			
-				if(spec_name == "" && spec_status == "")
+				if(gst_name == "" && gst_status == "")
 				{
 					$("#model_body").html('<span style="style="color:#F00;">Please fill details</span>');
 					$('#error_model').modal('toggle');
@@ -801,19 +802,19 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				{
 					e.preventDefault();
 					$('input[name="reg_submit_error"]').attr('disabled', 'true');
-					var sendInfo 	= {"error_id":error_id,"spec_name":spec_name,"spec_status":spec_status,"insert_req":"1"};
-					var spec_insert = JSON.stringify(sendInfo);				
+					var sendInfo 	= {"error_id":error_id,"gst_name":gst_name,"gst_status":gst_status,"insert_req":"1"};
+					var gst_insert = JSON.stringify(sendInfo);				
 					$.ajax({
-						url: "load_specifications.php",
+						url: "load_gst_management.php",
 						type: "POST",
-						data: spec_insert,
+						data: gst_insert,
 						contentType: "application/json; charset=utf-8",						
 						success: function(response) 
 						{
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{
-								window.location.assign("view_specifications.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_gst_management.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							} 
 							else 

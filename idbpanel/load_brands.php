@@ -15,21 +15,11 @@ function insertBrand($brand_name,$brand_description, $brand_owner,$brand_meta_ti
 	$num_rows_check_brand = mysqli_num_rows($result_check_brand);
 	if($num_rows_check_brand == 0)
 	{
-		$sql_last_rec = "Select * from tbl_brands_master order by brand_id desc LIMIT 0,1";
-		$result_last_rec = mysqli_query($db_con,$sql_last_rec) or die(mysqli_error($db_con));
-		$num_rows_last_rec = mysqli_num_rows($result_last_rec);
-		if($num_rows_last_rec == 0)
-		{
-			$brand_id 		= 1;				
-		}
-		else
-		{
-			$row_last_rec = mysqli_fetch_array($result_last_rec);				
-			$brand_id 		= $row_last_rec['brand_id']+1;
-		}			
-		$sql_insert_brand = " INSERT INTO `tbl_brands_master`(`brand_id`,`brand_name`, `brand_description`, `brand_owner`, `brand_meta_tags`, `brand_meta_description`, `brand_meta_title`, ";
-		$sql_insert_brand .= " `brand_created_by`, `brand_created`,`brand_status`) VALUES ('".$brand_id."','".$brand_name."','".$brand_description."',";
-		$sql_insert_brand .= " '".$brand_owner."','".$brand_meta_tags."','".$brand_meta_description."','".$brand_meta_title."','".$uid."','".$datetime."','".$brand_status."') ";
+		$brand_slug 			= getSlug(strtolower(str_replace(" ","-",$brand_name)));
+		
+		$sql_insert_brand = " INSERT INTO `tbl_brands_master`(`brand_name`, `brand_description`, `brand_owner`,`brand_slug`, `brand_meta_tags`, `brand_meta_description`, `brand_meta_title`, ";
+		$sql_insert_brand .= " `brand_created_by`, `brand_created`,`brand_status`) VALUES ('".$brand_name."','".$brand_description."',";
+		$sql_insert_brand .= " '".$brand_owner."','".$brand_slug."','".$brand_meta_tags."','".$brand_meta_description."','".$brand_meta_title."','".$uid."','".$datetime."','".$brand_status."') ";
 		$result_insert_brand = mysqli_query($db_con,$sql_insert_brand) or die(mysqli_error($db_con));
 		if($result_insert_brand)
 		{
@@ -620,7 +610,9 @@ if((isset($_POST['update_brand'])) == "1" && isset($_POST['update_brand']))
 		$num_rows_check_brand 	= mysqli_num_rows($result_check_brand);
 		if($num_rows_check_brand == 0)
 		{
-			$sql_update_brand = " UPDATE `tbl_brands_master` SET `brand_name`='".$brand_name."',`brand_description`='".$brand_description."',`brand_owner`='".$brand_owner."',";		
+			$brand_slug 			= getSlug(strtolower(str_replace(" ","-",$brand_name)));
+			
+			$sql_update_brand = " UPDATE `tbl_brands_master` SET `brand_name`='".$brand_name."',`brand_description`='".$brand_description."',`brand_owner`='".$brand_owner."',`brand_slug`='".$brand_slug."',";		
 			$sql_update_brand .= " `brand_meta_title`='".$brand_meta_title."',`brand_meta_tags`='".$brand_meta_tags."',`brand_meta_description`='".$brand_meta_description."',`brand_status`='".$brand_status."',";
 			$sql_update_brand .= " `brand_modified`='".$datetime."',`brand_modified_by`='".$uid."' WHERE `brand_id` = '".$brand_id."' ";		
 			$result_update_brand = mysqli_query($db_con,$sql_update_brand) or die(mysqli_error($db_con));
@@ -664,7 +656,7 @@ if((isset($_POST['update_brand'])) == "1" && isset($_POST['update_brand']))
 				}
 				else
 				{
-					$response_array = array("Success"=>"fail","resp"=>"Record Updated.");
+					$response_array = array("Success"=>"Success","resp"=>"Record Updated.");
 				}
 			}
 			else

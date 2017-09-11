@@ -128,7 +128,7 @@ if((isset($obj->load_coupons)) == "1" && isset($obj->load_coupons))
 		}
 		else
 		{
-			$response_array = array("Success"=>"fail","resp"=>"No Data Available in Customers");
+			$response_array = array("Success"=>"fail","resp"=>"No Data Available");
 		}
 	}
 	else
