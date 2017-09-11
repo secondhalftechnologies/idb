@@ -223,7 +223,7 @@
 			}
 			
 			// Query for Getting all the information of the company for respective user-id
-			$sql_get_comp_info	= " SELECT * FROM `tbl_company_master` WHERE `comp_user_id`='".$where_arr['comp_user_id']."' ";
+			$sql_get_comp_info	= " SELECT * FROM `tbl_customer_company` WHERE `comp_user_id`='".$where_arr['comp_user_id']."' ";
 			$res_get_comp_info	= mysqli_query($db_con, $sql_get_comp_info) or die(mysqli_error($db_con));
 			$num_get_comp_info	= mysqli_num_rows($res_get_comp_info);
 			
@@ -236,7 +236,7 @@
 				
 				// Update Query
 				// Query For update the User's Basic Information
-				$res_update_user_company	= update('tbl_company_master', $data, $where_arr);
+				$res_update_user_company	= update('tbl_customer_company', $data, $where_arr);
 				
 				if($res_update_user_company)
 				{
@@ -372,7 +372,7 @@
 				
 				// Insert Query
 				// Query For update the User's Basic Information
-				$res_update_user_company	= insert('tbl_company_master', $data);
+				$res_update_user_company	= insert('tbl_customer_company', $data);
 				
 				if($res_update_user_company)
 				{
