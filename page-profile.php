@@ -20,10 +20,10 @@
 	$logged_mobilenum	= $_SESSION['front_panel']['cust_mobile'];
 	
 	// ==============================================================================================================================
-	// START : getting the Company Data from the tbl_company_master table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
+	// START : getting the Company Data from the tbl_customer_company table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
 	// ==============================================================================================================================
 	// Query for Getting all the information of the company for respective user-id
-	$sql_get_comp_info	= " SELECT * FROM `tbl_company_master` WHERE `comp_user_id`='".$logged_uid."' ";
+	$sql_get_comp_info	= " SELECT * FROM `tbl_customer_company` WHERE `comp_user_id`='".$logged_uid."' ";
 	$res_get_comp_info	= mysqli_query($db_con, $sql_get_comp_info) or die(mysqli_error($db_con));
 	$num_get_comp_info	= mysqli_num_rows($res_get_comp_info);
 	
@@ -63,7 +63,7 @@
 		$comp_descp			= $row_get_comp_info['comp_descp'];
 	}
 	// ==============================================================================================================================
-	// END : getting the Company Data from the tbl_company_master table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
+	// END : getting the Company Data from the tbl_customer_company table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
 	// ==============================================================================================================================
 	
 	$org_details      	= '';
