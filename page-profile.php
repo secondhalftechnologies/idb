@@ -1,14 +1,4 @@
 <?php
-$a = '1.0.2';
-$b = '0.2.3';
-if($a < $b)
-{
-	echo 1;
-}
-else
-{
-	echo 0;
-}
 	include("includes/db_con.php");
    	
 	if(!isset($_SESSION['front_panel']))
