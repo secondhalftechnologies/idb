@@ -5,17 +5,17 @@ $obj 	= json_decode($json);
 $uid	= $_SESSION['panel_user']['id'];
 $utype	= $_SESSION['panel_user']['utype'];
 
-function insertGst($gst_name,$gst_status,$response_array)
+function insertUOW($uow_name,$uow_status,$response_array)
 {
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
-	$sql_check_spec 	 = " select * from tbl_gst_master where gst_name like '".$gst_name."' "; 
+	$sql_check_spec 	 = " select * from tbl_unit_of_weight where uow_name like '".$uow_name."' "; 
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{
-		$sql_insert_spec 	= " INSERT INTO `tbl_gst_master`(`gst_name`,`gst_created_by`, `gst_created`,`gst_status`) VALUES ('".$gst_name."','".$uid."','".$datetime."','".$gst_status."') ";
+		$sql_insert_spec 	= " INSERT INTO `tbl_unit_of_weight`(`uow_name`,`uow_created_by`, `uow_created`,`uow_status`) VALUES ('".$uow_name."','".$uid."','".$datetime."','".$uow_status."') ";
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
 		{
@@ -44,7 +44,7 @@ function insertGst($gst_name,$gst_status,$response_array)
 	}
 	else
 	{
-		$response_array = array("Success"=>"fail","resp"=>"Specification <b>".ucwords($gst_name)."</b> already Exist");
+		$response_array = array("Success"=>"fail","resp"=>"Unit Of Weight <b>".ucwords($uow_name)."</b> already Exist");
 	}	
 	return $response_array;
 }
@@ -57,7 +57,7 @@ if(isset($_FILES['file']))
 	
 	set_include_path(get_include_path() . PATH_SEPARATOR . 'Classes/');
 	include 'PHPExcel/IOFactory.php';
-	$gst_id 	= 0;
+	$uow_id 	= 0;
 	$msg	= '';
 	$insertion_flag	= 0;
 	$response_array = array();
@@ -78,20 +78,20 @@ if(isset($_FILES['file']))
 	{
 		for($i=2;$i<=$arrayCount;$i++)
 		{
-			$gst_name 				= trim($allDataInSheet[$i]["A"]);
+			$uow_name 				= trim($allDataInSheet[$i]["A"]);
 			
-			$query = " SELECT `gst_id`, `gst_name`, `gst_status`, `gst_created_by`, `gst_created`, `gst_modified_by`, `gst_modified` 
-						FROM `tbl_gst_master` 
-						WHERE `gst_name`='".$gst_name."' " ;
+			$query = " SELECT `uow_id`, `uow_name`, `uow_status`, `uow_created_by`, `uow_created`, `uow_modified_by`, `uow_modified` 
+						FROM `tbl_unit_of_weight` 
+						WHERE `uow_name`='".$uow_name."' " ;
 							
 			$sql 		= mysqli_query($db_con, $query) or die(mysqli_error($db_con));
 			$recResult 	= mysqli_fetch_array($sql);
 			
-			$existName 		= $recResult["gst_name"];
+			$existName 		= $recResult["uow_name"];
 			
 			if($existName=="" )
 			{
-				$response_array 	= insertGst($gst_name,$gst_status,$response_array);
+				$response_array 	= insertUOW($uow_name,$uow_status,$response_array);
 				if($response_array)
 				{
 					$insertion_flag	= 1;	
@@ -104,7 +104,7 @@ if(isset($_FILES['file']))
 			else
 			{
 				// error data array
-				$error_data = array("gst_name"=>$gst_name);	
+				$error_data = array("uow_name"=>$uow_name);	
 				
 				$sql_get_last_record	= " SELECT * FROM `tbl_error_data` ORDER by `error_id` DESC LIMIT 0,1 ";
 				$res_get_last_record	= mysqli_query($db_con, $sql_get_last_record) or die(mysqli_error($db_con));
@@ -119,7 +119,7 @@ if(isset($_FILES['file']))
 					$error_id	= $row_get_last_record['error_id']+1;
 				}
 				
-				$error_module_name	= "GST Managment";
+				$error_module_name	= "unit_of_weight";
 				$error_file			= $inputFileName;
 				$error_status		= '1';
 				$error_data_json	= json_encode($error_data);
@@ -151,12 +151,12 @@ if(isset($_FILES['file']))
 
 if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 {
-	$gst_name			= strtolower(mysqli_real_escape_string($db_con,$obj->gst_name));
-	$gst_status		= $obj->gst_status;
+	$uow_name	= strtolower(mysqli_real_escape_string($db_con,$obj->uow_name));
+	$uow_status	= $obj->uow_status;
 	$response_array 	= array();	
-	if($gst_name != "" && $gst_status != "")
+	if($uow_name != "" && $uow_status != "")
 	{
-		$response_array = insertGst($gst_name,$gst_status,$response_array);
+		$response_array = insertUOW($uow_name,$uow_status,$response_array);
 	}
 	else
 	{
@@ -165,117 +165,117 @@ if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 	echo json_encode($response_array);		
 }
 
-if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
+if((isset($obj->load_uow_parts)) == "1" && isset($obj->load_uow_parts))
 {
-	$gst_id = $obj->gst_id;
+	$uow_id = $obj->uow_id;
 	$req_type = $obj->req_type;
 	$response_array = array();
 	if($req_type != "")
 	{
-		if($gst_id != "" && $req_type == "error")
+		if($uow_id != "" && $req_type == "error")
 		{
-			$sql_error_data 	= " SELECT * FROM `tbl_error_data` WHERE `error_id` = '".$gst_id."' "; // this gst_id is error id from error table
+			$sql_error_data 	= " SELECT * FROM `tbl_error_data` WHERE `error_id` = '".$uow_id."' "; // this uow_id is error id from error table
 			$result_error_data 	= mysqli_query($db_con,$sql_error_data) or die(mysqli_error($db_con));
 			$row_error_data		= mysqli_fetch_array($result_error_data);	
-			$row_gst_data		= json_decode($row_error_data['error_data']);
+			$row_uow_data		= json_decode($row_error_data['error_data']);
 		}
-		else if($gst_id != "" && $req_type == "edit")
+		else if($uow_id != "" && $req_type == "edit")
 		{
-			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
-			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
-			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
+			$sql_uow_data 	= "Select * from tbl_unit_of_weight where uow_id = '".$uow_id."' ";
+			$result_uow_data 	= mysqli_query($db_con,$sql_uow_data) or die(mysqli_error($db_con));
+			$row_uow_data		= mysqli_fetch_array($result_uow_data);		
 		}	
-		else if($gst_id != "" && $req_type == "view")
+		else if($uow_id != "" && $req_type == "view")
 		{
-			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
-			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
-			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
+			$sql_uow_data 	= "Select * from tbl_unit_of_weight where uow_id = '".$uow_id."' ";
+			$result_uow_data 	= mysqli_query($db_con,$sql_uow_data) or die(mysqli_error($db_con));
+			$row_uow_data		= mysqli_fetch_array($result_uow_data);		
 		}			
 		$data = '';
-		if($gst_id != "" && $req_type == "edit")
+		if($uow_id != "" && $req_type == "edit")
 		{
-			$data .= '<input type="hidden" id="gst_id" value="'.$row_gst_data['gst_id'].'">';
+			$data .= '<input type="hidden" id="uow_id" value="'.$row_uow_data['uow_id'].'">';
 		}
-		elseif($gst_id != "" && $req_type == "error")
+		elseif($uow_id != "" && $req_type == "error")
 		{
-			$data .= '<input type="hidden" id="error_id" value="'.$gst_id.'">';
+			$data .= '<input type="hidden" id="error_id" value="'.$uow_id.'">';
 		}	                                                         		
 		$data .= '<div class="control-group">';
-		$data .= '<label for="tasktitel" class="control-label">GST Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+		$data .= '<label for="tasktitel" class="control-label">Unit Of Weight Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" step="0.01" id="gst_name" name="gst_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
-		if($gst_id != "" && $req_type == "edit")
+		$data .= '<input type="text" step="0.01" id="uow_name" name="uow_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
+		if($uow_id != "" && $req_type == "edit")
 		{
-			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'"'; 
+			$data .= ' value="'.ucwords($row_uow_data['uow_name']).'"'; 
 		}
-		elseif($gst_id != "" && $req_type == "error")
+		elseif($uow_id != "" && $req_type == "error")
 		{
-			$data .= ' value="'.ucwords($row_gst_data->gst_name).'"'; 			
+			$data .= ' value="'.ucwords($row_uow_data->uow_name).'"'; 			
 		}
-		elseif($gst_id != "" && $req_type == "view")
+		elseif($uow_id != "" && $req_type == "view")
 		{
-			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'" disabled';
+			$data .= ' value="'.ucwords($row_uow_data['uow_name']).'" disabled';
 		}
-		$data .= '/> %';
+		$data .= '/> ';
 		$data .= '</div>';
-		$data .= '</div> <!-- GST Name -->';
+		$data .= '</div> <!-- Unit Of Weight Name -->';
 		$data .= '<div class="control-group">';
 		$data .= '<label for="radio" class="control-label">Status<span style="color:#F00;font-size:20px;">*</span></label>';
 		$data .= '<div class="controls">';
-		if($gst_id != "" && $req_type == "error")
+		if($uow_id != "" && $req_type == "error")
 		{
-			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_gst_management.php",3);
+			$data .= '<input type="radio" name="uow_status" value="1" class="css-radio" data-rule-required="true" ';
+			$dis	= checkFunctionalityRight("view_unit_of_weight.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_gst_data->gst_status == 1)
+			if($row_uow_data->uow_status == 1)
 			{
 				$data .= 'checked';
 			}
 			$data .= '>Active';
-			$data .= '<input type="radio" name="gst_status" value="0" class="css-radio" data-rule-required="true"';
+			$data .= '<input type="radio" name="uow_status" value="0" class="css-radio" data-rule-required="true"';
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_gst_data->gst_status == 0)
+			if($row_uow_data->uow_status == 0)
 			{
 				$data .= 'checked';
 			}
 			$data .= '>Inactive';
 		}
-		elseif($gst_id != "" && $req_type == "view")
+		elseif($uow_id != "" && $req_type == "view")
 		{
-			if($row_gst_data['gst_status'] == 1)
+			if($row_uow_data['uow_status'] == 1)
 			{
 				$data .= '<label class="control-label" style="color:#30DD00">Active</label>';
 			}
-			if($row_gst_data['gst_status'] == 0)
+			if($row_uow_data['uow_status'] == 0)
 			{
 				$data .= '<label class="control-label" style="color:#E63A3A">Inactive</label>';
 			}
 		}			
 		else
 		{
-			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_gst_management.php",3);
+			$data .= '<input type="radio" name="uow_status" value="1" class="css-radio" data-rule-required="true" ';
+			$dis	= checkFunctionalityRight("view_unit_of_weight.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_gst_data['gst_status'] == 1)
+			if($row_uow_data['uow_status'] == 1)
 			{
 				$data .= 'checked ';
 			}
 			$data .= '>Active';
-			$data .= '<input type="radio" name="gst_status" value="0" class="css-radio" data-rule-required="true"';
+			$data .= '<input type="radio" name="uow_status" value="0" class="css-radio" data-rule-required="true"';
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
 			}
-			if($row_gst_data['gst_status'] == 0)
+			if($row_uow_data['uow_status'] == 0)
 			{
 				$data .= 'checked';
 			}
@@ -286,15 +286,15 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 		$data .= '</div>';
 		$data .= '</div><!--Status-->';
 		$data .= '<div class="form-actions">';
-		if($gst_id == "" && $req_type == "add")
+		if($uow_id == "" && $req_type == "add")
 		{
 			$data .= '<button type="submit" name="reg_submit_add" class="btn-success">Create</button>';			
 		}
-		elseif($gst_id != "" && $req_type == "edit")
+		elseif($uow_id != "" && $req_type == "edit")
 		{
 			$data .= '<button type="submit" name="reg_submit_edit" class="btn-success">Update</button>';			
 		}			
-		elseif($gst_id != "" && $req_type == "error")
+		elseif($uow_id != "" && $req_type == "error")
 		{
 			$data .= '<button type="submit" name="reg_submit_error" class="btn-success">Update</button>';						
 		}
@@ -323,96 +323,96 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start_offset  += $page * $per_page;
 		$start 			= $page * $per_page;
 			
-		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_created_by) AS name_gst_created_by, ";
-		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_modified_by) AS name_gst_modified_by FROM `tbl_gst_master` AS tbm WHERE 1=1 ";
+		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.uow_created_by) AS name_uow_created_by, ";
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id = tbm.uow_modified_by) AS name_uow_modified_by FROM `tbl_unit_of_weight` AS tbm WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
 		{
-			$sql_load_data  .= " AND gst_created_by='".$uid."' ";
+			$sql_load_data  .= " AND uow_created_by='".$uid."' ";
 		}
 		if($search_text != "")
 		{
-			$sql_load_data .= " AND (gst_id like '%".$search_text."%' or gst_name like '%".$search_text."%' or gst_created like '%".$search_text."%' or  gst_modified like '%".$search_text."%')";
+			$sql_load_data .= " AND (uow_id like '%".$search_text."%' or uow_name like '%".$search_text."%' or uow_created like '%".$search_text."%' or  uow_modified like '%".$search_text."%')";
 		}
 		$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);		
-		$sql_load_data .=" ORDER BY gst_id DESC LIMIT $start, $per_page ";
+		$sql_load_data .=" ORDER BY uow_id DESC LIMIT $start, $per_page ";
 		$result_load_data = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));
 		if($result_load_data)		
 		{
 			if(strcmp($data_count,"0") !== 0)
 			{		
-				$gst_data = "";	
-				$gst_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
-    	 		$gst_data .= '<thead>';
-    	  		$gst_data .= '<tr>';
-         		$gst_data .= '<th>Sr. No.</th>';
-				$gst_data .= '<th>Id</th>';
-				$gst_data .= '<th>GST Value</th>';
-				$gst_data .= '<th>Created By</th>';
-				$gst_data .= '<th>Created</th>';
-				$gst_data .= '<th>Modified By</th>';
-				$gst_data .= '<th>Modified</th>';	
-				$dis = checkFunctionalityRight("view_gst_management.php",3);
+				$uow_data = "";	
+				$uow_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
+    	 		$uow_data .= '<thead>';
+    	  		$uow_data .= '<tr>';
+         		$uow_data .= '<th>Sr. No.</th>';
+				$uow_data .= '<th>Id</th>';
+				$uow_data .= '<th>Unit Of Weight</th>';
+				$uow_data .= '<th>Created By</th>';
+				$uow_data .= '<th>Created</th>';
+				$uow_data .= '<th>Modified By</th>';
+				$uow_data .= '<th>Modified</th>';	
+				$dis = checkFunctionalityRight("view_unit_of_weight.php",3);
 				if($dis)
 				{					
-					$gst_data .= '<th>Status</th>';											
+					$uow_data .= '<th>Status</th>';											
 				}
-				$edit = checkFunctionalityRight("view_gst_management.php",1);
+				$edit = checkFunctionalityRight("view_unit_of_weight.php",1);
 				if($edit)
 				{					
-					$gst_data .= '<th>Edit</th>';			
+					$uow_data .= '<th>Edit</th>';			
 				}	
-				$delete = checkFunctionalityRight("view_gst_management.php",2);
+				$delete = checkFunctionalityRight("view_unit_of_weight.php",2);
 				if($delete)
 				{					
-					$gst_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
+					$uow_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
 				}					
-          		$gst_data .= '</tr>';
-      			$gst_data .= '</thead>';
-      			$gst_data .= '<tbody>';
+          		$uow_data .= '</tr>';
+      			$uow_data .= '</thead>';
+      			$uow_data .= '<tbody>';
 				while($row_load_data = mysqli_fetch_array($result_load_data))
 				{
-	    		  	$gst_data .= '<tr>';				
-					$gst_data .= '<td>'.++$start_offset.'</td>';				
-					$gst_data .= '<td>'.$row_load_data['gst_id'].'</td>';
-					$gst_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['gst_name']).'%" class="btn-link" id="'.$row_load_data['gst_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
-					$gst_data .= '<td>'.$row_load_data['name_gst_created_by'].'</td>';
-					$gst_data .= '<td>'.$row_load_data['gst_created'].'</td>';
-					$gst_data .= '<td>'.$row_load_data['name_gst_modified_by'].'</td>';
-					$gst_data .= '<td>'.$row_load_data['gst_modified'].'</td>';
-					$dis = checkFunctionalityRight("view_gst_management.php",3);
+	    		  	$uow_data .= '<tr>';				
+					$uow_data .= '<td>'.++$start_offset.'</td>';				
+					$uow_data .= '<td>'.$row_load_data['uow_id'].'</td>';
+					$uow_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['uow_name']).'" class="btn-link" id="'.$row_load_data['uow_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
+					$uow_data .= '<td>'.$row_load_data['name_uow_created_by'].'</td>';
+					$uow_data .= '<td>'.$row_load_data['uow_created'].'</td>';
+					$uow_data .= '<td>'.$row_load_data['name_uow_modified_by'].'</td>';
+					$uow_data .= '<td>'.$row_load_data['uow_modified'].'</td>';
+					$dis = checkFunctionalityRight("view_unit_of_weight.php",3);
 					if($dis)
 					{					
-						$gst_data .= '<td style="text-align:center">';	
-						if($row_load_data['gst_status'] == 1)
+						$uow_data .= '<td style="text-align:center">';	
+						if($row_load_data['uow_status'] == 1)
 						{
-							$gst_data .= '<input type="button" value="Active" id="'.$row_load_data['gst_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
+							$uow_data .= '<input type="button" value="Active" id="'.$row_load_data['uow_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
 						}
 						else
 						{
-							$gst_data .= '<input type="button" value="Inactive" id="'.$row_load_data['gst_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+							$uow_data .= '<input type="button" value="Inactive" id="'.$row_load_data['uow_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
 						}
-						$gst_data .= '</td>';	
+						$uow_data .= '</td>';	
 					}
-					$edit = checkFunctionalityRight("view_gst_management.php",1);
+					$edit = checkFunctionalityRight("view_unit_of_weight.php",1);
 					if($edit)
 					{						
-						$gst_data .= '<td style="text-align:center">';
-						$gst_data .= '<input type="button" value="Edit" id="'.$row_load_data['gst_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
+						$uow_data .= '<td style="text-align:center">';
+						$uow_data .= '<input type="button" value="Edit" id="'.$row_load_data['uow_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
 					}
-					$delete = checkFunctionalityRight("view_gst_management.php",2);
+					$delete = checkFunctionalityRight("view_unit_of_weight.php",2);
 					if($delete)
 					{					
-						$gst_data .= '<td><div class="controls" align="center">';
-						$gst_data .= '<input type="checkbox"  id="batch'.$row_load_data['gst_id'].'" name="batch'.$row_load_data['gst_id'].'" value="'.$row_load_data['gst_id'].'"  class="css-checkbox batch">';
-						$gst_data .= '<label for="batch'.$row_load_data['gst_id'].'" class="css-label" style="color:#FFF"></label>';
-						$gst_data .= '</div></td>';										
+						$uow_data .= '<td><div class="controls" align="center">';
+						$uow_data .= '<input type="checkbox"  id="batch'.$row_load_data['uow_id'].'" name="batch'.$row_load_data['uow_id'].'" value="'.$row_load_data['uow_id'].'"  class="css-checkbox batch">';
+						$uow_data .= '<label for="batch'.$row_load_data['uow_id'].'" class="css-label" style="color:#FFF"></label>';
+						$uow_data .= '</div></td>';										
 					}
-	        	  	$gst_data .= '</tr>';															
+	        	  	$uow_data .= '</tr>';															
 				}	
-      			$gst_data .= '</tbody>';
-      			$gst_data .= '</table>';	
-				$gst_data .= $data_count;
-				$response_array = array("Success"=>"Success","resp"=>$gst_data);
+      			$uow_data .= '</tbody>';
+      			$uow_data .= '</table>';	
+				$uow_data .= $data_count;
+				$response_array = array("Success"=>"Success","resp"=>$uow_data);
 			}
 			else
 			{
@@ -433,10 +433,10 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 
 if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 {
-	$gst_id				= $obj->gst_id;
+	$uow_id				= $obj->uow_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();		
-	$sql_update_status 		= " UPDATE `tbl_gst_master` SET `gst_status`= '".$curr_status."' ,`gst_modified` = '".$datetime."' ,`gst_modified_by` = '".$uid."' WHERE `gst_id` like '".$gst_id."' ";
+	$sql_update_status 		= " UPDATE `tbl_unit_of_weight` SET `uow_status`= '".$curr_status."' ,`uow_modified` = '".$datetime."' ,`uow_modified_by` = '".$uid."' WHERE `uow_id` like '".$uow_id."' ";
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -451,19 +451,19 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 
 if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 {
-	$gst_id			= $obj->gst_id;
-	$gst_name			= strtolower(mysqli_real_escape_string($db_con,$obj->gst_name));
-	$gst_status		= $obj->gst_status;
+	$uow_id			= $obj->uow_id;
+	$uow_name			= strtolower(mysqli_real_escape_string($db_con,$obj->uow_name));
+	$uow_status		= $obj->uow_status;
 	$response_array 	= array();
-	if($gst_name != "" && $gst_id != "" && $gst_status != "")
+	if($uow_name != "" && $uow_id != "" && $uow_status != "")
 	{
-		$sql_check_spec 		= " select * from tbl_gst_master where gst_name like '".$gst_name."' and `gst_id` != '".$gst_id."' "; 
+		$sql_check_spec 		= " select * from tbl_unit_of_weight where uow_name like '".$uow_name."' and `uow_id` != '".$uow_id."' "; 
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{		
-			$sql_update_spec 	= " UPDATE `tbl_gst_master` SET `gst_name`='".$gst_name."',`gst_status`='".$gst_status."',";
-			$sql_update_spec  .= " `gst_modified`='".$datetime."',`gst_modified_by`='".$uid."' WHERE `gst_id` = '".$gst_id."' ";		
+			$sql_update_spec 	= " UPDATE `tbl_unit_of_weight` SET `uow_name`='".$uow_name."',`uow_status`='".$uow_status."',";
+			$sql_update_spec  .= " `uow_modified`='".$datetime."',`uow_modified_by`='".$uid."' WHERE `uow_id` = '".$uow_id."' ";		
 			$result_update_spec = mysqli_query($db_con,$sql_update_spec) or die(mysqli_error($db_con));
 			if($result_update_spec)
 			{
@@ -476,7 +476,7 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 		}
 		else
 		{
-			$response_array 	= array("Success"=>"fail","resp"=>"Specification ".$gst_name." already Exist");			
+			$response_array 	= array("Success"=>"fail","resp"=>"Unit Of Weight ".$uow_name." already Exist");			
 		}
 	}
 	else
@@ -489,11 +489,11 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 {
 	$response_array = array();		
-	$ar_gst_id 	= $obj->batch;
+	$ar_uow_id 	= $obj->batch;
 	$del_flag 		= 0; 
-	foreach($ar_gst_id as $gst_id)	
+	foreach($ar_uow_id as $uow_id)	
 	{
-		$sql_delete_spec		= " DELETE FROM `tbl_gst_master` WHERE `gst_id` = '".$gst_id."' ";
+		$sql_delete_spec		= " DELETE FROM `tbl_unit_of_weight` WHERE `uow_id` = '".$uow_id."' ";
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));			
 		if($result_delete_spec)
 		{
@@ -533,7 +533,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_created_by) as created_by_name, ";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_modified_by) as modified_by_name ";
 		$sql_load_data  .= " FROM `tbl_error_data`  ";
-		$sql_load_data  .= " WHERE error_module_name='GST Managment' ";
+		$sql_load_data  .= " WHERE error_module_name='unit_of_weight' ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND error_created_by='".$uid."' ";
@@ -552,69 +552,69 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				
 		if(strcmp($data_count,"0") !== 0)
 		{		
-			$gst_data = "";	
-			$gst_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
-    	 	$gst_data .= '<thead>';
-    	  	$gst_data .= '<tr>';
-         	$gst_data .= '<th>Sr. No.</th>';
-			$gst_data .= '<th>Specification Name</th>';
-			//$gst_data .= '<th>Description</th>';
-			//$gst_data .= '<th>Parent</th>';
-			$gst_data .= '<th>Created</th>';
-			$gst_data .= '<th>Created By</th>';
-			$gst_data .= '<th>Modified</th>';
-			$gst_data .= '<th>Modified By</th>';
-			$gst_data .= '<th>Edit</th>';			
-			$gst_data .= '<th>
+			$uow_data = "";	
+			$uow_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
+    	 	$uow_data .= '<thead>';
+    	  	$uow_data .= '<tr>';
+         	$uow_data .= '<th>Sr. No.</th>';
+			$uow_data .= '<th>Unit Of Weight Value</th>';
+			//$uow_data .= '<th>Description</th>';
+			//$uow_data .= '<th>Parent</th>';
+			$uow_data .= '<th>Created</th>';
+			$uow_data .= '<th>Created By</th>';
+			$uow_data .= '<th>Modified</th>';
+			$uow_data .= '<th>Modified By</th>';
+			$uow_data .= '<th>Edit</th>';			
+			$uow_data .= '<th>
 							<div style="text-align:center">
 								<input type="button"  value="Delete" onclick="multipleDelete_error();" class="btn-danger"/>
 							</div>
 						</th>';
-          	$gst_data .= '</tr>';
-      		$gst_data .= '</thead>';
-      		$gst_data .= '<tbody>';
+          	$uow_data .= '</tr>';
+      		$uow_data .= '</thead>';
+      		$uow_data .= '<tbody>';
 			while($row_load_data = mysqli_fetch_array($result_load_data))
 			{
-				$get_gst_rec	= json_decode($row_load_data['error_data']);
+				$get_uow_rec	= json_decode($row_load_data['error_data']);
 				
-				$er_gst_name	= $get_gst_rec->gst_name;
+				$er_uow_name	= $get_uow_rec->uow_name;
 				
-				$gst_data .= '<tr>';				
-				$gst_data .= '<td>'.++$start_offset.'</td>';				
-				$gst_data .= '<td>';
-					$sql_chk_name_already_exist	= " SELECT `gst_name` FROM `tbl_gst_master` WHERE `gst_name`='".$er_gst_name."' ";
+				$uow_data .= '<tr>';				
+				$uow_data .= '<td>'.++$start_offset.'</td>';				
+				$uow_data .= '<td>';
+					$sql_chk_name_already_exist	= " SELECT `uow_name` FROM `tbl_unit_of_weight` WHERE `uow_name`='".$er_uow_name."' ";
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 					
 					if(strcmp($num_chk_name_already_exist,"0")===0)
 					{
-						$gst_data .= $er_gst_name;
+						$uow_data .= $er_uow_name;
 					}
 					else
 					{
-						$gst_data .= '<span style="color:#E63A3A;">'.$er_gst_name.' [Already Exist]</span>';
+						$uow_data .= '<span style="color:#E63A3A;">'.$er_uow_name.' [Already Exist]</span>';
 					}
-				$gst_data .= '</td>';
-				//$gst_data .= '<td>'.$row_load_data['cat_description'].'</td>';
+				$uow_data .= '</td>';
+				//$uow_data .= '<td>'.$row_load_data['cat_description'].'</td>';
 				
-				$gst_data .= '<td>'.$row_load_data['error_created'].'</td>';
-				$gst_data .= '<td>'.$row_load_data['created_by_name'].'</td>';
-				$gst_data .= '<td>'.$row_load_data['error_modified'].'</td>';
-				$gst_data .= '<td>'.$row_load_data['modified_by_name'].'</td>';
-				$gst_data .= '<td style="text-align:center">';
-				$gst_data .= '<input type="button" value="Edit" id="'.$row_load_data['error_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'error\');"></td>';						
-				$gst_data .= '<td>
+				$uow_data .= '<td>'.$row_load_data['error_created'].'</td>';
+				$uow_data .= '<td>'.$row_load_data['created_by_name'].'</td>';
+				$uow_data .= '<td>'.$row_load_data['error_modified'].'</td>';
+				$uow_data .= '<td>'.$row_load_data['modified_by_name'].'</td>';
+				$uow_data .= '<td style="text-align:center">';
+				$uow_data .= '<input type="button" value="Edit" id="'.$row_load_data['error_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'error\');"></td>';						
+				$uow_data .= '<td>
 								<div class="controls" align="center">';
-				$gst_data .= '		<input type="checkbox" value="'.$row_load_data['error_id'].'" id="error_batch'.$row_load_data['error_id'].'" name="error_batch'.$row_load_data['error_id'].'" class="css-checkbox error_batch">';
-				$gst_data .= '		<label for="error_batch'.$row_load_data['error_id'].'" class="css-label"></label>';
-				$gst_data .= '	</div>
+				$uow_data .= '		<input type="checkbox" value="'.$row_load_data['error_id'].'" id="error_batch'.$row_load_data['error_id'].'" name="error_batch'.$row_load_data['error_id'].'" class="css-checkbox error_batch">';
+				$uow_data .= '		<label for="error_batch'.$row_load_data['error_id'].'" class="css-label"></label>';
+				$uow_data .= '	</div>
 							  </td>';										
-	          	$gst_data .= '</tr>';															
+	          	$uow_data .= '</tr>';															
 			}	
-      		$gst_data .= '</tbody>';
-      		$gst_data .= '</table>';	
-			$gst_data .= $data_count;
-			$response_array = array("Success"=>"Success","resp"=>$gst_data);					
+      		$uow_data .= '</tbody>';
+      		$uow_data .= '</table>';	
+			$uow_data .= $data_count;
+			$response_array = array("Success"=>"Success","resp"=>$uow_data);					
 		}
 		else
 		{
@@ -628,14 +628,14 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 	
 	echo json_encode($response_array);
 }
-if((isset($obj->delete_gst_error)) == "1" && isset($obj->delete_gst_error))
+if((isset($obj->delete_uow_error)) == "1" && isset($obj->delete_uow_error))
 {
-	$ar_gst_id 		= $obj->batch;
+	$ar_uow_id 		= $obj->batch;
 	$response_array = array();	
 	$del_flag_error = 0; 
-	foreach($ar_gst_id as $gst_id)	
+	foreach($ar_uow_id as $uow_id)	
 	{
-		$sql_delete_cat_error	= " DELETE FROM `tbl_error_data` WHERE `error_id` = '".$gst_id."' ";
+		$sql_delete_cat_error	= " DELETE FROM `tbl_error_data` WHERE `error_id` = '".$uow_id."' ";
 		
 		$result_delete_cat_error= mysqli_query($db_con,$sql_delete_cat_error) or die(mysqli_error($db_con));			
 		if($result_delete_cat_error)
