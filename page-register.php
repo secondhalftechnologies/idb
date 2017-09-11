@@ -72,7 +72,7 @@
                                     
                                     <div class="field-row control-group controls">
                                         <label class="col-md-3  col-xs-12">Password<span style="color:#F00">*</span></label>
-                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password" placeholder="Password" data-rule-required="true" minlength="6" maxlength="15" title="Password length should be minimum 8.It conatin special character,upper case and lower case letters and numbers." onkeyup="checkStrength(this.id,'cust_password_error_register');">
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password" placeholder="Password" data-rule-required="true" minlength="6" maxlength="15" title="Password length should be minimum 8.It contain special character,upper case and lower case letters and numbers." onkeyup="checkStrength(this.id,'cust_password_error_register');">
                                         <span id="cust_password_error_register"></span>
                                     	<div class="clearfix"></div>
                                     </div><!-- Password -->
