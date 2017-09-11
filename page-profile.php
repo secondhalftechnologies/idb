@@ -1070,7 +1070,7 @@
                                   <?php
 								  
 								  //  Check Record and return single row
-								  $panRow = checkExist('tbl_pans',array('pan_userid'=>$logged_uid));
+								  $panRow = checkExist('tbl_customer_pan',array('pan_userid'=>$logged_uid));
 								  if(!$panRow) // for add and update in single form 
 								  {
 									  $frm_pan_name      = 'frm_pan_info';
@@ -1133,7 +1133,7 @@
                                   GST Information
                                   <?php
 								   //  Check Record and return single row
-								  $gstRow = checkExist('tbl_gst',array('gst_userid'=>$logged_uid));
+								  $gstRow = checkExist('tbl_customer_gst',array('gst_userid'=>$logged_uid));
 								  if(!$gstRow)// for add and update in single form 
 								  {
 									  $frm_gst_name      = 'frm_gst_info';
@@ -1209,7 +1209,7 @@
                                   Bank Information
                                   <?php
 								 //  Check Record and return single row
-								  $bankRow = checkExist('tbl_bank_details',array('bank_userid'=>$logged_uid));
+								  $bankRow = checkExist('tbl_customer_bank_details',array('bank_userid'=>$logged_uid));
 								  if(!$bankRow)// for add and update in single form 
 								  {
 									  $frm_bank_name      = 'frm_bank_info';
