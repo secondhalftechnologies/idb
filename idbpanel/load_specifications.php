@@ -5,29 +5,17 @@ $obj 	= json_decode($json);
 $uid	= $_SESSION['panel_user']['id'];
 $utype				= $_SESSION['panel_user']['utype'];
 
-function insertSpecification($spec_name,$response_array)
+function insertSpecification($spec_name,$spec_status,$response_array)
 {
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
-	$sql_check_spec 	 = " select * from tbl_specifications_master where spec_name like '".$spec_name."' "; 
+	$sql_check_spec 	 = " select * from tbl_composition where spec_name like '".$spec_name."' "; 
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{
-		$sql_last_rec = "Select * from tbl_specifications_master order by spec_id desc LIMIT 0,1";
-		$result_last_rec = mysqli_query($db_con,$sql_last_rec) or die(mysqli_error($db_con));
-		$num_rows_last_rec = mysqli_num_rows($result_last_rec);
-		if($num_rows_last_rec == 0)
-		{
-			$spec_id 		= 1;				
-		}
-		else
-		{
-			$row_last_rec = mysqli_fetch_array($result_last_rec);				
-			$spec_id 		= $row_last_rec['spec_id']+1;
-		}			
-		$sql_insert_spec 	= " INSERT INTO `tbl_specifications_master`(`spec_id`,`spec_name`,`spec_created_by`, `spec_created`,`spec_status`) VALUES ('".$spec_id."','".$spec_name."','".$uid."','".$datetime."','".$spec_status."') ";
+		$sql_insert_spec 	= " INSERT INTO `tbl_composition`(`spec_name`,`spec_created_by`, `spec_created`,`spec_status`) VALUES ('".$spec_name."','".$uid."','".$datetime."','".$spec_status."') ";
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
 		{
@@ -56,7 +44,7 @@ function insertSpecification($spec_name,$response_array)
 	}
 	else
 	{
-		$response_array = array("Success"=>"fail","resp"=>"Specification <b>".ucwords($spec_name)."</b> already Exist");
+		$response_array = array("Success"=>"fail","resp"=>"Composition <b>".ucwords($spec_name)."</b> already Exist");
 	}	
 	return $response_array;
 }
@@ -93,7 +81,7 @@ if(isset($_FILES['file']))
 			$spec_name 				= trim($allDataInSheet[$i]["A"]);
 			
 			$query = " SELECT `id`, `spec_id`, `spec_name`, `spec_status`, `spec_created_by`, `spec_created`, `spec_modified_by`, `spec_modified` 
-						FROM `tbl_specifications_master` 
+						FROM `tbl_composition` 
 						WHERE `spec_name`='".$spec_name."' " ;
 							
 			$sql 		= mysqli_query($db_con, $query) or die(mysqli_error($db_con));
@@ -103,7 +91,7 @@ if(isset($_FILES['file']))
 			
 			if($existName=="" )
 			{
-				$response_array 	= insertSpecification($spec_name,$response_array);
+				$response_array 	= insertSpecification($spec_name,$spec_status,$response_array);
 				if($response_array)
 				{
 					$insertion_flag	= 1;	
@@ -131,7 +119,7 @@ if(isset($_FILES['file']))
 					$error_id	= $row_get_last_record['error_id']+1;
 				}
 				
-				$error_module_name	= "specification";
+				$error_module_name	= "composition";
 				$error_file			= $inputFileName;
 				$error_status		= '1';
 				$error_data_json	= json_encode($error_data);
@@ -168,7 +156,7 @@ if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 	$response_array 	= array();	
 	if($spec_name != "" && $spec_status != "")
 	{
-		$response_array = insertSpecification($spec_name,$response_array);
+		$response_array = insertSpecification($spec_name,$spec_status,$response_array);
 	}
 	else
 	{
@@ -193,13 +181,13 @@ if((isset($obj->load_spec_parts)) == "1" && isset($obj->load_spec_parts))
 		}
 		else if($spec_id != "" && $req_type == "edit")
 		{
-			$sql_spec_data 	= "Select * from tbl_specifications_master where spec_id = '".$spec_id."' ";
+			$sql_spec_data 	= "Select * from tbl_composition where spec_id = '".$spec_id."' ";
 			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
 			$row_spec_data		= mysqli_fetch_array($result_spec_data);		
 		}	
 		else if($spec_id != "" && $req_type == "view")
 		{
-			$sql_spec_data 	= "Select * from tbl_specifications_master where spec_id = '".$spec_id."' ";
+			$sql_spec_data 	= "Select * from tbl_composition where spec_id = '".$spec_id."' ";
 			$result_spec_data 	= mysqli_query($db_con,$sql_spec_data) or die(mysqli_error($db_con));
 			$row_spec_data		= mysqli_fetch_array($result_spec_data);		
 		}			
@@ -336,7 +324,7 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start 			= $page * $per_page;
 			
 		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.spec_created_by) AS name_spec_created_by, ";
-		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.spec_modified_by) AS name_spec_modified_by FROM `tbl_specifications_master` AS tbm WHERE 1=1 ";
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.spec_modified_by) AS name_spec_modified_by FROM `tbl_composition` AS tbm WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND spec_created_by='".$uid."' ";
@@ -448,7 +436,7 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$spec_id				= $obj->spec_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();		
-	$sql_update_status 		= " UPDATE `tbl_specifications_master` SET `spec_status`= '".$curr_status."' ,`spec_modified` = '".$datetime."' ,`spec_modified_by` = '".$uid."' WHERE `spec_id` like '".$spec_id."' ";
+	$sql_update_status 		= " UPDATE `tbl_composition` SET `spec_status`= '".$curr_status."' ,`spec_modified` = '".$datetime."' ,`spec_modified_by` = '".$uid."' WHERE `spec_id` like '".$spec_id."' ";
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -469,12 +457,12 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 	$response_array 	= array();
 	if($spec_name != "" && $spec_id != "" && $spec_status != "")
 	{
-		$sql_check_spec 		= " select * from tbl_specifications_master where spec_name like '".$spec_name."' and `spec_id` != '".$spec_id."' "; 
+		$sql_check_spec 		= " select * from tbl_composition where spec_name like '".$spec_name."' and `spec_id` != '".$spec_id."' "; 
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{		
-			$sql_update_spec 	= " UPDATE `tbl_specifications_master` SET `spec_name`='".$spec_name."',`spec_status`='".$spec_status."',";
+			$sql_update_spec 	= " UPDATE `tbl_composition` SET `spec_name`='".$spec_name."',`spec_status`='".$spec_status."',";
 			$sql_update_spec  .= " `spec_modified`='".$datetime."',`spec_modified_by`='".$uid."' WHERE `spec_id` = '".$spec_id."' ";		
 			$result_update_spec = mysqli_query($db_con,$sql_update_spec) or die(mysqli_error($db_con));
 			if($result_update_spec)
@@ -488,7 +476,7 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 		}
 		else
 		{
-			$response_array 	= array("Success"=>"fail","resp"=>"Specification ".$spec_name." already Exist");			
+			$response_array 	= array("Success"=>"fail","resp"=>"Composition ".$spec_name." already Exist");			
 		}
 	}
 	else
@@ -505,7 +493,7 @@ if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 	$del_flag 		= 0; 
 	foreach($ar_spec_id as $spec_id)	
 	{
-		$sql_delete_spec		= " DELETE FROM `tbl_specifications_master` WHERE `spec_id` = '".$spec_id."' ";
+		$sql_delete_spec		= " DELETE FROM `tbl_composition` WHERE `spec_id` = '".$spec_id."' ";
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));			
 		if($result_delete_spec)
 		{
@@ -545,7 +533,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_created_by) as created_by_name, ";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_modified_by) as modified_by_name ";
 		$sql_load_data  .= " FROM `tbl_error_data`  ";
-		$sql_load_data  .= " WHERE error_module_name='specification' ";
+		$sql_load_data  .= " WHERE error_module_name='composition' ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND error_created_by='".$uid."' ";
@@ -569,7 +557,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
     	 	$spec_data .= '<thead>';
     	  	$spec_data .= '<tr>';
          	$spec_data .= '<th>Sr. No.</th>';
-			$spec_data .= '<th>Specification Name</th>';
+			$spec_data .= '<th>Composition Name</th>';
 			//$spec_data .= '<th>Description</th>';
 			//$spec_data .= '<th>Parent</th>';
 			$spec_data .= '<th>Created</th>';
@@ -594,7 +582,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				$spec_data .= '<tr>';				
 				$spec_data .= '<td>'.++$start_offset.'</td>';				
 				$spec_data .= '<td>';
-					$sql_chk_name_already_exist	= " SELECT `spec_name` FROM `tbl_specifications_master` WHERE `spec_name`='".$er_spec_name."' ";
+					$sql_chk_name_already_exist	= " SELECT `spec_name` FROM `tbl_composition` WHERE `spec_name`='".$er_spec_name."' ";
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 					

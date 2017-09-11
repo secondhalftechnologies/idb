@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Form Factors</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Form Factor</button>
   											<?php
 										}
 									?>

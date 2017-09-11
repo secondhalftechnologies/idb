@@ -53,6 +53,217 @@
                                         <i class="icon-table"></i>
                                         <?php echo $feature_name; ?>
                                     </h3>
+                                    &nbsp;&nbsp;
+                                    <?php
+                                    // ====================================================================================
+									// START : DDL for Company Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_company" id="ddl_company" onChange="loadData();"  class = "select2-me">
+                                    	<?php
+                                        // Query For getting all the companies from the system
+										$sql_get_company	= " SELECT * FROM `tbl_customer_company` ";
+										$res_get_company	= mysqli_query($db_con, $sql_get_company) or die(mysqli_error($db_con));
+										$num_get_company	= mysqli_num_rows($res_get_company);
+										
+										if($num_get_company != 0)
+										{
+											?>
+											<option value="">Select Company</option>
+											<?php
+											while($row_get_company = mysqli_fetch_array($res_get_company))
+											{
+												// Query for getting the idea about the status of the company
+												$sql_get_status	= " SELECT * FROM `tbl_customer_company` WHERE `comp_id`='".$row_get_company['comp_id']."' ";
+												$res_get_status	= mysqli_query($db_con, $sql_get_status) or die(mysqli_error($db_con));
+												$row_get_status	= mysqli_fetch_array($res_get_status);
+												$comp_status	= $row_get_status['comp_status'];
+												?>
+												<option value="<?php echo $row_get_company['comp_id']; ?>">
+                                                	<?php echo ucwords($row_get_company['comp_name']); ?>
+                                                </option>
+												<?php
+											}
+										}
+										else
+										{
+											?>
+											<option value="">No Match Found</option>
+											<?php	
+										}
+										?>	
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Company Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Brand Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_brand" id="ddl_brand" onChange="loadData();"  class = "select2-me">
+                                    	<?php
+                                        // Query For getting all the brands from the system
+										$sql_get_brand	= " SELECT * FROM `tbl_brands_master` ";
+										$res_get_brand	= mysqli_query($db_con, $sql_get_brand) or die(mysqli_error($db_con));
+										$num_get_brand	= mysqli_num_rows($res_get_brand);
+										
+										if($num_get_brand != 0)
+										{
+											?>
+											<option value="">Select Brand</option>
+											<?php
+											while($row_get_brand = mysqli_fetch_array($res_get_brand))
+											{
+												// Query for getting the idea about the status of the company
+												$sql_get_status	= " SELECT * FROM `tbl_brands_master` WHERE `brand_id`='".$row_get_brand['brand_id']."' ";
+												$res_get_status	= mysqli_query($db_con, $sql_get_status) or die(mysqli_error($db_con));
+												$row_get_status	= mysqli_fetch_array($res_get_status);
+												$comp_status	= $row_get_status['brand_status'];
+												?>
+												<option value="<?php echo $row_get_brand['brand_id']; ?>">
+                                                	<?php echo ucwords($row_get_brand['brand_name']); ?>
+                                                </option>
+												<?php
+											}
+										}
+										else
+										{
+											?>
+											<option value="">No Match Found</option>
+											<?php	
+										}
+										?>	
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Brand Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Category Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_category" id="ddl_category" onChange="loadData();"  class = "select2-me">
+                                    	<?php
+                                        // Query For getting all categories from the system
+										$sql_get_cats	= " SELECT * FROM `tbl_category` ";
+										$sql_get_cats	.= " WHERE `cat_status`='1' ";
+										$sql_get_cats	.= " 	AND `cat_name`!='none' ";
+										$sql_get_cats	.= " 	AND `cat_type`='parent' ";
+										$sql_get_cats	.= " ORDER BY `cat_name` ASC ";
+										$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
+										$num_get_cats	= mysqli_num_rows($res_get_cats);
+										
+										if($num_get_cats != 0)
+										{
+											?>
+											<option  value="">Select Category</option>
+											<?php
+											while($row_get_cats = mysqli_fetch_array($res_get_cats))
+											{
+												?>
+												<option value="<?php echo $row_get_cats['cat_id']; ?>">
+                                                	<?php echo ucwords($row_get_cats['cat_name']); ?>
+                                                </option>
+												<?php
+												echo getSubCatValue($row_get_cats['cat_id'], 'add');
+											}
+										}
+										else
+										{
+											?>
+											<option value="">No Match Found</option>
+											<?php	
+										}
+										?>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Category Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Created By Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_created_by" id="ddl_created_by" onChange="loadData();" class="select2-me">
+                                    	<?php
+                                        // Query For getting the user list for created by
+										$sql_get_created_by	= " SELECT `id`, `fullname` FROM `tbl_cadmin_users` ";
+										$sql_get_created_by	.= " WHERE `id` IN (SELECT distinct(prod_created_by) ";
+										$sql_get_created_by	.= " 				FROM `tbl_products_master`) ";
+										$res_get_created_by	= mysqli_query($db_con, $sql_get_created_by) or die(mysqli_error($db_con));
+										$num_get_created_by	= mysqli_num_rows($res_get_created_by);
+										
+										if($num_get_created_by != 0)
+										{
+											?>
+											<option value="">Select Created By User</option>
+											<?php
+											while($row_get_created_by = mysqli_fetch_array($res_get_created_by))
+											{
+												?>
+												<option value="<?php echo $row_get_created_by['id']; ?>">
+                                                	<?php echo ucwords($row_get_created_by['fullname']); ?>
+                                                </option>
+												<?php	
+											}
+										}
+										else
+										{
+											?>
+											<option value="">No Match Found</option>
+											<?php	
+										}
+										?>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Created By Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									
+									// ====================================================================================
+									// START : DDL for Modified By Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
+									<select name="ddl_modified_by" id="ddl_modified_by" onChange="loadData();" class="select2-me">
+                                    	<?php
+                                        // Query For getting the user list for modified by
+										$sql_get_modified_by	= " SELECT `id`, `fullname` FROM `tbl_cadmin_users` ";
+										$sql_get_modified_by	.= " WHERE `id` IN (SELECT distinct(prod_modified_by) ";
+										$sql_get_modified_by	.= " 				FROM `tbl_products_master`) ";
+										$res_get_modified_by	= mysqli_query($db_con, $sql_get_modified_by) or die(mysqli_error($db_con));
+										$num_get_modified_by	= mysqli_num_rows($res_get_modified_by);
+										
+										if($num_get_modified_by != 0)
+										{
+											?>
+											<option value="">Select Created By User</option>
+											<?php
+											while($row_get_modified_by = mysqli_fetch_array($res_get_modified_by))
+											{
+												?>
+												<option value="<?php echo $row_get_modified_by['id']; ?>">
+                                                	<?php echo ucwords($row_get_modified_by['fullname']); ?>
+                                                </option>
+												<?php	
+											}
+										}
+										else
+										{
+											?>
+											<option value="">No Match Found</option>
+											<?php	
+										}
+										?>
+                                    </select>
+									<?php
+									// ====================================================================================
+									// END : DDL for Modified By Filter [dn by Prathamesh on 11 Sept 2017]
+									// ====================================================================================
+									?>
                                 </div>
                                 <div class="box-content nopadding">
                                     <?php
@@ -60,7 +271,9 @@
                                         if($add)
                                         {
                                             ?>
-                                            <button type="button" class="btn-info" onClick="addMoreProd('','add')" ><i class="icon-plus"></i>&nbspAdd Products</button>
+                                            <button type="button" class="btn-info" onClick="addMoreProd('','add')" >
+                                            	<i class="icon-plus"></i>&nbspAdd Products
+                                            </button>
                                             <?php
                                         }
                                     ?>
@@ -163,6 +376,8 @@
 					});
 				}
 			}
+			
+			
 		</script>
     </body>
 </html>

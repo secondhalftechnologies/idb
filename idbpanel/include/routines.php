@@ -1627,4 +1627,99 @@ function quit($msg,$Success="")
 
 /////=====================End : Added By Satish 21082017==================//
 
+// ===============================================================================================================
+// START : function for getting the sub categories for dropdown list [Dn By Prathamesh on 11 Sept 2017]
+// ===============================================================================================================
+function getSubCatValue($cat_id, $userType)	// Parameters : Parent ID and userType [i.e. Add, Edit, View]
+{
+	global $db_con;
+	$data	= '';
+	
+	if($userType == 'add')
+	{
+		// Get The children of this Cat ID from Category Master Table
+		$sql_get_children_frm_cm	= " SELECT * FROM `tbl_category` WHERE `cat_type`='".$cat_id."' AND `cat_name`!='none' AND `cat_status`='1' ";
+		$res_get_children_frm_cm	= mysqli_query($db_con, $sql_get_children_frm_cm) or die(mysqli_error($db_con));
+		$num_get_children_frm_cm	= mysqli_num_rows($res_get_children_frm_cm);
+		
+		if($num_get_children_frm_cm != 0)
+		{
+			while($row_get_children_frm_cm = mysqli_fetch_array($res_get_children_frm_cm))
+			{
+				// Get the count and the related parent ids of this category from the Category Path table
+				$sql_get_count_and_all_parent	= " SELECT * FROM `tbl_category_path_master` ";
+				$sql_get_count_and_all_parent	.= " WHERE `cat_id`='".$row_get_children_frm_cm['cat_id']."' ";
+				$sql_get_count_and_all_parent	.= " ORDER BY level ASC ";
+				$res_get_count_and_all_parent	= mysqli_query($db_con, $sql_get_count_and_all_parent) or die(mysqli_error($db_con));
+				$num_get_count_and_all_parent	= mysqli_num_rows($res_get_count_and_all_parent);
+				
+				if($num_get_count_and_all_parent != 0)
+				{
+					$opt_value	= '';
+					while($row_get_count_and_all_parent = mysqli_fetch_array($res_get_count_and_all_parent))
+					{
+						// Find the name of the category
+						$sql_get_name_of_cat	= " SELECT `cat_id`, `cat_name` ";
+						$sql_get_name_of_cat	.= " FROM `tbl_category` ";
+						$sql_get_name_of_cat	.= " WHERE `cat_id`='".$row_get_count_and_all_parent['path_id']."' ";
+						$res_get_name_of_cat	= mysqli_query($db_con,$sql_get_name_of_cat) or die(mysqli_error($db_con));
+						$row_get_name_of_cat	= mysqli_fetch_array($res_get_name_of_cat);
+						
+						$parent_cat_name		= $row_get_name_of_cat['cat_name'];
+						
+						$opt_value	.= $parent_cat_name.' > ';
+					}
+					$data .= '<option id="cat'.$row_get_children_frm_cm['cat_id'].'sec'.$count.'" value="'.$row_get_children_frm_cm['cat_id'].'">'.substr(ucwords($opt_value),0,-3).'</option>';
+					$data1	= getSubCatValue($row_get_children_frm_cm['cat_id'],'add');
+					if($data1 != '')
+					{
+						$data	.= $data1;
+					}
+				}
+			}
+			return $data;	
+		}
+		else
+		{
+			return $data;	
+		}
+	}
+	elseif($userType == 'view')
+	{
+		// Get the count and the related parent ids of this category from the Category Path table
+		$sql_get_count_and_all_parent	= " SELECT * FROM `tbl_category_path_master` ";
+		$sql_get_count_and_all_parent	.= " WHERE `cat_id`='".$cat_id."' ";
+		$sql_get_count_and_all_parent	.= " ORDER BY level ASC ";
+		$res_get_count_and_all_parent	= mysqli_query($db_con, $sql_get_count_and_all_parent) or die(mysqli_error($db_con));
+		$num_get_count_and_all_parent	= mysqli_num_rows($res_get_count_and_all_parent);
+		
+		if($num_get_count_and_all_parent != 0)
+		{
+			$opt_value	= '';
+			while($row_get_count_and_all_parent = mysqli_fetch_array($res_get_count_and_all_parent))
+			{
+				// Find the name of the category
+				$sql_get_name_of_cat	= " SELECT `cat_id`, `cat_name` ";
+				$sql_get_name_of_cat	.= " FROM `tbl_category` ";
+				$sql_get_name_of_cat	.= " WHERE `cat_id`='".$row_get_count_and_all_parent['path_id']."' ";
+				$res_get_name_of_cat	= mysqli_query($db_con,$sql_get_name_of_cat) or die(mysqli_error($db_con));
+				$row_get_name_of_cat	= mysqli_fetch_array($res_get_name_of_cat);
+				
+				$parent_cat_name		= $row_get_name_of_cat['cat_name'];
+				
+				$opt_value	.= $parent_cat_name.' > ';
+			}
+			$data .= '<label class="control-label" >'.substr(ucwords($opt_value),0,-3).'</label>';
+		}
+		
+		return $data;		
+	}
+	else
+	{
+		return $data;	
+	}
+}
+// ===============================================================================================================
+// END : function for getting the sub categories for dropdown list [Dn By Prathamesh on 11 Sept 2017]
+// ===============================================================================================================
 ?>

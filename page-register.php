@@ -54,31 +54,32 @@
                                     <div class="field-row  control-group controls">
                                     	
                                         <label class="col-md-3  col-xs-12" for="name">Contact Person<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name" data-rule-required="true">
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_name" name="txt_name" placeholder="Ex. Jhon Deo" data-rule-required="true">
                                         <div class="clearfix"></div>
                                     </div><!-- Contact Persone -->
                                     
                                     <div class="field-row  control-group controls">
                                         <label class="col-md-3  col-xs-12">Email<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email" data-rule-required="true" data-rule-email="true">
+                                        <input type="text" class="le-input col-md-9  col-xs-12" id="txt_email" name="txt_email" placeholder="Ex. email@something.com" data-rule-required="true" data-rule-email="true">
                                     	<div class="clearfix"></div>
                                     </div><!-- Email -->
 									
                                     <div class="field-row  control-group controls">
                                         <label class="col-md-3 col-xs-12">Mobile<span style="color:#F00">*</span></label>
-                                        <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile" data-rule-required="true">
+                                        <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile" placeholder="Ex. 1234567890" data-rule-required="true" data-rule-number="true" maxlength="10" size="10" >
                                     	<div class="clearfix"></div>
                                     </div><!-- Mobile -->
                                     
                                     <div class="field-row control-group controls">
                                         <label class="col-md-3  col-xs-12">Password<span style="color:#F00">*</span></label>
-                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password" data-rule-required="true">
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_password" name="txt_password" placeholder="Password" data-rule-required="true" minlength="6" maxlength="15" title="Password length should be minimum 8.It contain special character,upper case and lower case letters and numbers." onkeyup="checkStrength(this.id,'cust_password_error_register');">
+                                        <span id="cust_password_error_register"></span>
                                     	<div class="clearfix"></div>
                                     </div><!-- Password -->
                                     
                                     <div class="field-row control-group controls">
                                         <label class="col-md-3 col-xs-12" >Confirm Password<span style="color:#F00">*</span></label>
-                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword" data-rule-required="true">
+                                        <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword" placeholder="Confirm Password" data-rule-required="true" data-rule-equalto="#txt_password">
                                     	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
                                     
@@ -186,6 +187,63 @@
 						});
 				}
 			});
+			
+			function checkStrength(password_field,password_error_span)
+			{
+				var password = $("#"+password_field).val();
+				var strength = 0
+				if (password.length < 6) 
+				{
+					$('#'+password_error_span).html(" ");
+					return false; 
+				}
+				
+				if (password.length = 0) 
+				{ 
+					$('#'+password_error_span).removeClass()
+					$('#'+password_error_span).addClass('short')
+					$('#'+password_error_span).html('');
+				}		
+				if (password.length < 6) 
+				{ 
+					$('#'+password_error_span).removeClass()
+					$('#'+password_error_span).addClass('short')
+					$('#'+password_error_span).html('Too short');
+				}		
+				if (password.length > 5) strength += 1		
+				//If password contains both lower and uppercase characters, increase strength value.
+				if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))  strength += 1
+		
+				//If it has numbers and characters, increase strength value.
+				if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/))  strength += 1 
+				
+				//If it has one special character, increase strength value.
+				if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/))  strength += 1
+		
+				//if it has two special characters, increase strength value.
+				if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+		
+				//Calculated strength value, we can return messages
+				//If value is less than 2
+				if (strength < 2 )
+				{
+					$('#'+password_error_span).removeClass()
+					$('#'+password_error_span).addClass('weak')
+					$('#'+password_error_span).html('Weak');
+				}
+				else if (strength == 2 )
+				{
+					$('#'+password_error_span).removeClass()
+					$('#'+password_error_span).addClass('good')
+					$('#'+password_error_span).html('Good');
+				}
+				else
+				{
+					$('#'+password_error_span).removeClass()
+					$('#'+password_error_span).addClass('strong')
+					$('#'+password_error_span).html('Strong');
+				}
+			}
 		</script>
     </body>
 </html>

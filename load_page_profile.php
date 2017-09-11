@@ -223,7 +223,7 @@
 			}
 			
 			// Query for Getting all the information of the company for respective user-id
-			$sql_get_comp_info	= " SELECT * FROM `tbl_company_master` WHERE `comp_user_id`='".$where_arr['comp_user_id']."' ";
+			$sql_get_comp_info	= " SELECT * FROM `tbl_customer_company` WHERE `comp_user_id`='".$where_arr['comp_user_id']."' ";
 			$res_get_comp_info	= mysqli_query($db_con, $sql_get_comp_info) or die(mysqli_error($db_con));
 			$num_get_comp_info	= mysqli_num_rows($res_get_comp_info);
 			
@@ -236,7 +236,7 @@
 				
 				// Update Query
 				// Query For update the User's Basic Information
-				$res_update_user_company	= update('tbl_company_master', $data, $where_arr);
+				$res_update_user_company	= update('tbl_customer_company', $data, $where_arr);
 				
 				if($res_update_user_company)
 				{
@@ -372,7 +372,7 @@
 				
 				// Insert Query
 				// Query For update the User's Basic Information
-				$res_update_user_company	= insert('tbl_company_master', $data);
+				$res_update_user_company	= insert('tbl_customer_company', $data);
 				
 				if($res_update_user_company)
 				{
@@ -438,7 +438,7 @@
 		
 		if(move_uploaded_file($_FILES['file_pan_image']['tmp_name'],$dir))
 		{
-			$res                          = insert('tbl_pans',$data);
+			$res                          = insert('tbl_customer_pan',$data);
 			
 			if($res)
 			{
@@ -464,7 +464,7 @@
 			quit('Pan Number is required...!');
 		}
 		
-		$panRow = checkExist('tbl_pans',array('pan_userid'=>$where_arr['pan_userid']));
+		$panRow = checkExist('tbl_customer_pan',array('pan_userid'=>$where_arr['pan_userid']));
 		
 		if(isset($_FILES['file_pan_image']['name']) && $_FILES['file_pan_image']['name']!="")
 		{
@@ -482,7 +482,7 @@
 			if(move_uploaded_file($_FILES['file_pan_image']['tmp_name'],$dir))
 			{
 				unlink('idbpanel/documents/pan/'.$panRow['pan_image']);
-				$res                          = update('tbl_pans',$data,$where_arr);
+				$res                          = update('tbl_customer_pan',$data,$where_arr);
 				
 				if($res)
 				{
@@ -497,7 +497,7 @@
 		}
 		else
 		{
-			 update('tbl_pans',$data,$where_arr);
+			 update('tbl_customer_pan',$data,$where_arr);
 			 quit('Update Successfully...!',1);
 		}
 		
@@ -555,7 +555,7 @@
 		{
 			if(move_uploaded_file($_FILES['file_gst_ack_image']['tmp_name'],$dir1))
 		    {
-				$res                          = insert('tbl_gst',$data);
+				$res                          = insert('tbl_customer_gst',$data);
 			    if($res)
 				{
 					quit('Success',1);
@@ -588,7 +588,7 @@
 			quit('GST Number is required...!');
 		}
 		
-		$gstRow = checkExist('tbl_gst',array('gst_userid'=>$where_arr['gst_userid']));
+		$gstRow = checkExist('tbl_customer_gst',array('gst_userid'=>$where_arr['gst_userid']));
 		
 		if($_FILES['file_gst_image']['name']!="")
 		{
@@ -628,7 +628,7 @@
 			}
 		}
 		
-		$res                          = update('tbl_gst',$data,$where_arr);
+		$res                          = update('tbl_customer_gst',$data,$where_arr);
 		if($res)
 		{
 		 	quit('Update Successfully...!',1);
@@ -681,7 +681,7 @@
 		
 		if(move_uploaded_file($_FILES['file_bank_image']['tmp_name'],$dir))
 		{
-			$res                          = insert('tbl_bank_details',$data);
+			$res                          = insert('tbl_customer_bank_details',$data);
 			if($res)
 			{
 				quit('Added Successfully...!',1);
@@ -713,7 +713,7 @@
 			quit('All fields are mandotory...!');
 		}
 		
-		$bankRow = checkExist('tbl_bank_details',array('bank_userid'=>$where_arr['bank_userid']));
+		$bankRow = checkExist('tbl_customer_bank_details',array('bank_userid'=>$where_arr['bank_userid']));
 		
 		if(isset($_FILES['file_bank_image']['name']) && $_FILES['file_bank_image']['name']!="")
 		{
@@ -730,7 +730,7 @@
 			$dir                          = 'idbpanel/documents/bank/'.$bank_image_name;
 			if(move_uploaded_file($_FILES['file_bank_image']['tmp_name'],$dir))
 			{
-				$res                          = update('tbl_bank_details',$data,$where_arr);
+				$res                          = update('tbl_customer_bank_details',$data,$where_arr);
 				
 				if($res)
 				{
@@ -745,7 +745,7 @@
 		}
 		else
 		{
-			 update('tbl_bank_details',$data,$where_arr);
+			 update('tbl_customer_bank_details',$data,$where_arr);
 			 quit('Update Successfully...!',1);
 		}
 	}

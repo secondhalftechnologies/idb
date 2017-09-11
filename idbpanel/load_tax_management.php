@@ -5,17 +5,21 @@ $obj 	= json_decode($json);
 $uid	= $_SESSION['panel_user']['id'];
 $utype				= $_SESSION['panel_user']['utype'];
 
-function insertSpecification($tax_name,$response_array)
+function insertSpecification($tax_name,$tax_status,$response_array)
 {
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
-	$sql_check_spec 	 = " select * from tbl_taxmanagement_master where tax_name like '".$tax_name."' "; 
+	$sql_check_spec 	 = " select * from tbl_tax_master where tax_name like '".$tax_name."' "; 
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{
+<<<<<<< HEAD
 		$sql_insert_spec 	= " INSERT INTO `tbl_taxmanagement_master`(`tax_name`,`tax_created_by`, `tax_created`,`tax_status`) VALUES ('".$tax_name."','".$uid."','".$datetime."','".$tax_status."') ";
+=======
+		$sql_insert_spec 	= " INSERT INTO `tbl_tax_master`(`tax_name`,`tax_created_by`, `tax_created`,`tax_status`) VALUES ('".$tax_name."','".$uid."','".$datetime."','".$tax_status."') ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
 		{
@@ -81,7 +85,7 @@ if(isset($_FILES['file']))
 			$tax_name 				= trim($allDataInSheet[$i]["A"]);
 			
 			$query = " SELECT `id`, `tax_id`, `tax_name`, `tax_status`, `tax_created_by`, `tax_created`, `tax_modified_by`, `tax_modified` 
-						FROM `tbl_taxmanagement_master` 
+						FROM `tbl_tax_master` 
 						WHERE `tax_name`='".$tax_name."' " ;
 							
 			$sql 		= mysqli_query($db_con, $query) or die(mysqli_error($db_con));
@@ -91,7 +95,7 @@ if(isset($_FILES['file']))
 			
 			if($existName=="" )
 			{
-				$response_array 	= insertSpecification($tax_name,$response_array);
+				$response_array 	= insertSpecification($tax_name,$tax_status,$response_array);
 				if($response_array)
 				{
 					$insertion_flag	= 1;	
@@ -156,7 +160,7 @@ if((isset($obj->insert_req)) == "1" && isset($obj->insert_req))
 	$response_array 	= array();	
 	if($tax_name != "" && $tax_status != "")
 	{
-		$response_array = insertSpecification($tax_name,$response_array);
+		$response_array = insertSpecification($tax_name,$tax_status,$response_array);
 	}
 	else
 	{
@@ -169,7 +173,7 @@ if((isset($obj->load_tax_parts)) == "1" && isset($obj->load_tax_parts))
 {
 	$tax_id = $obj->tax_id;
 	$req_type = $obj->req_type;
-	$response_array = array();
+	$response_array = array(); 
 	if($req_type != "")
 	{
 		if($tax_id != "" && $req_type == "error")
@@ -181,13 +185,13 @@ if((isset($obj->load_tax_parts)) == "1" && isset($obj->load_tax_parts))
 		}
 		else if($tax_id != "" && $req_type == "edit")
 		{
-			$sql_tax_data 	= "Select * from tbl_taxmanagement_master where tax_id = '".$tax_id."' ";
+			$sql_tax_data 	= "Select * from tbl_tax_master where tax_id = '".$tax_id."' ";
 			$result_tax_data 	= mysqli_query($db_con,$sql_tax_data) or die(mysqli_error($db_con));
 			$row_tax_data		= mysqli_fetch_array($result_tax_data);		
 		}	
 		else if($tax_id != "" && $req_type == "view")
 		{
-			$sql_tax_data 	= "Select * from tbl_taxmanagement_master where tax_id = '".$tax_id."' ";
+			$sql_tax_data 	= "Select * from tbl_tax_master where tax_id = '".$tax_id."' ";
 			$result_tax_data 	= mysqli_query($db_con,$sql_tax_data) or die(mysqli_error($db_con));
 			$row_tax_data		= mysqli_fetch_array($result_tax_data);		
 		}			
@@ -225,7 +229,7 @@ if((isset($obj->load_tax_parts)) == "1" && isset($obj->load_tax_parts))
 		if($tax_id != "" && $req_type == "error")
 		{
 			$data .= '<input type="radio" name="tax_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_specifications.php",3);
+			$dis	= checkFunctionalityRight("view_tax_management.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -260,7 +264,7 @@ if((isset($obj->load_tax_parts)) == "1" && isset($obj->load_tax_parts))
 		else
 		{
 			$data .= '<input type="radio" name="tax_status" value="1" class="css-radio" data-rule-required="true" ';
-			$dis	= checkFunctionalityRight("view_specifications.php",3);
+			$dis	= checkFunctionalityRight("view_tax_management.php",3);
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -324,7 +328,7 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start 			= $page * $per_page;
 			
 		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.tax_created_by) AS name_tax_created_by, ";
-		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.tax_modified_by) AS name_tax_modified_by FROM `tbl_taxmanagement_master` AS tbm WHERE 1=1 ";
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.tax_modified_by) AS name_tax_modified_by FROM `tbl_tax_master` AS tbm WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND tax_created_by='".$uid."' ";
@@ -351,17 +355,17 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 				$tax_data .= '<th>Created</th>';
 				$tax_data .= '<th>Modified By</th>';
 				$tax_data .= '<th>Modified</th>';	
-				$dis = checkFunctionalityRight("view_specifications.php",3);
+				$dis = checkFunctionalityRight("view_tax_management.php",3);
 				if($dis)
 				{					
 					$tax_data .= '<th>Status</th>';											
 				}
-				$edit = checkFunctionalityRight("view_specifications.php",1);
+				$edit = checkFunctionalityRight("view_tax_management.php",1);
 				if($edit)
 				{					
 					$tax_data .= '<th>Edit</th>';			
 				}	
-				$delete = checkFunctionalityRight("view_specifications.php",2);
+				$delete = checkFunctionalityRight("view_tax_management.php",2);
 				if($delete)
 				{					
 					$tax_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
@@ -379,7 +383,7 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 					$tax_data .= '<td>'.$row_load_data['tax_created'].'</td>';
 					$tax_data .= '<td>'.$row_load_data['name_tax_modified_by'].'</td>';
 					$tax_data .= '<td>'.$row_load_data['tax_modified'].'</td>';
-					$dis = checkFunctionalityRight("view_specifications.php",3);
+					$dis = checkFunctionalityRight("view_tax_management.php",3);
 					if($dis)
 					{					
 						$tax_data .= '<td style="text-align:center">';	
@@ -393,13 +397,13 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 						}
 						$tax_data .= '</td>';	
 					}
-					$edit = checkFunctionalityRight("view_specifications.php",1);
+					$edit = checkFunctionalityRight("view_tax_management.php",1);
 					if($edit)
 					{						
 						$tax_data .= '<td style="text-align:center">';
 						$tax_data .= '<input type="button" value="Edit" id="'.$row_load_data['tax_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
 					}
-					$delete = checkFunctionalityRight("view_specifications.php",2);
+					$delete = checkFunctionalityRight("view_tax_management.php",2);
 					if($delete)
 					{					
 						$tax_data .= '<td><div class="controls" align="center">';
@@ -436,7 +440,7 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$tax_id				= $obj->tax_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();		
-	$sql_update_status 		= " UPDATE `tbl_taxmanagement_master` SET `tax_status`= '".$curr_status."' ,`tax_modified` = '".$datetime."' ,`tax_modified_by` = '".$uid."' WHERE `tax_id` like '".$tax_id."' ";
+	$sql_update_status 		= " UPDATE `tbl_tax_master` SET `tax_status`= '".$curr_status."' ,`tax_modified` = '".$datetime."' ,`tax_modified_by` = '".$uid."' WHERE `tax_id` like '".$tax_id."' ";
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -457,12 +461,12 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 	$response_array 	= array();
 	if($tax_name != "" && $tax_id != "" && $tax_status != "")
 	{
-		$sql_check_spec 		= " select * from tbl_taxmanagement_master where tax_name like '".$tax_name."' and `tax_id` != '".$tax_id."' "; 
+		$sql_check_spec 		= " select * from tbl_tax_master where tax_name like '".$tax_name."' and `tax_id` != '".$tax_id."' "; 
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{		
-			$sql_update_spec 	= " UPDATE `tbl_taxmanagement_master` SET `tax_name`='".$tax_name."',`tax_status`='".$tax_status."',";
+			$sql_update_spec 	= " UPDATE `tbl_tax_master` SET `tax_name`='".$tax_name."',`tax_status`='".$tax_status."',";
 			$sql_update_spec  .= " `tax_modified`='".$datetime."',`tax_modified_by`='".$uid."' WHERE `tax_id` = '".$tax_id."' ";		
 			$result_update_spec = mysqli_query($db_con,$sql_update_spec) or die(mysqli_error($db_con));
 			if($result_update_spec)
@@ -493,7 +497,7 @@ if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 	$del_flag 		= 0; 
 	foreach($ar_tax_id as $tax_id)	
 	{
-		$sql_delete_spec		= " DELETE FROM `tbl_taxmanagement_master` WHERE `tax_id` = '".$tax_id."' ";
+		$sql_delete_spec		= " DELETE FROM `tbl_tax_master` WHERE `tax_id` = '".$tax_id."' ";
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));			
 		if($result_delete_spec)
 		{
@@ -582,7 +586,7 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				$tax_data .= '<tr>';				
 				$tax_data .= '<td>'.++$start_offset.'</td>';				
 				$tax_data .= '<td>';
-					$sql_chk_name_already_exist	= " SELECT `tax_name` FROM `tbl_taxmanagement_master` WHERE `tax_name`='".$er_tax_name."' ";
+					$sql_chk_name_already_exist	= " SELECT `tax_name` FROM `tbl_tax_master` WHERE `tax_name`='".$er_tax_name."' ";
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 					

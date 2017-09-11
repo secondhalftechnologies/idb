@@ -517,7 +517,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							loading_hide();								
 							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
 							$('#error_model').modal('toggle');							
-							//window.location.assign("view_brands.php?pag=<?php echo $title; ?>");
+							window.location.assign("view_brands.php?pag=<?php echo $title; ?>");
 						} 
 						else 
 						{

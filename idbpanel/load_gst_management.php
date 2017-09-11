@@ -10,12 +10,20 @@ function insertGst($gst_name,$gst_status,$response_array)
 	global $db_con, $datetime;
 	global $uid;
 	global $obj;
+<<<<<<< HEAD
 	$sql_check_spec 	 = " select * from tbl_gstmanagement_master where gst_name like '".$gst_name."' "; 
+=======
+	$sql_check_spec 	 = " select * from tbl_gst_master where gst_name like '".$gst_name."' "; 
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 	$result_check_spec 	 = mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 	$num_rows_check_spec = mysqli_num_rows($result_check_spec);
 	if($num_rows_check_spec == 0)
 	{
+<<<<<<< HEAD
 		$sql_insert_spec 	= " INSERT INTO `tbl_gstmanagement_master`(`gst_name`,`gst_created_by`, `gst_created`,`gst_status`) VALUES ('".$gst_name."','".$uid."','".$datetime."','".$gst_status."') ";
+=======
+		$sql_insert_spec 	= " INSERT INTO `tbl_gst_master`(`gst_name`,`gst_created_by`, `gst_created`,`gst_status`) VALUES ('".$gst_name."','".$uid."','".$datetime."','".$gst_status."') ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		$result_insert_spec = mysqli_query($db_con,$sql_insert_spec) or die(mysqli_error($db_con));
 		if($result_insert_spec)
 		{
@@ -80,8 +88,13 @@ if(isset($_FILES['file']))
 		{
 			$gst_name 				= trim($allDataInSheet[$i]["A"]);
 			
+<<<<<<< HEAD
 			$query = " SELECT `id`, `gst_id`, `gst_name`, `gst_status`, `gst_created_by`, `gst_created`, `gst_modified_by`, `gst_modified` 
 						FROM `tbl_gstmanagement_master` 
+=======
+			$query = " SELECT `gst_id`, `gst_name`, `gst_status`, `gst_created_by`, `gst_created`, `gst_modified_by`, `gst_modified` 
+						FROM `tbl_gst_master` 
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 						WHERE `gst_name`='".$gst_name."' " ;
 							
 			$sql 		= mysqli_query($db_con, $query) or die(mysqli_error($db_con));
@@ -181,13 +194,21 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 		}
 		else if($gst_id != "" && $req_type == "edit")
 		{
+<<<<<<< HEAD
 			$sql_gst_data 	= "Select * from tbl_gstmanagement_master where gst_id = '".$gst_id."' ";
+=======
+			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
 			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
 		}	
 		else if($gst_id != "" && $req_type == "view")
 		{
+<<<<<<< HEAD
 			$sql_gst_data 	= "Select * from tbl_gstmanagement_master where gst_id = '".$gst_id."' ";
+=======
+			$sql_gst_data 	= "Select * from tbl_gst_master where gst_id = '".$gst_id."' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 			$result_gst_data 	= mysqli_query($db_con,$sql_gst_data) or die(mysqli_error($db_con));
 			$row_gst_data		= mysqli_fetch_array($result_gst_data);		
 		}			
@@ -201,9 +222,15 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 			$data .= '<input type="hidden" id="error_id" value="'.$gst_id.'">';
 		}	                                                         		
 		$data .= '<div class="control-group">';
+<<<<<<< HEAD
 		$data .= '<label for="tasktitel" class="control-label">gst Name <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
 		$data .= '<input type="number" step="0.01" id="gst_name" name="gst_name" class="input-large" data-rule-required="true" ';
+=======
+		$data .= '<label for="tasktitel" class="control-label">GST Value <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+		$data .= '<div class="controls">';
+		$data .= '<input type="text" step="0.01" id="gst_name" name="gst_name" size="2" maxlength="2" class="input-large" data-rule-required="true" data-rule-number="true"';
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		if($gst_id != "" && $req_type == "edit")
 		{
 			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'"'; 
@@ -216,7 +243,11 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 		{
 			$data .= ' value="'.ucwords($row_gst_data['gst_name']).'" disabled';
 		}
+<<<<<<< HEAD
 		$data .= '/>';
+=======
+		$data .= '/> %';
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		$data .= '</div>';
 		$data .= '</div> <!-- GST Name -->';
 		$data .= '<div class="control-group">';
@@ -225,7 +256,11 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 		if($gst_id != "" && $req_type == "error")
 		{
 			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
+<<<<<<< HEAD
 			$dis	= checkFunctionalityRight("view_specifications.php",3);
+=======
+			$dis	= checkFunctionalityRight("view_gst_management.php",3);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -260,7 +295,11 @@ if((isset($obj->load_gst_parts)) == "1" && isset($obj->load_gst_parts))
 		else
 		{
 			$data .= '<input type="radio" name="gst_status" value="1" class="css-radio" data-rule-required="true" ';
+<<<<<<< HEAD
 			$dis	= checkFunctionalityRight("view_specifications.php",3);
+=======
+			$dis	= checkFunctionalityRight("view_gst_management.php",3);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 			if(!$dis)
 			{
 				$data .= ' disabled="disabled" ';
@@ -324,7 +363,11 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 		$start 			= $page * $per_page;
 			
 		$sql_load_data  = " SELECT *,(SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_created_by) AS name_gst_created_by, ";
+<<<<<<< HEAD
 		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_modified_by) AS name_gst_modified_by FROM `tbl_gstmanagement_master` AS tbm WHERE 1=1 ";
+=======
+		$sql_load_data  .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tbm.gst_modified_by) AS name_gst_modified_by FROM `tbl_gst_master` AS tbm WHERE 1=1 ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND gst_created_by='".$uid."' ";
@@ -346,22 +389,38 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
     	  		$gst_data .= '<tr>';
          		$gst_data .= '<th>Sr. No.</th>';
 				$gst_data .= '<th>Id</th>';
+<<<<<<< HEAD
 				$gst_data .= '<th>gst Name</th>';
+=======
+				$gst_data .= '<th>GST Value</th>';
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 				$gst_data .= '<th>Created By</th>';
 				$gst_data .= '<th>Created</th>';
 				$gst_data .= '<th>Modified By</th>';
 				$gst_data .= '<th>Modified</th>';	
+<<<<<<< HEAD
 				$dis = checkFunctionalityRight("view_specifications.php",3);
+=======
+				$dis = checkFunctionalityRight("view_gst_management.php",3);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 				if($dis)
 				{					
 					$gst_data .= '<th>Status</th>';											
 				}
+<<<<<<< HEAD
 				$edit = checkFunctionalityRight("view_specifications.php",1);
+=======
+				$edit = checkFunctionalityRight("view_gst_management.php",1);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 				if($edit)
 				{					
 					$gst_data .= '<th>Edit</th>';			
 				}	
+<<<<<<< HEAD
 				$delete = checkFunctionalityRight("view_specifications.php",2);
+=======
+				$delete = checkFunctionalityRight("view_gst_management.php",2);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 				if($delete)
 				{					
 					$gst_data .= '<th><div style="text-align:center"><input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/></div></th>';
@@ -374,12 +433,20 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 	    		  	$gst_data .= '<tr>';				
 					$gst_data .= '<td>'.++$start_offset.'</td>';				
 					$gst_data .= '<td>'.$row_load_data['gst_id'].'</td>';
+<<<<<<< HEAD
 					$gst_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['gst_name']).'" class="btn-link" id="'.$row_load_data['gst_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
+=======
+					$gst_data .= '<td style="text-align:center"><input type="button" value="'.ucwords($row_load_data['gst_name']).'%" class="btn-link" id="'.$row_load_data['gst_id'].'" onclick="addMoreSpec(this.id,\'view\');"></td>';
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 					$gst_data .= '<td>'.$row_load_data['name_gst_created_by'].'</td>';
 					$gst_data .= '<td>'.$row_load_data['gst_created'].'</td>';
 					$gst_data .= '<td>'.$row_load_data['name_gst_modified_by'].'</td>';
 					$gst_data .= '<td>'.$row_load_data['gst_modified'].'</td>';
+<<<<<<< HEAD
 					$dis = checkFunctionalityRight("view_specifications.php",3);
+=======
+					$dis = checkFunctionalityRight("view_gst_management.php",3);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 					if($dis)
 					{					
 						$gst_data .= '<td style="text-align:center">';	
@@ -393,13 +460,21 @@ if((isset($obj->load_spec)) == "1" && isset($obj->load_spec))
 						}
 						$gst_data .= '</td>';	
 					}
+<<<<<<< HEAD
 					$edit = checkFunctionalityRight("view_specifications.php",1);
+=======
+					$edit = checkFunctionalityRight("view_gst_management.php",1);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 					if($edit)
 					{						
 						$gst_data .= '<td style="text-align:center">';
 						$gst_data .= '<input type="button" value="Edit" id="'.$row_load_data['gst_id'].'" class="btn-warning" onclick="addMoreSpec(this.id,\'edit\');"></td>';						
 					}
+<<<<<<< HEAD
 					$delete = checkFunctionalityRight("view_specifications.php",2);
+=======
+					$delete = checkFunctionalityRight("view_gst_management.php",2);
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 					if($delete)
 					{					
 						$gst_data .= '<td><div class="controls" align="center">';
@@ -436,7 +511,11 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$gst_id				= $obj->gst_id;
 	$curr_status			= $obj->curr_status;
 	$response_array 		= array();		
+<<<<<<< HEAD
 	$sql_update_status 		= " UPDATE `tbl_gstmanagement_master` SET `gst_status`= '".$curr_status."' ,`gst_modified` = '".$datetime."' ,`gst_modified_by` = '".$uid."' WHERE `gst_id` like '".$gst_id."' ";
+=======
+	$sql_update_status 		= " UPDATE `tbl_gst_master` SET `gst_status`= '".$curr_status."' ,`gst_modified` = '".$datetime."' ,`gst_modified_by` = '".$uid."' WHERE `gst_id` like '".$gst_id."' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 	$result_update_status 	= mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
 	if($result_update_status)
 	{
@@ -457,12 +536,20 @@ if((isset($obj->update_req)) == "1" && isset($obj->update_req))
 	$response_array 	= array();
 	if($gst_name != "" && $gst_id != "" && $gst_status != "")
 	{
+<<<<<<< HEAD
 		$sql_check_spec 		= " select * from tbl_gstmanagement_master where gst_name like '".$gst_name."' and `gst_id` != '".$gst_id."' "; 
+=======
+		$sql_check_spec 		= " select * from tbl_gst_master where gst_name like '".$gst_name."' and `gst_id` != '".$gst_id."' "; 
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		$result_check_spec 		= mysqli_query($db_con,$sql_check_spec) or die(mysqli_error($db_con));
 		$num_rows_check_spec 	= mysqli_num_rows($result_check_spec);
 		if($num_rows_check_spec == 0)
 		{		
+<<<<<<< HEAD
 			$sql_update_spec 	= " UPDATE `tbl_gstmanagement_master` SET `gst_name`='".$gst_name."',`gst_status`='".$gst_status."',";
+=======
+			$sql_update_spec 	= " UPDATE `tbl_gst_master` SET `gst_name`='".$gst_name."',`gst_status`='".$gst_status."',";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 			$sql_update_spec  .= " `gst_modified`='".$datetime."',`gst_modified_by`='".$uid."' WHERE `gst_id` = '".$gst_id."' ";		
 			$result_update_spec = mysqli_query($db_con,$sql_update_spec) or die(mysqli_error($db_con));
 			if($result_update_spec)
@@ -493,7 +580,11 @@ if((isset($obj->delete_spec)) == "1" && isset($obj->delete_spec))
 	$del_flag 		= 0; 
 	foreach($ar_gst_id as $gst_id)	
 	{
+<<<<<<< HEAD
 		$sql_delete_spec		= " DELETE FROM `tbl_gstmanagement_master` WHERE `gst_id` = '".$gst_id."' ";
+=======
+		$sql_delete_spec		= " DELETE FROM `tbl_gst_master` WHERE `gst_id` = '".$gst_id."' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		$result_delete_spec	= mysqli_query($db_con,$sql_delete_spec) or die(mysqli_error($db_con));			
 		if($result_delete_spec)
 		{
@@ -533,7 +624,11 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_created_by) as created_by_name, ";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = error_modified_by) as modified_by_name ";
 		$sql_load_data  .= " FROM `tbl_error_data`  ";
+<<<<<<< HEAD
 		$sql_load_data  .= " WHERE error_module_name='specification' ";
+=======
+		$sql_load_data  .= " WHERE error_module_name='GST Managment' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND error_created_by='".$uid."' ";
@@ -582,7 +677,11 @@ if((isset($obj->load_error)) == "1" && isset($obj->load_error))
 				$gst_data .= '<tr>';				
 				$gst_data .= '<td>'.++$start_offset.'</td>';				
 				$gst_data .= '<td>';
+<<<<<<< HEAD
 					$sql_chk_name_already_exist	= " SELECT `gst_name` FROM `tbl_gstmanagement_master` WHERE `gst_name`='".$er_gst_name."' ";
+=======
+					$sql_chk_name_already_exist	= " SELECT `gst_name` FROM `tbl_gst_master` WHERE `gst_name`='".$er_gst_name."' ";
+>>>>>>> 1abf58b3b3b0d23b5faa704fe78843c42aaf59a0
 					$res_chk_name_already_exist = mysqli_query($db_con, $sql_chk_name_already_exist) or die(mysqli_error($db_con));
 					$num_chk_name_already_exist = mysqli_num_rows($res_chk_name_already_exist);
 					

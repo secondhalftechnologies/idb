@@ -4,7 +4,7 @@ checkuser();
 chkRights(basename($_SERVER['PHP_SELF']));
 
 // This is for dynamic title, bread crum, etc.
-$title = "View Specification";
+$title = "View Composition";
 $path_parts   		= pathinfo(__FILE__);
 $filename 	  		= $path_parts['filename'].".php";
 $sql_feature 		= "select * from tbl_admin_features where af_page_url = '".$filename."'";

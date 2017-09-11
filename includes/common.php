@@ -203,7 +203,7 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			
 			if($row_get_user_login['cust_status'] == 0)
 			{
-				quit('You are not yet activeted');
+				quit('Your account has not been activated');
 			}
 			/* data base password */
 			$cust_password_db_login		= trim($row_get_user_login['cust_password']);
