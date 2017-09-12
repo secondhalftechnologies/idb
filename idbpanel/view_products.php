@@ -59,7 +59,7 @@
 									// START : DDL for Company Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_company" id="ddl_company" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_company" id="ddl_company" onChange="loadData();"  class = "select2-me input-large">
                                     	<?php
                                         // Query For getting all the companies from the system
 										$sql_get_company	= " SELECT * FROM `tbl_customer_company` ";
@@ -102,7 +102,7 @@
 									// START : DDL for Brand Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_brand" id="ddl_brand" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_brand" id="ddl_brand" onChange="loadData();"  class = "select2-me input-large">
                                     	<?php
                                         // Query For getting all the brands from the system
 										$sql_get_brand	= " SELECT * FROM `tbl_brands_master` ";
@@ -145,7 +145,7 @@
 									// START : DDL for Category Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_category" id="ddl_category" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_category" id="ddl_category" onChange="loadData();"  class = "select2-me input-large">
                                     	<?php
                                         // Query For getting all categories from the system
 										$sql_get_cats	= " SELECT * FROM `tbl_category` ";
@@ -188,7 +188,7 @@
 									// START : DDL for Created By Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_created_by" id="ddl_created_by" onChange="loadData();" class="select2-me">
+									<select name="ddl_created_by" id="ddl_created_by" onChange="loadData();" class="select2-me input-large">
                                     	<?php
                                         // Query For getting the user list for created by
 										$sql_get_created_by	= " SELECT `id`, `fullname` FROM `tbl_cadmin_users` ";
@@ -228,7 +228,7 @@
 									// START : DDL for Modified By Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_modified_by" id="ddl_modified_by" onChange="loadData();" class="select2-me">
+									<select name="ddl_modified_by" id="ddl_modified_by" onChange="loadData();" class="select2-me input-large">
                                     	<?php
                                         // Query For getting the user list for modified by
 										$sql_get_modified_by	= " SELECT `id`, `fullname` FROM `tbl_cadmin_users` ";
@@ -268,7 +268,7 @@
 									// START : DDL for Product Status Filter [Active/Inactive] [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_prod_status" id="ddl_prod_status" onChange="loadData();"  class = "select2-me ">
+									<select name="ddl_prod_status" id="ddl_prod_status" onChange="loadData();"  class = "select2-me input-large">
                                     	<option value="" selected>All Products</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
@@ -282,7 +282,7 @@
 									// START : DDL for Stock Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_stock" id="ddl_stock" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_stock" id="ddl_stock" onChange="loadData();"  class = "select2-me input-large">
                                     	<option value="" selected>All Products</option>
                                         <option value="1">In-Stock</option>
                                         <option value="0">Out-Of-Stock</option>
@@ -296,7 +296,7 @@
 									// START : DDL for Image/No Image Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_image" id="ddl_image" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_image" id="ddl_image" onChange="loadData();"  class = "select2-me input-large">
                                     	<option value="" selected>All Products</option>
                                         <option value="1">Has Image</option>
                                         <option value="0">Has No Image</option>
@@ -310,7 +310,7 @@
 									// START : DDL for Google Product Category Filter [dn by Prathamesh on 11 Sept 2017]
 									// ====================================================================================
 									?>
-									<select name="ddl_gpc" id="ddl_gpc" onChange="loadData();"  class = "select2-me">
+									<select name="ddl_gpc" id="ddl_gpc" onChange="loadData();"  class = "select2-me input-large">
                                     	<option value="" selected>All Products</option>
                                         <option value="1">Has Google Product Category</option>
                                         <option value="0">Has No Google Product Category</option>

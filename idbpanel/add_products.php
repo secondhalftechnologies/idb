@@ -85,18 +85,20 @@
                                         </div> <!-- Product Description -->
                                         
                                         <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Company<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                             	<?php
                                                 // Query For getiing the Active Company List 
 												$sql_get_comp_list	= " SELECT * FROM `tbl_customer_company` WHERE `comp_status`='1' ";
 												$res_get_comp_list	= mysqli_query($db_con, $sql_get_comp_list) or die(mysqli_error($db_con));
 												$num_get_comp_list	= mysqli_num_rows($res_get_comp_list);
-												
+												?>
+												<select name="ddl_company" id="ddl_company" class="select2-me input-large" data-rule-required="true">
+												<?php
 												if($num_get_comp_list != 0)
 												{
 													?>
-													<option value="">Select Comapny</option>
+													<option value="">Select Category</option>
                                                     <?php
 													while($row_get_comp_list = mysqli_fetch_array($res_get_comp_list))
 													{
@@ -114,6 +116,7 @@
 													<?php	
 												}
 												?>
+                                                </select>
                                             </div>
                                         </div>
                                     </form>
