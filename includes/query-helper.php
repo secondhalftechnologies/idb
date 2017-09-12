@@ -86,7 +86,20 @@
 			return false;
 		}
 	}
-	
+	// For Compile
+	function quit($msg,$Success="")
+	{
+		if($Success ==1)
+		{
+			$Success="Success";
+		}
+		else
+		{
+			$Success="fail";
+		}
+		echo json_encode(array("Success"=>$Success,"resp"=>$msg));
+		exit();
+	}
 	// Select Query For getting the Record count
 	function isExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{
@@ -133,20 +146,7 @@
 		}
 	}
 	
-	// For Compile
-	function quit($msg,$Success="")
-	{
-		if($Success ==1)
-		{
-			$Success="Success";
-		}
-		else
-		{
-			$Success="fail";
-		}
-		echo json_encode(array("Success"=>$Success,"resp"=>$msg));
-		exit();
-	}
+	
 	
 	function checkExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{

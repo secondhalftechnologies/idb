@@ -1088,7 +1088,7 @@ if((isset($obj->load_cat)) == "1" && isset($obj->load_cat))
 		$start_offset += $page * $per_page;
 		$start 			= $page * $per_page;
 			
-		$sql_load_data  = " SELECT cat_id,cat_name,cat_description,cat_slug,cat_sort_order,cat_created,cat_modified,cat_status, cat_type,";
+		$sql_load_data  = " SELECT cat_id,cat_name,cat_commission,cat_description,cat_slug,cat_sort_order,cat_created,cat_modified,cat_status, cat_type,";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = tc.cat_createdby) as cat_by_created,cat_slug,";
 		$sql_load_data  .= " (SELECT fullname FROM `tbl_cadmin_users` WHERE id = tc.cat_modifiedby) as cat_by_modified, ";
 		$sql_load_data  .= " (SELECT cat_name FROM `tbl_category` WHERE cat_id = tc.cat_type) as parent_name ";				
@@ -1125,6 +1125,9 @@ if((isset($obj->load_cat)) == "1" && isset($obj->load_cat))
 			$cat_data .= '<th style="width:6%;text-align:center">Sort Order</th>';
 			$cat_data .= '<th style="width:15%;text-align:center">Slug/Url</th>';			
 			$cat_data .= '<th class="center-text">Product Discount</th>';
+			//===================Strat : add Commission Dn by Satish 12092017=====================//
+			$cat_data .= '<th class="center-text">Commision( % )</th>';
+			//===================End : add Commission Dn by Satish 12092017=====================//
 			$cat_data .= '<th class="center-text">View</th>';
 			$dis = checkFunctionalityRight("view_category.php",3);
 			if($dis)
@@ -1203,12 +1206,24 @@ if((isset($obj->load_cat)) == "1" && isset($obj->load_cat))
 				$cat_data .= '<span><input type="radio" name="'.$row_load_data['cat_id'].'discount" value="percent">Percent(%) </span>';
 				$cat_data .= '</div><br>';					
 				$cat_data .= '<div class="center-text">';
-				$cat_data .= '<input type="text" name="'.$row_load_data['cat_id'].'discount_value" id="'.$row_load_data['cat_id'].'discount_value">';					
+				$cat_data .= '<input onkeypress="return isNumberKey(event)" type="text" name="'.$row_load_data['cat_id'].'discount_value" id="'.$row_load_data['cat_id'].'discount_value">';					
 				$cat_data .= '</div>';															
 				$cat_data .= '<div class="center-text">';
 				$cat_data .= '<input type="button" onClick="productDiscount(this.id,3);" class="btn-success" id="'.$row_load_data['cat_id'].'dis_btn" value="Apply to '.ucwords($row_load_data['cat_name']).'">';
 				$cat_data .= '</div>';				
 				$cat_data .= '</td>';
+				//===================Strat : add Commission Dn by Satish 12092017=====================//
+				$cat_data .= '<td class="center-text">';				
+									
+				$cat_data .= '<br><br><div class="center-text">';
+				$cat_data .= '<input onkeypress="return isNumberKey(event)" value="'.$row_load_data['cat_commission'].'" type="text" name="'.$row_load_data['cat_id'].'com_value" id="'.$row_load_data['cat_id'].'com_value">';					
+				$cat_data .= '</div>';															
+				$cat_data .= '<div class="center-text">';
+				$cat_data .= '<input  type="button" onClick="productCommision(this.id,3);" class="btn-success" id="'.$row_load_data['cat_id'].'com_btn" value="Apply to '.ucwords($row_load_data['cat_name']).'">';
+				$cat_data .= '</div>';				
+				$cat_data .= '</td>';
+				
+				//===================End : add Commission Dn by Satish 12092017=====================//
 				$cat_data .= '<td class="center-text">';
 				
 				if($cat_parent == "parent")
@@ -1219,6 +1234,10 @@ if((isset($obj->load_cat)) == "1" && isset($obj->load_cat))
 					if($num_rows_check_parent != 0)
 					{
 						$cat_data .= '<input type="button" class="btn-success"  value="View Child" id="'.$row_load_data['cat_id'].'" onclick="viewChild(this.id)"></td>';						
+					}
+				    else
+					{
+						$cat_data .= 'No Child</td>';	
 					}
 					
 				}
@@ -1766,4 +1785,26 @@ if((isset($obj->delete_catogery_error)) == "1" && isset($obj->delete_catogery_er
 	echo json_encode($response_array);	
 }
 // ==========================================================================
+
+
+
+//================Start : Update product Commision===================================//
+if((isset($obj->apply_product_commision)) == "1" && isset($obj->apply_product_commision))
+{
+	$cat_id 		        = mysqli_real_escape_string($db_con,$obj->sent_id);
+	$cat_commission 		= mysqli_real_escape_string($db_con,$obj->commision_value);
+	
+	$res = update('tbl_category',array('cat_commission'=>$cat_commission),array('cat_id'=>$cat_id));
+	if($res)
+	{
+		quit('Success',1);
+	}
+	else
+	{
+		quit('Commission not updated...!');
+	}
+	
+	
+}
+//================Start : Update product Commision===================================//
 ?>

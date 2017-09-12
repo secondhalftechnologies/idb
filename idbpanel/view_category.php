@@ -984,6 +984,68 @@
 		// scripts for excel bulk upload [ for showing the error logs ] ends here 
 		// ******************************************************************************************
 		
+		
+		////============================Start : Product Commision Dn By Satish 12Sep2017===========///
+			
+			
+			function productCommision(dis_btn,fun_for)
+			{
+				
+				var sent_id			= parseInt(dis_btn);
+				commision_value		= parseInt($('#'+sent_id+"com_value").val());
+				if(isNaN(commision_value) || commision_value=="")
+				{
+					$("#model_body").html('<span style="style="color:#F00;">Please enter valid commision...!</span>');							
+					$('#error_model').modal('toggle');						
+					loading_hide();	
+					return false;	
+				}
+				
+				if(commision_value > 100 || commision_value < 0)
+				{
+					$("#model_body").html('<span style="style="color:#F00;">Please select value between 1 to 100...!</span>');							
+					$('#error_model').modal('toggle');						
+					loading_hide();	
+					return false;	
+				}
+				
+				var sendInfo 		= {"commision_value":commision_value, "sent_id":sent_id,"apply_product_commision":1};
+					var discount_data 	= JSON.stringify(sendInfo);				
+					$.ajax({
+						url: "next_version_load_category.php",
+						type: "POST",
+						data: discount_data,
+						contentType: "application/json; charset=utf-8",						
+						success: function(response) 
+						{
+							data = JSON.parse(response);
+							if(data.Success == "Success") 
+							{	
+								loading_hide();																						
+								loadCategoryData();
+							} 
+							else 
+							{
+								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+								$('#error_model').modal('toggle');	
+								loading_hide();						
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+							$('#error_model').modal('toggle');	
+							loading_hide();							
+						},
+						complete: function()
+						{
+						}
+					});					
+								
+			}
+			
+			////============================End : Product Commision Dn By Satish 12Sep2017===========///
+		
 		</script>
     </body>
 </html>
