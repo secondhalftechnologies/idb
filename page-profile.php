@@ -767,7 +767,7 @@
                                     {
                                       
 								  //  Check Record and return single row
-								  $licRow = checkExist('tbl_doctor_license',array('lic_userid'=>$logged_uid));
+								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
@@ -797,7 +797,7 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_document']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -819,29 +819,37 @@
                                       ?>
                                       <?php
 									  //  Check Record and return single row
-								  $licRow = checkExist('tbl_hospital_license',array('lic_userid'=>$logged_uid));
+								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
+								  $result = getRecord('tbl_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
+								  $licNum = isExist('tbl_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
 									  $frm_lic_request   = 'add_hospital_lic_req';
 									  $required          = 'data-rule-required="true"';
+									  $i                 = '0';
 								  }
 								  else
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
 									  $frm_lic_request   = 'update_hospital_lic_req';
 									  $required          = '';
+									  $i                 = 0;
+									  
 								  }
 								  ?>     
                                <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
                                   <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="">
+                                  <input type="hidden" name="renewal_count" id="renewal_count" value="<?php echo $licNum; ?>">
                                   <!--=========================Start : Hospital License Number===================================-->
-                                    <div class="field-row">
+                                  
+                                  <div id="licenses">
+                                  <div id="renewal<?php echo $i; ?>">
+                                   <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Hospital License Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_number_hospital']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
-                                      
-                                      <div class="clearfix"></div>
+                                      <input type="text" value="<?php echo @$licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+                                    <div class="clearfix"></div>
                                     </div><!-- License Number -->
                                     
                                    <?php
@@ -850,107 +858,97 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_hospital_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_document']; ?>" >
                                       <div class="clearfix"></div>
-                                    </div><!-- License Image -->
+                                    </div><!-- Showing License Image -->
                                     <?php 
 									 }
 									 
 									 ?>
-                                    
-                                    <div class="field-row">
+                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">License Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image" id="file_lic_image" data-rule-requied="true" >
+                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image" id="file_lic_image" <?php echo $required; ?>>
                                       <div class="clearfix"></div>
-                                    </div><!-- License Image -->
+                                    </div><!--  License Image -->
                                     
                                     <div class="field-row">
-                                    
                                       <label class="col-md-3 col-xs-12" for="name">License Expiry Date</label>
-                                      <input valuw="<?php echo @$lic_hospital_expdate; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" >
+                                      <input value="<?php echo @$licRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
-                                    </div><!-- License Image -->
+                                    </div><!-- Expiry  Date -->
+                                   </div><!--Renewal End-->
+                                   
+                                    <?php
+									if($result)
+									{
+										$i=0;
+										while($row  = mysqli_fetch_array($result))
+										{
+										$i++;	
+										?>
+										
+										 <div id="renewal<?php echo $i; ?>">
+									   <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?> License Number</label>
+										  <input type="text" value="<?php echo @$row['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no<?php echo $i; ?>" name="txt_hospital_lic_no<?php echo $i; ?>" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+										<div class="clearfix"></div>
+										</div><!-- License Number -->
+										
+									   <?php
+										 if($result)
+										 {
+										 ?>
+										<div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name"></label>
+										   <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$row['lic_document']; ?>" >
+										  <div class="clearfix"></div>
+										</div><!-- Showing License Image -->
+										<?php 
+										 }
+										 
+										 ?>
+										 <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Image</label>
+										  <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image<?php echo $i; ?>" id="file_lic_image<?php echo $i; ?>" <?php echo $required; ?>>
+										  <div class="clearfix"></div>
+										</div><!--  License Image -->
+										
+										<div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Expiry Date</label>
+										  <input value="<?php echo @$row['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date<?php echo $i; ?>" id="lic_hospital_date<?php echo $i; ?>" data-rule-requied="true" >
+										  <div class="clearfix"></div>
+										</div><!-- Expiry  Date -->
+									   </div><!--Renewal End-->
+                              <?php   } // while end
+									} // if end?>
+                                   
+ 
+                                    
+                                  </div>  <!--licenses end-->
+                                    
+                                    
+                            <?php  if($licNum)
+                                    { ?>
+                                       <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                      <button type="button" onClick="fnAddMoreLic(this.value)" id="addMoreLic" name="btn_submit" class="le-button" value="<?php  echo $licNum; ?>" >Add Renewal </button>
+                                      <div class="clearfix"></div>
+                                      </div>
+                             <?php  }
+									?>
+                                    
+                                    
                                <!--=========================End Hospital License Number===================================-->
                                
-                               <!--=========================Start : Renewal 1 License Number===================================-->
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 1 License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number_renewal1']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal1_lic_no" name="txt_renewal1_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
-                                      
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Number -->
-                                    
-                                   <?php
-									 if($licRow)
-									 {
-									 ?>
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_renewal1_image']; ?>" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                                    <?php 
-									 }
-									 
-									 ?>
-                                    
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 1 Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_renewal1_image" id="file_renewal1_image" data-rule-requied="true" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                                    
-                                    <div class="field-row">
-                                    
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 1 Expiry Date</label>
-                                      <input value="<?php echo @$licRow['lic_renewal1_expdate']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal1_date" id="lic_renewal1_date" data-rule-requied="true" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                               <!--=========================End : Renewal 1 License Number===================================-->
-                				
-                               <!--=========================Start : Renewal 2 License Number===================================-->
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 2 License Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_number_renewal2']; ?>" class="le-input col-md-9 col-xs-12" id="txt_renewal2_lic_no" name="txt_renewal2_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12" >
-                                      
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Number -->
-                                    
-                                   <?php
-									 if($licRow)
-									 {
-									 ?>
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_renewal2_image']; ?>" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                                    <?php 
-									 }
-									 
-									 ?>
-                                    
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 2 Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_renewal2_image" id="file_renewal2_image" data-rule-requied="true" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                                    
-                                    <div class="field-row">
-                                    
-                                      <label class="col-md-3 col-xs-12" for="name">Renewal 2 Expiry Date</label>
-                                      <input value="<?php echo @$licRow['lic_renewal2_expdate']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_renewal2_date" id="lic_renewal2_date" data-rule-requied="true" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                               <!--=========================End : Renewal 2 License Number===================================-->
+                            
                                       <?php
                                     }
                                     elseif ($logged_user_type == 'chemist' || $logged_user_type == 'trader') 
                                     {
                                       ?>
-                						 <?php
+                				<?php
 									  //  Check Record and return single row
-								  $licRow = checkExist('tbl_chemist_license',array('lic_userid'=>$logged_uid));
+								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_chemist_lic_info';
@@ -968,9 +966,12 @@
                                   <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="">
                                   <!--=========================Start : 20B License Number===================================-->
+                                  <?php
+								   $lic20BRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20B"));
+								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_20B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic20BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="12" maxlength="12" size="12" >
                                   
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -981,7 +982,7 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_20B_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$lic20BRow['lic_document']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -993,23 +994,32 @@
                                       <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20b_image" id="file_lic_20b_image"  >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
+                                    
+                                    <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">20B Expiry Date</label>
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_20Bexpiry_date" id="lic_20Bexpiry_date" data-rule-requied="true" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Expiry  Date -->
                                <!--=========================End 20B License Number===================================-->
                                
                                <!--=========================Start : 20B License Number===================================-->
+                                  <?php
+								   $lic21BRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"21B"));
+								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21B Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_21B_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic21BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
                                     
                                    <?php
-									 if($licRow)
+									 if($lic21BRow)
 									 {
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_21B_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$lic21BRow['lic_document']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -1021,23 +1031,32 @@
                                       <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21b_image" id="file_lic_21b_image" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
+                                    
+                                   <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">21B Expiry Date</label>
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Expiry  Date -->
                                <!--=========================End 21B License Number===================================-->
                 				
-                               <!--=========================Start : 21L License Number===================================-->
+                               <!--=========================Start : 21C License Number===================================-->
+                                   <?php
+								   $lic20CRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20C"));
+								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20C Licence Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_21C_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21c_lic_no" name="txt_21c_lic_no"  minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"  minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
                                     
                                    <?php
-									 if($licRow && $licRow['lic_21C_image']!="")
+									 if($lic20CRow)
 									 {
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_21C_image']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$lic20CRow['lic_document']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -1046,9 +1065,15 @@
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20C Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_21c_image" id="file_lic_21c_image" >
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20c_image" id="file_lic_21c_image" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
+                                    
+                                      <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label>
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date" id="lic_20Cexpiry_date" data-rule-requied="true" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Expiry  Date -->
                                <!--=========================End 21L License Number===================================-->
                                       <?php
                                     }
@@ -1939,6 +1964,15 @@
 				
 			}
         });
+		
+		function fnAddMoreLic(lic)
+		{
+			var renewal_count = parseInt($('#renewal_count').val()) + 1 ;
+			var data ='<div id="renewal"> <div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Number</label><input type="text" value="" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no'+renewal_count+'" name="txt_hospital_lic_no'+renewal_count+'" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12"> <div class="clearfix"></div></div><div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Image</label><input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image'+renewal_count+'" id="file_lic_image'+renewal_count+'"><div class="clearfix"></div></div><!--  License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name"> Renewal '+renewal_count+' License Expiry Date</label><input value="" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date'+renewal_count+'" id="lic_hospital_date'+renewal_count+'" data-rule-requied="true"><div class="clearfix"></div></div><!-- Expiry  Date --></div>';
+			$('#renewal_count').val(renewal_count);					  
+			$('#licenses').append(data);
+		}
+		
 		
         </script>
 	</body>

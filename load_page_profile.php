@@ -759,8 +759,8 @@
 	// ===============================================================================
 	if((isset($_POST['add_doctor_lic_req']))== '1' && (isset($_POST['add_doctor_lic_req'])))
 	{
-		$data['lic_number']      = mysqli_real_escape_string($db_con,$_POST['txt_lic_no']);
-		$data['lic_userid']      = $_SESSION['front_panel']['cust_id'];
+		$data['lic_number']        = mysqli_real_escape_string($db_con,$_POST['txt_lic_no']);
+		$data['lic_custid']        = $_SESSION['front_panel']['cust_id'];
 		$data['lic_created']     = $datetime;
 		
 		if($data['lic_number']=="" || !isset($_FILES['file_lic_image']['name']))
@@ -775,14 +775,14 @@
 		}
 		
 		$lic_image_name               = explode('.',$_FILES['file_lic_image']['name']);
-		$lic_image_name               = date('dhyhis').'_'.$data['lic_userid'].'.'.$lic_image_name[1];
-		$data['lic_image']            = $lic_image_name;
+		$lic_image_name               = date('dhyhis').'_'.$data['lic_custid'].'.'.$lic_image_name[1];
+		$data['lic_document']            = $lic_image_name;
 		
 		$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
 		
 		if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 		{
-			$res                          = insert('tbl_doctor_license',$data);
+			$res                          = insert('tbl_licenses',$data);
 			
 			if($res)
 			{
@@ -799,8 +799,8 @@
 	
 	if((isset($_POST['update_doctor_lic_req']))== '1' && (isset($_POST['update_doctor_lic_req'])))
 	{
-		$where_arr['lic_userid']  = $_SESSION['front_panel']['cust_id'];
-		$data['lic_number']           = mysqli_real_escape_string($db_con,$_POST['txt_lic_no']);
+		$where_arr['lic_custid']  = $_SESSION['front_panel']['cust_id'];
+		$data['lic_number']       = mysqli_real_escape_string($db_con,$_POST['txt_lic_no']);
 		$data['lic_modified']     = $datetime;
 		$data['lic_status']       = 0;
 		if($data['lic_number']=="")
@@ -808,7 +808,7 @@
 			quit('License Number is required...!');
 		}
 		
-		$licRow = checkExist('tbl_doctor_license',array('lic_userid'=>$where_arr['lic_userid']));
+		$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid']));
 		
 		if(isset($_FILES['file_lic_image']['name']) && $_FILES['file_lic_image']['name']!="")
 		{
@@ -819,14 +819,14 @@
 			}
 			
 			$lic_image_name               = explode('.',$_FILES['file_lic_image']['name']);
-			$lic_image_name               = date('dhyhis').'_'.$where_arr['lic_userid'].'.'.$lic_image_name[1];
+			$lic_image_name               = date('dhyhis').'_'.$where_arr['lic_custid'].'.'.$lic_image_name[1];
 			$data['lic_image']            = $lic_image_name;
 			
 			$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
 			if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 			{
 				unlink('idbpanel/documents/licenses/'.$licRow['lic_image']);
-				$res                          = update('tbl_doctor_license',$data,$where_arr);
+				$res                          = update('tbl_licenses',$data,$where_arr);
 				
 				if($res)
 				{
@@ -845,7 +845,7 @@
 		}
 		else
 		{
-			 update('tbl_doctor_license',$data,$where_arr);
+			 update('tbl_licenses',$data,$where_arr);
 			 quit('Update Successfully...!',1);
 		}
     }
@@ -859,27 +859,24 @@
 	// ===============================================================================
 	if((isset($_POST['add_hospital_lic_req']))== '1' && (isset($_POST['add_hospital_lic_req'])))
 	{
-		$data['lic_number_hospital']      = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no']);
-		$data['lic_hospital_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date']);
-		
-		$data['lic_number_renewal1']      = mysqli_real_escape_string($db_con,$_POST['txt_renewal1_lic_no']);
-		$data['lic_renewal1_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_renewal1_date']);
-		
-		$data['lic_number_renewal2']      = mysqli_real_escape_string($db_con,$_POST['txt_renewal2_lic_no']);
-		$data['lic_renewal2_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_renewal2_date']);
-		
-		$data['lic_userid']      = $_SESSION['front_panel']['cust_id'];
+		$data['lic_custid']      = $_SESSION['front_panel']['cust_id'];
 		$data['lic_created']     = $datetime;
+		$data['lic_type']        = 'New';
 		
-		if($data['lic_number_hospital']=="" && $data['lic_hospital_expdate']=="" && $data['lic_number_renewal1']=="" && $data['lic_renewal1_expdate'] && $data['lic_number_renewal2']=="" && $data['lic_renewal2_expdate'] =="") 
+		
+		$data['lic_number']      = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no']);
+		$data['lic_exipiry_date'] = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date']);
+		
+	  
+		
+		if($data['lic_number']=="" || $data['lic_exipiry_date']=="") 
 		{
-			//quit('All fields are required...!');
-			quit($data['lic_renewal2_expdate']);
+			quit("All filed ae required...!");
 		}
 		
-		if(!isset($_FILES['file_lic_image']) || !isset($_FILES['file_renewal1_image']) || !isset($_FILES['file_renewal2_image'])) 
+		if(!isset($_FILES['file_lic_image'])) 
 		{
-			quit('All Documents are required...!');
+			quit('Document is required...!');
 		}
 		
 		$lic_image_size      = $_FILES['file_lic_image']['size'];
@@ -887,54 +884,19 @@
 		{
 			quit('Hospital License Document size should be less than 5 MB');
 		}
-		$renewal1_image_size      = $_FILES['file_renewal1_image']['size'];
-		
-		if($renewal1_image_size > 5242880 &&  $renewal1_image_size !=0) // file size
-		{
-			quit('Renewal License Document size should be less than 5 MB');
-		}
-		$renewal2_image_size      = $_FILES['file_renewal2_image']['size'];
-		if($renewal2_image_size > 5242880 &&  $renewal2_image_size !=0) // file size
-		{
-			quit('Renewal License Document size should be less than 5 MB');
-		}
 		
 		$lic_image_name               = explode('.',$_FILES['file_lic_image']['name']);
-		$lic_image_name               = date('dhyhis').'_1_'.$data['lic_userid'].'.'.$lic_image_name[1];
-		$data['lic_hospital_image']   = $lic_image_name;
-		
-		$lic_renewal1_image           = explode('.',$_FILES['file_renewal1_image']['name']);
-		$lic_renewal1_image           = date('dhyhis').'_2_'.$data['lic_userid'].'.'.$lic_renewal1_image[1];
-		$data['lic_renewal1_image']            = $lic_renewal1_image;
-		
-		$lic_renewal2_image           = explode('.',$_FILES['file_renewal2_image']['name']);
-		$lic_renewal2_image           = date('dhyhis').'_3_'.$data['lic_userid'].'.'.$lic_renewal2_image[1];
-		$data['lic_renewal2_image']   = $lic_renewal2_image;
+		$lic_image_name               = date('dhyhis').'_1_'.$data['lic_custid'].'.'.$lic_image_name[1];
+		$data['lic_document']         = $lic_image_name;
 		
 		$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
-		$dir1                         = 'idbpanel/documents/licenses/'.$lic_renewal1_image;
-		$dir2                         = 'idbpanel/documents/licenses/'.$lic_renewal2_image;
 		
 		if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 		{
-			if(move_uploaded_file($_FILES['file_renewal1_image']['tmp_name'],$dir1))
-		    {
-				if(move_uploaded_file($_FILES['file_renewal2_image']['tmp_name'],$dir1))
-				{
-					$res                          = insert('tbl_hospital_license',$data);
-					if($res)
-					{
-						quit('Added Successfully...!',1);
-					}
-					else
-					{
-						quit('Something went wrong...!');
-					}
-				}
-				else
-				{
-					quit('Something went wrong...!');
-				}
+			$res                          = insert('tbl_licenses',$data);
+			if($res)
+			{
+				quit('Added Successfully...!',1);
 			}
 			else
 			{
@@ -951,30 +913,19 @@
 	
 	if((isset($_POST['update_hospital_lic_req']))== '1' && (isset($_POST['update_hospital_lic_req'])))
 	{
-		$data['lic_number_hospital']      = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no']);
-		$data['lic_hospital_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date']);
+		$renewal_count  		   = mysqli_real_escape_string($db_con,$_POST['renewal_count']);
+		$where_arr['lic_custid']   = $_SESSION['front_panel']['cust_id'];
 		
-		$data['lic_number_renewal1']      = mysqli_real_escape_string($db_con,$_POST['txt_renewal1_lic_no']);
-		$data['lic_renewal1_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_renewal1_date']);
+		$data['lic_number']        = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no']);
+		$data['lic_exipiry_date']  = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date']);
 		
-		$data['lic_number_renewal2']      = mysqli_real_escape_string($db_con,$_POST['txt_renewal2_lic_no']);
-		$data['lic_renewal2_expdate']     = mysqli_real_escape_string($db_con,$_POST['lic_renewal2_date']);
-		
-		$where_arr['lic_userid']      = $_SESSION['front_panel']['cust_id'];
-		$data['lic_created']     = $datetime;
-		
-		if($data['lic_number_hospital']=="" && $data['lic_hospital_expdate']=="" && $data['lic_number_renewal1']=="" && $data['lic_renewal1_expdate'] && $data['lic_number_renewal2']=="" && $data['lic_renewal2_expdate'] =="") 
+		if($data['lic_number']=="" && $data['lic_exipiry_date']=="") 
 		{
 			//quit('All fields are required...!');
-			quit($data['lic_renewal2_expdate']);
+			quit("License Number are required...");
 		}
 		
-		if(!isset($_FILES['file_lic_image']) || !isset($_FILES['file_renewal1_image']) || !isset($_FILES['file_renewal2_image'])) 
-		{
-			quit('All Documents are required...!');
-		}
-		
-		$licRow = checkExist('tbl_hospital_license',array('lic_userid'=>$where_arr['lic_userid']));
+		$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid']));
 		
 		if(isset($_FILES['file_lic_image']['name']) && $_FILES['file_lic_image']['name']!="")
 		{
@@ -985,53 +936,96 @@
 			}
 			
 			$lic_image_name               = explode('.',$_FILES['file_lic_image']['name']);
-			$lic_image_name               = date('dhyhis').'_1_'.$where_arr['lic_userid'].'.'.$lic_image_name[1];
+			$lic_image_name               = date('dhyhis').'_1_'.$where_arr['lic_custid'].'.'.$lic_image_name[1];
 			$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
 			if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 		    {
-				$data['lic_hospital_image']   = $lic_image_name;
-				unlink('idbpanel/documents/licenses/'.$licRow['lic_hospital_image']);
+				$data['lic_document']   = $lic_image_name;
+				unlink('idbpanel/documents/licenses/'.$licRow['lic_document']);
 			}
 		}
-		
-		
-		if(isset($_FILES['file_renewal1_image']['name']) && $_FILES['file_renewal1_image']['name']!="")
+		$where_arr['lic_type']	      = "New";
+		$res                          = update('tbl_licenses',$data,$where_arr);
+		if($renewal_count > 0)
 		{
-			$renewal1_image_size      = $_FILES['file_renewal1_image']['size'];
-			if($renewal1_image_size > 5242880 &&  $renewal1_image_size !=0) // file size
-			{
-				quit('Renewal License Document size should be less than 5 MB');
-			}
-			$lic_renewal1_image           = explode('.',$_FILES['file_renewal1_image']['name']);
-			$lic_renewal1_image           = date('dhyhis').'_2_'.$where_arr['lic_userid'].'.'.$lic_renewal1_image[1];
-			$dir1                         = 'idbpanel/documents/licenses/'.$lic_renewal1_image;
-			if(move_uploaded_file($_FILES['file_renewal1_image']['tmp_name'],$dir1))
-		    {
-				$data['lic_renewal1_image']            = $lic_renewal1_image;
-				unlink('idbpanel/documents/licenses/'.$licRow['lic_renewal1_image']);
-			}
-		}
-		
-		if(isset($_FILES['file_renewal2_image']['name']) && $_FILES['file_renewal2_image']['name']!="")
-		{
-			$renewal2_image_size      = $_FILES['file_renewal2_image']['size'];
-			if($renewal2_image_size > 5242880 &&  $renewal2_image_size !=0) // file size
-			{
-				quit('Renewal License Document size should be less than 5 MB');
+			for($i=1; $i <=$renewal_count;$i++)
+			{   
+				$data['lic_number']        = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no'.$i]);
+		        $data['lic_exipiry_date']  = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date'.$i]);
+				$data['lic_type']  		   = 'Renewal'.$i;
+				$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid'],"lic_type"=>"Renewal".$i));
+				if(!$licRow) // Start Insertion of Renewal
+				{
+					$data['lic_custid'] =   $_SESSION['front_panel']['cust_id'];
+					if($data['lic_number']=="" || $data['lic_exipiry_date']=="") 
+					{
+						quit("All filed ae required...!");
+					}
+					
+					if(!isset($_FILES['file_lic_image'.$i])) 
+					{
+						quit('Document is required...!');
+					}
+					
+					$lic_image_size      = $_FILES['file_lic_image'.$i]['size'];
+					if($lic_image_size > 5242880 &&  $lic_image_size !=0) // file size
+					{
+						quit('Hospital License Document size should be less than 5 MB');
+					}
+					
+					$lic_image_name               = explode('.',$_FILES['file_lic_image'.$i]['name']);
+					$lic_image_name               = date('dhyhis').$i.$data['lic_custid'].'.'.$lic_image_name[1];
+					$data['lic_document']         = $lic_image_name;
+					
+					$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
+					
+					if(move_uploaded_file($_FILES['file_lic_image'.$i]['tmp_name'],$dir))
+					{
+						$res                          = insert('tbl_licenses',$data);
+						if(!$res)
+						{
+							quit('Something went wrong...!');
+						}
+					}
+					else
+					{
+						quit('Something went wrong...!');
+					}
+				}////////Start Updatetion of Renewal
+				else
+				{
+					if($data['lic_number']=="" && $data['lic_exipiry_date']=="") 
+					{
+						//quit('All fields are required...!');
+						quit("License Number are required...");
+					}
+					
+					$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid'],'lic_type'=>"Renewal".$i));
+					
+					if(isset($_FILES['file_lic_image'.$i]['name']) && $_FILES['file_lic_image'.$i]['name']!="")
+					{
+						$lic_image_size      = $_FILES['file_lic_image'.$i]['size'];
+						if($lic_image_size > 5242880 &&  $lic_image_size !=0) // file size
+						{
+							quit('Hospital License Document size should be less than 5 MB');
+						}
+						
+						$lic_image_name               = explode('.',$_FILES['file_lic_image'.$i]['name']);
+						$lic_image_name               = date('dhyhis').$i.$where_arr['lic_custid'].'.'.$lic_image_name[1];
+						$dir                          = 'idbpanel/documents/licenses/'.$lic_image_name;
+						if(move_uploaded_file($_FILES['file_lic_image'.$i]['tmp_name'],$dir))
+						{
+							$data['lic_document']   = $lic_image_name;
+							unlink('idbpanel/documents/licenses/'.$licRow['lic_document']);
+						}
+					}
+					$where_arr['lic_type']	      = "Renewal".$i;
+					$res                          = update('tbl_licenses',$data,$where_arr);
+				}
 			}
 			
-			$lic_renewal2_image           = explode('.',$_FILES['file_renewal2_image']['name']);
-			$lic_renewal2_image           = date('dhyhis').'_3_'.$where_arr['lic_userid'].'.'.$lic_renewal2_image[1];
-			$dir2                         = 'idbpanel/documents/licenses/'.$lic_renewal2_image;
-			if(move_uploaded_file($_FILES['file_renewal2_image']['tmp_name'],$dir2))
-		    {
-					$data['lic_renewal2_image']   = $lic_renewal2_image;
-					unlink('idbpanel/documents/licenses/'.$licRow['lic_renewal2_image']);
-			}
 		}
-		
-		$res                          = update('tbl_hospital_license',$data,$where_arr);
-		if($res)
+	    if($res)
 		{
 			quit('Update Successfully...!',1);
 		}
@@ -1052,13 +1046,17 @@
 	// ===============================================================================
 	if((isset($_POST['add_chemist_lic_req']))== '1' && (isset($_POST['add_chemist_lic_req'])))
 	{
-		$data['lic_20B_number']      = mysqli_real_escape_string($db_con,$_POST['txt_20b_lic_no']);
-		$data['lic_21B_number']      = mysqli_real_escape_string($db_con,$_POST['txt_21b_lic_no']);
+		$data20B['lic_number']      = mysqli_real_escape_string($db_con,$_POST['txt_20b_lic_no']);
+		$data21B['lic_number']      = mysqli_real_escape_string($db_con,$_POST['txt_21b_lic_no']);
+		$data20B['lic_type']        = '20B';
+		$data21B['lic_type']        = '21B';
 		
-		$data['lic_userid']          = $_SESSION['front_panel']['cust_id'];
-		$data['lic_created']         = $datetime;
+		$data21B['lic_custid']             = $_SESSION['front_panel']['cust_id'];
+		$data21B['lic_created']            = $datetime;
+		$data20B['lic_custid']             = $_SESSION['front_panel']['cust_id'];
+		$data20B['lic_created']            = $datetime;
 		
-		if($data['lic_20B_number']!="" || $data['lic_21B_number']!="")
+		if($data20B['lic_number']!="" || $data21B['lic_number']!="")
 		{
 			if(!isset($_FILES['file_lic_20b_image']['size']) && $_FILES['file_lic_20b_image']['size']=="" || !isset($_FILES['file_lic_21b_image']['size']) && $_FILES['file_lic_21b_image']['size']=="")
 			{
@@ -1078,21 +1076,23 @@
 			}
 			
 			$lic_20b_image               = explode('.',$_FILES['file_lic_20b_image']['name']);
-			$lic_20b_image               = date('dhyhis').'_20B_'.$data['lic_userid'].'.'.$lic_20b_image[1];
-			$data['lic_20B_image']       = $lic_20b_image;
+			$lic_20b_image               = date('dhyhis').'_20B_'.$data20B['lic_custid'].'.'.$lic_20b_image[1];
+			$data20B['lic_document']       = $lic_20b_image;
 			
 			$lic_21b_image               = explode('.',$_FILES['file_lic_21b_image']['name']);
-			$lic_21b_image               = date('dhyhis').'_21B_'.$data['lic_userid'].'.'.$lic_21b_image[1];
-			$data['lic_21B_image']       = $lic_21b_image;
+			$lic_21b_image               = date('dhyhis').'_21B_'.$data21B['lic_custid'].'.'.$lic_21b_image[1];
+			$data21B['lic_document']       = $lic_21b_image;
 			
 			$dir                          = 'idbpanel/documents/licenses/'.$lic_20b_image;
 		    $dir1                         = 'idbpanel/documents/licenses/'.$lic_21b_image;
 			
 			if(move_uploaded_file($_FILES['file_lic_20b_image']['tmp_name'],$dir))
 		    {
+				insert('tbl_licenses',$data20B);
+				
 				if(move_uploaded_file($_FILES['file_lic_21b_image']['tmp_name'],$dir1))
 				{
-					insert('tbl_chemist_license',$data);
+					insert('tbl_licenses',$data21B);
 					quit('Added Successfully...!');
 				}
 				else
@@ -1108,20 +1108,23 @@
 		}
 		else
 		{
-			$data['lic_21C_number']      = mysqli_real_escape_string($db_con,$_POST['txt_21c_lic_no']);
-			$file_21c_image_size      = $_FILES['file_lic_21c_image']['size'];
-			if($file_21c_image_size > 5242880 &&  $file_21c_image_size !=0) // file size
+			$data['lic_number']       = mysqli_real_escape_string($db_con,$_POST['txt_20c_lic_no']);
+			$file_20c_image_size      = $_FILES['file_lic_20c_image']['size'];
+			$data['lic_custid']       = $_SESSION['front_panel']['cust_id'];
+			$data['lic_created']      = $datetime;
+			if($file_20c_image_size > 5242880 &&  $file_20c_image_size !=0) // file size
 			{
 				quit('21C License Document size should be less than 5 MB');
 			}
 			
-			$lic_21c_image               = explode('.',$_FILES['file_lic_21c_image']['name']);
-			$lic_21c_image               = date('dhyhis').'_21C_'.$data['lic_userid'].'.'.$lic_21c_image[1];
-			$data['lic_21C_image']       = $lic_21c_image;
-			$dir2                        = 'idbpanel/documents/licenses/'.$lic_21c_image;
-			if(move_uploaded_file($_FILES['file_lic_21c_image']['tmp_name'],$dir2))
+			$lic_20c_image               = explode('.',$_FILES['file_lic_20c_image']['name']);
+			$lic_20c_image               = date('dhyhis').'_20C_'.$data['lic_custid'].'.'.$lic_20c_image[1];
+			$data['lic_document']        = $lic_20c_image;
+			$data['lic_type'	]        = '20C';
+			$dir2                        = 'idbpanel/documents/licenses/'.$lic_20c_image;
+			if(move_uploaded_file($_FILES['file_lic_20c_image']['tmp_name'],$dir2))
 		    {
-				insert('tbl_chemist_license',$data);
+				insert('tbl_licenses',$data);
 				quit('Added Successfully...!',1);
 			}
 			else

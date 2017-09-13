@@ -367,7 +367,9 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 		$start 			= $page * $per_page;
 			
 		$sql_load_data  = " SELECT  * ";
-		$sql_load_data  .= " FROM `tbl_customer` AS ti WHERE 1=1 ";
+		$sql_load_data  .= " FROM `tbl_customer` AS tc  ";
+		$sql_load_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id ";
+		$sql_load_data  .= " WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND cust_created_by='".$uid."' ";
