@@ -977,7 +977,7 @@
                                     </div><!-- License Number -->
                                     
                                    <?php
-									 if($licRow)
+									 if($lic20BRow)
 									 {
 									 ?>
                                     <div class="field-row">
