@@ -63,6 +63,8 @@
 	    <script src="<?php echo $BaseFolder; ?>/assets/js/jquery.customSelect.min.js"></script>
 	    <script src="<?php echo $BaseFolder; ?>/assets/js/wow.min.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/scripts.js"></script>
+        <script src="<?php echo $BaseFolder; ?>/assets/js/bootstrap-datepicker.js"></script>
+        
 
 		<!-- For demo purposes – can be removed on production -->
 		<!--<script src="switchstylesheet/switchstylesheet.js"></script>

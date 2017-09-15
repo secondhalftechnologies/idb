@@ -997,7 +997,7 @@
                                     
                                     <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">20B Expiry Date</label>
-										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_20Bexpiry_date" id="lic_20Bexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12  datepicker" name="lic_20Bexpiry_date" id="lic_20Bexpiry_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                <!--=========================End 20B License Number===================================-->
@@ -1034,7 +1034,7 @@
                                     
                                    <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">21B Expiry Date</label>
-										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                <!--=========================End 21B License Number===================================-->
@@ -1042,11 +1042,45 @@
                                <!--=========================Start : 21C License Number===================================-->
                                    <?php
 								   $lic20CRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20C"));
+								   $result    = getRecord('tbl_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
+								   $lic20Num  = isExist('tbl_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
+								   
+								   if(!$lic20CRow)
+								   {
 								   ?>
-                                    <div class="field-row">
+                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20C Licence Number</label>
                                       <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"  minlength="12" maxlength="12" size="12" >
                                       
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Number -->
+                                    
+                                     <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20C Image</label>
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20c_image" id="file_lic_21c_image" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- License Image -->
+                                    
+                                     <div class="field-row">
+										  <label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label>
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date" id="lic_20Cexpiry_date" data-rule-requied="true" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Expiry  Date -->
+                                   <?php 
+								   }
+								   else
+								   {?>
+                                   
+                                   <div id="chemist_lic">
+                                   <?php 
+									while($row  = mysqli_fetch_array($result))
+									{  
+									
+									?>
+                                    <input type="hidden" value="<?php echo $row['license_id']; ?>"  name="lic_id[]">
+                                   <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">20C Licence Number</label>
+                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]"  minlength="12" maxlength="12" size="12" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
                                     
@@ -1056,25 +1090,46 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$lic20CRow['lic_document']; ?>" >
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$row['lic_document']; ?>" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
 									 }
 									 ?>
-                                    
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20C Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20c_image" id="file_lic_21c_image" >
+                                      <input accept="image/jpeg,image/png,image/jpg,appication/pdf" type="file" name="file_lic_20c_image[]" id="file_lic_21c_image" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     
                                       <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label>
-										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date" id="lic_20Cexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
+                                   <?php
+									}// while end
+									?>
+                                    </div><!--Div Chemist 20 LIcenses End-->
+                                   <?php
+                                   }//else end
+								   ?>
+                                   
                                <!--=========================End 21L License Number===================================-->
+                               
+                                   <?php
+								   if($lic20CRow)
+								   {?>
+									   <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                      <button type="button" onClick="fnAddMoreCemistLic(this.value)" id="addMoreLic" name="btn_submit" class="le-button" value="" >Add Renewal </button>
+                                      <div class="clearfix"></div>
+                                      </div>
+								   <?php }
+									?>
+                               
+                               
+                               
                                       <?php
                                     }
                                     ?>
@@ -1973,6 +2028,25 @@
 			$('#licenses').append(data);
 		}
 		
+		
+		function fnAddMoreCemistLic()
+		{
+			var data ='<div id="chemist_lic"><input value="" name="lic_id[]" type="hidden"><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Licence Number</label><input value="" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]" minlength="12" maxlength="12" size="12" type="text"><div class="clearfix"></div></div><!-- License Number --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Image</label><input accept="image/jpeg,image/png,image/jpg,appication/pdf" name="file_lic_20c_image[]" id="file_lic_21c_image" type="file"><div class="clearfix"></div></div><!-- License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label><input value="" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" type="text"><div class="clearfix"></div> </div><!-- Expiry  Date --></div>';
+			$('#chemist_lic').append(data);
+		}
+		
+		
+	  
+	 
+	//datefilter(2,limit,1,srch);	
+	   $( ".datepicker" ).datepicker({
+		changeMonth	: true,
+		changeYear	: true,
+		dateFormat	: 'mm-dd-yy',
+		yearRange 	: 'c:c',//replaced "c+0" with c (for showing years till current year)
+		maxDate		: new Date(),
+			
+	   });
 		
         </script>
 	</body>
