@@ -882,6 +882,7 @@ if((isset($obj->get_comments)) == "1" && isset($obj->get_comments))
 	}
 	echo json_encode($response_array);	
 }
+
 if((isset($obj->update_comments)) == "1" && isset($obj->update_comments))
 {
     $comment  = $obj->comment;
@@ -899,6 +900,7 @@ if((isset($obj->update_comments)) == "1" && isset($obj->update_comments))
 	}
 	echo json_encode($response_array);
 }
+
 if((isset($obj->update_starstatus)) == "1" && isset($obj->update_starstatus))
 {
     $status  = $obj->status;
