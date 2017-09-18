@@ -767,7 +767,7 @@
                                     {
                                       
 								  //  Check Record and return single row
-								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
+								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
@@ -819,9 +819,9 @@
                                       ?>
                                       <?php
 									  //  Check Record and return single row
-								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
-								  $result = getRecord('tbl_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
-								  $licNum = isExist('tbl_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
+								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
+								  $result = getRecord('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
+								  $licNum = isExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
@@ -948,7 +948,7 @@
                                       ?>
                 				<?php
 									  //  Check Record and return single row
-								  $licRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid));
+								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_chemist_lic_info';
@@ -967,7 +967,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="">
                                   <!--=========================Start : 20B License Number===================================-->
                                   <?php
-								   $lic20BRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20B"));
+								   $lic20BRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20B"));
 								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20B Licence Number</label>
@@ -1004,7 +1004,7 @@
                                
                                <!--=========================Start : 20B License Number===================================-->
                                   <?php
-								   $lic21BRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"21B"));
+								   $lic21BRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"21B"));
 								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21B Licence Number</label>
@@ -1041,9 +1041,9 @@
                 				
                                <!--=========================Start : 21C License Number===================================-->
                                    <?php
-								   $lic20CRow = checkExist('tbl_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20C"));
-								   $result    = getRecord('tbl_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
-								   $lic20Num  = isExist('tbl_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
+								   $lic20CRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid,"lic_type"=>"20C"));
+								   $result    = getRecord('tbl_customer_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
+								   $lic20Num  = isExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>'20C'));
 								   
 								   if(!$lic20CRow)
 								   {

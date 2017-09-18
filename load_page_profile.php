@@ -201,16 +201,16 @@
 		if($data['comp_pri_email'] != '' && $data['comp_pri_phone'] != '' && $data['comp_name'] != '' && $data['comp_website'] != '' && $data['comp_bill_address'] != '' && $data['comp_bill_state'] != '' && $data['comp_bill_city'] != '' && $data['comp_bill_pincode'] != '' && $data['comp_ship_address'] != '' && $data['comp_ship_state'] != '' && $data['comp_ship_city'] != '' && $data['comp_ship_pincode'] != '' && $data['comp_descp'] != '' && $data['comp_user_id'] != '')
 		{
 			// Query for checking the duplicate email id
-
+  
 			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['comp_pri_email']), array("cust_id"=>$where_arr['comp_user_id']));
 			
 			// Query for checking the duplicate Mobile Number
 			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['comp_pri_phone']), array("cust_id"=>$where_arr['comp_user_id']));
-
-			$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['cust_email']), array("cust_id"=>$where_arr['cust_id']));
-			
+            
+			/*$num_duplicate_email_id	= isExist('tbl_customer', array("cust_email"=>$data['cust_email']), array("cust_id"=>$where_arr['cust_id']));
+		
 			// Query for checking the duplicate Mobile Number
-			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['cust_mobile']), array("cust_id"=>$where_arr['cust_id']));
+			$num_duplicate_mobile	= isExist('tbl_customer', array("cust_mobile"=>$data['cust_mobile']), array("cust_id"=>$where_arr['cust_id']));*/
 
 			
 			if($num_duplicate_email_id)
@@ -446,8 +446,11 @@
 			}
 			else
 			{
-				quit('fail');
+				quit('Something went wrong...!');
 			}
+		}else
+		{
+			quit('Something went wrong...!');
 		}
 		
 	}
@@ -490,8 +493,12 @@
 				}
 				else
 				{
-					quit('fail');
+					quit('Something went wrong...!');
 				}
+			}
+			else
+			{
+				quit('Something went wrong...!');
 			}
 			
 		}
@@ -558,7 +565,7 @@
 				$res                          = insert('tbl_customer_gst',$data);
 			    if($res)
 				{
-					quit('Success',1);
+					quit('Added Successfully...!',1);
 				}
 				else
 				{
@@ -782,7 +789,7 @@
 		
 		if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 		{
-			$res                          = insert('tbl_licenses',$data);
+			$res                          = insert('tbl_customer_licenses',$data);
 			
 			if($res)
 			{
@@ -808,7 +815,7 @@
 			quit('License Number is required...!');
 		}
 		
-		$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid']));
+		$licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$where_arr['lic_custid']));
 		
 		if(isset($_FILES['file_lic_image']['name']) && $_FILES['file_lic_image']['name']!="")
 		{
@@ -826,7 +833,7 @@
 			if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 			{
 				unlink('idbpanel/documents/licenses/'.$licRow['lic_image']);
-				$res                          = update('tbl_licenses',$data,$where_arr);
+				$res                          = update('tbl_customer_licenses',$data,$where_arr);
 				
 				if($res)
 				{
@@ -845,7 +852,7 @@
 		}
 		else
 		{
-			 update('tbl_licenses',$data,$where_arr);
+			 update('tbl_customer_licenses',$data,$where_arr);
 			 quit('Update Successfully...!',1);
 		}
     }
@@ -893,7 +900,7 @@
 		
 		if(move_uploaded_file($_FILES['file_lic_image']['tmp_name'],$dir))
 		{
-			$res                          = insert('tbl_licenses',$data);
+			$res                          = insert('tbl_customer_licenses',$data);
 			if($res)
 			{
 				quit('Added Successfully...!',1);
@@ -926,7 +933,7 @@
 			quit("License Number are required...");
 		}
 		
-		$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid']));
+		$licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$where_arr['lic_custid']));
 		
 		if(isset($_FILES['file_lic_image']['name']) && $_FILES['file_lic_image']['name']!="")
 		{
@@ -946,7 +953,7 @@
 			}
 		}
 		$where_arr['lic_type']	      = "New";
-		$res                          = update('tbl_licenses',$data,$where_arr);
+		$res                          = update('tbl_customer_licenses',$data,$where_arr);
 		if($renewal_count > 0)
 		{
 			for($i=1; $i <=$renewal_count;$i++)
@@ -954,7 +961,7 @@
 				$data['lic_number']        = mysqli_real_escape_string($db_con,$_POST['txt_hospital_lic_no'.$i]);
 		        $data['lic_exipiry_date']  = mysqli_real_escape_string($db_con,$_POST['lic_hospital_date'.$i]);
 				$data['lic_type']  		   = 'Renewal'.$i;
-				$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid'],"lic_type"=>"Renewal".$i));
+				$licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$where_arr['lic_custid'],"lic_type"=>"Renewal".$i));
 				if(!$licRow) // Start Insertion of Renewal
 				{
 					$data['lic_custid'] =   $_SESSION['front_panel']['cust_id'];
@@ -982,7 +989,7 @@
 					
 					if(move_uploaded_file($_FILES['file_lic_image'.$i]['tmp_name'],$dir))
 					{
-						$res                          = insert('tbl_licenses',$data);
+						$res                          = insert('tbl_customer_licenses',$data);
 						if(!$res)
 						{
 							quit('Something went wrong...!');
@@ -1001,7 +1008,7 @@
 						quit("License Number are required...");
 					}
 					
-					$licRow = checkExist('tbl_licenses',array('lic_custid'=>$where_arr['lic_custid'],'lic_type'=>"Renewal".$i));
+					$licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$where_arr['lic_custid'],'lic_type'=>"Renewal".$i));
 					
 					if(isset($_FILES['file_lic_image'.$i]['name']) && $_FILES['file_lic_image'.$i]['name']!="")
 					{
@@ -1021,7 +1028,7 @@
 						}
 					}
 					$where_arr['lic_type']	      = "Renewal".$i;
-					$res                          = update('tbl_licenses',$data,$where_arr);
+					$res                          = update('tbl_customer_licenses',$data,$where_arr);
 				}
 			}
 			
@@ -1091,11 +1098,11 @@
 			
 			if(move_uploaded_file($_FILES['file_lic_20b_image']['tmp_name'],$dir))
 		    {
-				insert('tbl_licenses',$data20B);
+				insert('tbl_customer_licenses',$data20B);
 				
 				if(move_uploaded_file($_FILES['file_lic_21b_image']['tmp_name'],$dir1))
 				{
-					insert('tbl_licenses',$data21B);
+					insert('tbl_customer_licenses',$data21B);
 					quit('Added Successfully...!');
 				}
 				else
@@ -1129,7 +1136,7 @@
 			$dir2                        = 'idbpanel/documents/licenses/'.$lic_20c_image;
 			if(move_uploaded_file($_FILES['file_lic_20c_image']['tmp_name'],$dir2))
 		    {
-				insert('tbl_licenses',$data);
+				insert('tbl_customer_licenses',$data);
 				quit('Added Successfully...!',1);
 			}
 			else
@@ -1190,8 +1197,8 @@
 			}
 			$where_21B['lic_type'] ="21B";
 			$where_20B['lic_type'] ="20B";
-			$res = update('tbl_licenses',$data20B,$where_20B);
-			$res = update('tbl_licenses',$data21B,$where_21B);
+			$res = update('tbl_customer_licenses',$data20B,$where_20B);
+			$res = update('tbl_customer_licenses',$data21B,$where_21B);
 		}
 		///================Insertion And Updation Start here Satish 15092017============//
 		if($_POST['lic_id'])
@@ -1218,7 +1225,7 @@
 					$dir2                        = 'idbpanel/documents/licenses/'.$lic_20c_image;
 					if(move_uploaded_file($_FILES['file_lic_20c_image']['tmp_name'][$i],$dir2))
 					{
-						insert('tbl_licenses',$data);
+						insert('tbl_customer_licenses',$data);
 						quit('Added Successfully...!',1);
 					}
 					else
@@ -1251,7 +1258,7 @@
 					$data['lic_type'	]        = '20C';
 					//quit($_POST['lic_id'][$i]);
 					
-					$res = update('tbl_licenses',$data,array("license_id"=>$_POST['lic_id'][$i]));
+					$res = update('tbl_customer_licenses',$data,array("license_id"=>$_POST['lic_id'][$i]));
 				}
 				
 			}// for end

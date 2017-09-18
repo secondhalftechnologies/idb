@@ -548,6 +548,8 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	$row_check_parent 		= mysqli_fetch_array($result_check_parent);
 	$data['email']          = $row_check_parent['vendor_email'];
 	
+	
+	
 	if($curr_status==1)
 	{   ///////////////////////////////////////////////////////////////////////////
 		///=========Start Insertion For Panel Login Satish 24082017==============//
@@ -585,36 +587,11 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 		
 		
 		//////////////////////////////////////////////////////////////////////////
-		///=========Start Insertion For Buyer Login Satish 24082017==============//
-		$cdata['cust_vendorid']        =$row_check_parent['vendor_id'];
-		$sql_check_user  = " SELECT * FROM tbl_customer   ";
-		$sql_check_user .= " WHERE cust_email like '".$row_check_parent['vendor_email']."' ";
-		$sql_check_user .= "        or cust_vendorid='".$cdata['cust_vendorid']."' ";
-		$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
-		$num_check_user = mysqli_num_rows($res_check_user);
+		///=========Start Updation For Buyer Login Satish 24082017==============//
 		
-		if($num_check_user==0)
-		{
-			$cdata['cust_name']         = $row_check_parent['vendor_name'];
-			$cdata['cust_email']        = $row_check_parent['vendor_email'];
-			$cdata['cust_emailstatus']  = $row_check_parent['vendor_emailstatus'];
-			$cdata['cust_mobile']       = $row_check_parent['vendor_mobile'];
-			$cdata['cust_mobilestatus'] = $row_check_parent['vendor_mobilestatus'];
-			$cdata['cust_password']     = $row_check_parent['vendor_password'];
-			$cdata['cust_salt']         = $row_check_parent['vendor_salt'];
-			$cdata['cust_pan']          = $row_check_parent['vendor_pan'];
-			$cdata['cust_gst']      	= $row_check_parent['vendor_gst'];
-			$cdata['cust_status']       = $curr_status;
-			$cdata['cust_created']      = $datetime;
-			$cdata['cust_created_by']   = $uid;
-			
-			insert('tbl_customer',$cdata);
-		}
-		else
-		{
-			update('tbl_customer',array('cust_status'=>$curr_status),array('cust_vendorid'=>$row_check_parent['vendor_id']));
-		}
-		///=========End Insertion For Buyer Lgin Satish 24082017==============//
+		update('tbl_customer',array('cust_status'=>$curr_status),array('cust_vendorid'=>$row_check_parent['vendor_id']));
+		
+		///=========End Updation For Buyer Lgin Satish 24082017==============//
 		////////////////////////////////////////////////////////////////////////
 	}
 	else

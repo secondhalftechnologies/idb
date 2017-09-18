@@ -368,8 +368,14 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 			
 		$sql_load_data  = " SELECT  * ";
 		$sql_load_data  .= " FROM `tbl_customer` AS tc  ";
-		$sql_load_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id ";
+		$sql_load_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id "; //  Company
+		$sql_load_data  .= " INNER JOIN tbl_customer_gst as tcg ON tc.cust_id = tcg.gst_userid ";//  GST 
+		$sql_load_data  .= " INNER JOIN tbl_customer_pan as tcp ON tc.cust_id = tcp.pan_userid ";//  PAN 
+		$sql_load_data  .= " INNER JOIN tbl_customer_bank_details as tcb ON tc.cust_id = tcb.bank_userid ";//  BANK 
+		$sql_load_data  .= " INNER JOIN tbl_customer_licenses as tcl ON tc.cust_id = tcl.lic_custid ";//  Lic 
+		
 		$sql_load_data  .= " WHERE 1=1 ";
+		$sql_load_data  .= " AND IF(`cust_type`='trader',cust_status,cust_id)!=0 ";
 		if(strcmp($utype,'1')!==0)
 		{
 			$sql_load_data  .= " AND cust_created_by='".$uid."' ";
