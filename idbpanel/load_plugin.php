@@ -149,13 +149,6 @@
 				{
 					quit('No Match Found For Country');	
 				}
-				
-				// 1: Get the Country record
-				// 2: Get the State record
-				// 3: Get the District record
-				// 4: Get the Taluka record
-				// 5: Get Respective Area
-				
 			}
 			else
 			{
@@ -166,5 +159,93 @@
 		{
 			quit('Pincode should not be empty');	
 		}	
+	}
+	
+	if((isset($obj->load_taluka)) == '1' && (isset($obj->load_taluka)))
+	{
+		$pincode	= $obj->pincode;
+		$distVal	= $obj->distVal;
+		$arr_taluka	= array();
+		$arr_area	= array();
+		
+		if($pincode != '' && $distVal != '')
+		{
+			// Have to find the respective Talukas and Areas
+			$res_get_taluka	= getPinCodeData('DISTINCT `pincode`, `taluka`', 'tbl_pincodes', array("pincode"=>$pincode, "district"=>$distVal));
+			$num_get_taluka	= mysqli_num_rows($res_get_taluka);
+			
+			if($num_get_taluka != 0)
+			{
+				while($row_get_taluka = mysqli_fetch_array($res_get_taluka))
+				{
+					array_push($arr_taluka, $row_get_taluka);
+				}
+				
+				// Now Area
+				$res_get_area	= getPinCodeData('DISTINCT `pincode`, `office_name`', 'tbl_pincodes', array("pincode"=>$pincode, "district"=>$distVal));
+				$num_get_area	= mysqli_num_rows($res_get_area);
+				
+				if($num_get_area != 0)
+				{
+					while($row_get_area = mysqli_fetch_array($res_get_area))
+					{
+						array_push($arr_area, $row_get_area);	
+					}
+					
+					$response_array	= array("Success"=>"Success", "resp"=>"Success", "taluka"=>$arr_taluka, "area"=>$arr_area);
+					echo json_encode($response_array);
+					exit();
+				}
+				else
+				{
+					quit('No Match Found');	
+				}
+			}
+			else
+			{
+				quit('No Match Found');
+			}
+		}
+		else
+		{
+			quit('District or Pincode should not be Empty');	
+		}	
+	}
+	
+	if((isset($obj->load_area)) == '1' && (isset($obj->load_area)))
+	{
+		
+		$pincode		= $obj->pincode;
+		$talVal			= $obj->talVal;
+		$ddl_district	= $obj->ddl_district; 
+		$arr_area		= array();
+		
+		if($pincode != '' && $talVal != '')
+		{
+			// Have to find the respective Talukas and Areas
+			$res_get_area	= getPinCodeData('DISTINCT `pincode`, `office_name`', 'tbl_pincodes', array("pincode"=>$pincode, "taluka"=>$talVal, "district"=>$ddl_district));
+			$num_get_area	= mysqli_num_rows($res_get_area);
+			
+			if($num_get_area != 0)
+			{
+				while($row_get_area = mysqli_fetch_array($res_get_area))
+				{
+					array_push($arr_area, $row_get_area);	
+				}
+				
+				$response_array	= array("Success"=>"Success", "resp"=>"Success", "area"=>$arr_area);
+				echo json_encode($response_array);
+				exit();
+			}
+			else
+			{
+				quit('No Match Found');	
+			}
+		}
+		else
+		{
+			quit('District or Pincode should not be Empty');	
+		}	
+		
 	}
 ?>

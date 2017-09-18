@@ -63,28 +63,28 @@
                                     	<input type="hidden" id="hid_countryId" name="hid_countryId" value="">
                                         <input type="hidden" id="hid_stateId" name="hid_stateId" value=""> 
                                         
-                                    	<div class="control-group span6">
+                                    	<div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">Pincode<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                             	<input type="text" placeholder="6 digit Pincode" id="txt_pincode" name="txt_pincode" class="input-large" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" autofocus />
                                             </div>
                                         </div> <!-- Pincode -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">Country<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                             	<input type="text" id="txt_country" name="txt_country" class="input-large keyup-char" data-rule-required="true" readonly/>
                                             </div>
                                         </div> <!-- Country -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">State<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                             	<input type="text" id="txt_state" name="txt_state" class="input-large keyup-char" data-rule-required="true" readonly/>
                                             </div>
                                         </div> <!-- State -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">District<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls" id="div_district">
                                             	<select name="ddl_district" id="ddl_district" class = "select2-me input-large" >
@@ -93,7 +93,7 @@
                                             </div>
                                         </div> <!-- District -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">Taluka<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls" id="div_taluka">
                                             	<select name="ddl_taluka" id="ddl_taluka" class = "select2-me input-large" >
@@ -102,7 +102,7 @@
                                             </div>
                                         </div> <!-- Taluka -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">	<!-- span6 -->
                                         	<label for="tasktitel" class="control-label">Area<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls" id="div_area">
                                             	<select name="ddl_area" id="ddl_area" class = "select2-me input-large" >
@@ -196,8 +196,8 @@
 								} 
 								else if(data.Success == "fail") 
 								{
-									//alert(data.resp);
-									console.log(data.resp);
+									alert(data.resp);
+									//console.log(data.resp);
 									loading_hide();						
 								}
 							},
@@ -219,12 +219,137 @@
 			
 			function getTaluka(distVal, pincode)
 			{
-				alert(distVal+'<==>'+pincode);	
+				//alert(distVal+'<==>'+pincode);
+				if(distVal != '' && pincode != '')
+				{
+					loading_show();
+					var sendInfo	= {"pincode":pincode, "distVal":distVal, "load_taluka":1};
+					var taluka_load = JSON.stringify(sendInfo);
+					
+					$.ajax({
+						url: "load_plugin.php?",
+						type: "POST",
+						data: taluka_load,
+						contentType: "application/json; charset=utf-8",						
+						success: function(response) 
+						{
+							data = JSON.parse(response);
+							
+							if(data.Success == "Success") 
+							{
+								var taluka_data		= '';
+								var area_data		= '';
+								
+								taluka_data	+= '<select name="ddl_taluka" id="ddl_taluka" class = "select2-me input-large" onChange="getArea(this.value, '+pincode+')">';
+									taluka_data	+= '<option value="">Select Taluka</option>';
+									for(var i = 0; i < data.taluka.length; i++)
+									{
+										taluka_data	+= '<option value="'+data.taluka[i]['taluka']+'">';
+											taluka_data	+= data.taluka[i]['taluka'];
+										taluka_data	+= '</option>';
+									}
+								taluka_data	+= '</select>';
+								
+								area_data	+= '<select name="ddl_area" id="ddl_area" class = "select2-me input-large">';
+									area_data	+= '<option value="">Select Area</option>';
+									for(var i = 0; i < data.area.length; i++)
+									{
+										area_data	+= '<option value="'+data.area[i]['id']+'">';
+											area_data	+= data.area[i]['office_name'];
+										area_data	+= '</option>';
+									}
+								area_data	+= '</select>';
+								
+								$('#div_taluka').html(taluka_data);
+								$('#div_area').html(area_data);
+								
+								$('#ddl_taluka').select2();
+								$('#ddl_area').select2();
+								
+								loading_hide();
+							} 
+							else if(data.Success == "fail") 
+							{
+								alert(data.resp);
+								//console.log(data.resp);
+								loading_hide();						
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+							$('#error_model').modal('toggle');						
+							loading_hide();
+						},
+						complete: function()
+						{
+							loading_hide();
+							//alert("complete");
+						}
+					});
+				}
 			}
 			
 			function getArea(talVal, pincode)
 			{
-				alert(talVal+'<==>'+pincode);	
+				var ddl_district	= $('#ddl_district').val();
+				alert(talVal+'<==>'+pincode+'<===>'+ddl_district);
+				
+				if(talVal != '' && pincode != '' && ddl_district != '')
+				{
+					loading_show();
+					var sendInfo	= {"pincode":pincode, "talVal":talVal, "ddl_district":ddl_district, "load_area":1};
+					var area_load = JSON.stringify(sendInfo);
+					
+					$.ajax({
+						url: "load_plugin.php?",
+						type: "POST",
+						data: area_load,
+						contentType: "application/json; charset=utf-8",						
+						success: function(response) 
+						{
+							data = JSON.parse(response);
+							
+							if(data.Success == "Success") 
+							{
+								var area_data		= '';
+								
+								area_data	+= '<select name="ddl_area" id="ddl_area" class = "select2-me input-large">';
+									area_data	+= '<option value="">Select Area</option>';
+									for(var i = 0; i < data.area.length; i++)
+									{
+										area_data	+= '<option value="'+data.area[i]['id']+'">';
+											area_data	+= data.area[i]['office_name'];
+										area_data	+= '</option>';
+									}
+								area_data	+= '</select>';
+								
+								$('#div_area').html(area_data);
+								
+								$('#ddl_area').select2();
+								
+								loading_hide();
+							} 
+							else if(data.Success == "fail") 
+							{
+								alert(data.resp);
+								//console.log(data.resp);
+								loading_hide();						
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+							$('#error_model').modal('toggle');						
+							loading_hide();
+						},
+						complete: function()
+						{
+							loading_hide();
+							//alert("complete");
+						}
+					});	
+				}
 			}
         </script>
     </body>
