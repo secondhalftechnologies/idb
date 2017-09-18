@@ -23,7 +23,7 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 	{
 		$type       = "vendor_";
 		$table_name = 'tbl_vendor';
-		$data['cust_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
+		$data['vendor_type']  = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
 	}
 	
 	$data[$type.'name']     = mysqli_real_escape_string($db_con,$_POST['txt_name']);
@@ -59,13 +59,33 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 		
 		//if(move_uploaded_file($_FILES['file_license_pdf']['tmp_name'],$dir))
 		//{
-			$cust_id                          			= insert($table_name,$data);
+			$cust_id                    = insert($table_name,$data);
+			///=============Start : To entry in customer table Dn By Satish 18092017==========//
+			
+			if($txt_user_type=="vendor")
+			{
+				$cdata['cust_type']     = mysqli_real_escape_string($db_con,$_POST['txt_usergrp']);
+				
+				$cdata['cust_name']     = mysqli_real_escape_string($db_con,$_POST['txt_name']);
+				$cdata['cust_email']    = mysqli_real_escape_string($db_con,$_POST['txt_email']);
+				$random_string			= '';
+				$cdata['cust_emailstatus']   = $cust_email_status;
+				$cdata['cust_vendorid']   = $cust_id;
+				$cdata['cust_mobile']   = mysqli_real_escape_string($db_con,$_POST['txt_mobile']);
+				$cdata['cust_password'] = mysqli_real_escape_string($db_con,$_POST['txt_password']);
+				$cdata['cust_created']  = $datetime;
+				$cdata['cust_salt']     = trim($salt);
+	            $cdata['cust_password'] = trim(md5($cdata['cust_password'].$cdata['cust_salt']));
+				
+				$cust_id                          			= insert('tbl_customer',$cdata);
+			}
+			///=============End : To entry in customer table Dn By Satish 18092017==========//
 			
 			// =====================================================================================================
 			// START : getting fields value for inserting into tbl_customer_login_info Dn By Prathamesh On 04092017 
 			// =====================================================================================================
 			$data_login_details['cli_custid']			= $cust_id;
-			$data_login_details['cli_user_type']		= $data['cust_type'];
+			$data_login_details['cli_user_type']		= $data[$type.'type'];
 			$data_login_details['cli_ip_address']		= get_client_ip();
 			$data_login_details['cli_browser_info']		= get_browser_info();
 			$data_login_details['cli_session_id']		= session_id();
