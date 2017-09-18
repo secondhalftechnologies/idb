@@ -293,7 +293,7 @@
 			function getArea(talVal, pincode)
 			{
 				var ddl_district	= $('#ddl_district').val();
-				alert(talVal+'<==>'+pincode+'<===>'+ddl_district);
+				//alert(talVal+'<==>'+pincode+'<===>'+ddl_district);
 				
 				if(talVal != '' && pincode != '' && ddl_district != '')
 				{
