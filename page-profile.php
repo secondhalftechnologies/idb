@@ -122,7 +122,7 @@
         <meta name="keywords" content="">
         <meta name="robots" content="all">
 
-        <title>Register - Indian Dava Bazar</title>
+        <title>Profile - Indian Dava Bazar</title>
 
 		<?php include('st-head.php'); ?>
         <?php include('st-validator-css.php'); ?>
@@ -318,11 +318,12 @@
                                         </div>
                                         <span></span>
                                   </label>
-                                    <input id='jobs' type='checkbox'>
+                                   <input id='jobs' type='checkbox'>
                                     <label for='jobs'>
-                                    <p>Upcoming Jobs</p>
+                                      <p onclick="logout();">Logout</p>
+                                   
                                     <div class='lil_arrow'></div>
-                                    <div class='content'>
+                                   <!--  <div class='content'>
                                     <ul>
                                     <li>
                                     <a href='#'>Weekly Forecast</a>
@@ -393,7 +394,7 @@
                                     </ul>
                                     </div>
                                     <span></span>
-                                    </label>
+                                    </label>-->
                                 </div>
         		  			</div>
         					<div class="col-md-9">
@@ -604,7 +605,9 @@
                 
                                     Address Details
                                     
-                                    <div class="field-row">
+                                    <div class="row" >
+                                        <div class="col-sm-6" style="padding-top: 50px;">
+                                           <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
                                       <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"><?php
 										if($comp_bill_address != '')
@@ -614,47 +617,48 @@
 										?></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Address -->
-                
-                                    <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Billing State<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onChange="getCities(this.value, this.id, 'txt_bill_city');" data-rule-required="true">
-                                        <?php
-                                        // =======================================================
-                                        // start : query for getting the all active states only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        // send city id from session if state id is already exist in the database
-                                        echo getActiveStates($comp_bill_state);
-                                        // =======================================================
-                                        // end : query for getting the all active state only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        ?>
-                                      </select>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Billing State -->
-                
-                                    <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Billing City<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city" data-rule-required="true">
-                                        <?php
-                                        // =======================================================
-                                        // start : query for getting the all active cities only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        // send city id from session if city id is already exist in the database
-                                        echo getActiveCities($comp_bill_city);
-                                        // =======================================================
-                                        // end : query for getting the all active cities only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        ?>
-                                      </select>
-                                    </div><!-- Billing City -->
-                
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
+                                    	
+                                        	
+                                            <div class="field-row">
+                                              <label class="col-md-6  col-xs-12">Billing State<span style="color:#F00">*</span></label>
+                                              <select class="col-md-6 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_state" id="txt_bill_state" onChange="getCities(this.value, this.id, 'txt_bill_city');" data-rule-required="true">
+                                                <?php
+                                                // =======================================================
+                                                // start : query for getting the all active states only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                // send city id from session if state id is already exist in the database
+                                                echo getActiveStates($comp_bill_state);
+                                                // =======================================================
+                                                // end : query for getting the all active state only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                ?>
+                                              </select>
+                                              <div class="clearfix"></div>
+                                            </div><!-- Billing State -->
+                        
+                                            <div class="field-row">
+                                              <label class="col-md-6  col-xs-12">Billing City<span style="color:#F00">*</span></label>
+                                              <select class="col-md-6 col-xs-12 selectpicker" data-live-search="true" name="txt_bill_city" id="txt_bill_city" data-rule-required="true">
+                                                <?php
+                                                // =======================================================
+                                                // start : query for getting the all active cities only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                // send city id from session if city id is already exist in the database
+                                                echo getActiveCities($comp_bill_city);
+                                                // =======================================================
+                                                // end : query for getting the all active cities only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                ?>
+                                              </select>
+                                            </div><!-- Billing City -->
+                                            
+                                            <div class="field-row">
+                                      <label class="col-md-6 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
+                                      <input type="text" class="le-input col-md-6 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
                                       	<?php
 										if($comp_bill_pincode != '')
 										{
@@ -672,14 +676,16 @@
                                       >
                                       <div class="clearfix"></div>
                                     </div><!-- Billing Pincode -->
-                
-                                    <div style="margin-left:1%;">
+                                        </div><!-- End Billinf Address-->
+                                        
+                                        <div class="col-sm-6">
+                                            <div style="margin-left:1%;">
                                       <input id="address_check" name="address_check" onclick="same_as_bill();" class="css-checkbox" value="CHK" type="checkbox">
                                       <label for="address_check" class="css-label" style="margin:12px;font-size:15px;">Same As Billing Details</label>
                                       <div class="clearfix"></div>
                                     </div>
-                
-                                    <div class="field-row">
+                                            
+                                        	<div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
                                       <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"><?php
 										if($comp_ship_address != '')
@@ -690,67 +696,80 @@
                                       <div class="clearfix"></div>
                                     </div><!-- Shipping Address -->
                 
-                                    <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Shipping State<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state" data-rule-required="true">
-                                        <?php
-                                        // =======================================================
-                                        // start : query for getting the all active states only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        // send city id from session if state id is already exist in the database
-                                        echo getActiveStates($comp_ship_state);
-                                        // =======================================================
-                                        // end : query for getting the all active state only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        ?>
-                                      </select>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Shipping State -->
+                                            <div class="field-row">
+                                              <label class="col-md-6  col-xs-12">Shipping State<span style="color:#F00">*</span></label>
+                                              <select class="col-md-6 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_state" id="txt_shipping_state" data-rule-required="true">
+                                                <?php
+                                                // =======================================================
+                                                // start : query for getting the all active states only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                // send city id from session if state id is already exist in the database
+                                                echo getActiveStates($comp_ship_state);
+                                                // =======================================================
+                                                // end : query for getting the all active state only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                ?>
+                                              </select>
+                                              <div class="clearfix"></div>
+                                            </div><!-- Shipping State -->
+                        
+                                            <div class="field-row">
+                                              <label class="col-md-6  col-xs-12">Shipping City<span style="color:#F00">*</span></label>
+                                              <select class="col-md-6 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city" data-rule-required="true">
+                                                <?php
+                                                // =======================================================
+                                                // start : query for getting the all active cities only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                // send city id from session if city id is already exist in the database
+                                                echo getActiveCities($comp_ship_city);
+                                                // =======================================================
+                                                // end : query for getting the all active cities only
+                                                // dn by prathamesh on 04092017
+                                                // =======================================================
+                                                ?>
+                                              </select>
+                                            </div><!-- Shipping City -->
+                        
+                                            <div class="field-row">
+                                              <label class="col-md-6 col-xs-12" for="name">Shipping Pincode<span style="color:#F00">*</span></label>
+                                              <input type="text" class="le-input col-md-6 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
+                                                <?php
+                                                if($comp_ship_pincode != '')
+                                                {
+                                                    ?>
+                                                    value="<?php echo $comp_ship_pincode; ?>"
+                                                    <?php										  
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                    placeholder="6 Digit Pincode"
+                                                    <?php	
+                                                }
+                                                ?>
+                                              >
+                                              <div class="clearfix"></div>
+                                            </div><!-- Shipping Pincode -->
+                                        </div><!-- End Shipping Address-->
+                                        
+                                    </div>
+                                  
                 
-                                    <div class="field-row">
-                                      <label class="col-md-3  col-xs-12">Shipping City<span style="color:#F00">*</span></label>
-                                      <select class="col-md-3 col-xs-12 selectpicker" data-live-search="true" name="txt_shipping_city" id="txt_shipping_city" data-rule-required="true">
-                                        <?php
-                                        // =======================================================
-                                        // start : query for getting the all active cities only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        // send city id from session if city id is already exist in the database
-                                        echo getActiveCities($comp_ship_city);
-                                        // =======================================================
-                                        // end : query for getting the all active cities only
-                                        // dn by prathamesh on 04092017
-                                        // =======================================================
-                                        ?>
-                                      </select>
-                                    </div><!-- Shipping City -->
                 
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Shipping Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-3 col-xs-12" id="txt_shipping_pincode" name="txt_shipping_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
-                                      	<?php
-										if($comp_ship_pincode != '')
-										{
-											?>
-											value="<?php echo $comp_ship_pincode; ?>"
-											<?php										  
-										}
-										else
-										{
-											?>
-											placeholder="6 Digit Pincode"
-											<?php	
-										}
-									  	?>
-                                      >
-                                      <div class="clearfix"></div>
-                                    </div><!-- Shipping Pincode -->
+                               
+                
+                                    
+                
+                                   
                 
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Description<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description" data-rule-required="true"></textarea>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description" data-rule-required="true">
+                                          <?php echo @$comp_descp; ?>
+                                      </textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Description -->
                 
@@ -767,7 +786,7 @@
                                     {
                                       
 								  //  Check Record and return single row
-								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
+								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid,'lic_type'=>''));
 								  if(!$licRow) // for add and update in single form 
 								  {
 									  $frm_lic_name      = 'frm_lic_info';
@@ -786,7 +805,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true"  minlength="12" maxlength="12" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -797,7 +816,7 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo $licRow['lic_document']; ?>" >
+                                       <a href="idbpanel/documents/licenses/<?php echo $licRow['lic_document']; ?>" style="color:#333;"><?php echo $licRow['lic_document']; ?></a>
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                                     <?php 
@@ -808,7 +827,7 @@
                                     <div class="field-row">
                                     
                                       <label class="col-md-3 col-xs-12" for="name">License Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image" id="file_lic_image" data-rule-requied="true" >
+                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" data-rule-requied="true" >
                                       <div class="clearfix"></div>
                                     </div><!-- License Image -->
                 
@@ -858,7 +877,7 @@
 									 ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$licRow['lic_document']; ?>" >
+                                       <a href="idbpanel/documents/licenses/<?php echo @$licRow['lic_document']; ?>" ><?php echo @$licRow['lic_document']; ?></a>
                                       <div class="clearfix"></div>
                                     </div><!-- Showing License Image -->
                                     <?php 
@@ -867,13 +886,13 @@
 									 ?>
                                      <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">License Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image" id="file_lic_image" <?php echo $required; ?>>
+                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" <?php echo $required; ?>>
                                       <div class="clearfix"></div>
                                     </div><!--  License Image -->
                                     
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">License Expiry Date</label>
-                                      <input value="<?php echo @$licRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" >
+                                      <input value="<?php echo @$licRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                    </div><!--Renewal End-->
@@ -915,7 +934,7 @@
 										
 										<div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Expiry Date</label>
-										  <input value="<?php echo @$row['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date<?php echo $i; ?>" id="lic_hospital_date<?php echo $i; ?>" data-rule-requied="true" >
+										  <input value="<?php echo @$row['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date<?php echo $i; ?>" id="lic_hospital_date<?php echo $i; ?>" data-rule-requied="true" readonly>
 										  <div class="clearfix"></div>
 										</div><!-- Expiry  Date -->
 									   </div><!--Renewal End-->
@@ -997,7 +1016,7 @@
                                     
                                     <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">20B Expiry Date</label>
-										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12  datepicker" name="lic_20Bexpiry_date" id="lic_20Bexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12  datepicker" name="lic_20Bexpiry_date" id="lic_20Bexpiry_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                <!--=========================End 20B License Number===================================-->
@@ -1034,7 +1053,7 @@
                                     
                                    <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">21B Expiry Date</label>
-										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                <!--=========================End 21B License Number===================================-->
@@ -1063,7 +1082,7 @@
                                     
                                      <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label>
-										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date" id="lic_20Cexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date" id="lic_20Cexpiry_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                    <?php 
@@ -1104,7 +1123,7 @@
                                     
                                       <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label>
-										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" >
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                    <?php
@@ -1233,7 +1252,7 @@
                                    
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Number</label>
-                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true" maxlength="15" size="15">
+                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true" maxlength="12" size="12">
                                       <div class="clearfix"></div>
                                     </div><!-- GST Number -->                    
                 
@@ -1425,6 +1444,45 @@
 					}
 				});
         }
+        // strat logout
+         function logout()
+        {
+          	
+        	var sendInfo		= {"logout":1};
+        	var getStateCities	= JSON.stringify(sendInfo); 
+
+        	$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: getStateCities, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+						   window.location.assign('page-login');
+						} 
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+        }
+        //===End Logout===//
+        
+        
+        
         
 		function same_as_bill()   //done by monika
 		{
@@ -1605,13 +1663,13 @@
 						if(data.Success == "Success") 
 						{  
 							 
-							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');	
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
-							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');	
+								$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
 						}
 					},
 					error: function (request, status, error) 
@@ -1648,8 +1706,9 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
-							 
+							window.location.assign('page-profile'); 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1694,7 +1753,7 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
-							 
+							 setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
 						} 
 						else 
@@ -1736,6 +1795,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1781,6 +1841,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1822,6 +1883,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);	
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1866,6 +1928,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1933,6 +1996,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1983,7 +2047,6 @@
 				}
 				
 				
-				
 				$.ajax({
 					url: "load_page_profile.php",
 					type: "POST",
@@ -1999,6 +2062,7 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -2023,7 +2087,7 @@
 		function fnAddMoreLic(lic)
 		{
 			var renewal_count = parseInt($('#renewal_count').val()) + 1 ;
-			var data ='<div id="renewal"> <div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Number</label><input type="text" value="" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no'+renewal_count+'" name="txt_hospital_lic_no'+renewal_count+'" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12"> <div class="clearfix"></div></div><div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Image</label><input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image'+renewal_count+'" id="file_lic_image'+renewal_count+'"><div class="clearfix"></div></div><!--  License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name"> Renewal '+renewal_count+' License Expiry Date</label><input value="" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date'+renewal_count+'" id="lic_hospital_date'+renewal_count+'" data-rule-requied="true"><div class="clearfix"></div></div><!-- Expiry  Date --></div>';
+			var data ='<div id="renewal"> <div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Number</label><input type="text" value="" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no'+renewal_count+'" name="txt_hospital_lic_no'+renewal_count+'" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12"> <div class="clearfix"></div></div><div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Image</label><input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image'+renewal_count+'" id="file_lic_image'+renewal_count+'"><div class="clearfix"></div></div><!--  License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name"> Renewal '+renewal_count+' License Expiry Date</label><input value="" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date'+renewal_count+'" id="lic_hospital_date'+renewal_count+'" data-rule-requied="true" readonly><div class="clearfix"></div></div><!-- Expiry  Date --></div>';
 			$('#renewal_count').val(renewal_count);					  
 			$('#licenses').append(data);
 		}
@@ -2031,7 +2095,7 @@
 		
 		function fnAddMoreCemistLic()
 		{
-			var data ='<div id="chemist_lic"><input value="" name="lic_id[]" type="hidden"><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Licence Number</label><input value="" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]" minlength="12" maxlength="12" size="12" type="text"><div class="clearfix"></div></div><!-- License Number --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Image</label><input accept="image/jpeg,image/png,image/jpg,appication/pdf" name="file_lic_20c_image[]" id="file_lic_21c_image" type="file"><div class="clearfix"></div></div><!-- License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label><input value="" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" type="text"><div class="clearfix"></div> </div><!-- Expiry  Date --></div>';
+			var data ='<div id="chemist_lic"><input value="" name="lic_id[]" type="hidden"><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Licence Number</label><input value="" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]" minlength="12" maxlength="12" size="12" type="text"><div class="clearfix"></div></div><!-- License Number --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Image</label><input accept="image/jpeg,image/png,image/jpg,appication/pdf" name="file_lic_20c_image[]" id="file_lic_21c_image" type="file"><div class="clearfix"></div></div><!-- License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label><input value="" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" type="text" readonly><div class="clearfix"></div> </div><!-- Expiry  Date --></div>';
 			$('#chemist_lic').append(data);
 		}
 		

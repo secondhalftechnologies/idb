@@ -83,6 +83,16 @@
                                     	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
                                     
+                                     <div class="field-row clearfix">
+                                        <span class="pull-left">
+                                            <label class="content-color">
+                                             <input id="policy"  type="checkbox" class="le-checbox auto-width inline" data-rule-required="true"> 
+                                                <span class="bold">Accept Policy</span>
+                                            </label>
+                                        </span>
+                                       
+                                    </div>
+                                    
                                     <div class="buttons-holder">
                                         <button type="submit" id="btn_submit" name="btn_submit" class="le-button huge" value="frm-submit" >Sign Up</button>
                                     </div><!-- Submit -->
@@ -106,6 +116,34 @@
                     </div><!-- /.row -->
                 </div><!-- /.container -->
             </main><!-- /.authentication -->
+            
+            <div class="modal fade policy" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Policy</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+        In general, an item may be eligible for return within the applicable return window if it fulfils one or more of the following conditions:
+        Was delivered in a physically damaged condition </p><p>
+        Has missing parts or accessories
+       </p><p> Is different from what was ordered
+       </p><p> Is no longer needed (not all items may be eligible)
+    Products marked as "non-returnable" on the product detail page cannot be returned. View the full list of non-returnable items.
+    </p><p>All items must be returned in their original condition, with price tags intact, user manual, warranty cards, original accessories and in the original manufacturer’s box/packaging as delivered to you.
+  </p><p>  Only Fulfilled by Amazon (FBA) items may be eligible for replacement. For more details, please refer About Free Replacements.
+   </p><p> If you wish to return an electronic device that stores any personal information, please ensure that you have removed all such personal information from the device prior to returning. Amazon shall not be liable in any manner for any misuse or usage of such information."
+  </p><p>  Some items may not be eligible for return if you "no longer need it" (including cases of buyer's remorse such as incorrect model or color of product ordered or incorrect product ordered).
+</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
             <!-- ========================================= MAIN : END ========================================= -->
 		<?php include('st-footer.php'); ?>
        	</div><!-- /.wrapper -->
@@ -170,7 +208,8 @@
 								else 
 								{   
 									alert(data.resp);
-									location.href	= baseurll + "/error-404";
+									return false;
+							        //location.href	= baseurll + "/error-404";
 								}
 							},
 							error: function (request, status, error) 
@@ -244,6 +283,16 @@
 					$('#'+password_error_span).html('Strong');
 				}
 			}
+			
+			$(document).on('change', '#policy', function() {
+				
+				if($("#policy").attr("checked")) 
+				{
+					$('.policy').modal({
+										backdrop: 'static'
+								  });
+				}
+			});
 		</script>
     </body>
 </html>

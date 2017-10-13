@@ -74,7 +74,7 @@
                                     	<div class="control-group span6">
                                         	<label for="tasktitel" class="control-label">Model Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large keyup-char" data-rule-required="true" />
+                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large" data-rule-required="true" />
                                             </div>
                                         </div>	<!-- Product Model Number -->
                                         
@@ -464,7 +464,6 @@
 	   	
 			function showComposition(type)
 			{
-				alert(type);
 				if(type=="Single")
 				{
 					$('#single').css('display','block');

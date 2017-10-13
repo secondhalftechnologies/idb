@@ -236,11 +236,13 @@
 				
 				// Update Query
 				// Query For update the User's Basic Information
+			
 				$res_update_user_company	= update('tbl_customer_company', $data, $where_arr);
 				
 				if($res_update_user_company)
 				{
-					if($_SESSION['front_panel']['cust_email'] != $data['cust_email'])
+				
+					if($_SESSION['front_panel']['cust_email'] != $data['comp_pri_email'])
 					{
 						$_SESSION['front_panel']	= array();
 						// remove all session variables
@@ -340,12 +342,13 @@
 					}
 					else
 					{
-						$_SESSION['front_panel']	= array();
+						//$_SESSION['front_panel']	= array();
 				
 						// Query For setting the session again through user id
-						$sql_get_user_info	= " SELECT * FROM `tbl_customer` WHERE `cust_id`='".$where_arr['cust_id']."' ";
+						$sql_get_user_info	= " SELECT * FROM `tbl_customer` WHERE `cust_id`='".$where_arr['comp_user_id']."' ";
 						$res_get_user_info	= mysqli_query($db_con, $sql_get_user_info) or die(mysqli_error($db_con));
 						$num_get_user_info	= mysqli_num_rows($res_get_user_info);
+						
 						
 						if($num_get_user_info != 0)
 						{
@@ -376,7 +379,7 @@
 				
 				if($res_update_user_company)
 				{
-					quit('Insert Successfully!', 1);
+					quit('Information Added Successfully!', 1);
 				}
 				else
 				{
@@ -1270,4 +1273,13 @@
 	// End : Doctor LIcense Information Dn By Satish On 06-Sep-2017
 	// ===============================================================================
 	
+	
+	// ===============================================================================
+	// Start : Logout Dn By Satish On 10-Oct-2017
+	// ===============================================================================
+	if((isset($obj->logout))== '1' && (isset($obj->logout)))
+	{
+	   $_SESSION['front_panel']	= array();
+	    quit('1',1);
+	}
 ?>

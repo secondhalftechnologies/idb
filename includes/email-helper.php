@@ -1,5 +1,17 @@
 <?php
 /*Mail template headers and footers */
+
+
+
+if(file_exists("../PHPMailer/class.phpmailer.php"))
+{
+	include("../PHPMailer/class.phpmailer.php");		
+}
+elseif(file_exists("PHPMailer/class.phpmailer.php"))
+{
+	include("PHPMailer/class.phpmailer.php");		
+}
+
 function mail_template_header()
 {
 	$mail_message = '<div marginwidth="0" marginheight="0" style="margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; width: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;" offset="0" topmargin="0" leftmargin="0">';
@@ -29,7 +41,7 @@ function mail_template_header()
 	$mail_message .= '<td><table height="80" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
 	$mail_message .= '<tr>';
 	$mail_message .= '<td data-color="Logo 01" data-size="Logo 01" data-min="30" data-max="50" class="td-display-block-blog-center" style="font-weight:900; letter-spacing: -0.050em; font-size:40px; color:#5bbc2e; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" width="260" align="left">';
-	$mail_message .= '<img src="http://www.planeteducate.com/img/pe_logo.png" height="50" width="150">';
+	$mail_message .= '<img src="http://www.kumar7.com/assets/images/logo.png" height="50" width="150">';
 	$mail_message .= '</td>';
 	$mail_message .= '<td class="td-display-block-blog" width="260" align="right"><!-- START button -->';
 	$mail_message .= '</tr>';
@@ -54,14 +66,14 @@ function mail_template_footer()
 	$mail_message .= '<tr>';
 	$mail_message .= '<td><table height="100" width="600" align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#fff">';
 	$mail_message .= '<tr>';
-	$mail_message .= '<td data-color="Link" data-size="Link" data-min="8" data-max="20" class="td-pad10" style="font-weight:regular; letter-spacing: 0.000em; line-height:21px; font-size:12px; color:#494949; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center"><a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.planeteducate.com/about-us"> About Us  </a> |  <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.planeteducate.com/terms-and-conditions"> Terms & conditions </a> | <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.planeteducate.com/disclaimer"> Disclaimer  </a> | <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.planeteducate.com/privacy-policy"> Privacy Policy  </a></td>';
+	$mail_message .= '<td data-color="Link" data-size="Link" data-min="8" data-max="20" class="td-pad10" style="font-weight:regular; letter-spacing: 0.000em; line-height:21px; font-size:12px; color:#494949; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center"><a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.kumar7.com/about-us"> About Us  </a> |  <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.kumar7.com/terms-and-conditions"> Terms & conditions </a> | <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.kumar7.com/disclaimer"> Disclaimer  </a> | <a data-color="Link" data-size="Link" data-min="8" data-max="20" style="color:#494949; text-decoration:none;" href="https://www.kumar7.com/privacy-policy"> Privacy Policy  </a></td>';
 	$mail_message .= '</tr>';
 	$mail_message .= '<tr>';
 	$mail_message .= '<td class="td-pad10" align="center">';
-	$mail_message .= '<a href="https://www.facebook.com/Planet-Educate-796488243821161/"><img src="http://www.planeteducate.com/img/footer-fb.png"></a> &nbsp; ';
-	$mail_message .= '<a href="https://twitter.com/planet_educate"><img src="http://www.planeteducate.com/img/footer-tw.png"></a> &nbsp; ';
+	$mail_message .= '<a href="#"><img src="http://www.planeteducate.com/img/footer-fb.png"></a> &nbsp; ';
+	$mail_message .= '<a href="#"><img src="http://www.planeteducate.com/img/footer-tw.png"></a> &nbsp; ';
 	//$mail_message .= '<a href="javascript.void(0);"><img src="http://www.planeteducate.com/img/footer-in.png"></a> &nbsp; ';
-	$mail_message .= '<a href="https://plus.google.com/u/0/b/112673679462635743960/"><img src="http://www.planeteducate.com/img/footer-gl.png"></a></td>';
+	$mail_message .= '<a href="#"><img src="http://www.planeteducate.com/img/footer-gl.png"></a></td>';
 	$mail_message .= '</tr>';
 	$mail_message .= '</table></td>';
 	$mail_message .= '</tr>';
@@ -78,32 +90,36 @@ function mail_template_footer()
 function sendEmail($email,$subject,$message)
 {	
 	global $server_set;
+	
 	if($email != "" && $subject != "" || $message !="")
 	{
 		if($server_set == 1)
-		{
-			$mail 				= new PHPMailer;			
+		{ 
+			$mail 				= new PHPMailer;		
 			$mail->IsSMTP();                           
 			$mail->Port       	= 25;                    
-			$mail->Host       	= 'mail.idb.com'; 
-			$mail->Username   	= 'support@idb.com';
-			$mail->Password   	= 'idbTEST1199';           
-			$mail->From     	= 'support@idb.com';
+			$mail->Host       	= 'mail.kumar7.com'; 
+			$mail->Username   	= 'support@kumar7.com';
+			$mail->Password   	= 'support@123';           
+			$mail->From     	= 'support@kumar7.com';
 			$mail->FromName 	= 'IDB';
 			$mail->AddAddress($email,$email);
-			$mail->AddReplyTo('support@idb.com', 'IDB');
+			$mail->AddReplyTo('support@kumar7.com', 'IDB');
 			$mail->WordWrap 	= 50;                             
 			$mail->IsHTML(true);                              
 			$mail->Subject  	= $subject;
 			$body 				= $message;
-			$mail->Body			= $body;							 
+			$mail->Body			= $body;	
+		   
+		   
 			if(!$mail->Send())
 			{ 
-				return false;//$mail->ErrorInfo;
+			    
+			   return false;//$mail->ErrorInfo;
 			}  
 			else
 			{
-				return true;
+			    return true;
 			}				
 		}
 		else
