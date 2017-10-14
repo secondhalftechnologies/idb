@@ -182,6 +182,7 @@
 		$data['comp_pri_phone']		= mysqli_real_escape_string($db_con,$_POST['txt_pri_phone']);
 		
 		$data['comp_name']			= mysqli_real_escape_string($db_con,$_POST['txt_comp_name']);
+		$data['comp_establishment']	= mysqli_real_escape_string($db_con,$_POST['txt_establishment']);
 		$data['comp_sec_email']		= mysqli_real_escape_string($db_con,$_POST['txt_sec_email']);
 		$data['comp_sec_phone']		= mysqli_real_escape_string($db_con,$_POST['txt_alt_phone']);
 		$data['comp_website']		= mysqli_real_escape_string($db_con,$_POST['txt_website']);

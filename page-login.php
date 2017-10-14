@@ -82,7 +82,7 @@
                                             <label class="content-color"><input type="checkbox" class="le-checbox auto-width inline"> <span class="bold">Remember me</span></label>
                                         </span>
                                         <span class="pull-right">
-                                            <a href="#" class="content-color bold">Forgotten Password ?</a>
+                                            <a href="#"  data-toggle="modal" data-target=".forgot_password" data-backdrop="static" class="content-color bold">Forgotten Password ?</a>
                                         </span>
                                     </div>
 
@@ -105,6 +105,37 @@
 
            <?php include('st-footer.php'); ?>
        	</div><!-- /.wrapper -->
+
+
+
+            <div class="modal fade forgot_password" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Forgot Password</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p style="color: red;display: none;" id="resetFail"></p>
+                    <p style="color: green;display: none;" id="resetSuccess"></p>
+                    <form role="form" class="login-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_forgot_password" name="frm_login" novalidate="novalidate">
+                                    <div class="field-row control-group controls success">
+                                       
+                                        <input placeholder="Enter your registered email address" autocomplete="off" type="email" name="txt_femail" id="txt_femail" class="le-input col-md-12 col-xs-12 valid" data-rule-required="true">
+                                    <span for="txt_femail"  class="help-block error valid"></span></div><!-- /.field-row -->
+ <br>
+                                    <div class="buttons-holder form-actions">
+                                    <br>
+                                        <button id="Submit"  name="Submit" type="button" onclick="resetPassword()" class="le-button ">Submit</button>
+                                    </div><!-- /.buttons-holder -->
+                                </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
 
 		<?php include('st-javascript.php'); ?>
         <?php include('st-validator-js.php'); ?>
@@ -160,6 +191,48 @@
 		
 				}
 		});
+
+
+			function resetPassword()
+			{
+					
+				var txt_email		= $('#txt_femail').val();
+				
+				var sendInfo 	= {"txt_email":txt_email, "forgot_password":1};
+				
+				var esn_edit	= JSON.stringify(sendInfo);				
+				$.ajax({
+					url: "includes/common.php",
+					type: "POST",
+					data: esn_edit,
+					contentType: "application/json; charset=utf-8",						
+					success: function(response) 
+					{
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{
+							$('#resetSuccess').css('display','block');
+							$('#resetFail').css('display','none');
+							$('#resetSuccess').html(data.resp);
+						} 
+						else 
+						{
+							$('#resetSuccess').css('display','none');
+							$('#resetFail').css('display','block');
+							$('#resetFail').html(data.resp);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						alert(request.responseText);
+					},
+					complete: function()
+					{
+						//loading_hide();	
+					}
+				});
+			
+		}
         </script>
     </body>
 </html>

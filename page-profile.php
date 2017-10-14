@@ -42,6 +42,7 @@
 	$comp_ship_city		= '';
 	$comp_ship_pincode	= '';
 	$comp_descp			= '';
+	$comp_establishment = '';
 	
 	if($num_get_comp_info != 0)
 	{
@@ -61,6 +62,7 @@
 		$comp_ship_city		= $row_get_comp_info['comp_ship_city'];
 		$comp_ship_pincode	= $row_get_comp_info['comp_ship_pincode'];
 		$comp_descp			= $row_get_comp_info['comp_descp'];
+		$comp_establishment = $row_get_comp_info['comp_establishment'];
 	}
 	// ==============================================================================================================================
 	// END : getting the Company Data from the tbl_customer_company table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
@@ -639,22 +641,43 @@
                                       >
                                       <div class="clearfix"></div>
                                     </div><!-- Website -->
+
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">Establishment</label>
+                                      <input type="text" class="le-input col-md-9 col-xs-12" id="txt_establishment" name="txt_establishment"
+                                      	<?php
+										if($comp_establishment != '')
+										{
+											?>
+											value="<?php echo $comp_establishment; ?>"
+											<?php										  
+										}
+										else
+										{
+											?>
+											placeholder="Ex. 2017"
+											<?php	
+										}
+									  	?>
+                                      >
+                                      <div class="clearfix"></div>
+                                    </div><!-- Establishment -->
                 
                                     Address Details
                                     
                                     <div class="row" >
                                         <div class="col-sm-6" style="padding-top: 50px;">
                                            <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"><?php
-										if($comp_bill_address != '')
-										{
-											echo $comp_bill_address;
-										}
-										?></textarea>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Billing Address -->
-                                    	
+		                                      <label class="col-md-3 col-xs-12" for="name">Billing Address<span style="color:#F00">*</span></label>
+		                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_billing_address" name="txt_billing_address" data-rule-required="true"><?php
+												if($comp_bill_address != '')
+												{
+													echo $comp_bill_address;
+												}
+												?></textarea>
+		                                      <div class="clearfix"></div>
+		                                    </div><!-- Billing Address -->
+		                                    	
                                         	
                                             <div class="field-row">
                                               <label class="col-md-6  col-xs-12">Billing State<span style="color:#F00">*</span></label>
@@ -694,44 +717,44 @@
                                             </div><!-- Billing City -->
                                             
                                             <div class="field-row">
-                                      <label class="col-md-6 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
-                                      <input type="text" class="le-input col-md-6 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
-                                      	<?php
-										if($comp_bill_pincode != '')
-										{
-											?>
-											value="<?php echo $comp_bill_pincode; ?>"
-											<?php										  
-										}
-										else
-										{
-											?>
-											placeholder="6 Digit Pincode"
-											<?php	
-										}
-									  	?>
-                                      >
-                                      <div class="clearfix"></div>
-                                    </div><!-- Billing Pincode -->
+		                                      <label class="col-md-6 col-xs-12" for="name">Billing Pincode<span style="color:#F00">*</span></label>
+		                                      <input type="text" class="le-input col-md-6 col-xs-12" id="txt_bill_pincode" name="txt_bill_pincode" data-rule-required="true" data-rule-number="true" maxlength="6" size="6" 
+		                                      	<?php
+												if($comp_bill_pincode != '')
+												{
+													?>
+													value="<?php echo $comp_bill_pincode; ?>"
+													<?php										  
+												}
+												else
+												{
+													?>
+													placeholder="6 Digit Pincode"
+													<?php	
+												}
+											  	?>
+		                                      >
+		                                      <div class="clearfix"></div>
+		                                    </div><!-- Billing Pincode -->
                                         </div><!-- End Billinf Address-->
                                         
                                         <div class="col-sm-6">
                                             <div style="margin-left:1%;">
-                                      <input id="address_check" name="address_check" onclick="same_as_bill();" class="css-checkbox" value="CHK" type="checkbox">
-                                      <label for="address_check" class="css-label" style="margin:12px;font-size:15px;">Same As Billing Details</label>
-                                      <div class="clearfix"></div>
-                                    </div>
+		                                      <input id="address_check" name="address_check" onclick="same_as_bill();" class="css-checkbox" value="CHK" type="checkbox">
+		                                      <label for="address_check" class="css-label" style="margin:12px;font-size:15px;">Same As Billing Details</label>
+		                                      <div class="clearfix"></div>
+		                                    </div>
                                             
                                         	<div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"><?php
-										if($comp_ship_address != '')
-										{
-											echo $comp_ship_address;
-										}
-										?></textarea>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Shipping Address -->
+		                                      <label class="col-md-3 col-xs-12" for="name">Shipping Address<span style="color:#F00">*</span></label>
+		                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_shipping_address" name="txt_shipping_address" data-rule-required="true"><?php
+												if($comp_ship_address != '')
+												{
+													echo $comp_ship_address;
+												}
+												?></textarea>
+		                                      <div class="clearfix"></div>
+		                                    </div><!-- Shipping Address -->
                 
                                             <div class="field-row">
                                               <label class="col-md-6  col-xs-12">Shipping State<span style="color:#F00">*</span></label>
@@ -795,14 +818,7 @@
                                     </div>
                                   
                 
-                
-                               
-                
-                                    
-                
-                                   
-                
-                                    <div class="field-row">
+                					<div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">Description<span style="color:#F00">*</span></label>
                                       <textarea class="le-input col-md-9 col-xs-12" id="txt_description" name="txt_description" data-rule-required="true">
                                           <?php echo @$comp_descp; ?>

@@ -261,4 +261,113 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 }
 ////////////////==End : Login Satish:21082017================//////
 
+
+////////////////==Start : Forgot password Satish:21082017================//////
+if((isset($obj->forgot_password)) == "1" && isset($obj->forgot_password))// user login
+{
+	$cust_email 		 = trim(mysqli_real_escape_string($db_con,$obj->txt_email));
+
+    $row = checkExist('tbl_customer' ,array('cust_email'=>$cust_email));
+    if($row)
+    {
+    	$salt                       = generateRandomString(5, 'salt');
+    	$password                   = generateRandomString(8, 'salt');
+		$data['cust_salt']        	= trim($salt);
+		$data['cust_password']   	= trim(md5($password.$data['cust_salt']));	
+
+		update('tbl_customer',$data,array('cust_email'=>$cust_email));
+
+		// =====================================================================================================
+			// START : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+			$subject		= 'IDB - Reset Password';
+			/* create body for Update mail message */			
+			$message_body = '<table class="" data-module="main Content" height="347" width="100%" bgcolor="#e2e2e2" border="0" cellpadding="0" cellspacing="0">';
+				$message_body .= '<tr>';
+					$message_body .= '<td>';
+						$message_body .= '<table data-bgcolor="BG Color" height="347" width="800" align="center" bgcolor="#EDEFF0" border="0" cellpadding="0" cellspacing="0">';
+							$message_body .= '<tr>';
+								$message_body .= '<td>';
+									$message_body .= '<table data-bgcolor="BG Color 01" height="347" width="600" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">';
+										$message_body .= '<tr>';
+											$message_body .= '<td>';
+												$message_body .= '<table height="347" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
+													$message_body .= '<tr>';
+														$message_body .= '<td data-bgcolor="Line Color" height="1" width="520" bgcolor="#cedcce"></td>';
+													$message_body .= '</tr>';
+													$message_body .= '<tr>';
+														$message_body .= '<td height="345" width="520">';
+															$message_body .= '<table height="300" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
+																$message_body .= '<tr>';
+																	$message_body .= '<td data-color="Title" data-size="Title" data-min="10" data-max="30" class="td-pad10" style="font-weight:bold; letter-spacing: 0.025em; font-size:20px; color:#494949; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center">  Email Verification. </td>';
+																$message_body .= '</tr>';
+																$message_body .= '<tr>';
+																	$message_body .= '<td data-color="Name" data-size="Name" data-min="8" data-max="30" class="td-pad10" style="font-weight:600; letter-spacing: 0.000em; line-height:20px; font-size:14px; color:#7f7f7f; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="left"> Dear '.ucwords($row['cust_name']).', <br>';
+																	$message_body .= '</td>';
+																$message_body .= '</tr>';
+																$message_body .= '<tr>';
+																	$message_body .= '<td>';
+																		$message_body .= '<table data-bgcolor="Color Button 01" class="table-button230-center" style="border-radius: 900px;" height="36" width="230" align="center" bgcolor="#5bbc2e" border="0" cellpadding="0" cellspacing="0">';
+																			$message_body .= '<tr>';
+																				$message_body .= '<td style="padding: 5px 5px; font-weight:bold; font-size:15px; color:#ffffff; letter-spacing: 0.005em; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly; text-decoration: none;" valign="middle" align="center">
+
+																				    <h3>Your Password is : '.$password.'</h3></td>';
+																			$message_body .= '</tr>';
+																		$message_body .= '</table>';
+																	$message_body .= '</td>';
+																$message_body .= '</tr>';
+															$message_body .= '</table>';
+														$message_body .= '</td>';
+													$message_body .= '</tr>';
+												$message_body .= '</table>';
+											$message_body .= '</td>';
+										$message_body .= '</tr>';			
+										$message_body .= '<tr style="padding-top:10px;">';
+											$message_body .= '<td data-color="Name" data-size="Name" data-min="8" data-max="30" class="td-pad10" style="letter-spacing: 0.000em; line-height:20px; font-size:14px; color:#7f7f7f; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center"> We look forward to make your online shopping a wonderful experience';
+											$message_body .= '<br>Please contact us should you have any questions or need further assistance.';
+											$message_body .= '</td>';
+										$message_body .= '</tr>';
+										$message_body .= '<tr>';
+											$message_body .= '<td data-bgcolor="Line Color" height="1" width="520" bgcolor="#cedcce"></td>';
+										$message_body .= '</tr>';						
+									$message_body .= '</table>';
+								$message_body .= '</td>';
+							$message_body .= '</tr>';
+						$message_body .= '</table>';
+					$message_body .= '</td>';
+				$message_body .= '</tr>';
+			$message_body .= '</table>';
+			/* create body for Update mail message */
+			/* create a mail template message*/
+			$message = mail_template_header()."".$message_body."".mail_template_footer();
+			
+			
+			if(sendEmail($cust_email,$subject,$message))
+			{
+			  
+				$noti['type']			= 'Email_Verification_Mail';
+				$noti['message']		= htmlspecialchars($message, ENT_QUOTES);
+				$noti['user_email']		= $cust_email;
+				$noti['created_date']	= $datetime;
+				
+				$noti_data	= insert('tbl_notification',$noti);
+				quit('Password successfully sent to your email id',1);
+				 
+			}
+			else
+			{
+				quit('Email not sent please try after sometime');
+			}
+			// =====================================================================================================
+			// END : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+    }
+    else
+    {
+    	quit('Email Id not registrer with us..');
+    }
+	
+	
+}
+////////////////==End : Login Satish:21082017================//////
 ?>
