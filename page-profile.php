@@ -18,7 +18,7 @@
 	$logged_username	= $_SESSION['front_panel']['cust_name'];
 	$logged_emailid		= $_SESSION['front_panel']['cust_email'];
 	$logged_mobilenum	= $_SESSION['front_panel']['cust_mobile'];
-	
+	$cust_mobilestatus  = $_SESSION['front_panel']['cust_mobilestatus'];
 	// ==============================================================================================================================
 	// START : getting the Company Data from the tbl_customer_company table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
 	// ==============================================================================================================================
@@ -309,11 +309,19 @@
                                                 	<a href="javascript:void(0);" onclick="showDiv('pan_info');"> PAN Information </a>
                                                 </li>
                                                 <li>
+                                                	<a href="javascript:void(0);" onclick="showDiv('tan_info');"> TAN Information </a>
+                                                </li>
+                                                <li>
                                                 	<a href="javascript:void(0);" onclick="showDiv('gst_info');"> GST Information </a>
                                                 </li>
                                                 <li>
                                                 	<a href="javascript:void(0);" onclick="showDiv('bank_info');"> Bank Information </a>
                                                 </li>
+
+                                                <li>
+                                                	<a href="javascript:void(0);" onclick="showDiv('sign_info');"> Signature Information </a>
+                                                </li>
+
                                             </ul>
                                         </div>
                                         <span></span>
@@ -453,7 +461,15 @@
                                         
                                         <div class="field-row">
                                             <label class="col-md-3 col-xs-12" for="name">Mobile<span style="color:#F00">*</span></label>
-                                            <input type="text" class="le-input col-md-9 col-xs-12" id="txt_mobile" name="txt_mobile"
+                                            <?php
+
+                                            	$col_md = 9;
+                                            	if($cust_mobilestatus !=1)
+                                            	{
+                                            		$col_md = 6;
+                                            	}
+                                             ?>
+                                            <input type="text" class="le-input col-md-<?php echo $col_md; ?> col-xs-12" id="txt_mobile" name="txt_mobile"
                                             <?php
                                             	if($logged_mobilenum != '')
 												{
@@ -469,12 +485,33 @@
 												}
 											?>
                                             data-rule-required="true" data-rule-number="true" maxlength="10" size="10">
+                                            <?php
+                                            if($cust_mobilestatus !=1)
+                                            { ?>
+                                            &nbsp;&nbsp;<button onclick="sendOTP();" type="button" id="btn_send_otp" name="btn_submit" class="le-button" value="">
+                                            	Verify
+                                            </button>
+                                            <?php
+                                            }
+                                        ?>
                                             <div class="clearfix"></div>
-                                        </div><!-- Mobile -->                    
+										</div><!-- Mobile -->   
+
+										 <div class="field-row" id="otp_div" style="display:none">
+                                            <label class="col-md-3 col-xs-12" for="name"><span style="color:#F00">*</span></label>
+                                           
+                                            <input type="text" placeholder="Enter OTP" class="le-input col-md-6 col-xs-12" id="otp_val" name="otp_val"
+                                            
+                                            data-rule-required="true" data-rule-number="true" maxlength="6" size="5">
+                                             &nbsp;&nbsp;<button onclick="verifyOTP();" type="button" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit">
+                                            	Verify
+                                            </button>
+                                            <div class="clearfix"></div>
+										</div><!-- OTP VAL -->                  
                                         
                                         <div class="buttons-holder">
                                         	<button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >
-                                            	Update
+                                            	Save and Next
                                             </button>
                                         </div><!-- Submit -->
                                     </form>
@@ -774,7 +811,7 @@
                                     </div><!-- Description -->
                 
                                     <div class="buttons-holder">
-                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Save and Next</button>
                                     </div><!-- Submit -->
                                   </form>
                                 </div>	<!--Company Details-->
@@ -800,150 +837,148 @@
 									  $required          = '';
 								  }
 								  ?>     
-                               <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
-                                  <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
-                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">License Number</label>
-                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true"  minlength="12" maxlength="12" size="12" >
-                                      
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Number -->
-                                    
-                                   <?php
-									 if($licRow)
-									 {
-									 ?>
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <a href="idbpanel/documents/licenses/<?php echo $licRow['lic_document']; ?>" style="color:#333;"><?php echo $licRow['lic_document']; ?></a>
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                                    <?php 
-									 }
-									 
-									 ?>
-                                    
-                                    <div class="field-row">
-                                    
-                                      <label class="col-md-3 col-xs-12" for="name">License Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" data-rule-requied="true" >
-                                      <div class="clearfix"></div>
-                                    </div><!-- License Image -->
-                
-                                   <?php
-                                    }
-                                    elseif ($logged_user_type == 'hospitals') 
-                                    {
-                                      ?>
-                                      <?php
-									  //  Check Record and return single row
-								  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
-								  $result = getRecord('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
-								  $licNum = isExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
-								  if(!$licRow) // for add and update in single form 
-								  {
-									  $frm_lic_name      = 'frm_lic_info';
-									  $frm_lic_request   = 'add_hospital_lic_req';
-									  $required          = 'data-rule-required="true"';
-									  $i                 = '0';
-								  }
-								  else
-								  {
-									  $frm_lic_name      = 'frm_lic_info';
-									  $frm_lic_request   = 'update_hospital_lic_req';
-									  $required          = '';
-									  $i                 = 0;
-									  
-								  }
-								  ?>     
-                               <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
-                                  <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
-                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
-                                  <input type="hidden" name="renewal_count" id="renewal_count" value="<?php echo $licNum; ?>">
-                                  <!--=========================Start : Hospital License Number===================================-->
-                                  
-                                  <div id="licenses">
-                                  <div id="renewal<?php echo $i; ?>">
-                                   <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Hospital License Number</label>
-                                      <input type="text" value="<?php echo @$licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
-                                    <div class="clearfix"></div>
-                                    </div><!-- License Number -->
-                                    
-                                   <?php
-									 if($licRow)
-									 {
-									 ?>
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name"></label>
-                                       <a href="idbpanel/documents/licenses/<?php echo @$licRow['lic_document']; ?>" ><?php echo @$licRow['lic_document']; ?></a>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Showing License Image -->
-                                    <?php 
-									 }
-									 
-									 ?>
-                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">License Image</label>
-                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" <?php echo $required; ?>>
-                                      <div class="clearfix"></div>
-                                    </div><!--  License Image -->
-                                    
-                                    <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">License Expiry Date</label>
-                                      <input value="<?php echo @$licRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" readonly>
-                                      <div class="clearfix"></div>
-                                    </div><!-- Expiry  Date -->
-                                   </div><!--Renewal End-->
-                                   
-                                    <?php
-									if($result)
-									{
-										$i=0;
-										while($row  = mysqli_fetch_array($result))
-										{
-										$i++;	
-										?>
-										
-										 <div id="renewal<?php echo $i; ?>">
-									   <div class="field-row">
-										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?> License Number</label>
-										  <input type="text" value="<?php echo @$row['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no<?php echo $i; ?>" name="txt_hospital_lic_no<?php echo $i; ?>" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
-										<div class="clearfix"></div>
-										</div><!-- License Number -->
-										
-									   <?php
-										 if($result)
+	                               <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
+	                                  <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
+	                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
+	                                    <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name">License Number</label>
+	                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true"  minlength="12" maxlength="12" size="12" >
+	                                      
+	                                      <div class="clearfix"></div>
+	                                    </div><!-- License Number -->
+	                                    
+	                                   <?php
+										 if($licRow)
 										 {
 										 ?>
-										<div class="field-row">
-										  <label class="col-md-3 col-xs-12" for="name"></label>
-										   <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$row['lic_document']; ?>" >
-										  <div class="clearfix"></div>
-										</div><!-- Showing License Image -->
-										<?php 
+	                                    <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name"></label>
+	                                       <a href="idbpanel/documents/licenses/<?php echo $licRow['lic_document']; ?>" style="color:#333;"><?php echo $licRow['lic_document']; ?></a>
+	                                      <div class="clearfix"></div>
+	                                    </div><!-- License Image -->
+	                                    <?php 
 										 }
 										 
 										 ?>
-										 <div class="field-row">
-										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Image</label>
-										  <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image<?php echo $i; ?>" id="file_lic_image<?php echo $i; ?>" <?php echo $required; ?>>
-										  <div class="clearfix"></div>
-										</div><!--  License Image -->
-										
-										<div class="field-row">
-										  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Expiry Date</label>
-										  <input value="<?php echo @$row['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date<?php echo $i; ?>" id="lic_hospital_date<?php echo $i; ?>" data-rule-requied="true" readonly>
-										  <div class="clearfix"></div>
-										</div><!-- Expiry  Date -->
-									   </div><!--Renewal End-->
-                              <?php   } // while end
-									} // if end?>
+	                                    
+	                                    <div class="field-row">
+	                                    
+	                                      <label class="col-md-3 col-xs-12" for="name">License Image</label>
+	                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" data-rule-requied="true" >
+	                                      <div class="clearfix"></div>
+	                                    </div><!-- License Image -->
+	                
+	                                   <?php
+	                                    }
+	                                    elseif ($logged_user_type == 'hospitals') 
+	                                    {
+	                                      ?>
+	                                      <?php
+										  //  Check Record and return single row
+									  $licRow = checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid));
+									  $result = getRecord('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
+									  $licNum = isExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid),array('lic_type'=>'New'));
+									  if(!$licRow) // for add and update in single form 
+									  {
+										  $frm_lic_name      = 'frm_lic_info';
+										  $frm_lic_request   = 'add_hospital_lic_req';
+										  $required          = 'data-rule-required="true"';
+										  $i                 = '0';
+									  }
+									  else
+									  {
+										  $frm_lic_name      = 'frm_lic_info';
+										  $frm_lic_request   = 'update_hospital_lic_req';
+										  $required          = '';
+										  $i                 = 0;
+										  
+									  }
+									  ?>     
+	                               <form role="form" class="register-form cf-style-1" id="<?php echo $frm_lic_name; ?>" name="<?php echo $frm_lic_name; ?>" enctype="multipart/form-data" method="post">
+	                                  <input type="hidden" name="<?php echo $frm_lic_request; ?>" value="1">
+	                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
+	                                  <input type="hidden" name="renewal_count" id="renewal_count" value="<?php echo $licNum; ?>">
+	                                  <!--=========================Start : Hospital License Number===================================-->
+	                                  
+	                                  <div id="licenses">
+	                                  <div id="renewal<?php echo $i; ?>">
+	                                   <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name">Hospital License Number</label>
+	                                      <input type="text" value="<?php echo @$licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+	                                    <div class="clearfix"></div>
+	                                    </div><!-- License Number -->
+	                                    
+	                                   <?php
+										 if($licRow)
+										 {
+										 ?>
+	                                    <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name"></label>
+	                                       <a href="idbpanel/documents/licenses/<?php echo @$licRow['lic_document']; ?>" ><?php echo @$licRow['lic_document']; ?></a>
+	                                      <div class="clearfix"></div>
+	                                    </div><!-- Showing License Image -->
+	                                    <?php 
+										 }
+										 
+										 ?>
+	                                     <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name">License Image</label>
+	                                      <input accept="image/jpeg,image/png,image/jpg,application/pdf" type="file" name="file_lic_image" id="file_lic_image" <?php echo $required; ?>>
+	                                      <div class="clearfix"></div>
+	                                    </div><!--  License Image -->
+	                                    
+	                                    <div class="field-row">
+	                                      <label class="col-md-3 col-xs-12" for="name">License Expiry Date</label>
+	                                      <input value="<?php echo @$licRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date" id="lic_hospital_date" data-rule-requied="true" readonly>
+	                                      <div class="clearfix"></div>
+	                                    </div><!-- Expiry  Date -->
+	                                   </div><!--Renewal End-->
+	                                   
+	                                    <?php
+										if($result)
+										{
+											$i=0;
+											while($row  = mysqli_fetch_array($result))
+											{
+											$i++;	
+											?>
+											
+											 <div id="renewal<?php echo $i; ?>">
+										   <div class="field-row">
+											  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?> License Number</label>
+											  <input type="text" value="<?php echo @$row['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no<?php echo $i; ?>" name="txt_hospital_lic_no<?php echo $i; ?>" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+											<div class="clearfix"></div>
+											</div><!-- License Number -->
+											
+										   <?php
+											 if($result)
+											 {
+											 ?>
+											<div class="field-row">
+											  <label class="col-md-3 col-xs-12" for="name"></label>
+											   <img style="width:200px;height:100px" src="idbpanel/documents/licenses/<?php echo @$row['lic_document']; ?>" >
+											  <div class="clearfix"></div>
+											</div><!-- Showing License Image -->
+											<?php 
+											 }
+											 
+											 ?>
+											 <div class="field-row">
+											  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Image</label>
+											  <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image<?php echo $i; ?>" id="file_lic_image<?php echo $i; ?>" <?php echo $required; ?>>
+											  <div class="clearfix"></div>
+											</div><!--  License Image -->
+											
+											<div class="field-row">
+											  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?>  License Expiry Date</label>
+											  <input value="<?php echo @$row['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date<?php echo $i; ?>" id="lic_hospital_date<?php echo $i; ?>" data-rule-requied="true" readonly>
+											  <div class="clearfix"></div>
+											</div><!-- Expiry  Date -->
+										   </div><!--Renewal End-->
+	                              <?php   } // while end
+										} // if end?>
                                    
- 
-                                    
-                                  </div>  <!--licenses end-->
+ 									</div>  <!--licenses end-->
                                     
                                     
                             <?php  if($licNum)
@@ -1053,7 +1088,7 @@
                                     
                                    <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">21B Expiry Date</label>
-										  <input value="<?php echo @$lic20BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" readonly>
+										  <input value="<?php echo @$lic21BRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_21Bexpiry_date" id="lic_21Bexpiry_date" data-rule-requied="true" readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                <!--=========================End 21B License Number===================================-->
@@ -1155,7 +1190,7 @@
                                     
                                     
                                     <div class="buttons-holder">
-                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Save and Next</button>
                                     </div><!-- Submit -->
                                   </form>
                                   
@@ -1217,12 +1252,68 @@
                                     </div><!-- Pan Image -->
                 
                                     <div class="buttons-holder">
-                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Save and Next</button>
                                     </div><!-- Submit -->
                                   </form>
-                                 
-									  
                                 </div>	<!--PAN Information-->
+
+                                <div class="cls_mainmenu" id="tan_info">
+                                  TAN Information
+                                  <?php
+								  
+								  //  Check Record and return single row
+								  $tanRow = checkExist('tbl_customer_tan',array('tan_userid'=>$logged_uid));
+								  if(!$tanRow) // for add and update in single form 
+								  {
+									  $frm_tan_name      = 'frm_tan_info';
+									  $frm_tan_request   = 'add_tan_req';
+									  $required          = 'data-rule-required="true"';
+								  }
+								  else
+								  {
+									  $frm_tan_name      = 'frm_update_tan_info';
+									  $frm_tan_request   = 'update_tan_req';
+									  $required          = '';
+								  }
+								  ?>
+                                  
+                                  <form role="form" class="register-form cf-style-1" id="<?php echo $frm_tan_name; ?>" name="<?php echo $frm_tan_name; ?>" enctype="multipart/form-data" method="post">
+                                  <input type="hidden" name="<?php echo $frm_tan_request; ?>" value="1">
+                                  <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name">TAN Number</label>
+                                      <input type="text" value="<?php echo @$tanRow['tan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_tan_no" name="txt_tan_no" data-rule-required="true" minlength="10" maxlength="10" size="10">
+                                      
+                                      <div class="clearfix"></div>
+                                    </div><!-- TAN Number -->
+                                    
+                                   
+									
+                                     <?php
+									 if($tanRow)
+									 {
+									 ?>
+                                    <div class="field-row">
+                                      <label class="col-md-3 col-xs-12" for="name"></label>
+                                       <img style="width:200px;height:100px" src="idbpanel/documents/tan/<?php echo $tanRow['tan_image'];?>" >
+                                      <div class="clearfix"></div>
+                                    </div><!-- TAN Image -->
+                                    <?php 
+									 }
+									 ?>
+                                    
+                                    <div class="field-row">
+                                    
+                                      <label class="col-md-3 col-xs-12" for="name">TAN Image</label>
+                                      <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_tan_image" id="file_tan_image" data-rule-requied="true" <?php echo $required;?>>
+                                      <div class="clearfix"></div>
+                                    </div><!-- Pan Image -->
+                
+                                    <div class="buttons-holder">
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Save and Next</button>
+                                    </div><!-- Submit -->
+                                  </form>
+                                </div>	<!--TAN Information-->
                                 
                                <!--=======================End : Pan Information Dn By Satish 06092017=============================================-->
                                
@@ -1295,7 +1386,7 @@
                                     </div><!-- GST Ackg Image -->
                 
                                     <div class="buttons-holder">
-                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Submit</button>
                                     </div><!-- Submit -->
                                   </form>
                                 </div>	<!--GST Information-->
@@ -1376,11 +1467,57 @@
                                     </div><!-- GST Ackg Image -->
                 
                                     <div class="buttons-holder">
-                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Update</button>
+                                      <button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >Save and Next</button>
                                     </div><!-- Submit -->               
                                   </form>
                                 </div>	<!--Bank Information-->
                              <!--=======================End : Pan Information Dn By Satish 06092017=============================================-->
+
+
+                             <div class="cls_mainmenu" id="sign_info">
+                                    Signature Information
+                                    <?php
+								 //  Check Record and return single row
+									  $signRow = checkExist('tbl_customer_sign',array('sign_userid'=>$logged_uid));
+									  if(!$signRow)// for add and update in single form 
+									  {
+										
+										  $required           = 'data-rule-required="true"';
+									  }
+									  else
+									  {
+										  $required           = '';
+									  }
+									  ?>
+                                    <form role="form" class="register-form cf-style-1" id="frm_sign_info" name="frm_sign_info">
+                                    	<input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
+                                        <input type="hidden" name="req_signature_info" id="req_signature_info" value="1">
+                                        
+                                        <div class="field-row">
+                                            <label class="col-md-3 col-xs-12" for="name">Document<span style="color:#F00">*</span></label>
+                                            <input type="file" class="le-input col-md-9 col-xs-12" id="img_sign_info" name="img_sign_info" 
+											<?php echo $required; ?>>
+                                            <div class="clearfix"></div>
+                                        </div><!-- Contact Persone's Name -->
+                                         <?php                
+                                         if($signRow)// for add and update in single form 
+									      {
+									      ?>
+									      	 <div class="field-row">
+			                                      <label class="col-md-3 col-xs-12" for="name"></label>
+			                                       <img style="width:200px;height:100px" src="idbpanel/documents/sign/<?php echo $signRow['sign_doc'];?>" >
+			                                      <div class="clearfix"></div>
+			                                  </div><!-- Pan Image -->
+									      <?php                
+                                           }
+									      ?>
+                                        <div class="buttons-holder">
+                                        	<button type="submit" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit" >
+                                            	Submit
+                                            </button>
+                                        </div><!-- Submit -->
+                                    </form>
+                				</div>	<!--Signature Information-->
                              
         					</div>
            				</div>
@@ -1559,8 +1696,12 @@
 							{
 								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 							}
+
 							
 							setTimeout(function(){ $('#div_success').html('').fadeIn(5000); }, 3000);
+
+							$('.cls_mainmenu').removeClass('active');
+			                $('#comp_info').addClass('active');
 							
 						} 
 						else 
@@ -1583,6 +1724,49 @@
 			}
         });
         
+          $('#frm_sign_info').on('submit', function(e) 
+        {
+			e.preventDefault();
+			if($('#frm_sign_info').valid())
+			{
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							
+							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+
+						} 
+						else 
+						{   
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			}
+        });
+        
+
         $('#frm_comp_info').on('submit', function(e) 
         {
 			e.preventDefault();
@@ -1611,6 +1795,8 @@
 							}
 							
 							setTimeout(function(){ $('#div_success').html('').fadeIn(5000); }, 3000);
+							$('.cls_mainmenu').removeClass('active');
+			                $('#urDoc').addClass('active');
 						} 
 						else 
 						{   
@@ -1665,7 +1851,9 @@
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
 							
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							    $('.cls_mainmenu').removeClass('active');
+			                    $('#tan_info').addClass('active');
 						} 
 						else 
 						{   
@@ -1706,9 +1894,11 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
-							window.location.assign('page-profile'); 
+							//window.location.assign('page-profile'); 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							   //setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							   $('.cls_mainmenu').removeClass('active');
+			                    $('#tan_info').addClass('active');
 						} 
 						else 
 						{   
@@ -1731,8 +1921,104 @@
         });
 		
 		
-		//============================End Add Form Information==========================//
+		//============================End Add PAN Information==========================//
 		
+        //============================Start : Pan  Information==========================//
+		
+        $('#frm_tan_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_tan_info').valid())
+			{
+				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							    $('.cls_mainmenu').removeClass('active');
+			                    $('#gst_info').addClass('active');
+						} 
+						else 
+						{   
+								$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			
+			}
+        });
+        
+		 $('#frm_update_tan_info').on('submit', function(e) 
+        {
+        	e.preventDefault();
+			if($('#frm_update_tan_info').valid())
+			{
+				
+				$.ajax({
+					url: "load_page_profile.php",
+					type: "POST",
+					data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							//window.location.assign('page-profile'); 
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							    $('.cls_mainmenu').removeClass('active');
+			                    $('#gst_info').addClass('active');
+						} 
+						else 
+						{   
+							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+			
+			}
+        });
+		
+		
+		//============================End Add TAN Information==========================//
+
 		//============================Start GST Information================================================//
 		
         $('#frm_gst_info').on('submit', function(e) 
@@ -1753,7 +2039,9 @@
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
-							 setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+						    	$('.cls_mainmenu').removeClass('active');
+			                    $('#bank_info').addClass('active');
+							 //setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
 						} 
 						else 
@@ -1795,7 +2083,9 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							    $('.cls_mainmenu').removeClass('active');
+			                    $('#bank_info').addClass('active');
 						} 
 						else 
 						{   
@@ -1841,11 +2131,14 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							$('.cls_mainmenu').removeClass('active');
+			                $('#sign_info').addClass('active');
 						} 
 						else 
 						{   
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
+
 						}
 					},
 					error: function (request, status, error) 
@@ -1883,7 +2176,9 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);	
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							$('.cls_mainmenu').removeClass('active');
+			                $('#sign_info').addClass('active');
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -1929,6 +2224,8 @@
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
 							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							$('.cls_mainmenu').removeClass('active');
+			                $('#pan_info').addClass('active');
 						} 
 						else 
 						{   
@@ -1996,7 +2293,9 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+							$('.cls_mainmenu').removeClass('active');
+			                $('#pan_info').addClass('active');
 						} 
 						else 
 						{   
@@ -2062,7 +2361,10 @@
 						{  
 							 
 							$('#div_success').html('<div style="background:#6C6; max-height:50px; height:50px; border-radius:10px; color:#fff; font-family:\'Courier New\', Courier, monospace; font-size:20px; font-weight:600;" align="center"><div style="padding-top:10px;">'+data.resp+'</div></div>').fadeIn(5000).fadeOut(5000);
-							setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
+
+								$('.cls_mainmenu').removeClass('active');
+			                    $('#pan_info').addClass('active');
+							//setTimeout(function(){ window.location.assign('page-profile');  }, 5000);
 						} 
 						else 
 						{   
@@ -2112,6 +2414,79 @@
 			
 	   });
 		
+
+		function sendOTP()
+		{
+
+			var sendInfo 	= {"sendOTP":1};
+			
+			var esn_edit	= JSON.stringify(sendInfo);				
+			$.ajax({
+				url: "load_page_profile.php",
+				type: "POST",
+				data: esn_edit,
+				contentType: "application/json; charset=utf-8",						
+				success: function(response) 
+				{
+					data = JSON.parse(response);
+					if(data.Success == "Success") 
+					{
+						$('#otp_div').css('display','block');
+						$('#btn_send_otp').css('display','none');
+						
+					} 
+					else 
+					{
+						alert(data.resp);
+					}
+				},
+				error: function (request, status, error) 
+				{
+					alert(request.responseText);
+				},
+				complete: function()
+				{
+					//loading_hide();	
+				}
+			});
+				
+		}
+
+		function verifyOTP()
+		{
+			otp_val         = $('#otp_val').val();
+			var sendInfo 	= {"otp_val":otp_val,"verifyOTP":1};
+			
+			var esn_edit	= JSON.stringify(sendInfo);				
+			$.ajax({
+				url: "load_page_profile.php",
+				type: "POST",
+				data: esn_edit,
+				contentType: "application/json; charset=utf-8",						
+				success: function(response) 
+				{
+					data = JSON.parse(response);
+					if(data.Success == "Success") 
+					{
+						$('#otp_div').css('display','block');
+						$('#btn_send_otp').css('display','none');
+						
+					} 
+					else 
+					{
+						alert(data.resp);
+					}
+				},
+				error: function (request, status, error) 
+				{
+					alert(request.responseText);
+				},
+				complete: function()
+				{
+					//loading_hide();	
+				}
+			});
+		}
         </script>
 	</body>
 </html>

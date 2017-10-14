@@ -453,9 +453,8 @@
 			}
 		}else
 		{
-			quit('Something went wrong...!');
+			quit('Something went wrong please try letter...!');
 		}
-		
 	}
 	
 	
@@ -510,8 +509,6 @@
 			 update('tbl_customer_pan',$data,$where_arr);
 			 quit('Update Successfully...!',1);
 		}
-		
-		
 	}
 	
 	// ===============================================================================
@@ -519,6 +516,108 @@
 	// ===============================================================================
 	
 	
+	// ===============================================================================
+	// START : TAN Information Dn By Satish On 14-Oct-2017
+	// ===============================================================================
+	if((isset($_POST['add_tan_req']))== '1' && (isset($_POST['add_tan_req'])))
+	{
+		$data['tan_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['tan_no']      = mysqli_real_escape_string($db_con,$_POST['txt_tan_no']);
+		$data['tan_created'] = $datetime;
+		
+		if($data['tan_no']=="" || !isset($_FILES['file_tan_image']['name']))
+		{
+			quit('TAN Number and Image is required...!');
+		}
+		
+		$tan_image_size      = $_FILES['file_tan_image']['size'];
+		if($tan_image_size > 5242880 &&  $tan_image_size !=0) // file size
+		{
+			quit('Image size should be less than 5 MB');
+		}
+		
+		$tan_image_name               = explode('.',$_FILES['file_tan_image']['name']);
+		$tan_image_name               = date('dhyhis').'_'.$data['tan_userid'].'.'.$tan_image_name[1];
+		$data['tan_image']            = $tan_image_name;
+		
+		$dir                          = 'idbpanel/documents/pan/'.$tan_image_name;
+		
+		if(move_uploaded_file($_FILES['file_tan_image']['tmp_name'],$dir))
+		{
+			$res                          = insert('tbl_customer_tan',$data);
+			
+			if($res)
+			{
+				quit('Added Successfully...!',1);
+			}
+			else
+			{
+				quit('Something went wrong...!');
+			}
+		}else
+		{
+			quit('Something went wrong...!');
+		}
+	}
+	
+	
+	if((isset($_POST['update_tan_req']))== '1' && (isset($_POST['update_tan_req'])))
+	{
+		$where_arr['tan_userid']  = mysqli_real_escape_string($db_con,$_POST['hid_userid']);
+		$data['tan_no']           = mysqli_real_escape_string($db_con,$_POST['txt_tan_no']);
+		$data['tan_modified']     = $datetime;
+		$data['tan_status']       = 0;
+		if($data['tan_no']=="")
+		{
+			quit('TAN Number is required...!');
+		}
+		
+		$panRow = checkExist('tbl_customer_tan',array('tan_userid'=>$where_arr['tan_userid']));
+		
+		if(isset($_FILES['file_tan_image']['name']) && $_FILES['file_tan_image']['name']!="")
+		{
+			$tan_image_size      = $_FILES['file_tan_image']['size'];
+			if($tan_image_size > 5242880 &&  $tan_image_size !=0) // file size
+			{
+				quit('Image size should be less than 5 MB');
+			}
+			
+			$tan_image_name               = explode('.',$_FILES['file_tan_image']['name']);
+			$tan_image_name               = date('dhyhis').'_'.$where_arr['tan_userid'].'.'.$tan_image_name[1];
+			$data['tan_image']            = $tan_image_name;
+			
+			$dir                          = 'idbpanel/documents/tan/'.$tan_image_name;
+			if(move_uploaded_file($_FILES['file_tan_image']['tmp_name'],$dir))
+			{
+				unlink('idbpanel/documents/tan/'.$panRow['tan_image']);
+				$res                          = update('tbl_customer_tan',$data,$where_arr);
+				
+				if($res)
+				{
+					quit('Update Successfully...!',1);
+				}
+				else
+				{
+					quit('Something went wrong...!');
+				}
+			}
+			else
+			{
+				quit('Something went wrong...!');
+			}
+			
+		}
+		else
+		{
+			 update('tbl_customer_tan',$data,$where_arr);
+			 quit('Update Successfully...!',1);
+		}
+	}
+	
+	// ===============================================================================
+	// End : TAN Information Dn By Satish On 14-Oct-2017
+	// ===============================================================================
+
 	// ===============================================================================
 	// START : GST Information Dn By Satish On 06-Sep-2017
 	// ===============================================================================
@@ -1173,7 +1272,7 @@
 					quit('20B License Document size should be less than 5 MB');
 				}
 				$lic_20b_image               = explode('.',$_FILES['file_lic_20b_image']['name']);
-				$lic_20b_image               = date('dhyhis').'_20B_'.$data20B['lic_custid'].'.'.$lic_20b_image[1];
+				$lic_20b_image               = date('dhyhis').'_20B_'.$where_20B['lic_custid'].'.'.$lic_20b_image[1];
 				$dir                         = 'idbpanel/documents/licenses/'.$lic_20b_image;
 				if(move_uploaded_file($_FILES['file_lic_20b_image']['tmp_name'],$dir))
 		 		{
@@ -1190,11 +1289,11 @@
 					quit('20B License Document size should be less than 5 MB');
 				}
 				$lic_21b_image               = explode('.',$_FILES['file_lic_21b_image']['name']);
-				$lic_21b_image               = date('dhyhis').'_21B_'.$data21B['lic_custid'].'.'.$lic_21b_image[1];
+				$lic_21b_image               = date('dhyhis').'_21B_'.$where_21B['lic_custid'].'.'.$lic_21b_image[1];
 				$dir                         = 'idbpanel/documents/licenses/'.$lic_21b_image;
 				if(move_uploaded_file($_FILES['file_lic_21b_image']['tmp_name'],$dir))
 		 		{
-					$$data21B['lic_document']     = $lic_21b_image;
+					$data21B['lic_document']     = $lic_21b_image;
 				}
 				
 			}
@@ -1202,13 +1301,16 @@
 			$where_20B['lic_type'] ="20B";
 			$res = update('tbl_customer_licenses',$data20B,$where_20B);
 			$res = update('tbl_customer_licenses',$data21B,$where_21B);
+
+			quit('Update Successfully...!',1);
 		}
 		///================Insertion And Updation Start here Satish 15092017============//
-		if($_POST['lic_id'])
+		if(isset($_POST['lic_id']))
 		{
 			//quit($_POST['lic_id']);
 			for($i=0;$i<sizeof($_POST['lic_id']);$i++)
 			{
+
 				if($_POST['lic_id'][$i]=="")
 				{
 					$data['lic_number']       = mysqli_real_escape_string($db_con,$_POST['txt_20c_lic_no'][$i]);
@@ -1281,5 +1383,122 @@
 	{
 	   $_SESSION['front_panel']	= array();
 	    quit('1',1);
+	}
+
+    // ===============================================================================
+	// Start : Send OTP Dn By Satish On 14-Oct-2017
+	// ===============================================================================
+	if((isset($obj->sendOTP))== '1' && (isset($obj->sendOTP)))
+	{
+	    $data['cust_mobilestatus']	= rand('111111','999999');
+	    $logged_uid			= $_SESSION['front_panel']['cust_id'];
+	    update('tbl_customer',$data,array('cust_id'=>$logged_uid));
+	    quit('1',1);
+	}
+
+
+
+
+    // ===============================================================================
+	// Start : Verify OTP Dn By Satish On 14-Oct-2017
+	// ===============================================================================
+
+    if((isset($obj->verifyOTP))== '1' && (isset($obj->verifyOTP)))
+	{
+		$otp_val            = $obj->otp_val;
+		$logged_uid			= $_SESSION['front_panel']['cust_id'];
+		$row                = checkExist('tbl_customer' ,array('cust_id'=>$logged_uid));
+	    if($row['cust_mobilestatus']==$otp_val)
+	    {
+	    	 $data['cust_mobilestatus']	=1;
+	    	 update('tbl_customer',$data,array('cust_id'=>$logged_uid));
+	    	 quit('Mobile number verified Successfully',1);
+	    }
+	    else
+	    {
+	    	quit('OTP not matched..!');
+	    }
+	  
+	}
+	
+	// ===============================================================================
+	// Start : Signatiure Dn By Satish On 14-Oct-2017
+	// ===============================================================================
+
+    if((isset($_POST['req_signature_info']))== '1' && (isset($_POST['req_signature_info'])))
+    {
+		$sign_userid         = $_POST['hid_userid'];
+		
+		$signRow = checkExist('tbl_customer_sign',array('sign_userid'=>$sign_userid));
+		if($signRow)
+		{
+			if(isset($_FILES['img_sign_info']['name']) && $_FILES['img_sign_info']['name']!="")
+			{
+				$img_sign_info      = $_FILES['img_sign_info']['size'];
+				if($img_sign_info > 2000 &&  $img_sign_info !=0) // file size
+				{
+					quit('Image size should be less than 200 Kb');
+				}
+				
+				$sign_image_name               = explode('.',$_FILES['img_sign_info']['name']);
+				$sign_image_name               = date('dhyhis').'_'.$sign_userid.'.'.$sign_image_name[1];
+				$data['sign_doc']            = $sign_image_name;
+				
+				$dir                          = 'idbpanel/documents/sign/'.$sign_image_name;
+				if(move_uploaded_file($_FILES['img_sign_info']['tmp_name'],$dir))
+				{
+					unlink('idbpanel/documents/sign/'.$signRow['sign_doc']);
+					$res                          = update('tbl_customer_sign',$data,array('sign_userid'=>$sign_userid));
+					quit('Update Successfully...!',1);
+				}
+				else
+				{
+					quit('Something went wrong...!');
+				}
+				update('tbl_customer_tan',$data,$where_arr);
+			}
+			else
+			{
+				quit('Update Successfully...!',1);
+			}
+		}
+		else
+		{
+
+			if(isset($_FILES['img_sign_info']['name']) && $_FILES['img_sign_info']['name']!="")
+			{
+				$img_sign_info      = $_FILES['img_sign_info']['size'];
+				if($img_sign_info > 2000 &&  $img_sign_info !=0) // file size
+				{
+					quit('Image size should be less than 200 Kb');
+				}
+				
+				$sign_image_name               = explode('.',$_FILES['img_sign_info']['name']);
+				$sign_image_name               = date('dhyhis').'_'.$sign_userid.'.'.$sign_image_name[1];
+				$data['sign_doc']              = $sign_image_name;
+				$data['sign_userid']           = $sign_userid;
+				$data['sign_created']          = $datetime;
+				
+
+
+				$dir                          = 'idbpanel/documents/sign/'.$sign_image_name;
+				if(move_uploaded_file($_FILES['img_sign_info']['tmp_name'],$dir))
+				{
+					$res                          = insert('tbl_customer_sign',$data);
+					quit('Update Successfully...!',1);
+				}
+				else
+				{
+					quit('Something went wrong...!');
+				}
+				
+			}
+			else
+			{
+				quit('Signature Document Required...!');
+			}
+
+		}
+	  
 	}
 ?>

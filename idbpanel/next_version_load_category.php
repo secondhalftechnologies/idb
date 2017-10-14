@@ -377,7 +377,7 @@ if((isset($obj->load_add_cat_part)) != "" && isset($obj->load_add_cat_part))
 		$data .= '<div class="controls">';
 		if($req_type != "view")
 		{
-			$data .= '<select name="cat_type" id="cat_type" placeholder="Type" class="select2-me input-large" data-rule-required="true" >';
+			$data .= '<select  style="width:90%" name="cat_type" id="cat_type" placeholder="Type" class="select2-me input-large" data-rule-required="true" >';
 			$data .= '<option value="">Select Type</option>';						
 		}
 		

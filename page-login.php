@@ -67,6 +67,16 @@
                                         <input type="password" name="txt_password" id="txt_password" class="le-input col-md-12 col-xs-12" data-rule-required="true">
                                     </div><!-- /.field-row -->
 
+                                    <div class="field-row control-group controls">
+                                        <label> <?php $a =rand(1,11); 
+                                        		      $b =rand(1,11); ?> 
+                                         <?php echo $a.' + '.$b ; ?> = ?</label>
+
+
+                                        <input type="text" data-rule-number="true" maxlength="2" size="2" name="captcha" id="captcha" class="le-input col-md-12 col-xs-12" data-rule-required="true">
+                                    </div><!-- /.field-row -->
+                                    <input type="hidden" name="captcha_val" id="captcha_val" value="<?php echo ($a+$b)?>">
+
                                     <div class="field-row clearfix">
                                         <span class="pull-left">
                                             <label class="content-color"><input type="checkbox" class="le-checbox auto-width inline"> <span class="bold">Remember me</span></label>
@@ -107,8 +117,9 @@
 					e.preventDefault();
 					var txt_email		= $('#txt_email').val();
 					var txt_password	= $('#txt_password').val();
-					
-					var sendInfo 	= {"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
+					var captcha		    = $('#captcha').val();
+					var captcha_val	    = $('#captcha_val').val();
+					var sendInfo 	= {"captcha_val":captcha_val,"captcha":captcha,"txt_email":txt_email, "txt_password":txt_password, "login_customer":1};
 					
 					var esn_edit	= JSON.stringify(sendInfo);				
 					$.ajax({

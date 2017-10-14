@@ -180,10 +180,19 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user login
 {
 	$cust_email 		 = trim(mysqli_real_escape_string($db_con,$obj->txt_email));
+
+	$captcha 		     = trim(mysqli_real_escape_string($db_con,$obj->captcha));
+	$captcha_val 		 = trim(mysqli_real_escape_string($db_con,$obj->captcha_val));
+
 	$cust_password_login = trim($obj->txt_password);
 	$cli_browser_info	 = get_browser_info();
 	$cli_ip_address 	 = get_client_ip();	
 	
+	if($captcha !=$captcha_val)
+	{
+		quit('Captcha is incorrect..!');
+	}
+
 	if($cust_email == "" || $cust_password_login == "" )
 	{
 		quit("Please Provide Email and Password.");
