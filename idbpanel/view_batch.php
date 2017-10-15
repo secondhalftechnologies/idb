@@ -40,11 +40,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
     <div class="container-fluid" id="content">
             <div id="main" style="margin-left:0px !important">
                 <div class="container-fluid" id="div_view_branch">                
-	<?php 
-	/* this function used to add navigation menu to the page*/ 
-	breadcrumbs($home_url,$home_name,'View Branch',$filename,$feature_name);  
-	/* this function used to add navigation menu to the page*/ 
-	?>          
+                    	<?php 
+                    	/* this function used to add navigation menu to the page*/ 
+                    	breadcrumbs($home_url,$home_name,'View Batch',$filename,$feature_name);  
+                    	/* this function used to add navigation menu to the page*/ 
+                    	?>          
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="box box-color box-bordered">
@@ -62,7 +62,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreBranch('','add')" ><i class="icon-plus"></i>&nbspAdd Branch</button>
+                                            <button type="button" class="btn-info" onClick="addMoreBranch('','add')" ><i class="icon-plus"></i>&nbsp;Add Batch</button>
   											<?php		
 										}
 									?>                                         
@@ -92,7 +92,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if(($add) || ($edit))
 										{
 											?>                                  
-            				                    <div class="box box-color box-bordered">
+            				                    <div class="box box-color box-bordered" style="display: none">
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
@@ -124,11 +124,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     </div>
                                 </div>
                                 
-			                	                <div class="box box-color box-bordered">
+			                	<div class="box box-color box-bordered">
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Wrong Entries For Branch
+                                            Wrong Entries For Batch
                                         </h3>
                                        
                                     </div> <!-- header title-->
@@ -158,12 +158,14 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 <?php 	}	?>
                             </div>
                         </div>
-                    </div> <!-- View Branch -->
+                </div> <!-- View Branch -->
+
+
 				<div id="div_add_branch" style="display:none;">
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Add Branch',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Add Batch',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -172,14 +174,14 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Branch
+                                            Add Batch
                                         </h3>
-                                    <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                       
-                                    </div> <!-- header title-->
+                                        <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_add_branch','div_view_branch');" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                       
+                                     </div> <!-- header title-->
                                     <div class="box-content nopadding" >
-                                    	<form id="frm_add_branch" class="form-horizontal form-bordered form-validate" >
-                                        <div id="div_add_branch_part">
-                                        </div>                                    
+                                    	<form id="frm_add_batch" class="form-horizontal form-bordered form-validate" >
+                                            <div id="div_add_branch_part">
+                                            </div>                                    
                                         </form>
                                     </div>	<!-- Main Body -->
                                 </div>
@@ -187,11 +189,13 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                         </div>
                     </div>
                 </div> <!-- Add Branch -->
+
+
 				<div id="div_edit_branch" style="display:none;">
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Edit Branch',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Edit Batch',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -200,12 +204,12 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Branch
+                                            Edit Batch
                                         </h3>
-                                            <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                                                                                                          
+                                            <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_edit_branch','div_view_branch');" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                                                                                                          
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding" >
-                                    	<form id="frm_edit_branch" class="form-horizontal form-bordered form-validate" >
+                                    	<form id="frm_edit_batch" class="form-horizontal form-bordered form-validate" >
                                         <div id="div_edit_branch_part">
                                         </div>                                    
                                         </form>
@@ -215,11 +219,12 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                         </div>
                     </div>
                 </div> <!-- edit Branch -->
+
 				<div id="div_error_branch" style="display:none;">
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Update Error Branch',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Update Error Batch',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -272,7 +277,37 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                     </div>
                 </div> <!-- view Branch -->                    
             </div>
+    </div>
+
+
+    <!-- ========================Product Request=================== -->
+    <div class="modal fade" id="product_reqest" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
         </div>
+        <div class="modal-body text-center" id="model_body">
+
+        <div class="control-group">
+           <label for="tasktitel" class="control-label"><h3>Product Name </h3></label>
+            <div class="controls">
+                <input type="text" id="prod_name" name="prod_name"  style="width:90%"  rows="4" class="input-large" data-rule-required="true" >
+            </div>
+        </div> <!-- Faq Ques -->
+        <div class="form-actions">
+        <button type="button" onclick="productRequest();" name="reg_submit_add" class="btn-success">Send Request</button>
+        </div> <!-- Save and cancel -->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>      
+    </div>
+  </div>
+
 		<?php getloder();?>
         <?php ?>
         <script type="text/javascript">
@@ -293,7 +328,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"batch":batch, "delete_branch":1};
 				var del_branch 	= JSON.stringify(sendInfo);								
 				$.ajax({
-					url: "load_branch.php",
+					url: "load_batch.php",
 					type: "POST",
 					data: del_branch,
 					contentType: "application/json; charset=utf-8",						
@@ -339,10 +374,10 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			}
 			else
 			{
-				var sendInfo 		= {"row_limit":row_limit, "search_text":search_text, "load_branch":1, "page":page};
+				var sendInfo 		= {"row_limit":row_limit, "search_text":search_text, "load_batch":1, "page":page};
 				var branch_load 	= JSON.stringify(sendInfo);				
 				$.ajax({
-					url: "load_branch.php",
+					url: "load_batch.php",
 					type: "POST",
 					data: branch_load,
 					contentType: "application/json; charset=utf-8",						
@@ -374,6 +409,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			    });
 			}
 		}
+
 		function changeStatus(branch_id,curr_status)
 		{
 			loading_show();
@@ -386,7 +422,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"branch_id":branch_id, "curr_status":curr_status, "change_status":1};
 				var branch_status 	= JSON.stringify(sendInfo);								
 				$.ajax({
-					url: "load_branch.php?",
+					url: "load_batch.php?",
 					type: "POST",
 					data: branch_status,
 					contentType: "application/json; charset=utf-8",						
@@ -418,7 +454,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			    });						
 			}
 		}	
-		function addMoreBranch(branch_id,req_type)
+		function addMoreBranch(batch_id,req_type)
 		{
 			$('#div_view_branch').css("display", "none");
 			if(req_type == "add")
@@ -437,10 +473,10 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				$('#div_view_branch_details').css("display", "block");				
 			}							
-			var sendInfo = {"branch_id":branch_id,"req_type":req_type,"load_add_branch_part":"1"};
+			var sendInfo = {"batch_id":batch_id,"req_type":req_type,"load_add_batch_part":"1"};
 			var branch_load = JSON.stringify(sendInfo);
 			$.ajax({
-					url: "load_branch.php",
+					url: "load_batch.php",
 					type: "POST",
 					data: branch_load,
 					contentType: "application/json; charset=utf-8",						
@@ -449,6 +485,11 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{
+                            $("#div_add_branch_part").html(' ');
+                            $("#div_edit_branch_part").html(' '); 
+                            $("#div_error_branch_part").html(' ');
+                            $("#div_view_branch_part").html(' ');
+
 							if(req_type == "add")
 							{
 								$("#div_add_branch_part").html(data.resp);
@@ -500,7 +541,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"branch_id":branch_id, "new_order":new_order, "change_sort_order":change_sort_order};
 				var branch_order 	= JSON.stringify(sendInfo);								
 				$.ajax({
-					url: "load_branch.php?",
+					url: "load_batch.php?",
 					type: "POST",
 					data: branch_order,
 					contentType: "application/json; charset=utf-8",						
@@ -597,7 +638,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo_error 		= {"row_limit1":row_limit1, "search_text1":search_text1, "load_error":load_error, "page1":page1,"branch_parent1":branch_parent1};
 				var branch_load_error = JSON.stringify(sendInfo_error);				
 				$.ajax({
-					url: "load_branch.php?",
+					url: "load_batch.php?",
 					type: "POST",
 					data: branch_load_error,
 					contentType: "application/json; charset=utf-8",						
@@ -631,64 +672,14 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			}
 		}
 		
-		function multipleDelete_error()
-		{
-			loading_show();
-			var batch = [];
-			$(".error_batch:checked").each(function ()
-			{
-				batch.push(parseInt($(this).val()));
-			});
-			if (typeof batch.length == 0)
-			{
-				alert("Please select checkbox to delete Branch");				
-			}
-			else
-			{
-				//delete_branchogery_error 	= 1;
-				var sendInfo 	= {"batch":batch, "delete_branch_error":1};
-				var del_branch 	= JSON.stringify(sendInfo);	
-				
-				$.ajax({
-					url: "load_branch.php?",
-					type: "POST",
-					data: del_branch,
-					contentType: "application/json; charset=utf-8",						
-					success: function(response) 
-					{	
-						data = JSON.parse(response);
-						if(data.Success == "Success") 
-						{	
-							loadData1();
-							loading_hide();	
-						} 
-						else
-						{
-							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');
-							loading_hide();													
-						}
-					},
-					error: function (request, status, error) 
-					{
-						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-						$('#error_model').modal('toggle');						
-						loading_hide();
-					},
-					complete: function()
-					{
-						loading_hide();
-					}
-				});					
-			}
-		}
+		
 		$('#frm_branch_excel').on('submit', function(e) {
 			e.preventDefault();
 			if ($('#frm_branch_excel').valid())
 			{
 				loading_show();	
 				$.ajax({
-						url: "load_branch.php?",
+						url: "load_batch.php?",
 						type: "POST",
 						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 						contentType: false,       // The content type used when sending data to the server.
@@ -721,133 +712,86 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				    });
 			}
 		});
-		$('#frm_add_branch').on('submit', function(e) {
+		$('#frm_add_batch').on('submit', function(e) {
 			e.preventDefault();
-			if ($('#frm_add_branch').valid())
+			if ($('#frm_add_batch').valid())
 			{
-				loading_show();	
-				var branch_name 		= $.trim($("#branch_name").val());
-				var branch_orgid 		= $.trim($("#branch_orgid").val());				
-				var branch_detail_add 	= $.trim(CKEDITOR.instances['branch_detail_add'].getData());
-				var branch_state 		= $.trim($("#branch_state").val());
-				var branch_city			= $.trim($("#branch_city").val());
-				var branch_pincode 		= $.trim($("#branch_pincode").val());												
-				var branch_meta_tags	= $.trim($("#branch_meta_tags").val());
-				var branch_meta_description	= $.trim(CKEDITOR.instances['branch_meta_description'].getData());
-				var branch_meta_title	= $.trim($("#branch_meta_title").val());	
-				var branch_status 		= $('input[name=branch_status]:checked', '#frm_add_branch').val();
-							
-				if(branch_name == "" && branch_orgid == "" && branch_status == "")
-				{
-					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-					$('#error_model').modal('toggle');	
-				} 
-				else
-				{
-					e.preventDefault();
-					$('input[name="reg_submit_add"]').attr('disabled', 'true');
-					var sendInfo 		= {"branch_name":branch_name, "branch_orgid":branch_orgid, "branch_detail_add":branch_detail_add,"branch_state":branch_state,"branch_city":branch_city,"branch_pincode":branch_pincode,"branch_meta_tags":branch_meta_tags,"branch_meta_description":branch_meta_description,"branch_meta_title":branch_meta_title,"branch_status":branch_status,"insert_req":"1"};
-					var branch_insert = JSON.stringify(sendInfo);				
-					$.ajax({
-						url: "load_branch.php",
-						type: "POST",
-						data: branch_insert,
-						contentType: "application/json; charset=utf-8",						
-						success: function(response) 
-						{
-							data = JSON.parse(response);
-							if(data.Success == "Success") 
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');								
-								window.location.assign("view_branch.php?pag=<?php echo $title; ?>");
-								loading_hide();
-							} 
-							else 
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');	
-								loading_hide();						
-							}
-						},
-						error: function (request, status, error) 
-						{
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
-							$('#error_model').modal('toggle');						
-							loading_hide();
-						},
-						complete: function()
-						{
-							//alert("complete");
-							loading_hide();
-						}
-				    });
-				}
+				$.ajax({
+                        url: "load_batch.php?",
+                        type: "POST",
+                        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                        contentType: false,       // The content type used when sending data to the server.
+                        cache: false,             // To unable request pages to be cached
+                        processData:false,        // To send DOMDocument or non processed data file it is set to false
+                        async:true,                 
+                        success: function(response) 
+                        {
+                            //alert(response);
+                            data = JSON.parse(response);
+                            //alert();
+                            if(data.Success == "Success") 
+                            {
+                                window.location.assign("view_batch.php?pag=Batch");
+                            } 
+                            else 
+                            {
+                                //alert("Wrong Entries");
+                                $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+                                $('#error_model').modal('toggle');  
+                                            
+                            }
+                        },
+                        error: function (request, status, error) 
+                        {
+                            $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+                            $('#error_model').modal('toggle');  
+                                                
+                        },
+                        complete: function()
+                        {
+                        }
+                    });
 			}
 		});//add
-		$('#frm_edit_branch').on('submit', function(e) {
+		$('#frm_edit_batch').on('submit', function(e) {
 			e.preventDefault();
-			if ($('#frm_edit_branch').valid())
+			if ($('#frm_edit_batch').valid())
 			{
-				loading_show();	
-				var branch_id				= $.trim($('#branch_id').val());
-				var branch_name 			= $.trim($("#branch_name").val());
-				var branch_orgid 			= $.trim($("#branch_orgid").val());				
-				var branch_detail_add 		= $.trim(CKEDITOR.instances['branch_detail_add'].getData());
-				var branch_state 			= $.trim($("#branch_state").val());
-				var branch_city				= $.trim($("#branch_city").val());
-				var branch_pincode 			= $.trim($("#branch_pincode").val());												
-				var branch_meta_tags		= $.trim($("#branch_meta_tags").val());
-				var branch_meta_description	= $.trim(CKEDITOR.instances['branch_meta_description'].getData());
-				var branch_meta_title		= $.trim($("#branch_meta_title").val());	
-				var branch_status 			= $('input[name=branch_status]:checked', '#frm_edit_branch').val();
-							
-				if(branch_name == "" && branch_orgid == "" && branch_status == "")
-				{					
-					$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-					$('#error_model').modal('toggle');
-				} 
-				else
-				{
-					e.preventDefault();
-					$('input[name="reg_submit_edit"]').attr('disabled', 'true');
-					var sendInfo 		= {"branch_id":branch_id,"branch_name":branch_name, "branch_orgid":branch_orgid, "branch_detail_add":branch_detail_add,"branch_state":branch_state,"branch_city":branch_city,"branch_pincode":branch_pincode,"branch_meta_tags":branch_meta_tags,"branch_meta_description":branch_meta_description,"branch_meta_title":branch_meta_title,"branch_status":branch_status,"update_req":"1"};
-					var branch_insert = JSON.stringify(sendInfo);				
-					$.ajax({
-						url: "load_branch.php?",
-						type: "POST",
-						data: branch_insert,
-						contentType: "application/json; charset=utf-8",						
-						success: function(response) 
-						{
-							data = JSON.parse(response);
-							if(data.Success == "Success") 
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');
-								window.location.assign("view_branch.php?pag=<?php echo $title; ?>");
-								loading_hide();								
-							} 
-							else 
-							{
-								loading_hide();
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');								
-							}
-						},
-						error: function (request, status, error) 
-						{
-							loading_hide();
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
-							$('#error_model').modal('toggle');							
-						},
-						complete: function()
-						{
-							loading_hide();
-							//alert("complete");
-                		}
-				    });
-				}
+				$.ajax({
+                        url: "load_batch.php?",
+                        type: "POST",
+                        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                        contentType: false,       // The content type used when sending data to the server.
+                        cache: false,             // To unable request pages to be cached
+                        processData:false,        // To send DOMDocument or non processed data file it is set to false
+                        async:true,                 
+                        success: function(response) 
+                        {
+                            //alert(response);
+                            data = JSON.parse(response);
+                            //alert();
+                            if(data.Success == "Success") 
+                            {
+                                window.location.assign("view_batch.php?pag=Batch");
+                            } 
+                            else 
+                            {
+                                //alert("Wrong Entries");
+                                $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+                                $('#error_model').modal('toggle');  
+                                            
+                            }
+                        },
+                        error: function (request, status, error) 
+                        {
+                            $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+                            $('#error_model').modal('toggle');  
+                                                
+                        },
+                        complete: function()
+                        {
+                        }
+                    });
 			}
 		});//edit
 		$('#frm_branch_error').on('submit', function(e) {
@@ -879,7 +823,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 					var sendInfo 		= {"branch_name":branch_name, "branch_orgid":branch_orgid, "branch_detail_add":branch_detail_add,"branch_state":branch_state,"branch_city":branch_city,"branch_pincode":branch_pincode,"branch_meta_tags":branch_meta_tags,"branch_meta_description":branch_meta_description,"branch_meta_title":branch_meta_title,"branch_status":branch_status,"error_id":error_id,"insert_req":"1"};
 					var branch_insert = JSON.stringify(sendInfo);				
 					$.ajax({
-						url: "load_branch.php?",
+						url: "load_batch.php?",
 						type: "POST",
 						data: branch_insert,
 						contentType: "application/json; charset=utf-8",						
@@ -918,6 +862,108 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 		// ******************************************************************************************
 		// scripts for excel bulk upload [ for showing the error logs ] ends here 
 		// ******************************************************************************************   
+
+
+        function backToMain(close_div,show_div)
+        {
+            $('#'+close_div).css('display','none');
+            $('#'+show_div).css('display','block');
+            loadData();
+        }
+
+        // ******************************************************************************************
+        // scripts for get product 
+        // ******************************************************************************************  
+        function getProduct(type)
+        {
+
+            if(type == "")
+            {
+                $("#model_body").html('<span style="style="color:#F00;"> Plesae select product type</span>');
+            }
+            else
+            {
+                var sendInfo    = {"type":type, "getProduct":1};
+                var batch_status   = JSON.stringify(sendInfo);                             
+                $.ajax({
+                    url: "load_batch.php?",
+                    type: "POST",
+                    data: batch_status,
+                    contentType: "application/json; charset=utf-8",                     
+                    success: function(response) 
+                    {           
+                        data = JSON.parse(response);
+                        if(data.Success == "Success") 
+                        {                           
+                           $('#prod_id').html(data.resp);
+                            
+                        } 
+                        else
+                        {
+                            $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');                                                 
+                            loading_hide();
+                        }
+                    },
+                    error: function (request, status, error) 
+                    {
+                        $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');                          
+                        $('#error_model').modal('toggle');                      
+                        loading_hide();
+                    },
+                    complete: function()
+                    {
+                        //alert("complete");
+                        loading_hide();
+                    }
+                });                     
+            }
+        }
+
+        function productRequest()
+        {
+            var prod_name = $('#prod_name').val();
+            loading_show();
+            if(prod_name == "")
+            {
+                $("#model_body").html('<span style="style="color:#F00;">Enter Product Name</span>');
+            }
+            else
+            {
+                var sendInfo    = {"prod_name":prod_name, "productRequest":1};
+                var batch_status   = JSON.stringify(sendInfo);                             
+                $.ajax({
+                    url: "load_batch.php?",
+                    type: "POST",
+                    data: batch_status,
+                    contentType: "application/json; charset=utf-8",                     
+                    success: function(response) 
+                    {           
+                        data = JSON.parse(response);
+                        if(data.Success == "Success") 
+                        {                           
+                           alert(data.resp);
+                           location.reload();
+                        } 
+                        else
+                        {
+                            alert(data.resp);                                              
+                            loading_hide();
+                        }
+                    },
+                    error: function (request, status, error) 
+                    {
+                        $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');                          
+                        $('#error_model').modal('toggle');                      
+                        loading_hide();
+                    },
+                    complete: function()
+                    {
+                        //alert("complete");
+                        loading_hide();
+                    }
+                });                     
+            }
+        }
 		</script>
     </body>
 </html>

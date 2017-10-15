@@ -23,7 +23,7 @@
 		$start_offset += $page * $per_page;
 		$start 			= $page * $per_page;
 			
-		$sql_load_data  = " SELECT * FROM tbl_products_master";			
+		$sql_load_data  = " SELECT * FROM tbl_products";			
 		
 
 		
@@ -56,10 +56,26 @@
     	 	$prod_data .= '<thead>';
     	  	$prod_data .= '<tr>';
          	$prod_data .= '<th class="center-text">Sr. No.</th>';
-			$prod_data .= '<th class="center-text">Prod id</th>';
+			$prod_data .= '<th class="center-text">Prod Id</th>';
 			$prod_data .= '<th class="center-text">Model Number</th>';			
 			$prod_data .= '<th class="center-text" style="width:15%;">Product Name</th>';
-						
+			$dis = checkFunctionalityRight("view_products.php",3);
+			if($dis)
+			{					
+				$prod_data .= '<th class="center-text">Status</th>';						
+			}
+			$edit = checkFunctionalityRight("view_products.php",1);
+			$edit = 1;
+			if($edit)
+			{			
+				$prod_data .= '<th class="center-text">Edit</th>';			
+			}
+			$del = checkFunctionalityRight("view_products.php",2);
+			$del = 1;
+			if($del)
+			{			
+				$prod_data .= '<th class="center-text"><div class="center-text"><input type="button"  value="Delete" onclick="deleteProductSpecification();" class="btn-danger"/></div></th>';
+			}			
           	$prod_data .= '</tr>';
       		$prod_data .= '</thead>';
       		$prod_data .= '<tbody>';
@@ -68,10 +84,40 @@
 			{
 				$prod_data .= '<tr>';
 				$prod_data .= '<td class="center-text">'.$i++.'</td>';
-				$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';
-				$prod_data .= '<td class="center-text">'.$row_load_data['prod_model_number'].'</td>';			
+				$prod_data .= '<td class="center-text">'.$row_load_data['id'].'</td>';
+				$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';			
 				$prod_data .= '<td class="center-text" style="width:15%;">'.$row_load_data['prod_name'].'</td>';
-							
+				$dis = checkFunctionalityRight("view_products.php",3);
+				if($dis)
+				{					
+					$prod_data .= '<td class="center-text">';	
+
+					if($row_load_data['prod_status'] == 1)
+					{
+						$prod_data .= '<input type="button" value="Active" id="'.$row_load_data['id'].'" class="btn-success" onclick="changeStatus(this.id,0)">';
+					}
+					else
+					{
+						$prod_data .= '<input type="button" value="Inactive" id="'.$row_load_data['id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+					}
+					$prod_data .= '</td>';	
+				}
+				$edit = checkFunctionalityRight("view_products.php",1);
+				$edit = 1;
+				if($edit)
+				{				
+					$prod_data .= '<td class="center-text">';
+					$prod_data .= '<input type="button" value="Edit" id="'.$row_load_data['id'].'" class="btn-warning" onclick="addMoreProductSpecification(this.id,\'edit\');"></td>';				
+				}
+				$del = checkFunctionalityRight("view_products.php",2);
+				$del = 1;
+				if($del)
+				{					
+					$prod_data .= '<td><div class="center-text">';
+					$prod_data .= '<input type="checkbox" value="'.$row_load_data['id'].'" id="batch_prod_spec'.$row_load_data['id'].'" name="batch_prod_spec'.$row_load_data['id'].'" class="css-checkbox batch_prod_spec">';
+					$prod_data .= '<label for="batch_prod_spec'.$row_load_data['id'].'" class="css-label"></label>';				
+					$prod_data .= '</div></td>';										
+				}			
 				$prod_data .= '</tr>';	
 			}	
       		$prod_data .= '</tbody>';
@@ -90,58 +136,116 @@
 		$response_array = array("Success"=>"fail","resp"=>"No Row Limit and Page Number Specified for Products");
 	}
 	echo json_encode($response_array);	
-}
+   }
 	
 	if((isset($_POST['add_product_req'])) == '1' && (isset($_POST['add_product_req'])))
 	{
-		$data['prod_name']          = mysqli_real_escape_string($db_con,$_POST['prod_name']);
-		$data['prod_model_number']  = mysqli_real_escape_string($db_con,$_POST['prod_model_number']);
-		$data['prod_factor'] 		= mysqli_real_escape_string($db_con,$_POST['txt_factor']);
-		$data['prod_pharmacopia']   = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
-		$data['prod_drug_type']     = mysqli_real_escape_string($db_con,$_POST['txt_drug_type']);
-		$data['prod_composition']   = mysqli_real_escape_string($db_con,$_POST['txt_cmp']);
-		if($data['prod_drug_type']=="Single")
+		$prod_id = 200000;
+
+		$prod_type                   = mysqli_real_escape_string($db_con,$_POST['txt_type']);
+		if($prod_type=='')
 		{
-			$data['prod_composition']   = mysqli_real_escape_string($db_con,$_POST['txt_cmp']);
+			quit('Plesae Select Type');
 		}
-		else
-		{
-			$data['prod_composition']   = implode('1',mysqli_real_escape_string($db_con,$_POST['txt_cmp']));
-		}
-		
-		$data['prod_brandid']    = mysqli_real_escape_string($db_con,$_POST['txt_brand']);
-		$data['prod_tax_class']  = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
-		$data['prod_packing']    = mysqli_real_escape_string($db_con,$_POST['txt_packing']);
-		$data['prod_dimension']  = mysqli_real_escape_string($db_con,$_POST['txt_dimension']);
-		$data['prod_uow']  		 = mysqli_real_escape_string($db_con,$_POST['txt_weight']);
-		$data['prod_available_pack']  = mysqli_real_escape_string($db_con,$_POST['txt_avai_pack']);
-		$data['prod_status']     = mysqli_real_escape_string($db_con,$_POST['prod_status']);
-		$data['prod_created_by'] = $logged_uid;
-		$data['prod_created']    = $datetime;
-		
-		if(!isExist('tbl_products_master',array('prod_model_number'=>$data['prod_model_number'])))
-		{
-			if($data['prod_model_number']!="")
-			{
-				$res = insert('tbl_products_master',$data);
+
+        $sql_get_id = " SELECT prod_id,id FROM tbl_products ORDER BY id DESC LIMIT 1";
+        $res_get_id = mysqli_query($db_con,$sql_get_id) or dir(mysqli_error($db_con));	
+        $row_get_id = mysqli_fetch_array($res_get_id);
+        $data['prod_name'] = mysqli_real_escape_string($db_con,$_POST['prod_name']);
+        $data['prod_slug'] = getSlug($data['prod_name']);
+
+ 		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'])))
+ 		{
+ 			$data['prod_cat']              = mysqli_real_escape_string($db_con,$_POST['txt_cat']);
+			$data['prod_id']               = 'SKU'.($prod_id+$row_get_id['id']);
 			
-				if($res)
-				{
-					quit('Product Added Successfully...!','1');
-				}
-				else
-				{
-					quit('Please try letter...!');
-				}
+			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
+			$data['prod_pharmacopia']      = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
+	        $data['prod_tax']              = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
+	        $data['prod_attribute']        = mysqli_real_escape_string($db_con,$_POST['txt_attribute']);
+	        $data['prod_dimension_l']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionl']);
+	        $data['prod_dimension_h']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionh']);
+	        $data['prod_dimension_w']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionw']);
+			
+			$data['prod_nett_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_uoweight']);
+	        $data['prod_gross_weight']     = mysqli_real_escape_string($db_con,$_POST['txt_weight']);
+	        $data['prod_unit_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_weight']);
+
+	        $data['prod_packing']          = mysqli_real_escape_string($db_con,$_POST['txt_packing']);
+	        $data['prod_manufactured']     = mysqli_real_escape_string($db_con,$_POST['txt_manufactured']);
+	        $data['prod_manufactured_number']  = mysqli_real_escape_string($db_con,$_POST['txt_manufactured_lic']);
+	        $data['prod_meta_tags']        = mysqli_real_escape_string($db_con,$_POST['txt_meta']);
+	       
+	        $data['prod_insurance']        = mysqli_real_escape_string($db_con,$_POST['txt_insurance']);
+	        $data['	prod_status']          = mysqli_real_escape_string($db_con,$_POST['txt_status']);
+	        
+			if($prod_type=='raw')
+			{
+				$data['prod_factor'] 		   = mysqli_real_escape_string($db_con,$_POST['txt_factor']);
 			}
 			else
 			{
-				quit('Model Number required...!');
+				$data['prod_effective_pack']   = mysqli_real_escape_string($db_con,$_POST['txt_cost_effective_pack']);
+				$data['prod_standard_pack']     = mysqli_real_escape_string($db_con,$_POST['txt_stadard_pack']);
+				$data['prod_shipper']          = mysqli_real_escape_string($db_con,$_POST['txt_shipper']);
+				$data['prod_ean']              = mysqli_real_escape_string($db_con,$_POST['txt_ean']);
+	            $data['prod_hsn']              = mysqli_real_escape_string($db_con,$_POST['txt_hsn']);
 			}
-		}
+			
+			//=====To Check Composition TYpe=================
+			if($data['prod_comp_cat'] !="Combination")
+			{
+				$data['prod_comp']          = mysqli_real_escape_string($db_con,$_POST['txt_cmp']);
+			}
+			else
+			{
+				$data['prod_comp       ']   = implode(',',mysqli_real_escape_string($db_con,$_POST['txt_cmp']));
+			}
+
+
+			//=====To Check n upload DMF Document
+			if(isset($_FILES['img_dmf']) && $_FILES['img_dmf']['name'] !='')
+			{
+		        $dmf_size      = $_FILES['img_dmf']['size'];
+				if($dmf_size > 5242880 &&  $dmf_size !=0) // file size
+				{
+					quit('Image size should be less than 5 MB');
+				}
+				
+				$dmf_img               = explode('.',$_FILES['img_dmf']['name']);
+				$dmf_img               = date('dhyhis').'.'.$dmf_img[1];
+				
+				
+				$dir                          = 'documents/dmf/'.$dmf_img;
+				
+				if(move_uploaded_file($_FILES['img_dmf']['tmp_name'],$dir))
+				{
+					$data['prod_dmf']      = $dmf_img;
+				}
+				else
+				{
+					quit('DMF Document not uploaded.!');
+				}
+			}
+
+            delete('tbl_product_request',array('prod_name'=>$data['prod_name']));
+      
+			$res = insert('tbl_products',$data);
+
+
+			if($res)
+			{
+				quit('Product Added Successfully.!',1);
+			}
+			else
+			{
+				quit('Something went wrong..!');
+			}
+
+ 		}
 		else
 		{
-			quit('Model Number already exist...!');
+			quit('Product Name already Exist...!');
 		}
 	}
 	

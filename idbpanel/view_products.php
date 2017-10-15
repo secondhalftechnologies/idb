@@ -327,9 +327,11 @@
                                         if($add)
                                         {
                                             ?>
-                                            <a href="<?php echo $BaseFolder; ?>add_products.php" class="btn-info" target="_self">
-                                            	<i class="icon-plus"></i>&nbspAdd Products
+                                         
+                                            	<a href="<?php echo $BaseFolder; ?>add_products.php"  target="_blank"><button class="btn-info ">
+                                            	<i class="icon-plus"></i>&nbsp; Add Products</button> 
                                             </a>
+                                         
                                             <?php
                                         }
                                     ?>

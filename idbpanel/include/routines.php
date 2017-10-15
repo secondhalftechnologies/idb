@@ -1637,52 +1637,95 @@ function quit($msg,$Success="")
 
 
 // Select Query For getting the Record count
-	function isExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
+function isExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
+{
+	global $db_con;
+	if($table=="")
 	{
-		global $db_con;
-		if($table=="")
-		{
-			quit('Table name can not be blank');
-		}
-		$sql = " SELECT * FROM ". $table ;
-		$fields = array();
-		$values = array();
-		
-		
-		$sql .=" WHERE 1 = 1 ";
-		
-		//==Check Where Condtions=====//
-		if(!empty($where))
-		{
-			foreach($where as $field1 => $value1 )
-			{   
-				$sql  .= " AND ".$field1 ."='".$value1."' ";
-			}
-		}
-		
-		//==Check Not Where Condtions=====//
-		if(!empty($not_where_array))
-		{
-			foreach($not_where_array as $field2 => $value2)
-			{   
-				$sql  .= " AND ".$field2 ."!='".$value2."' ";
-			}
-		}
-		
-		$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
-		$num            = mysqli_num_rows($result);
-		if($num > 0)
-		{
-			
-			return $num;
-		}
-		else
-		{
-			return false;
+		quit('Table name can not be blank');
+	}
+	$sql = " SELECT * FROM ". $table ;
+	$fields = array();
+	$values = array();
+	
+	
+	$sql .=" WHERE 1 = 1 ";
+	
+	//==Check Where Condtions=====//
+	if(!empty($where))
+	{
+		foreach($where as $field1 => $value1 )
+		{   
+			$sql  .= " AND ".$field1 ."='".$value1."' ";
 		}
 	}
 	
+	//==Check Not Where Condtions=====//
+	if(!empty($not_where_array))
+	{
+		foreach($not_where_array as $field2 => $value2)
+		{   
+			$sql  .= " AND ".$field2 ."!='".$value2."' ";
+		}
+	}
 	
+	$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+	$num            = mysqli_num_rows($result);
+	if($num > 0)
+	{
+		
+		return $num;
+	}
+	else
+	{
+		return false;
+	}
+}
+	
+function delete($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
+{
+	global $db_con;
+	if($table=="")
+	{
+		quit('Table name can not be blank');
+	}
+	$sql = " DELETE FROM ". $table ;
+	$fields = array();
+	$values = array();
+	
+	
+	$sql .=" WHERE 1 = 1 ";
+	
+	//==Check Where Condtions=====//
+	if(!empty($where))
+	{
+		foreach($where as $field1 => $value1 )
+		{   
+			$sql  .= " AND ".$field1 ."='".$value1."' ";
+		}
+	}
+	
+	//==Check Not Where Condtions=====//
+	if(!empty($not_where_array))
+	{
+		foreach($not_where_array as $field2 => $value2)
+		{   
+			$sql  .= " AND ".$field2 ."!='".$value2."' ";
+		}
+	}
+	
+	$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+	
+	if($result)
+	{
+		
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}	
 	
 	function checkExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{
