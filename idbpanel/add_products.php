@@ -84,11 +84,22 @@
                                     	<div class="control-group">
                                         	<label for="tasktitel" class="control-label">Product Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                         	<div class="controls" id="">
-                                            <select data-rule-required="true" name="txt_type" id="txt_type" onChange="productType(this.value);"  class = "select2-me input-large" style="width:90%">
+                                            <select data-rule-required="true" onChange="getCat(this.value)" name="txt_type" id="txt_type" onChange="productType(this.value);"  class = "select2-me input-large" style="width:90%">
                                             <option  value="">Select Type</option>
-                                            <option value="raw"  selected="selected">Raw Material</option>
-                                            <option value="formulation">Formulation</option>
-                                            
+                                            <?php
+											
+											$sql = " SELECT * FROM tbl_category WHERE cat_status =1  AND cat_type = 'parent' ";
+											$res = mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+											while($row = mysqli_fetch_array($res))
+											{
+											  echo '<option value="'.$row['cat_id'].'" ';
+											  if($row['cat_name']=='row')
+											  {
+												  echo ' selected ';
+											  }
+											  echo '>'.ucwords($row['cat_name']).'</option>';
+											}
+											?>
 											</select>
                                           </div><!--single-->
                                         </div><!-- Composition TYpe -->
@@ -118,6 +129,7 @@
 											$sql_get_cats	.= " WHERE `cat_status`='1' ";
 											$sql_get_cats	.= " 	AND `cat_name`!='none' ";
 											$sql_get_cats	.= " 	AND `cat_type`='parent' ";
+											$sql_get_cats	.= " 	AND `cat_id`='1' ";
 											$sql_get_cats	.= " ORDER BY `cat_name` ASC ";
 											$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
 											$num_get_cats	= mysqli_num_rows($res_get_cats);
@@ -594,11 +606,7 @@
                                         </div><!--Status -->
                                         
                                         
-			
-                                        
-                                        
-                                         
-                                        <div class="form-actions" style="clear:both">
+										 <div class="form-actions" style="clear:both">
                                          <button type="submit" name="reg_submit_add" class="btn-success">Add Product</button>
                                         </div>
                                        
@@ -676,6 +684,52 @@
 				}
 			});		
 	   	
+		
+		   function getCat(cat_id)
+		   {
+			   
+				if(cat_id=="")
+				{
+					alert('Please select Category...!');
+					return false;
+				}
+				var sendInfo 	= {"cat_id":cat_id,"getCat":1};
+				var area_status = JSON.stringify(sendInfo);								
+				$.ajax({
+					url: "load_products.php?",
+					type: "POST",
+					data: area_status,
+					contentType: "application/json; charset=utf-8",						
+					success: function(response) 
+					{			
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{							
+							$('#txt_cat').html(data.resp);
+						} 
+						else 
+						{
+							$('#area').select2();
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							$('#error_model').modal('toggle');
+							loading_hide();					
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();	
+					}
+				});		
+		
+		
+		   }
+		
 	   </script>
      <!--======================Start : Javascript Dn By satish 12sep2017=========================-->
     </body>

@@ -1,7 +1,7 @@
 
 function productType(type)
 {
-	if(type=='raw')
+	if(type=='1')
 	{
 		$('#div_form_factor').css('display','block');
 
@@ -13,7 +13,7 @@ function productType(type)
 		$('#div_hsn').css('display','none');
 
 	}
-	else if(type=='formulation')
+	else if(type=='2')
 	{
 
 		$('#div_cost_effective_pack').css('display','block');

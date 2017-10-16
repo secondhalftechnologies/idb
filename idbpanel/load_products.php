@@ -177,7 +177,7 @@
 	        $data['prod_meta_tags']        = mysqli_real_escape_string($db_con,$_POST['txt_meta']);
 	       
 	        $data['prod_insurance']        = mysqli_real_escape_string($db_con,$_POST['txt_insurance']);
-	        $data['	prod_status']          = mysqli_real_escape_string($db_con,$_POST['txt_status']);
+	        $data['prod_status']          = mysqli_real_escape_string($db_con,$_POST['txt_status']);
 	        
 			if($prod_type=='raw')
 			{
@@ -228,7 +228,11 @@
 				}
 			}
 
-            delete('tbl_product_request',array('prod_name'=>$data['prod_name']));
+
+            if($utype !=1)
+			{
+				$data['prod_status'] = 2;
+			}
       
 			$res = insert('tbl_products',$data);
 
@@ -247,6 +251,45 @@
 		{
 			quit('Product Name already Exist...!');
 		}
+	}
+	
+	if((isset($obj->getCat)) == '1' && (isset($obj->getCat)))
+	{
+		$cat_id  = $obj->cat_id;
+		
+		$sql_get_cats	= " SELECT * FROM `tbl_category` ";
+		$sql_get_cats	.= " WHERE `cat_status`='1' ";
+		$sql_get_cats	.= " 	AND `cat_name`!='none' ";
+		$sql_get_cats	.= " 	AND `cat_type`='parent' ";
+		$sql_get_cats	.= " 	AND `cat_id`='".$cat_id."' ";
+		$sql_get_cats	.= " ORDER BY `cat_name` ASC ";
+		$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
+		$num_get_cats	= mysqli_num_rows($res_get_cats);
+		
+		$data = '';
+		if($num_get_cats != 0)
+		{
+			
+			$data .='<option  value="">Select Category</option>';
+		
+			while($row_get_cats = mysqli_fetch_array($res_get_cats))
+			{
+			
+				    $data .='<option value="'.$row_get_cats['cat_id'].'">';
+					$data .=ucwords($row_get_cats['cat_name']);
+					$data .='</option>';
+				
+				$data.= getSubCatValue($row_get_cats['cat_id'], 'add');
+			}
+		}
+		else
+		{
+			
+			$data .='<option value="">No Match Found</option>';
+			
+		}
+		
+		quit($data,1);
 	}
 	
 ?>

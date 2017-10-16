@@ -344,7 +344,7 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 
 		if($req_type=='add')
 		{
-			$data .='<button type="button" class="btn-info" data-toggle="modal" data-target="#product_reqest" data-backdrop="static">&nbsp;Requset Product</button></button>';
+			$data .='<a href="add_products.php" target="_blank"><button type="button" class="btn-info">&nbsp;Requset Product</button></button></a>';
 		}
 		
 
