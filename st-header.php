@@ -188,7 +188,7 @@
                                     </ul>
                                 </li>
                   </div>
-                  <div class="col-xs-12 col-md-9 no-padding" style="  margin: 0 0 0 -44px;">
+                  <div class="col-xs-12 col-md-9 no-padding" id="topmenutogggle" >
                   <nav id="top-megamenu-nav" class="megamenu-vertical animate-dropdown">
 				    <div class="yamm navbar" style="min-height:0px;">
 				            <div class="navbar-header">

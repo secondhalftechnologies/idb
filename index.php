@@ -1,22 +1,24 @@
 <?php
-	include("includes/db_con.php");
+
+ include("includes/db_con.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
     
 <head>
-      <!-- Meta -->
-		<meta charset="utf-8">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
-	    <meta name="keywords" content="">
-	    <meta name="robots" content="all">
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+  <meta name="robots" content="all">
 
-	    <title>Home - Indian Dava Bazar</title>
-        <?php include('st-head.php'); ?>
-    </head>
+  <title>Home - Indian Dava Bazar</title>
+  <?php include('st-head.php'); ?>
+</head>
 
     <body>
         <div class="wrapper">

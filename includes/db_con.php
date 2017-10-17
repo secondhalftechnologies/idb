@@ -6,7 +6,7 @@
 	$date 				= new DateTime(null, new DateTimeZone('Asia/Kolkata'));
 	$datetime 			= $date->format('Y-m-d H:i:s');
 	$error_path 		= "images/no-image.jpg";
-	if ($_SERVER['HTTP_HOST'] == "localhost" || preg_match("/^192\.168\.0.\d+$/",$_SERVER['HTTP_HOST']) || preg_match("/^prem$/",$_SERVER['HTTP_HOST']))
+	if ($_SERVER['HTTP_HOST'] == "localhost" || preg_match("/^192\.168\.0.\d+$/",$_SERVER['HTTP_HOST']) || preg_match("/^punit$/",$_SERVER['HTTP_HOST']))
 	{
 		$server_set = 0;
 		$dbname 	= "idb2017";
@@ -14,11 +14,11 @@
 		$dbpass 	= "";
 		if($_SERVER['HTTP_HOST'] == "localhost")
 		{
-			$BaseFolder = "http://localhost/idb";		
+			$BaseFolder = "http://localhost/idb/op2";		
 		}
 		else
 		{
-			$BaseFolder = "http://192.168.0.13/idb";	
+			$BaseFolder = "http://192.168.0.13/idb/op2";	
 		}
 		
 	}
