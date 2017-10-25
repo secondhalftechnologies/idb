@@ -18,11 +18,17 @@
 	$logged_username	= $_SESSION['front_panel']['cust_name'];
 	$logged_emailid		= $_SESSION['front_panel']['cust_email'];
 	$logged_mobilenum	= $_SESSION['front_panel']['cust_mobile'];
-	$cust_mobilestatus  = $_SESSION['front_panel']['cust_mobilestatus'];
+	//$cust_mobilestatus  = $_SESSION['front_panel']['cust_mobilestatus'];
 	// ==============================================================================================================================
 	// START : getting the Company Data from the tbl_customer_company table depending on the user_id [dn by Prathamesh on 06 Sep 2017]
 	// ==============================================================================================================================
 	// Query for Getting all the information of the company for respective user-id
+	
+	$sql_get_cust	= " SELECT * FROM `tbl_customer` WHERE `cust_id`='".$logged_uid."' ";
+	$res_get_cust	= mysqli_query($db_con, $sql_get_cust) or die(mysqli_error($db_con));
+	$row_get_cust	= mysqli_fetch_array($res_get_cust);
+	$cust_mobilestatus = $row_get_cust['cust_mobilestatus'];
+	
 	$sql_get_comp_info	= " SELECT * FROM `tbl_customer_company` WHERE `comp_user_id`='".$logged_uid."' ";
 	$res_get_comp_info	= mysqli_query($db_con, $sql_get_comp_info) or die(mysqli_error($db_con));
 	$num_get_comp_info	= mysqli_num_rows($res_get_comp_info);
@@ -198,7 +204,7 @@
 			.wrapper-smenu .content {
 			height: 0;
 			background: rgba(92, 127, 94, 0.72);
-			height: 400px;
+			height: 426px;
 			position: relative;
 			border-top: 2px solid rgba(0, 0, 0, 0.12);
 			top: 4px;
@@ -468,7 +474,7 @@
                                             	$col_md = 9;
                                             	if($cust_mobilestatus !=1)
                                             	{
-                                            		$col_md = 6;
+                                            		$col_md = 3;
                                             	}
                                              ?>
                                             <input type="text" class="le-input col-md-<?php echo $col_md; ?> col-xs-12" id="txt_mobile" name="txt_mobile"
@@ -502,7 +508,7 @@
 										 <div class="field-row" id="otp_div" style="display:none">
                                             <label class="col-md-3 col-xs-12" for="name"><span style="color:#F00">*</span></label>
                                            
-                                            <input type="text" placeholder="Enter OTP" class="le-input col-md-6 col-xs-12" id="otp_val" name="otp_val"
+                                            <input type="text" placeholder="Enter OTP" class="le-input col-md-3 col-xs-3" id="otp_val" name="otp_val"
                                             
                                             data-rule-required="true" data-rule-number="true" maxlength="6" size="5">
                                              &nbsp;&nbsp;<button onclick="verifyOTP();" type="button" id="btn_submit" name="btn_submit" class="le-button" value="frm-submit">
@@ -886,8 +892,8 @@
 	                
 	                                   <?php
 	                                    }
-	                                    elseif ($logged_user_type == 'hospitals') 
-	                                    {
+									elseif ($logged_user_type == 'hospitals') 
+									{
 	                                      ?>
 	                                      <?php
 										  //  Check Record and return single row
@@ -1239,7 +1245,7 @@
                                   <input type="hidden" name="<?php echo $frm_pan_request; ?>" value="1">
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Pan Number</label>
+                                      <label class="col-md-3 col-xs-12" for="name">Pan Number<span style="color:#F00">*</span></label>
                                       <input type="text" value="<?php echo @$panRow['pan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_pan_no" name="txt_pan_no" data-rule-required="true" minlength="10" maxlength="10" size="10">
                                       
                                       <div class="clearfix"></div>
@@ -1262,7 +1268,7 @@
                                     
                                     <div class="field-row">
                                     
-                                      <label class="col-md-3 col-xs-12" for="name">Pan Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">Pan Image<span style="color:#F00">*</span></label>
                                       <input accept="image/jpeg,image/png,image/jpg" type="file" name="file_pan_image" id="file_pan_image" data-rule-requied="true" <?php echo $required;?>>
                                       <div class="clearfix"></div>
                                     </div><!-- Pan Image -->
@@ -1358,7 +1364,7 @@
                                     <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                    
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Number</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Number<span style="color:#F00">*</span></label>
                                       <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true" maxlength="12" size="12">
                                       <div class="clearfix"></div>
                                     </div><!-- GST Number -->                    
@@ -1377,7 +1383,7 @@
 									 ?>
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Image<span style="color:#F00">*</span></label>
                                       <input type="file" accept="image/jpeg,image/png,image/jpg" name="file_gst_image" id="file_gst_image" <?php echo $required;?>>
                                        <div class="clearfix"></div>
                                     </div><!-- GST Image -->
@@ -1396,7 +1402,7 @@
 									 ?>
                                         
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Image<span style="color:#F00">*</span></label>
                                       <input type="file" name="file_gst_ack_image" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image" <?php echo $required;?>>
                                      <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image -->
@@ -1434,32 +1440,32 @@
                                     <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     
                                      <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Account Holder Name</label>
-                                      <input value="<?php echo @$bankRow['bank_username'] ?>" type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_username" name="txt_bank_username">
+                                      <label class="col-md-3 col-xs-12" for="name">Account Holder Name<span style="color:#F00">*</span></label>
+                                      <input value="<?php echo @$bankRow['bank_username'] ?>" data-rule-required="true"  type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_username" name="txt_bank_username">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Name -->
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank Name</label>
-                                      <input value="<?php echo @$bankRow['bank_name'] ?>" type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
+                                      <label class="col-md-3 col-xs-12" for="name">Bank Name<span style="color:#F00">*</span></label>
+                                      <input value="<?php echo @$bankRow['bank_name'] ?>" data-rule-required="true" type="text" class="le-input col-md-9 col-xs-12" id="txt_bank_name" name="txt_bank_name">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Name -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank Address</label>
-                                      <textarea  id="txt_bank_address" name="txt_bank_address"><?php echo @$bankRow['bank_branch'] ;?></textarea>
+                                      <label class="col-md-3 col-xs-12" for="name">Bank Address<span style="color:#F00">*</span></label>
+                                      <textarea  id="txt_bank_address" name="txt_bank_address" data-rule-required="true"><?php echo @$bankRow['bank_branch'] ;?></textarea>
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Address -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank Account Number</label>
-                                      <input type="text" value="<?php echo @$bankRow['bank_acc_no'] ?>"  class="le-input col-md-9 col-xs-12" id="txt_bank_accno" name="txt_bank_accno">
+                                      <label class="col-md-3 col-xs-12" for="name">Bank Account Number<span style="color:#F00">*</span></label>
+                                      <input type="text" value="<?php echo @$bankRow['bank_acc_no'] ?>" data-rule-required="true"  class="le-input col-md-9 col-xs-12" id="txt_bank_accno" name="txt_bank_accno">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank Account Number -->
                 
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank IFSC Code</label>
-                                      <input type="text" value="<?php echo @$bankRow['bank_ifsc'] ?>" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code" minlength="11" maxlength="11">
+                                      <label class="col-md-3 col-xs-12" for="name">Bank IFSC Code<span style="color:#F00">*</span></label>
+                                      <input type="text" value="<?php echo @$bankRow['bank_ifsc'] ?>" data-rule-required="true" class="le-input col-md-9 col-xs-12" id="txt_ifsc_code" name="txt_ifsc_code" minlength="11" maxlength="11">
                                       <div class="clearfix"></div>
                                     </div><!-- Bank IFSC CODE -->     
                 					
@@ -1477,8 +1483,8 @@
 									 ?>
                                     
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Bank Check Image</label>
-                                      <input type="file" accept="image/jpeg,image/png,image/jpg" name="file_bank_image" id="file_bank_image" <?php echo $required;?>>
+                                      <label class="col-md-3 col-xs-12" for="name">Bank Check Image<span style="color:#F00">*</span></label>
+                                      <input type="file" accept="image/jpeg,image/png,image/jpg" name="file_bank_image" id="file_bank_image" <?php echo $required;?> >
                                       <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image -->
                 
@@ -1764,8 +1770,7 @@
 						} 
 						else 
 						{   
-							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
-							$('#error_model').modal('toggle');	
+							$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 						}
 					},
 					error: function (request, status, error) 
@@ -2405,7 +2410,7 @@
 		function fnAddMoreLic(lic)
 		{
 			var renewal_count = parseInt($('#renewal_count').val()) + 1 ;
-			var data ='<div id="renewal"> <div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Number</label><input type="text" value="" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no'+renewal_count+'" name="txt_hospital_lic_no'+renewal_count+'" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12"> <div class="clearfix"></div></div><div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Image</label><input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image'+renewal_count+'" id="file_lic_image'+renewal_count+'"><div class="clearfix"></div></div><!--  License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name"> Renewal '+renewal_count+' License Expiry Date</label><input value="" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date'+renewal_count+'" id="lic_hospital_date'+renewal_count+'" data-rule-requied="true" readonly><div class="clearfix"></div></div><!-- Expiry  Date --></div>';
+			var data ='<div id="renewal"> <div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Number</label><input type="text" value="" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no'+renewal_count+'" name="txt_hospital_lic_no'+renewal_count+'" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12"> <div class="clearfix"></div></div><div class="field-row"><label class="col-md-3 col-xs-12" for="name">Renewal '+renewal_count+' License Image</label><input accept="image/jpeg,image/png,image/jpg" type="file" name="file_lic_image'+renewal_count+'" id="file_lic_image'+renewal_count+'"><div class="clearfix"></div></div><!--  License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name"> Renewal '+renewal_count+' License Expiry Date</label><input value="" type="text" class="le-input col-md-9 col-xs-12" name="lic_hospital_date'+renewal_count+'" id="lic_hospital_date'+renewal_count+'" data-rule-requied="true" ><div class="clearfix"></div></div><!-- Expiry  Date --></div>';
 			$('#renewal_count').val(renewal_count);					  
 			$('#licenses').append(data);
 		}
@@ -2413,7 +2418,7 @@
 		
 		function fnAddMoreCemistLic()
 		{
-			var data ='<div id="chemist_lic"><input value="" name="lic_id[]" type="hidden"><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Licence Number</label><input value="" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]" minlength="12" maxlength="12" size="12" type="text"><div class="clearfix"></div></div><!-- License Number --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Image</label><input accept="image/jpeg,image/png,image/jpg,appication/pdf" name="file_lic_20c_image[]" id="file_lic_21c_image" type="file"><div class="clearfix"></div></div><!-- License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label><input value="" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" type="text" readonly><div class="clearfix"></div> </div><!-- Expiry  Date --></div>';
+			var data ='<div id="chemist_lic"><input value="" name="lic_id[]" type="hidden"><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Licence Number</label><input value="" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]" minlength="12" maxlength="12" size="12" type="text"><div class="clearfix"></div></div><!-- License Number --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Image</label><input accept="image/jpeg,image/png,image/jpg,appication/pdf" name="file_lic_20c_image[]" id="file_lic_21c_image" type="file"><div class="clearfix"></div></div><!-- License Image --><div class="field-row"><label class="col-md-3 col-xs-12" for="name">20C Expiry Date</label><input value="" class="le-input col-md-9 col-xs-12" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" type="text"><div class="clearfix"></div> </div><!-- Expiry  Date --></div>';
 			$('#chemist_lic').append(data);
 		}
 		

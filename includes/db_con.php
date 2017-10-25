@@ -14,7 +14,7 @@
 		$dbpass 	= "";
 		if($_SERVER['HTTP_HOST'] == "localhost")
 		{
-			$BaseFolder = "http://localhost/idb/op2";		
+			$BaseFolder = "http://localhost/idb";		
 		}
 		else
 		{

@@ -412,7 +412,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 
 		function changeStatus(branch_id,curr_status)
 		{
-			loading_show();
+			//loading_show();
 			if(branch_id == "" && curr_status == "")
 			{
 				$("#model_body").html('<span style="style="color:#F00;"> User id or Status to change not available</span>');

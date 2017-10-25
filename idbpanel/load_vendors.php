@@ -427,7 +427,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				if($edit)
 				{
 					$customers_data .= '<td style="text-align:center"><i id="'.$row_load_data['vendor_id'].'star_status" ';
-					if($row_load_data['cust_star'] == 1)
+					if($row_load_data['vendor_star'] == 1)
 					{
 						$customers_data .= ' onclick="changeStarStatus(this.id,\'0\');" class="icon-star" style="font-size:30px;cursor:pointer;color:#FFD700;padding:5px;margin-top:10px"></i>';
 					}
@@ -438,11 +438,10 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 					$customers_data .='</td>';
 				}				
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['vendor_id'].'</td>';
-				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['vendor_name']).'" class="btn-link" id="'.$row_load_data['vendor_id'].'" onclick="addMoreVendor(this.id,\'view\');">';
-				$customers_data .= '<i class="icon-chevron-down" id="'.$row_load_data['cust_id'].'chevron" onclick="toggleMyDiv(this.id,\'cust_info'.$row_load_data['vendor_id'].'\');" style="cursor:pointer;float:right;font-size:20px;margin-right: 10px;"></i>';
-				$customers_data .= '<div id="cust_info'.$row_load_data['vendor_id'].'" style="display:none;">';				
-				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['cust_email'].'</div>';
-				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['cust_mobile'].'</div>';								
+				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['vendor_name']).'" class="btn-link" id="'.$row_load_data['vendor_id'].'" >';
+				$customers_data .= '<div id="cust_info'.$row_load_data['vendor_id'].'" >';				
+				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['vendor_email'].'</div>';
+				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['vendor_mobile'].'</div>';								
 				$customers_data .= '<div><b>Created:</b>&nbsp;';
 				if(trim($row_load_data['cust_created']) == "")
 				{
@@ -454,26 +453,16 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				}
 				$customers_data .= '</div>';
 				$customers_data .= '<div><b>Created By:</b>&nbsp;';
-				if(trim($row_load_data['cust_modified']) == "")
+				if(trim($row_load_data['vendor_modified']) == "")
 				{
 					$customers_data .= '<span style="color:#F00">Not Available</span>';
 				}
 				else
 				{
-					$customers_data .= $row_load_data['cust_modified'];					
-				}				
-				$customers_data .= '</div>';	
-				$customers_data .= '<div><b>Modified By:</b>';
-				if(trim($row_load_data['name_midified_by']) == "")
-				{
-					$customers_data .= '<span style="color:#F00">Not Available</span>';
-				}
-				else
-				{
-					$customers_data .= $row_load_data['name_midified_by'];					
+					$customers_data .= $row_load_data['vendor_modified'];					
 				}				
 				$customers_data .= '</div>';
-				$customers_data .= '</div>';				
+						
 				$customers_data .= '</td>';
 				$date = strtotime($row_load_data['vendor_created']);
 	           
@@ -503,15 +492,15 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				if($edit)
 				{					
 					$customers_data .= '<td><div class="controls" style="text-align:center">';
-					$customers_data .= '<input type="checkbox" value="'.$row_load_data['cust_id'].'" id="customers'.$row_load_data['cust_id'].'" name="customers'.$row_load_data['cust_id'].'" class="css-checkbox customers">';
-					$customers_data .= '<label for="customers'.$row_load_data['cust_id'].'" class="css-label"></label>';
+					$customers_data .= '<input type="checkbox" value="'.$row_load_data['vendor_id'].'" id="customers'.$row_load_data['vendor_id'].'" name="customers'.$row_load_data['vendor_id'].'" class="css-checkbox customers">';
+					$customers_data .= '<label for="customers'.$row_load_data['vendor_id'].'" class="css-label"></label>';
 					$customers_data .= '</div></td>';										
 				}
 				
 				if($edit)
 			    {
 				$customers_data .= '<td>
-				<textarea name="comment_'.$row_load_data['cust_id'].'" id="comment_'.$row_load_data['cust_id'].'" onchange="comments('.$row_load_data['cust_id'].');">'.$row_load_data['cust_comment'].'</textarea><br>
+				<textarea name="comment_'.$row_load_data['vendor_id'].'" id="comment_'.$row_load_data['vendor_id'].'" onchange="comments('.$row_load_data['vendor_id'].');">'.$row_load_data['vendor_comment'].'</textarea><br>
 				
 </td>';							
 				}
@@ -575,14 +564,67 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 			$data['created_by']       = $uid;
 			$data['status']           = 1;
 			insert('tbl_cadmin_users',$data);
+			
+			$cdata['cust_name']         = $row_check_parent['vendor_name'];
+			$cdata['cust_email']        = $row_check_parent['vendor_email'];
+			$cdata['cust_emailstatus']  = 1;
+			$cdata['cust_mobile']       = $row_check_parent['vendor_mobile'];
+			$cdata['cust_mobilestatus'] = 1;
+			$cdata['cust_password']         = $row_check_parent['vendor_password'];
+			$cdata['cust_salt']       = $row_check_parent['vendor_salt'];
+			$cdata['cust_status']      	  = $row_check_parent['vendor_status'];
+			
+			
+			$cdata['cust_created']       = $datetime;
+			$cdata['cust_created_by']  = $uid;
+			
+			insert('tbl_customer',$cdata);
+			
 		}
 		else
 		{
 			update('tbl_cadmin_users',array('status'=>$curr_status),$data);
 		}
+		$sql_check_user = " SELECT * FROM tbl_customer WHERE cust_email like '".$row_check_parent['vendor_email']."'";
+		$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
+		$num_check_user = mysqli_num_rows($res_check_user);
+		if($num_check_user==0)
+		{
+		    $cdata['cust_name']         = $row_check_parent['vendor_name'];
+			$cdata['cust_email']        = $row_check_parent['vendor_email'];
+			$cdata['cust_emailstatus']  = 1;
+			$cdata['cust_mobile']       = $row_check_parent['vendor_mobile'];
+			$cdata['cust_mobilestatus'] = 1;
+			$cdata['cust_password']     = $row_check_parent['vendor_password'];
+			$cdata['cust_salt']         = $row_check_parent['vendor_salt'];
+			$cdata['cust_status']       = $row_check_parent['vendor_status'];
+			$cdata['cust_vendorid']     = $row_check_parent['vendor_id'];
+			
+			$cdata['cust_created']      = $datetime;
+			$cdata['cust_created_by']   = $uid;
+			
+			insert('tbl_customer',$cdata);
+			$cdata['cust_type']        = 'trader';
 		///=========End Insertion For Panel Lgin Satish 24082017==============//
 		////////////////////////////////////////////////////////////////////////
-		
+		}
+		else
+		{
+			$cdata['cust_name']         = $row_check_parent['vendor_name'];
+			$cdata['cust_email']        = $row_check_parent['vendor_email'];
+			$cdata['cust_emailstatus']  = 1;
+			$cdata['cust_mobile']       = $row_check_parent['vendor_mobile'];
+			$cdata['cust_mobilestatus'] = 1;
+			$cdata['cust_password']     = $row_check_parent['vendor_password'];
+			$cdata['cust_salt']           = $row_check_parent['vendor_salt'];
+			$cdata['cust_status']      	  = $row_check_parent['vendor_status'];
+			
+			$cdata['cust_modified']       = $datetime;
+			$cdata['cust_modified_by']  = $uid;
+			$cdata['cust_type']        = 'trader';
+			
+			update('tbl_customer',$cdata,array('cust_email'=>$row_check_parent['vendor_email']));
+		}
 		
 		
 		
@@ -703,7 +745,7 @@ if((isset($obj->reset_pass)) == "1" && isset($obj->reset_pass))
 														$message_body .= '</td>';
 													$message_body .= '</tr>';
 													$message_body .= '<tr>';
-														$message_body .= '<td data-color="Name" data-size="Name" align="left" style="color:#ccc;"><br> You didn\'t request for a new password? Please write to <a href="mailto:support@planeteducate.com">support@planeteducate.com</a> immediately. <br>';
+														$message_body .= '<td data-color="Name" data-size="Name" align="left" style="color:#ccc;"><br> You didn\'t request for a new password? Please write to <a href="mailto:support@idb.com">support@idb.com</a> immediately. <br>';
 														$message_body .= '</td>';
 													$message_body .= '</tr>';			
 													$message_body .= '<tr>';
@@ -728,10 +770,7 @@ if((isset($obj->reset_pass)) == "1" && isset($obj->reset_pass))
 			if($cust_email)
 			{	
 				$res_insert_into_tbl_notification	= '';
-				//$res_insert_into_tbl_notification	= insertEmailSmsEntryIntoNotification('Email_forgot_password', $message, $cust_email, $cust_mobile_num);
 				
-				//sendEmail('support@planeteducate.com',$subject,$message);
-			//	$res_insert_into_tbl_notification	= insertEmailSmsEntryIntoNotification('Email_forgot_password', $message, 'support@planeteducate.com', '02261572611');
 				
 				$response_array = array("Success"=>"Success","resp"=>"<div style='color:green;' align='center'><h4>Please Check your email.</h4></div>");
 			}
@@ -749,169 +788,14 @@ if((isset($obj->reset_pass)) == "1" && isset($obj->reset_pass))
 	echo json_encode($response_array);	
 }
 
-if((isset($obj->get_comments1)) == "1" && isset($obj->get_comments1))
-{   
 
-    $start_offset   = 0;
-	
-	$page 			= $obj->page;	
-	$per_page		= $obj->row_limit_customers;
-	$search_text	= $obj->search_text_customers;	
-	
-	$cur_page 		= $page;
-	$page 	   	   	= $page - 1;
-	$start_offset += $page * $per_page;
-	$start 			= $page * $per_page;
-    $cust_id 		= $obj->cust_id;
-	
-	
-	$comments_data  = "";
-	$cust_id =54;
-	if($cust_id != "")
-	{
-		$sql_get_comments  = ' SELECT * FROM tbl_review_master as trm ';
-		$sql_get_comments .= ' INNER JOIN tbl_products_master as tpm ON trm.review_prod_id = tpm.prod_id  ';
-		$sql_get_comments .= ' INNER JOIN tbl_products_images AS tpi ON tpm.prod_id = tpi.prod_img_prodid  ';
-		$sql_get_comments .= ' WHERE review_cust_id=\''.$cust_id.'\' AND tpi.prod_img_type = \'main\'  LIMIT '.$start.','. $per_page ;
-		
-		$result_get_comments = mysqli_query($db_con,$sql_get_comments) or die(mysqli_error($db_con));	
-		$num_get_comments  =mysqli_num_rows($result_get_comments);
-		$data_count		= 	dataPagination($sql_get_comments,$per_page,$start,$cur_page);	
-	    	
-			
-		if($num_get_comments > 0)
-		{
-			$comments_data				= '<table class="table table-bordered dataTable" style="width:100%;">';
-			$comments_data				.= '<thead>';
-			$comments_data				.= '<tr>';
-			$comments_data				.= '<th align="center"  style="width="30%">Cust Name</th>';
-			$comments_data				.= '<th align="center"  style="width="30%">Product</th>';
-			$comments_data				.= '<th align="center" style="width="30%">Image</th>';	
-			$comments_data				.= '<th align="center"  style="width="15%">Comment</th>';
-			$comments_data				.= '<th align="center"  style="width="10%">Date</th>';
-			$comments_data				.= '<th align="center"  style="width="15%">Reply</th>';	
-			$comments_data				.= '<tr>';
-			$comments_data				.= '</thead>';
-			$comments_data				.= '<tbody>';
-			
-			while($cmt_row = mysqli_fetch_array($result_get_comments))
-			{
-				$comments_data				.= '<tr>';
-				$comments_data				.= '<td align="center"  style="width="30%">'.$cmt_row['prod_name'].'</td>';
-				$comments_data				.= '<td align="center"  style="width="30%">'.$cmt_row['prod_name'].'</td>';
-				$comments_data				.= '<td align="center"  style="width="30%">';
-				$imagepath 		= '../images/planet/org'.$cmt_row['prod_orgid'].'/prod_id_'.$cmt_row['prod_id'].'/medium/'.$cmt_row['prod_img_file_name'];
-				$comments_data				.= '<img style="width:100px; height="100px" src="'.$imagepath.'"';
-				$comments_data				.= '</td>';	
-				$comments_data				.= '<td align="center"  style="width="15%">'.$cmt_row['review_content'].'</td>';
-				$comments_data				.= '<td align="center" style="width="10%">'.$cmt_row['review_created'].'</td>';
-				$comments_data				.= '<td align="center" style="width="15%">Reply</td>';	
-				$comments_data				.= '<tr>';
-			}
-			$comments_data				.= '</tbody>';
-			$comments_data				.= '</table>';
-		}
-		$comments_data .=$data_count;
-		
-		
-		$response_array = array("Success"=>"Success","resp"=>$comments_data);
-		
-	}
-	else
-	{			
-		$response_array = array("Success"=>"fail","resp"=>"Cust Id Blank");
-	}
-			
-	echo json_encode($response_array);	
-}
-if((isset($obj->get_comments)) == "1" && isset($obj->get_comments))
-{
-	$response_array = array();	
-	$start_offset   = 0;
-	
-	$page 			= $obj->page;	
-	$per_page		= $obj->row_limit_customers;
-	$search_text	= $obj->search_text_customers;	
-	
-	if($page != "" && $per_page != "")	
-	{
-		
-		$cur_page 		= $page;
-		$page 	   	   	= $page - 1;
-		$start_offset += $page * $per_page;
-		$start 			= $page * $per_page;
-			
-		$comments_data  = "";
-	$cust_id =54;
-	if($cust_id != "")
-	{  
-		$sql_get_comments  = ' SELECT * FROM tbl_review_master as trm ';
-		$sql_get_comments .= ' INNER JOIN tbl_products_master as tpm ON trm.review_prod_id = tpm.prod_id  ';
-		$sql_get_comments .= ' INNER JOIN tbl_customer as tc ON trm.review_cust_id = tc.cust_id  ';
-		$sql_get_comments .= ' INNER JOIN tbl_products_images AS tpi ON tpm.prod_id = tpi.prod_img_prodid  ';
-		$sql_get_comments .= ' WHERE review_cust_id=\''.$cust_id.'\' AND tpi.prod_img_type = \'main\' ';
-		$data_count		   = 	dataPagination($sql_get_comments,$per_page,$start,$cur_page);
-		$sql_get_comments .='  LIMIT '.$start.','. $per_page ;
-		
-		$result_get_comments = mysqli_query($db_con,$sql_get_comments) or die(mysqli_error($db_con));	
-		$num_get_comments  =mysqli_num_rows($result_get_comments);
-				
-		if(strcmp($data_count,"0") !== 0)
-		{		
-			$comments_data			    .= '<table class="table table-bordered dataTable" style="width:100%;">';
-			$comments_data				.= '<thead>';
-			$comments_data				.= '<tr>';
-			$comments_data				.= '<th align="center"  style="width="30%">Cust Name</th>';
-			$comments_data				.= '<th align="center"  style="width="30%">Product</th>';
-			$comments_data				.= '<th align="center" style="width="30%">Image</th>';	
-			$comments_data				.= '<th align="center"  style="width="15%">Comment</th>';
-			$comments_data				.= '<th align="center"  style="width="10%">Date</th>';
-			$comments_data				.= '<th align="center"  style="width="15%">Reply</th>';	
-			$comments_data				.= '<tr>';
-			$comments_data				.= '</thead>';
-			$comments_data				.= '<tbody>';
-			while($cmt_row = mysqli_fetch_array($result_get_comments))
-			{
-	    	  	$comments_data				.= '<tr>';
-				$comments_data				.= '<td align="center"   align="center">'.$cmt_row['cust_fname'].' '.$cmt_row['cust_lname'].'</td>';
-				$comments_data				.= '<td align="center" style="width="30%" >'.$cmt_row['prod_name'].'</td>';
-				$comments_data				.= '<td align="center"  style="width="30%">';
-				$imagepath 		= '../images/planet/org'.$cmt_row['prod_orgid'].'/prod_id_'.$cmt_row['prod_id'].'/medium/'.$cmt_row['prod_img_file_name'];
-				$comments_data				.= '<img style="width:100px; height="100px" src="'.$imagepath.'"';
-				$comments_data				.= '</td>';	
-				$comments_data				.= '<td align="center"  style="width:15%">'.$cmt_row['review_content'].'</td>';
-				$comments_data				.= '<td align="center" style="width="10%">'.$cmt_row['review_created'].'</td>';
-				$comments_data				.= '<td align="center" style="width="15%">Reply</td>';	
-				$comments_data				.= '<tr>';														
-			}	
-      		$comments_data .= '</tbody>';
-      		$comments_data .= '</table>';	
-			$comments_data .= $data_count;
-			
-			$response_array = array("Success"=>"Success","resp"=>$comments_data);					
-		}
-		else
-		{ 
-			$response_array = array("Success"=>"fail","resp"=>"No Data Available");
-		}
-	}
-	else 
-	    {
-			$response_array = array("Success"=>"fail","resp"=>"No Data Available");
-		}
-	}
-	else
-	{
-		$response_array = array("Success"=>"fail","resp"=>"No Row Limit and Page Number Specified");
-	}
-	echo json_encode($response_array);	
-}
+
 if((isset($obj->update_comments)) == "1" && isset($obj->update_comments))
 {
     $comment  = $obj->comment;
 	$cust_id  = $obj->cust_id;
 	$response_array = array();
-	$sql_update_comment = " UPDATE `tbl_customer` SET `cust_comment`='".$comment."' WHERE cust_id ='".$cust_id."' ";
+	$sql_update_comment = " UPDATE `tbl_vendor` SET `vendor_comment`='".$comment."' WHERE vendor_id ='".$cust_id."' ";
 	$res_update_comment = mysqli_query($db_con,$sql_update_comment) or die(mysqli_error($db_con));
 	if($res_update_comment)
 	{
@@ -928,11 +812,11 @@ if((isset($obj->update_starstatus)) == "1" && isset($obj->update_starstatus))
     $status  = $obj->status;
 	$cust_id  = $obj->cust_id;
 	$response_array = array();
-	$sql_update_star = " UPDATE `tbl_customer` SET `cust_star`='".$status."' WHERE cust_id ='".$cust_id."' ";
+	$sql_update_star = " UPDATE `tbl_vendor` SET `vendor_star`='".$status."' WHERE vendor_id ='".$cust_id."' ";
 	$res_update_star = mysqli_query($db_con,$sql_update_star) or die(mysqli_error($db_con));
 	if($res_update_star)
 	{
-		$response_array = array("Success"=>"Success","resp"=>$sql_update_comment);
+		$response_array = array("Success"=>"Success","resp"=>'');
 	}
 	else
 	{

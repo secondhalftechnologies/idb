@@ -73,9 +73,10 @@
                                          <?php echo $a.' + '.$b ; ?> = ?</label>
 
 
-                                        <input type="text" data-rule-number="true" maxlength="2" size="2" name="captcha" id="captcha" class="le-input col-md-12 col-xs-12" data-rule-required="true">
+                                        <input type="text" data-rule-number="true" maxlength="2" size="2" name="captcha" id="captcha" class="le-input col-md-3 col-xs-3" data-rule-required="true">
                                     </div><!-- /.field-row -->
-                                    <input type="hidden" name="captcha_val" id="captcha_val" value="<?php echo ($a+$b)?>">
+                                    <div class="clearfix"></div>
+                                      <input type="hidden" name="captcha_val" id="captcha_val" value="<?php echo ($a+$b)?>">
 
                                     <div class="field-row clearfix">
                                         <span class="pull-left">
@@ -118,7 +119,7 @@
                   <div class="modal-body">
                     <p style="color: red;display: none;" id="resetFail"></p>
                     <p style="color: green;display: none;" id="resetSuccess"></p>
-                    <form role="form" class="login-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_forgot_password" name="frm_login" novalidate="novalidate">
+                    <form role="form" class="login-form cf-style-1 form-horizontal form-bordered form-validate" id="frm_forgot_password" name="frm_login" novalidate>
                                     <div class="field-row control-group controls success">
                                        
                                         <input placeholder="Enter your registered email address" autocomplete="off" type="email" name="txt_femail" id="txt_femail" class="le-input col-md-12 col-xs-12 valid" data-rule-required="true">

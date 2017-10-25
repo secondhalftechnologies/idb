@@ -199,7 +199,7 @@
 		
 		$where_arr['comp_user_id']	= mysqli_real_escape_string($db_con,$_POST['hid_userid']);
 		
-		if($data['comp_pri_email'] != '' && $data['comp_pri_phone'] != '' && $data['comp_name'] != '' && $data['comp_website'] != '' && $data['comp_bill_address'] != '' && $data['comp_bill_state'] != '' && $data['comp_bill_city'] != '' && $data['comp_bill_pincode'] != '' && $data['comp_ship_address'] != '' && $data['comp_ship_state'] != '' && $data['comp_ship_city'] != '' && $data['comp_ship_pincode'] != '' && $data['comp_descp'] != '' && $data['comp_user_id'] != '')
+		if($data['comp_pri_email'] != '' && $data['comp_pri_phone'] != '' && $data['comp_name'] != ''  && $data['comp_bill_address'] != '' && $data['comp_bill_state'] != '' && $data['comp_bill_city'] != '' && $data['comp_bill_pincode'] != '' && $data['comp_ship_address'] != '' && $data['comp_ship_state'] != '' && $data['comp_ship_city'] != '' && $data['comp_ship_pincode'] != '' && $data['comp_descp'] != '' && $data['comp_user_id'] != '')
 		{
 			// Query for checking the duplicate email id
   
@@ -1469,10 +1469,10 @@
 			if(isset($_FILES['img_sign_info']['name']) && $_FILES['img_sign_info']['name']!="")
 			{
 				$img_sign_info      = $_FILES['img_sign_info']['size'];
-				if($img_sign_info > 2000 &&  $img_sign_info !=0) // file size
+				/*if($img_sign_info > 200 &&  $img_sign_info !=0) // file size
 				{
 					quit('Image size should be less than 200 Kb');
-				}
+				}*/
 				
 				$sign_image_name               = explode('.',$_FILES['img_sign_info']['name']);
 				$sign_image_name               = date('dhyhis').'_'.$sign_userid.'.'.$sign_image_name[1];

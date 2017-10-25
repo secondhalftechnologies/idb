@@ -186,7 +186,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 			$branch_data .= '<th style="text-align:center">Created By</th>';
 			$branch_data .= '<th style="text-align:center">Modified</th>';
 			$branch_data .= '<th style="text-align:center">Modified By</th>';
-			$dis = checkFunctionalityRight("view_batch.php",3);
+			/*$dis = checkFunctionalityRight("view_batch.php",3);
 			if($dis)
 			{			
 				$branch_data .= '<th style="text-align:center">Status</th>';						
@@ -204,7 +204,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 				$branch_data .= '<input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/>';
 				$branch_data .= '</div></th>';
 			}
-			$branch_data .= '</tr>';
+			$branch_data .= '</tr>';*/
       		$branch_data .= '</thead>';
       		$branch_data .= '<tbody>';
 			while($row_load_data = mysqli_fetch_array($result_load_data))
@@ -220,7 +220,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['batch_created_by']).'</td>';
 				$branch_data .= '<td style="text-align:center">'.$row_load_data['branch_modified'].'</td>';
 				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['branch_by_modified']).'</td>';
-				$dis = checkFunctionalityRight("view_batch.php",3);
+				/*$dis = checkFunctionalityRight("view_batch.php",3);
 				if($dis)
 				{				
 					$branch_data .= '<td style="text-align:center">';	
@@ -248,7 +248,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 					$branch_data .= '<label for="batch'.$row_load_data['batch_id'].'" class="css-label"></label>';
 					$branch_data .= '</div></td>';										
 				}
-	          	$branch_data .= '</tr>';															
+	          	$branch_data .= '</tr>';	*/														
 			}	
       		$branch_data .= '</tbody>';
       		$branch_data .= '</table>';	
@@ -527,11 +527,6 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 }
 
 
-
-
-
-
-
 if((isset($obj->getProduct)) == "1" && isset($obj->getProduct))
 {
 
@@ -693,5 +688,7 @@ if((isset($obj->productRequest)) == "1" && isset($obj->productRequest))
 		quit('This product name is available');
 	}
 }
+
+
 
 ?>

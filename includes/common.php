@@ -10,6 +10,12 @@ include('email-helper.php');
 if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 {
 	$response_array      = array();
+	$captcha 		     = trim(mysqli_real_escape_string($db_con,$_POST['captcha']));
+	$captcha_val 		 = trim(mysqli_real_escape_string($db_con,$_POST['captcha_val']));
+	if($captcha !=$captcha_val)
+	{
+		quit('Captcha is incorrect..!');
+	}
 	$txt_user_type       = mysqli_real_escape_string($db_con,$_POST['txt_user_type']);
 	
 	if($txt_user_type=='buyer')
@@ -65,7 +71,7 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 			// START : getting fields value for inserting into tbl_customer_login_info Dn By Prathamesh On 04092017 
 			// =====================================================================================================
 			$data_login_details['cli_custid']			= $cust_id;
-			$data_login_details['cli_user_type']		= $data['cust_type'];
+			$data_login_details['cli_user_type']		= $data[$type.'type'];
 			$data_login_details['cli_ip_address']		= get_client_ip();
 			$data_login_details['cli_browser_info']		= get_browser_info();
 			$data_login_details['cli_session_id']		= session_id();
@@ -267,7 +273,7 @@ if((isset($obj->forgot_password)) == "1" && isset($obj->forgot_password))// user
 {
 	$cust_email 		 = trim(mysqli_real_escape_string($db_con,$obj->txt_email));
 
-    $row = checkExist('tbl_customer' ,array('cust_email'=>$cust_email));
+    $row = checkExist('tbl_customer' ,array('cust_email'=>$cust_email),array('cust_status'=>2));
     if($row)
     {
     	$salt                       = generateRandomString(5, 'salt');

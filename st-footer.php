@@ -216,7 +216,7 @@
                             <!-- ============================================================= CONTACT INFO ============================================================= -->
                             <div class="contact-info">
                                 <div class="footer-logo">
-                                    
+                                   <img src="assets/images/logo_p.png" class="img-responsive"  />
                                 </div><!-- /.footer-logo -->
 
                                 <p class="regular-bold"> Feel free to contact us via phone,email or just send us mail.</p>

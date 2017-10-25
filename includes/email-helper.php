@@ -41,7 +41,7 @@ function mail_template_header()
 	$mail_message .= '<td><table height="80" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
 	$mail_message .= '<tr>';
 	$mail_message .= '<td data-color="Logo 01" data-size="Logo 01" data-min="30" data-max="50" class="td-display-block-blog-center" style="font-weight:900; letter-spacing: -0.050em; font-size:40px; color:#5bbc2e; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" width="260" align="left">';
-	$mail_message .= '<img src="http://www.kumar7.com/assets/images/logo.png" height="50" width="150">';
+	$mail_message .= '<img src="http://www.kumar7.com/assets/images/logo_p.png" height="50" width="150">';
 	$mail_message .= '</td>';
 	$mail_message .= '<td class="td-display-block-blog" width="260" align="right"><!-- START button -->';
 	$mail_message .= '</tr>';

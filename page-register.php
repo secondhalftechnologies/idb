@@ -77,16 +77,41 @@
                                     	<div class="clearfix"></div>
                                     </div><!-- Password -->
                                     
+                                   
+                                    
                                     <div class="field-row control-group controls">
                                         <label class="col-md-3 col-xs-12" >Confirm Password<span style="color:#F00">*</span></label>
                                         <input type="password" class="le-input col-md-9  col-xs-12" id="txt_cpassword" name="txt_cpassword" placeholder="Confirm Password" data-rule-required="true" data-rule-equalto="#txt_password">
                                     	<div class="clearfix"></div>
                                     </div><!-- Confirm Password -->
                                     
+                                     <div class="field-row control-group controls">
+                                        <label class="col-md-3  col-xs-12"> <?php $a =rand(1,11); 
+                                        		      $b =rand(1,11); ?> 
+                                         <?php echo $a.' + '.$b ; ?> = ?<span style="color:#F00">*</span></label>
+                                        <input type="text" data-rule-number="true" maxlength="2" size="2" name="captcha" id="captcha" class="le-input col-md-3 col-xs-3" data-rule-required="true" placeholder="Captcha">
+                                        <span id="cust_password_error_register"></span>
+                                    	<div class="clearfix"></div>
+                                    </div><!-- Password -->
+                                    <input type="hidden" name="captcha_val" id="captcha_val" value="<?php echo ($a+$b)?>">
+                                    
+                                   <!-- <div class="field-row control-group controls">
+                                        <label> <?php $a =rand(1,11); 
+                                        		      $b =rand(1,11); ?> 
+                                         <?php echo $a.' + '.$b ; ?> = ?</label>
+
+
+                                       
+                                    </div><!-- /.field-row -->
+                                    <div class="clearfix"></div>
+                                      
+
+                                    <div class="field-row clearfix">
+                                    
                                      <div class="field-row clearfix">
                                         <span class="pull-left">
                                             <label class="content-color">
-                                             <input id="policy"  type="checkbox" class="le-checbox auto-width inline" data-rule-required="true"> 
+                                             <input id="policy"  type="checkbox" class="le-checbox auto-width inline" data-rule-required="true" name="policy"> 
                                                 <span class="bold">Accept Policy</span>
                                             </label>
                                         </span>
@@ -186,9 +211,11 @@
 			
 			$('#frm_register').on('submit', function(e) 
 			{
+				
 				e.preventDefault();
 				if ($('#frm_register').valid())
 				{
+					
 					$.ajax({
 						url: "includes/common.php?",
 						type: "POST",
@@ -216,12 +243,12 @@
 							{
 								$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
 								$('#error_model').modal('toggle');	
-								loading_hide();
+								
 							},
 							complete: function()
 							{
 								//alert("complete");
-								loading_hide();
+								
 							}
 						});
 				}

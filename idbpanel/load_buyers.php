@@ -203,22 +203,33 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			$data .= '</div>';
 			$data .= '</div>';	// Csutomer MObile
 			
+			
+			$sql_get_pan  =" SELECT * FROM tbl_customer_pan WHERE  ";
+			$sql_get_pan .="  pan_userid='".$cust_id."'";
+			$res_get_pan = mysqli_query($db_con,$sql_get_pan) or die(mysqli_error($db_con));
+			$row_get_pan = mysqli_fetch_array($res_get_pan);
 			$data .= '<div class="control-group">';
 			$data .= '<label for="tasktitel" class="control-label">Pan Number <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 			$data .= '<div class="controls">';
-			$data .= '<input '.$disabled.' type="text" id="cust_pan" name="cust_pan" class="input-large" data-rule-required="true" value="'.$row_get_data['cust_pan'].'" />';
+			$data .= '<input '.$disabled.' type="text" id="cust_pan" name="cust_pan" class="input-large" data-rule-required="true" value="'.$row_get_pan['pan_no'].'" />';
 			$data .= '</div>';
 			$data .= '</div>';  // Cust PAN
 			
+			
+			
+			$sql_get_gst  =" SELECT * FROM tbl_customer_gst WHERE  ";
+			$sql_get_gst .="  gst_userid='".$cust_id."'";
+			$res_get_gst = mysqli_query($db_con,$sql_get_gst) or die(mysqli_error($db_con));
+			$row_get_gst = mysqli_fetch_array($res_get_gst);
 			$data .= '<div class="control-group">';
 			$data .= '<label for="tasktitel" class="control-label">GST Number <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 			$data .= '<div class="controls">';
-			$data .= '<input '.$disabled.' type="text" id="cust_gst" name="cust_gst" class="input-large" data-rule-required="true" value="'.$row_get_data['cust_gst'].'" />';
+			$data .= '<input '.$disabled.' type="text" id="cust_gst" name="cust_gst" class="input-large" data-rule-required="true" value="'.$row_get_gst['gst_no'].'" />';
 			$data .= '</div>';
 			$data .= '</div>'; // Cust GST
 			
-			$sql_get_licence  =" SELECT * FROM tbl_licenses WHERE lic_cust_type='buyer' ";
-			$sql_get_licence .=" AND lic_custid='".$cust_id."' ORDER BY lic_created DESC";
+			$sql_get_licence  =" SELECT * FROM tbl_customer_licenses WHERE  ";
+			$sql_get_licence .="  lic_custid='".$cust_id."' ORDER BY lic_created DESC";
 			$res_get_licence = mysqli_query($db_con,$sql_get_licence) or die(mysqli_error($db_con));
 			$num_get_licence = mysqli_num_rows($res_get_licence);
 			
@@ -262,8 +273,8 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			}// LIcence Detail End
 			
 			
-			$sql_get_bank  =" SELECT * FROM tbl_bank_details WHERE bcust_type='buyer' ";
-			$sql_get_bank .=" AND bank_custid='".$cust_id."' ORDER BY bank_created DESC";
+			$sql_get_bank  =" SELECT * FROM tbl_customer_bank_details WHERE  ";
+			$sql_get_bank .="  bank_userid='".$cust_id."' ORDER BY bank_created DESC";
 			$res_get_bank = mysqli_query($db_con,$sql_get_bank) or die(mysqli_error($db_con));
 			$num_get_bank = mysqli_num_rows($res_get_bank);
 			
@@ -316,13 +327,14 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			$data .= '<div class="control-group">';
 			$data .= '<label for="tasktitel" class="control-label">Status<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 			$data .= '<div class="controls">';
-			if($row_get_data['cust_status']==0)
+			if($row_get_data['cust_status']==1)
 			{
-				$data .='<input type="button" value="Not Approved" class="btn-link" id="'.$row_get_data['cust_id'].'" onclick="changeStatus(this.id,1);addMoreCustomers(this.id,\'edit\')">';
+				$data .='<input type="button" value="Approved" class="btn-link" id="'.$row_get_data['cust_id'].'" onclick="changeStatus(this.id,0);addMoreCustomers(this.id,\'edit\')">';
+				
 			}
 			else
 			{
-				$data .='<input type="button" value="Approved" class="btn-link" id="'.$row_get_data['cust_id'].'" onclick="changeStatus(this.id,0);addMoreCustomers(this.id,\'edit\')">';
+				$data .='<input type="button" value="Not Approved" class="btn-link" id="'.$row_get_data['cust_id'].'" onclick="changeStatus(this.id,1);addMoreCustomers(this.id,\'edit\')">';
 			}
 			$data .= '</div>';
 			$data .= '</div>'; // Cust Status
@@ -451,7 +463,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				}				
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['cust_id'].'</td>';
 				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['cust_name']).'" class="btn-link" id="'.$row_load_data['cust_id'].'" onclick="addMoreCustomers(this.id,\'view\');">';
-				$customers_data .= '<i class="icon-chevron-down" id="'.$row_load_data['cust_id'].'chevron" onclick="toggleMyDiv(this.id,\'cust_info'.$row_load_data['cust_id'].'\');" style="cursor:pointer;float:right;font-size:20px;margin-right: 10px;"></i>';
+				/*$customers_data .= '<i class="icon-chevron-down" id="'.$row_load_data['cust_id'].'chevron" onclick="toggleMyDiv(this.id,\'cust_info'.$row_load_data['cust_id'].'\');" style="cursor:pointer;float:right;font-size:20px;margin-right: 10px;"></i>';
 				$customers_data .= '<div id="cust_info'.$row_load_data['cust_id'].'" style="display:none;">';				
 				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['cust_email'].'</div>';
 				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['cust_mobile'].'</div>';								
@@ -485,7 +497,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 					$customers_data .= $row_load_data['name_midified_by'];					
 				}				
 				$customers_data .= '</div>';
-				$customers_data .= '</div>';				
+				$customers_data .= '</div>';*/				
 				$customers_data .= '</td>';
 				$date = strtotime($row_load_data['cust_created']);
 	           
