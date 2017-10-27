@@ -4,7 +4,7 @@ checkuser();
 chkRights(basename($_SERVER['PHP_SELF']));
 
 // This is for dynamic title, bread crum, etc.
-$title = "View Form Factors";
+$title = "View Attribute";
 $path_parts   		= pathinfo(__FILE__);
 $filename 	  		= $path_parts['filename'].".php";
 $sql_feature 			= "select * from tbl_admin_features where af_page_url = '".$filename."'";
@@ -39,7 +39,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec">
 				<?php
 				/* this function used to add navigation menu to the page*/
-				breadcrumbs($home_url,$home_name,'View Form Factors',$filename,$feature_name);
+				breadcrumbs($home_url,$home_name,'View Attribute',$filename,$feature_name);
 				/* this function used to add navigation menu to the page*/
 				?>
                         <div class="row-fluid">
@@ -57,7 +57,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 										if($add)
 										{
 											?>
-                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Form Factor</button>
+                                            <button type="button" class="btn-info" onClick="addMoreSpec('','add')" ><i class="icon-plus"></i>&nbspAdd Attribute</button>
   											<?php
 										}
 									?>
@@ -92,7 +92,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Excel Bulk Upload For Form Factor
+                                            Excel Bulk Upload For Attribute
                                         </h3>
 
                                     </div> <!-- header title-->
@@ -158,7 +158,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_add_spec" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'Add Form Factor',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'Add Attribute',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -167,9 +167,9 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Form Factor
+                                            Add Attribute
                                         </h3>
-                                            <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
+                                            <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_add_spec','div_view_spec')" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
                                     	<form id="frm_spec_add" class="form-horizontal form-bordered form-validate" >
@@ -184,7 +184,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_edit_spec" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'Edit Form Factor',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'Edit Attribute',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -193,9 +193,9 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Form Factor
+                                            Edit Attribute
                                         </h3>
-                                            <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
+                                            <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_edit_spec','div_view_spec')" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
                                     	<form id="frm_spec_edit" class="form-horizontal form-bordered form-validate" >
@@ -221,7 +221,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                             <i class="icon-table"></i>
                                             Edit Error Form Factor
                                         </h3>
-                                            <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
+                                            <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_error_spec','div_view_spec')" ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
                                     	<form id="frm_spec_error" class="form-horizontal form-bordered form-validate" >
@@ -236,7 +236,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 <div class="container-fluid" id="div_view_spec_details" style="display:none">
 					<?php
 						/* this function used to add navigation menu to the page*/
-						breadcrumbs($home_url,$home_name,'View Form Factor Details',$filename,$feature_name);
+						breadcrumbs($home_url,$home_name,'View Attribute Details',$filename,$feature_name);
 						/* this function used to add navigation menu to the page*/
 					?>
                     <div class="row-fluid">
@@ -245,9 +245,9 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Form Factor Details
+                                            Attribute Detail
                                         </h3>
-                                        <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>
+                                        <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_view_spec_details','div_view_spec')"  ><i class="icon-arrow-left"></i>&nbsp Back </button>
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding">
                                     	<form id="frm_view_spec_details" class="form-horizontal form-bordered form-validate" >
@@ -284,7 +284,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"batch":batch, "delete_spec":1};
 				var del_spec 	= JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_attribute.php",
 					type: "POST",
 					data: del_spec,
 					contentType: "application/json; charset=utf-8",
@@ -335,7 +335,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo = {"row_limit":row_limit, "search_text":search_text, "load_spec":load_spec, "page":page};
 				var spec_load = JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_attribute.php",
 					type: "POST",
 					data: spec_load,
 					contentType: "application/json; charset=utf-8",
@@ -382,7 +382,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo 	= {"spec_id":spec_id, "curr_status":curr_status, "change_status":change_status};
 				var spec_status 	= JSON.stringify(sendInfo);
 				$.ajax({
-					url: "load_form_factor.php",
+					url: "load_attribute.php",
 					type: "POST",
 					data: spec_status,
 					contentType: "application/json; charset=utf-8",
@@ -415,7 +415,6 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			    });
 			}
 		}
-
 		function addMoreSpec(spec_id,req_type)
 		{
 			$('#div_view_spec').css("display", "none");
@@ -435,10 +434,10 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				$('#div_view_spec_details').css("display", "block");
 			}
-			var sendInfo = {"spec_id":spec_id,"req_type":req_type,"load_spec_parts":1};
+			var sendInfo = {"spec_id":spec_id,"req_type":req_type,"load_attribute_parts":1};
 			var cat_load = JSON.stringify(sendInfo);
 			$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_attribute.php?",
 					type: "POST",
 					data: cat_load,
 					contentType: "application/json; charset=utf-8",
@@ -451,7 +450,6 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                             $("#div_edit_spec_part").html(' ');
                             $("#div_error_spec_part").html(' ');
                             $("#div_view_spec_details_part").html(' ');
-
 							if(req_type == "add")
 							{
 								$("#div_add_spec_part").html(data.resp);
@@ -558,7 +556,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var sendInfo_error 		= {"row_limit1":row_limit1, "search_text1":search_text1, "load_error":load_error, "page1":page1,"cat_parent1":cat_parent1};
 				var cat_load_error = JSON.stringify(sendInfo_error);
 				$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_attribute.php?",
 					type: "POST",
 					data: cat_load_error,
 					contentType: "application/json; charset=utf-8",
@@ -612,7 +610,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				var del_cat 	= JSON.stringify(sendInfo);
 
 				$.ajax({
-					url: "load_form_factor.php?",
+					url: "load_attribute.php?",
 					type: "POST",
 					data: del_cat,
 					contentType: "application/json; charset=utf-8",
@@ -653,7 +651,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			{
 				loading_show();
 				$.ajax({
-						url: "load_form_factor.php?",
+						url: "load_attribute.php?",
 						type: "POST",
 						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 						contentType: false,       // The content type used when sending data to the server.
@@ -688,114 +686,101 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				    });
 			}
 		});
+
+
 		$('#frm_spec_add').on('submit', function(e) {
 			e.preventDefault();
 			if ($('#frm_spec_add').valid())
 			{
 				loading_show();
-                var ddl_parent_cat  = $('#ddl_parent_cat').val();
-				var spec_name 		= $.trim($("#form_factor_name").val());
-				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_add').val()
-
-                if(spec_name == "" && spec_status == "")
-                {
-                    $("#model_body").html('<span style="style="color:#F00;">Please fill details</span>');
-                    $('#error_model').modal('toggle');
-                    loading_hide();
-                }
-                else
-                {
-                    e.preventDefault();
-                    $('input[name="reg_submit_add"]').attr('disabled', 'true');
-                    var sendInfo    = {"spec_name":spec_name,"spec_status":spec_status, "ddl_parent_cat":ddl_parent_cat,"insert_req":"1"};
-                    var spec_insert = JSON.stringify(sendInfo);
-                    //alert(ddl_parent_cat+'<=>'+spec_name+'<=>'+spec_status);
-					$.ajax({
-						url: "load_form_factor.php",
-						type: "POST",
-						data: spec_insert,
-						contentType: "application/json; charset=utf-8",
-						success: function(response)
-						{
+                $.ajax({
+                        url: "load_attribute.php?",
+                        type: "POST",
+                        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                        contentType: false,       // The content type used when sending data to the server.
+                        cache: false,             // To unable request pages to be cached
+                        processData:false,        // To send DOMDocument or non processed data file it is set to false
+                        async:true,                 
+                        success: function(response) 
+                        {
+                            //alert(response);
                             data = JSON.parse(response);
-                            if(data.Success == "Success")
-							{
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
-								loading_hide();
-							}
-							else
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');
-								loading_hide();
-							}
-						},
-						error: function (request, status, error)
-						{
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
-							$('#error_model').modal('toggle');
-							loading_hide();
-						},
-						complete: function()
-						{
-							loading_hide();
-                		}
-				    });
-				}
+                            //alert();
+                            if(data.Success == "Success") 
+                            {
+                                
+                                alert("Attribute Added Successfully");
+                                window.location.assign("view_attribute.php?pag=Attribute");
+                            } 
+                            else 
+                            {
+                                //alert("Wrong Entries");
+                                $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+                                $('#error_model').modal('toggle');  
+                                            
+                            }
+                        },
+                        error: function (request, status, error) 
+                        {
+                            $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+                            $('#error_model').modal('toggle');  
+                                                
+                        },
+                        complete: function()
+                        {
+                        }
+                    });
 			}
 		});	/*Add spec*/
+
+
 		$('#frm_spec_edit').on('submit', function(e) {
 			e.preventDefault();
 			if ($('#frm_spec_edit').valid())
 			{
-				var spec_id			= $.trim($('#spec_id').val());
-                var ddl_parent_cat  = $('#ddl_parent_cat').val();
-				var spec_name 		= $.trim($('input[name="form_factor_name"]').val());
-				var spec_status 	= $('input[name=spec_status]:checked', '#frm_spec_edit').val()
-				if(parent == 1)
-				{
-					$("#req_resp").html('<span style="style="color:#F00;">Please select parent type</span>');
-				}
-				else
-				{
-					e.preventDefault();
-					$('input[name="reg_submit"]').attr('disabled', 'true');
-					var sendInfo 		= {"spec_id":spec_id,"spec_name":spec_name,"spec_status":spec_status,"ddl_parent_cat":ddl_parent_cat,"update_req":"1"};
-					var spec_insert = JSON.stringify(sendInfo);
-					$.ajax({
-						url: "load_form_factor.php?",
-						type: "POST",
-						data: spec_insert,
-						contentType: "application/json; charset=utf-8",
-						success: function(response)
-						{
-							data = JSON.parse(response);
-							if(data.Success == "Success")
-							{
-								window.location.assign("view_form_factor.php?pag=<?php echo $title; ?>");
-								loading_hide();
-							}
-							else
-							{
-								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
-								$('#error_model').modal('toggle');
-								loading_hide();
-							}
-						},
-						error: function (request, status, error)
-						{
-							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
-							$('#error_model').modal('toggle');
-							loading_hide();
-						},
-						complete: function()
-						{
-							loading_hide();
-                		}
-				    });
-				}
+                loading_show();
+                $.ajax({
+                        url: "load_attribute.php?",
+                        type: "POST",
+                        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                        contentType: false,       // The content type used when sending data to the server.
+                        cache: false,             // To unable request pages to be cached
+                        processData:false,        // To send DOMDocument or non processed data file it is set to false
+                        async:true,                 
+                        success: function(response) 
+                        {
+                            //alert(response);
+                            data = JSON.parse(response);
+                            //alert();
+                            if(data.Success == "Success") 
+                            {
+                                
+                                alert("Attribute updated Successfully");
+                                window.location.assign("view_attribute.php?pag=Attribute");
+                            } 
+                            else 
+                            {
+                                //alert("Wrong Entries");
+                                $("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+                                $('#error_model').modal('toggle');  
+                                            
+                            }
+                        },
+                        error: function (request, status, error) 
+                        {
+                            $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+                            $('#error_model').modal('toggle');  
+                                                
+                        },
+                        complete: function()
+                        {
+                        }
+                    });
 			}
+
+
 		}); /* edit spec*/
+
 		$('#frm_spec_error').on('submit', function(e) {
 			e.preventDefault();
 			if ($('#frm_spec_error').valid())
@@ -817,7 +802,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 					var sendInfo 	= {"error_id":error_id,"spec_name":spec_name,"spec_status":spec_status,"insert_req":"1"};
 					var spec_insert = JSON.stringify(sendInfo);
 					$.ajax({
-						url: "load_form_factor.php",
+						url: "load_attribute.php",
 						type: "POST",
 						data: spec_insert,
 						contentType: "application/json; charset=utf-8",
@@ -853,6 +838,13 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 		// ******************************************************************************************
 		// scripts for excel bulk upload [ for showing the error logs ] ends here
 		// ******************************************************************************************
+
+        function backToMain(close_div,show_div)
+        {
+            $('#'+close_div).css('display','none');
+             $('#'+show_div).css('display','block');
+        }
+
 		</script>
     </body>
 </html>

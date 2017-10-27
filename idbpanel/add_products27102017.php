@@ -46,11 +46,6 @@
         /* This function used to call all header data like css files and links */
     ?>
     <script type="text/javascript" src="js/add_product.js"></script>
-    <style>
-        .input-large{
-       
-        }
-    </style>
     </head>
 	<body  class="<?php echo $theme_name;?>" data-theme="<?php echo $theme_name;?>" >
     	<?php
@@ -86,11 +81,11 @@
                                 	<form id="frm_add_prod" class="form-horizontal form-bordered form-validate" enctype="multipart/form-data" >
                                          <input type="hidden"  value="1" name="add_product_req" id="add_product_req"> 
                                     	
-                                    	<div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                    	<div class="control-group">
+                                        	<label for="tasktitel" class="control-label">Product Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                         	<div class="controls" id="">
-                                            <select data-rule-required="true" onChange="getCat(this.value);getPacking(this.value);getFactor(this.value);productType(this.value);" name="txt_type" id="txt_type"  class = "select2-me input-xlarge" >
-                                            <option  value="">Select Category</option>
+                                            <select data-rule-required="true" onChange="getCat(this.value);getPacking(this.value);getFactor(this.value);productType(this.value);" name="txt_type" id="txt_type"  class = "select2-me input-large" >
+                                            <option  value="">Select Type</option>
                                             <?php
 											
 											$sql = " SELECT * FROM tbl_category WHERE cat_status =1  AND cat_type = 'parent' ";
@@ -109,10 +104,25 @@
                                           </div><!--single-->
                                         </div><!-- Composition TYpe -->
 
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Sub Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        <div class="control-group">
+                                        	<label for="tasktitel" class="control-label">Product Name<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                                 <select name="txt_cat" id="txt_cat" class = "select2-me input-xlarge"   data-rule-required="true" >
+                                            	<input  type="text" placeholder="Product Name" id="prod_name" name="prod_name" class="input-large keyup-char" value="<?php echo $product_name; ?>" data-rule-required="true" />
+                                            </div>
+                                        </div>	<!-- Product Name -->
+                                    
+                                       <!-- 	<div class="control-group span6">
+                                        	<label for="tasktitel" class="control-label">Model Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                            <div class="controls">
+                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large" data-rule-required="true" />
+                                            </div>
+                                        </div>	 --><!-- Product Model Number -->
+                                        
+                                        
+                                        <div class="control-group span6">
+                                        	<label for="tasktitel" class="control-label">Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                            <div class="controls">
+                                            <select name="txt_cat" id="txt_cat" class = "select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             	<?php
 											// Query For getting all categories from the system
 											$sql_get_cats	= " SELECT * FROM `tbl_category` ";
@@ -127,7 +137,7 @@
 											if($num_get_cats != 0)
 											{
 												?>
-												<option  value="">Select Sub Category</option>
+												<option  value="">Select Category</option>
 												<?php
 												while($row_get_cats = mysqli_fetch_array($res_get_cats))
 												{
@@ -147,72 +157,13 @@
 											}
 											?>
                                                 </select>
-                                            
-                                            </div>
-                                        </div>	<!-- Product Name -->
-                                    
-                                       <!-- 	<div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Model Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large" data-rule-required="true" />
-                                            </div>
-                                        </div>	 --><!-- Product Model Number -->
-                                        
-                                        
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Product Name<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                                	<input   type="text" placeholder="Product Name" id="prod_name" name="prod_name" class="input-xlarge keyup-char" value="<?php echo $product_name; ?>" data-rule-required="true" />
                                             </div>
                                         </div><!--Category=====-->
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Product Image<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                           <div class="controls">
-                                           <input type="file" name="prod_img" accept="image/jpeg;image/png;image;jpg">
-                                            </div>
-                                        </div><!--Image Type-->
-                                        
-                                        <div class="control-group span6" >
-                                        	<label for="tasktitel" class="control-label">Pharmacopia<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                            <select name="txt_pharmacopia" id="txt_pharmacopia" onChange="loadData();" data-rule-required="true"   class = "select2-me input-xlarge" >
-                                            	<?php
-											// Query For getting all categories from the system
-											$sql_get_pharmacopia	= " SELECT * FROM `tbl_pharmacopia` ";
-											$sql_get_pharmacopia	.= " WHERE `pharmacopia_status`='1' ";
-										    $sql_get_pharmacopia	.= " ORDER BY `pharmacopia_name` ASC ";
-											$res_get_pharmacopia	= mysqli_query($db_con, $sql_get_pharmacopia) or die(mysqli_error($db_con));
-											$num_get_pharmacopia	= mysqli_num_rows($res_get_pharmacopia);
-											
-											if($num_get_pharmacopia != 0)
-											{
-												?>
-												<option  value="">Select Pharmacopia</option>
-												<?php
-												while($row_get_pharmacopia = mysqli_fetch_array($res_get_pharmacopia))
-												{
-													?>
-													<option value="<?php echo $row_get_pharmacopia['pharmacopia_id']; ?>">
-														<?php echo ucwords($row_get_pharmacopia['pharmacopia_name']); ?>
-													</option>
-													<?php
-												}
-											}
-											else
-											{
-												?>
-												<option value="">No Match Found</option>
-												<?php	
-											}
-											?>
-                                                </select>
-                                            </div>
-                                        </div><!--Pharmacopia-->
 
                                         <div class="control-group span6" id="div_form_factor">
                                         	<label for="tasktitel" class="control-label">Form Factor<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-	                                            <select name="txt_factor" id="txt_factor"  class = "select2-me input-xlarge" >
+	                                            <select name="txt_factor" id="txt_factor"  class = "select2-me input-large" style="width:90%">
 	                                            	<?php
 												// Query For getting all categories from the system
 												$sql_get_factor	= " SELECT * FROM `tbl_form_factor` ";
@@ -253,21 +204,21 @@
                                         <div class="control-group span6" id="div_cost_effective_pack" style="display: none">
                                         	<label for="tasktitel" class="control-label">Cost Effective Pack<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                            	<input type="text" placeholder="Cost Effective Pack" id="txt_cost_effective_pack" name="txt_cost_effective_pack" class="input-xlarge keyup-char" data-rule-required="true" />
+                                            	<input type="text" placeholder="Cost Effective Pack" id="txt_cost_effective_pack" name="txt_cost_effective_pack" class="input-large keyup-char" data-rule-required="true" />
                                             </div>
                                         </div>	<!-- Cost Efective Pack -->
 
                                         <div class="control-group span6" id="div_stadard_pack" style="display: none">
                                         	<label for="tasktitel" class="control-label">Sellable Standard Pack<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                            	<input type="text" placeholder="Sellable Standard Pack" id="txt_stadard_pack" name="txt_stadard_pack" class="input-xlarge keyup-char" data-rule-required="true" />
+                                            	<input type="text" placeholder="Sellable Standard Pack" id="txt_stadard_pack" name="txt_stadard_pack" class="input-large keyup-char" data-rule-required="true" />
                                             </div>
                                         </div>	<!-- Sellable Standard Pack -->
 
                                         <div class="control-group span6" id="div_shipper" style="display: none">
                                         	<label for="tasktitel" class="control-label">Shipper <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                            	<input type="text" placeholder="Shipper" id="txt_shipper" name="txt_shipper" class="input-xlarge keyup-char" data-rule-required="true" />
+                                            	<input type="text" placeholder="Shipper" id="txt_shipper" name="txt_shipper" class="input-large keyup-char" data-rule-required="true" />
                                             </div>
                                         </div>	<!-- txt_shipper -->
 
@@ -275,10 +226,10 @@
                                         <!-- =============================================================== -->
 
                                         <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Composition Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Composition Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                         	<div class="controls" id="">
-	                                            <select name="txt_cmp_cat" id="txt_cmp_cat" onChange="showComposition(this.value);"  class = "select2-me input-xlarge"   data-rule-required="true" >
-	                                            <option  value="">Select Composition Type</option>
+	                                            <select name="txt_cmp_cat" id="txt_cmp_cat" onChange="showComposition(this.value);"  class = "select2-me input-large" style="width:90%"  data-rule-required="true" >
+	                                            <option  value="">Select Composition</option>
 	                                            <option value="Generic">Generic</option>
 	                                            <option value="Combination">Combination</option>
 	                                            <option value="Special">Special</option>
@@ -300,7 +251,7 @@
 											{
 											?>
                                             <div class="controls" id="single">
-                                            <select name="txt_cmp" id="txt_cmp"  class = "select2-me input-xlarge"   data-rule-required="true" >
+                                            <select name="txt_cmp" id="txt_cmp"  class = "select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             <option  value="">Select Composition</option>
                                             <?php 
 											while($row_get_composition= mysqli_fetch_array($res_get_composition))
@@ -316,7 +267,7 @@
                                             </div><!--single-->
 
                                             <div class="controls" style="display:none;" id="multiple">
-                                            <select multiple="multiple"  id="prod_catid" onChange="console.log($(this).children(":selected").length)" name="txt_cmp_type[]" id="txt_cmp_type" placeholder="Select Composition"  class = "select2-me input-xlarge"  data-rule-required="true" >
+                                            <select multiple="multiple"  id="prod_catid" onChange="console.log($(this).children(":selected").length)" name="txt_cmp_type" id="txt_cmp_type" placeholder="Select Composition"  class = "select2-me input-large"  data-rule-required="true" style="width:90%">
                                             <?php 
 											$res_get_composition	= mysqli_query($db_con, $sql_get_composition) or die(mysqli_error($db_con));
 											while($row_get_composition= mysqli_fetch_array($res_get_composition))
@@ -335,8 +286,7 @@
 											{
 											?>
                                             <div class="controls"  id="multiple">
-                                            <select multiple="multiple"  onChange="console.log($(this).children(":selected").length)" name="txt_cmp" id="txt_cmp" onChange="loadData();"  class = "select2-me input-xlarge" 
-                                            >
+                                            <select multiple="multiple"  onChange="console.log($(this).children(":selected").length)" name="txt_cmp" id="txt_cmp" onChange="loadData();"  class = "select2-me input-large" style="width:90%">
                                             <option  value="">Select Composition</option>
 											
 											</select>
@@ -345,7 +295,42 @@
 											 } ?>
                                         </div><!--Composition Type-->
                                         
-                                        
+                                        <div class="control-group " style="clear:both;">
+                                        	<label for="tasktitel" class="control-label">Pharmacopia<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                            <div class="controls">
+                                            <select name="txt_pharmacopia" id="txt_pharmacopia" onChange="loadData();" data-rule-required="true"   class = "select2-me input-large" style="width:70%">
+                                            	<?php
+											// Query For getting all categories from the system
+											$sql_get_pharmacopia	= " SELECT * FROM `tbl_pharmacopia` ";
+											$sql_get_pharmacopia	.= " WHERE `pharmacopia_status`='1' ";
+										    $sql_get_pharmacopia	.= " ORDER BY `pharmacopia_name` ASC ";
+											$res_get_pharmacopia	= mysqli_query($db_con, $sql_get_pharmacopia) or die(mysqli_error($db_con));
+											$num_get_pharmacopia	= mysqli_num_rows($res_get_pharmacopia);
+											
+											if($num_get_pharmacopia != 0)
+											{
+												?>
+												<option  value="">Select Pharmacopia</option>
+												<?php
+												while($row_get_pharmacopia = mysqli_fetch_array($res_get_pharmacopia))
+												{
+													?>
+													<option value="<?php echo $row_get_pharmacopia['pharmacopia_id']; ?>">
+														<?php echo ucwords($row_get_pharmacopia['pharmacopia_name']); ?>
+													</option>
+													<?php
+												}
+											}
+											else
+											{
+												?>
+												<option value="">No Match Found</option>
+												<?php	
+											}
+											?>
+                                                </select>
+                                            </div>
+                                        </div><!--Pharmacopia-->
                                         
                                       <!--   
                                         <div class="control-group span6">
@@ -364,7 +349,7 @@
                                         <div class="control-group" style="clear:both">
                                         	<label for="tasktitel" class="control-label">Tax Class<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <select name="txt_tax" id="txt_tax"  class = "select2-me input-xlarge"   data-rule-required="true" >
+                                            <select name="txt_tax" id="txt_tax"  class = "select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             <?php
 											// Query For getting all categories from the system
 											$sql_get_gst	= " SELECT * FROM `tbl_gst_master` ";
@@ -399,41 +384,14 @@
                                         </div><!--Tax Type-->
                                         
                                         <div class="control-group" style="clear: both">
-                                        	<label for="tasktitel" class="control-label">Application<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Application (ATTRIBUTE)<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <!--<input placeholder="Application" type="text" name="txt_attribute" id="txt_attribute"  data-rule-required="true"   class=" input-xlarge" style="" />-->
-                                             <select multiple="multiple"  id="txt_attribute" onChange="console.log($(this).children(":selected").length)" name="txt_attribute[]" id="txt_attribute"  class = "select2-me input-xlarge"  data-rule-required="true" placeholder="Select Application" >					
-                                             
-                                              <?php
-											// Query For getting all categories from the system
-											$sql_get_app	= " SELECT * FROM `tbl_attribute` ";
-											$sql_get_app	.= " WHERE `status`='1' ";
-										    $sql_get_app	.= " ORDER BY `attribute_name` ASC ";
-											$res_get_app	= mysqli_query($db_con,$sql_get_app) or die(mysqli_error($db_con));
-											$num_get_app	= mysqli_num_rows($res_get_app);
-											
-											if($num_get_app != 0)
-											{
-												while($row_get_app= mysqli_fetch_array($res_get_app))
-												{?>
-													<option value="<?php echo $row_get_app['id']; ?>">
-													<?php echo ucwords($row_get_app['attribute_name']); ?>
-													</option>
-												<?php 
-												}
-												?>
-											
-                                            
-                                            <?php 
-											}
-											?>
-											
-											</select>
+                                            <input placeholder="Application (ATTRIBUTE)" type="text" name="txt_attribute" id="txt_attribute"  data-rule-required="true"   class=" input-large" style="" />
                                            </div>
                                         </div><!--Application (ATTRIBUTE) -->
 
                                         <div class="control-group span4">
-                                        	<label for="tasktitel" class="control-label">Dimension Length<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Dimension LENGTH<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
                                             <input placeholder="Dimension Length" type="text" name="txt_dimensionl" id="txt_dimensionl"   data-rule-required="true"  class=" input-large" style="" />
                                            </div>
@@ -456,7 +414,7 @@
                                         <div class="control-group span4">
                                         	<label for="tasktitel" class="control-label">Unit of Weight<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <select name="txt_uoweight" id="txt_uoweight"  class="select2-me input-large"   data-rule-required="true" >
+                                            <select name="txt_uoweight" id="txt_uoweight"  class="select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             <option>Select Unit</option>
                                             <option value="Kg">Kg</option>
                                             <option value="Mg">Mg</option>
@@ -468,7 +426,7 @@
                                         <div class="control-group span4">
                                         	<label for="tasktitel" class="control-label">NETT weight<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <select name="txt_nweight" id="txt_nweight"  class="select2-me input-large"  data-rule-required="true" >
+                                            <select name="txt_nweight" id="txt_nweight"  class="select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             <?php
 											// Query For getting all categories from the system
 											$sql_get_weight	= " SELECT * FROM `tbl_unit_of_weight` ";
@@ -539,10 +497,10 @@
                                             </div>
                                         </div><!--Gross weight-->
                                         
-                                        <div class="control-group span12">
+                                        <div class="control-group span6">
                                         	<label for="tasktitel" class="control-label">Packing<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <select name="txt_packing" id="txt_packing"  class = "select2-me input-xlarge"  data-rule-required="true" >
+                                            <select name="txt_packing" id="txt_packing"  class = "select2-me input-large" style="width:90%"  data-rule-required="true" >
                                             <?php
 											// Query For getting all categories from the system
 											$sql_get_packing	= " SELECT * FROM `tbl_packing` ";
@@ -576,7 +534,12 @@
                                             </div>
                                         </div><!--Packing Type-->
 
-                                        
+                                        <div class="control-group span6">
+                                        	<label for="tasktitel" class="control-label">Product Image<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                           <div class="controls">
+                                           <input type="file" name="prod_img" accept="image/jpeg;image/png;image;jpg">
+                                            </div>
+                                        </div><!--Image Type-->
 
 
                                         <div class="control-group span4">

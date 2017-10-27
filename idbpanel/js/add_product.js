@@ -3,6 +3,7 @@ function productType(type)
 {
 	if(type=='1')
 	{
+		
 		$('#div_form_factor').css('display','block');
 
 		// =============Display None====================
@@ -15,7 +16,7 @@ function productType(type)
 	}
 	else if(type=='2')
 	{
-
+	
 		$('#div_cost_effective_pack').css('display','block');
 		$('#div_stadard_pack').css('display','block');
 		$('#div_shipper').css('display','block');

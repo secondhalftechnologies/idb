@@ -162,7 +162,13 @@
 			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
 			$data['prod_pharmacopia']      = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
 	        $data['prod_tax']              = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
-	        $data['prod_attribute']        = mysqli_real_escape_string($db_con,$_POST['txt_attribute']);
+			$data['prod_attribute']        = mysqli_real_escape_string($db_con,$_POST['txt_attribute']);
+			if(!empty($data['prod_attribute']))
+			{
+				$data['prod_attribute'] = implode(',',$data['prod_attribute']);
+			}
+	       
+			
 	        $data['prod_dimension_l']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionl']);
 	        $data['prod_dimension_h']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionh']);
 	        $data['prod_dimension_w']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionw']);
@@ -199,7 +205,7 @@
 			}
 			else
 			{
-				$data['prod_comp       ']   = implode(',',mysqli_real_escape_string($db_con,$_POST['txt_cmp']));
+				$data['prod_comp']   = implode(',',mysqli_real_escape_string($db_con,$_POST['txt_cmp_type']));
 			}
 
 
@@ -291,5 +297,82 @@
 		
 		quit($data,1);
 	}
+	
+	if((isset($obj->getPacking)) == '1' && (isset($obj->getPacking)))
+	{
+		$cat_id  = $obj->cat_id;
+		$sql_get_cats	= " SELECT * FROM `tbl_packing` ";
+		$sql_get_cats	.= " WHERE `status`='1' ";
+		$sql_get_cats	.= " 	AND `cat_id`='".$cat_id."' ";
+		$sql_get_cats	.= " ORDER BY `packing_name` ASC ";
+		$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
+		$num_get_cats	= mysqli_num_rows($res_get_cats);
+		
+		$data = '';
+		if($num_get_cats != 0)
+		{
+			$data .='<option  value="">Select Category</option>';
+			while($row_get_cats = mysqli_fetch_array($res_get_cats))
+			{
+				$data .='<option value="'.$row_get_cats['id'].'">';
+				$data .=ucwords($row_get_cats['packing_name']);
+				$data .='</option>';
+			}
+		}
+		else
+		{
+			$data .='<option value="">No Match Found</option>';
+		}
+		
+		quit($data,1);
+	}
+	if((isset($obj->getFactor)) == '1' && (isset($obj->getFactor)))
+	{
+		$cat_id  = $obj->cat_id;
+		$sql_get_cats	= " SELECT * FROM `tbl_form_factor` ";
+		$sql_get_cats	.= " WHERE `status`='1' ";
+		$sql_get_cats	.= " 	AND `cat_id`='".$cat_id."' ";
+		$sql_get_cats	.= " ORDER BY `form_factor_name` ASC ";
+		$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
+		$num_get_cats	= mysqli_num_rows($res_get_cats);
+		
+		$data = '';
+		if($num_get_cats != 0)
+		{
+			$data .='<option  value="">Select Category</option>';
+			while($row_get_cats = mysqli_fetch_array($res_get_cats))
+			{
+				$data .='<option value="'.$row_get_cats['id'].'">';
+				$data .=ucwords($row_get_cats['form_factor_name']);
+				$data .='</option>';
+			}
+		}
+		else
+		{
+			$data .='<option value="">No Match Found</option>';
+		}
+		
+		quit($data,1);
+	}
+	
+	if((isset($obj->changeStatus)) == '1' && (isset($obj->changeStatus)))
+	{
+		$prod_id        = $obj->prod_id;
+		$status         = $obj->curr_status;
+		
+		$sql_update_status = " UPDATE tbl_products SET prod_status='".$status."' WHERE id ='".$prod_id."'";
+		$res_update_status = mysqli_query($db_con,$sql_update_status) or die(mysqli_error($db_con));
+		if($res_update_status)
+		{
+			$response_array  =   array('Success'=>'Success','resp'=>$sql_update_status);
+		}
+		else
+		{
+			$response_array  =   array('Success'=>'fail','resp'=>'');
+		}
+		
+		echo json_encode($response_array);exit();
+	}
+	
 	
 ?>
