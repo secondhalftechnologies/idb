@@ -536,7 +536,7 @@ if(isset($_POST['jsubmit']) && $_POST['jsubmit']=='check_email' && $_POST['comp1
 if(isset($_POST['jsubmit']) && $_POST['jsubmit'] == "countryd" && isset($_POST['countryid']) && $_POST['countryid'] != "")
 {
 	$country_id 		= mysqli_real_escape_string($db_con,$_POST['countryid']);	
-	$sql_get_state 		= "SELECT * FROM `state` where country_id = '".$country_id."'";
+	$sql_get_state 		= "SELECT * FROM `tbl_state` where country_id = '".$country_id."'";
 	$result_get_state 	= mysqli_query($db_con,$sql_get_state) or die(mysqli_error($db_con));
 	?>
     	<option value="">Select State</option>  	
@@ -554,7 +554,7 @@ if(isset($_POST['jsubmit']) && $_POST['jsubmit'] == "countryd" && isset($_POST['
 if(isset($_POST['jsubmit']) && $_POST['jsubmit'] == "stated" && isset($_POST['stateid']) && $_POST['stateid'] != "")
 {
 	$state_id 			= mysqli_real_escape_string($db_con,$_POST['stateid']);
-	$sql_get_city		= "SELECT * FROM `city` where state_id = '".$state_id."'";
+	$sql_get_city		= "SELECT * FROM `tbl_city` where state_id = '".$state_id."'";
 	$result_get_city 	= mysqli_query($db_con,$sql_get_city) or die(mysqli_error($db_con));
 	$num_rows_get_city 	= mysqli_num_rows($result_get_city); 	
 	if($num_rows_get_city != 0)

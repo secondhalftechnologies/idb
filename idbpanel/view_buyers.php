@@ -42,7 +42,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
             <div class="container-fluid" id="div_view_customers">                
 					<?php 
                 	/* this function used to add navigation menu to the page*/ 
-                	breadcrumbs($home_url,$home_name,'View Customers',$filename,$feature_name); 
+                	breadcrumbs($home_url,$home_name,'View Buyers',$filename,$feature_name); 
                 	/* this function used to add navigation menu to the page*/ 
                 	?>          
 					<div class="row-fluid">
@@ -56,7 +56,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 </h3>
                                 <div style="float:right">
                                 <input onChange="loadCustomersData();" style="float:right" value="1" id="star_customers" name="star_customers" class="css-checkbox customers" type="checkbox">
-                                <label for="star_customers" class="css-label" style="float:right" >Star Customers</label>
+                                <label for="star_customers" class="css-label" style="float:right" >Star Buyers</label>
                                 </div>
                                
                                
@@ -67,7 +67,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                 if($add)
                                 {
                                     ?>
-                                    <button type="button" class="btn-info" onClick="addMoreCustomers('','add')" ><i class="icon-plus"></i>&nbspAdd Customers</button>
+                                    <button type="button" class="btn-info" onClick="addMoreCustomers('','add')" ><i class="icon-plus"></i>&nbspAdd Buyer</button>
                                     <?php		
                                 }
                             ?>                                       
@@ -141,7 +141,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Add Customers',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Add Buyer',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -150,9 +150,9 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Add Customers
+                                            Add Buyer
                                         </h3>
-                                            <button type="button" class="btn-info_1" style= "float:right" onClick="location.reload();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                       
+                                            <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_add_customers','div_view_customers');loadCustomerData();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                       
                                     </div> <!-- header title-->
                                     <div class="box-content nopadding" >
                                     	<form id="frm_customers_add" class="form-horizontal form-bordered form-validate" >
@@ -171,7 +171,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Edit Customers',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Edit Buyer',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -180,7 +180,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Edit Customers
+                                            Edit Buyer
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_edit_customers','div_view_customers');loadCustomersData();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                                                                                                          
                                     </div> <!-- header title-->
@@ -201,7 +201,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                 	<div class="container-fluid"> 
                         <?php 
                         /* this function used to add navigation menu to the page*/ 
-                        breadcrumbs($home_url,$home_name,'Customers Details',$filename,$feature_name); 
+                        breadcrumbs($home_url,$home_name,'Buyer Details',$filename,$feature_name); 
                         /* this function used to add navigation menu to the page*/ 
                         ?>          
                         <div class="row-fluid">
@@ -210,7 +210,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
                                     <div class="box-title">
                                         <h3>
                                             <i class="icon-table"></i>
-                                            Customers Details
+                                            Buyer Details
                                         </h3>
                                             <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_view_customers_details','div_view_customers');loadCustomersData();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                                                                   
                                     </div> <!-- header title-->
@@ -509,8 +509,9 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			e.preventDefault();
 			if ($('#frm_customers_add').valid())
 			{
-					loading_show();	
-					$('input[name="reg_submit_add"]').attr('disabled', 'true');				
+				
+					 loading_show();	
+					 $('input[name="reg_submit_add"]').attr('disabled', 'true');				
 					$.ajax({
 						url: "load_buyers.php",
 						type: "POST",

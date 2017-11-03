@@ -267,29 +267,35 @@ function generateRandomString($length)
 	}
 	return $randomString;
 }
-function randomString($query,$length)
+
+
+function randomString($query,$col_name,$length,$type)
 {
-	global $db_con;
-	$random_string = generateRandomString($length);
-	if($random_string != "")
-	{
-		$sql_check_string		= $query;
-		$result_check_string 	= mysqli_query($db_con,$sql_check_string) or die(mysqli_error($db_con));
-		$num_rows_check_string 	= mysqli_num_rows($result_check_string); 
-		if($num_rows_check_string == 0)
+		global $db_con;
+		
+		$random_string = generateRandomString($length, $type);
+		$query	= $query." AND ".$col_name." = '".$random_string."' ";
+		
+		if($random_string != "")
 		{
-			return $random_string;
+			$sql_check_string		= $query;
+			$result_check_string 	= mysqli_query($db_con,$sql_check_string) or die(mysqli_error($db_con));
+			$num_rows_check_string 	= mysqli_num_rows($result_check_string); 
+			if($num_rows_check_string == 0)
+			{
+				return $random_string;
+			}
+			else
+			{
+				randomString($query,$col_name,$length,$type);
+			}
 		}
 		else
 		{
-			randomString($query,$length);
+			randomString($query,$col_name,$length,$type);
 		}
 	}
-	else
-	{
-		randomString($query,$length);
-	}
-}
+	
 function checkFunctionalityRight($filename,$pos)
 {
    	global $db_con;
@@ -1869,4 +1875,13 @@ function getSubCatValue($cat_id, $userType)	// Parameters : Parent ID and userTy
 // ===============================================================================================================
 // END : function for getting the sub categories for dropdown list [Dn By Prathamesh on 11 Sept 2017]
 // ===============================================================================================================
+
+function sqlInjection($val="")
+{
+	global $db_con;
+	$val = mysqli_real_escape_string($db_con,$val);
+	return $val;
+	
+}
+
 ?>

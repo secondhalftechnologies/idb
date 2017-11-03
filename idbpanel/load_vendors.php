@@ -5,7 +5,7 @@ $obj = json_decode($json);
 //var_dump($obj = json_decode($json));
 $uid				= $_SESSION['panel_user']['id'];
 $utype				= $_SESSION['panel_user']['utype'];
-
+include("../PHPMailer/class.phpmailer.php");		
 if((isset($_REQUEST['insert_req'])) == "1" && isset($_REQUEST['insert_req']))
 {
 	$cust_fname				= strtolower(mysqli_real_escape_string($db_con,$_REQUEST['cust_fname']));
@@ -203,22 +203,77 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			$data .= '</div>';
 			$data .= '</div>';	// Csutomer MObile
 			
+			$sql_get_pan  =" SELECT * FROM tbl_customer_pan WHERE  ";
+			$sql_get_pan .="  pan_userid='".$cust_id."'";
+			$res_get_pan = mysqli_query($db_con,$sql_get_pan) or die(mysqli_error($db_con));
+			$row_get_pan = mysqli_fetch_array($res_get_pan);
 			$data .= '<div class="control-group">';
 			$data .= '<label for="tasktitel" class="control-label">Pan Number <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 			$data .= '<div class="controls">';
-			$data .= '<input '.$disabled.' type="text" id="vendor_pan" name="vendor_pan" class="input-large" data-rule-required="true" value="'.$row_get_data['vendor_pan'].'" />';
+			$data .= '<input '.$disabled.' type="text" id="vendor_pan" name="vendor_pan" class="input-large" data-rule-required="true" value="'.$row_get_pan['pan_no'].'" />';
 			$data .= '</div>';
 			$data .= '</div>';  // Cust PAN
 			
+			
+			$sql_get_gst  =" SELECT * FROM tbl_customer_gst WHERE  ";
+			$sql_get_gst .="  gst_userid='".$cust_id."'";
+			$res_get_gst = mysqli_query($db_con,$sql_get_gst) or die(mysqli_error($db_con));
+			$row_get_gst = mysqli_fetch_array($res_get_gst);
 			$data .= '<div class="control-group">';
 			$data .= '<label for="tasktitel" class="control-label">GST Number <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 			$data .= '<div class="controls">';
-			$data .= '<input '.$disabled.' type="text" id="vendor_gst" name="vendor_gst" class="input-large" data-rule-required="true" value="'.$row_get_data['vendor_gst'].'" />';
+			$data .= '<input '.$disabled.' type="text" id="vendor_gst" name="vendor_gst" class="input-large" data-rule-required="true" value="'.$row_get_gst['gst_no'].'" />';
 			$data .= '</div>';
 			$data .= '</div>'; // Cust GST
 			
-			$sql_get_licence  =" SELECT * FROM tbl_licenses WHERE lic_cust_type='vendor' ";
-			$sql_get_licence .=" AND lic_custid='".$cust_id."' ORDER BY lic_created DESC";
+			$sql_get_bank  =" SELECT * FROM tbl_customer_company WHERE  ";
+			$sql_get_bank .="  comp_user_id='".$cust_id."' ORDER BY comp_created_by DESC";
+			$res_get_bank = mysqli_query($db_con,$sql_get_bank) or die(mysqli_error($db_con));
+			$num_get_bank = mysqli_num_rows($res_get_bank);
+			
+			if($num_get_bank!=0)
+			{
+				
+				$data .= '<div class="control-group">';
+				$data .= '<label for="tasktitel" class="control-label">Company Details <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+				$data .='<div  class="controls">';
+				$data .= '<h4 style="text-align:center">Company Detail</h4>';
+				$data .='<table class="table table-bordered dataTable" style="text-align:center">
+							 <tr>
+							   <th style="text-align:center">Sr NO.</th>
+							   <th style="text-align:center">Company Name</th>
+							   <th style="text-align:center">Establiashment</th>
+							   <th style="text-align:center">Billing Addess</th>
+							   <th style="text-align:center">Shipping Address</th>
+							   <th style="text-align:center">Added Date</th>
+							 </tr>';
+				$bank_no =1;			 
+				while($row_get_comp = mysqli_fetch_array($res_get_bank))
+				{
+					// print_r($res_get_licence);
+					$date  = date(' j F, Y',strtotime($row_get_comp['bank_created']));
+					$data .='<tr>
+							   <td style="text-align:center">'.$bank_no++.'</td>
+							   <td style="text-align:center;with:10%">
+							   '.$row_get_comp['comp_name'].'
+							   </td>
+							   <td style="text-align:center">'.$row_get_comp['comp_establishment'].'</td>
+							   <td style="text-align:center;with:10%">'.$row_get_comp['comp_bill_address'].'</td>
+							   
+							   <td style="text-align:center" >'.$row_get_comp['comp_ship_address'].'
+							   </td>
+							   
+							   <td style="text-align:center" >'.$date.'</td>
+					        </tr>';
+				
+				}
+				$data .='</table>';
+				$data .= '</div>';	
+				$data .= '</div>';	
+			}///  customer company
+			
+			$sql_get_licence  =" SELECT * FROM tbl_customer_licenses WHERE  ";
+			$sql_get_licence .="  lic_custid='".$cust_id."' ORDER BY lic_created DESC";
 			$res_get_licence = mysqli_query($db_con,$sql_get_licence) or die(mysqli_error($db_con));
 			$num_get_licence = mysqli_num_rows($res_get_licence);
 			
@@ -235,6 +290,8 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 							   <th style="text-align:center">Licence No.</th>
 							   <th style="text-align:center">Expiry Date</th>
 							   <th style="text-align:center">Document</th>
+							   <th style="text-align:center">Type</th>
+							   
 							   <th style="text-align:center">Added Date</th>
 							 </tr>';
 				$lic_no =1;			 
@@ -250,9 +307,20 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 							   </td>
 							   <td style="text-align:center"> <input type="text" name="lic_exipiry_date" value="'.$row_get_licence['lic_number'].'"></td>
 							   <td style="text-align:center">
-							   <a href="../cust_document/'.$row_get_licence['lic_document'].'" download>'.$row_get_licence['lic_document'].'</a>
-							   </td>
-							   <td style="text-align:center" >'.$date.'</td>
+							   <a href="../idbpanel/documents/licenses/'.$row_get_licence['lic_document'].'" download>'.$row_get_licence['lic_document'].'</a>
+							   </td>';
+							   
+							    if($row_get_licence['lic_type']!="")
+								{
+									$data .='<td style="text-align:center">'.$row_get_licence['lic_type'].'</td>';
+								}
+								else
+								{
+									$data .='<td style="text-align:center">-</td>';
+								}
+							    
+							   
+							   $data .='<td style="text-align:center" >'.$date.'</td>
 					        </tr>';
 				
 				}
@@ -262,8 +330,8 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			}// LIcence Detail End
 			
 			
-			$sql_get_bank  =" SELECT * FROM tbl_bank_details WHERE bcust_type='vendor' ";
-			$sql_get_bank .=" AND bank_custid='".$cust_id."' ORDER BY bank_created DESC";
+			$sql_get_bank  =" SELECT * FROM tbl_customer_bank_details WHERE  ";
+			$sql_get_bank .="  bank_userid='".$cust_id."' ORDER BY bank_created DESC";
 			$res_get_bank = mysqli_query($db_con,$sql_get_bank) or die(mysqli_error($db_con));
 			$num_get_bank = mysqli_num_rows($res_get_bank);
 			
@@ -281,7 +349,7 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 							   <th style="text-align:center">Branch Name</th>
 							   <th style="text-align:center">Account Number</th>
 							   <th style="text-align:center">IFSC</th>
-							   <th style="text-align:center">MICR</th>
+							   <th style="text-align:center">Document</th>
 							   <th style="text-align:center">Added Date</th>
 							 </tr>';
 				$bank_no =1;			 
@@ -294,15 +362,16 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 							   <td style="text-align:center;with:10%">
 							   <input type="text" name="bank_name" value="'.$row_get_bank['bank_name'].'">
 							   </td>
-							   <td style="text-align:center;with:10%"> <input type="text" name="branch_name" value="'.$row_get_bank['branch_name'].'"></td>
+							   <td style="text-align:center;with:10%"> <input type="text" name="branch_name" value="'.$row_get_bank['bank_branch'].'"></td>
 							   <td style="text-align:center">
-							   <input type="text" name="acc_number" value="'.$row_get_bank['acc_number'].'">
+							   <input type="text" name="acc_number" value="'.$row_get_bank['bank_acc_no'].'">
 							   </td>
 							   <td style="text-align:center" >
-							   	<input type="text" class="input-small" name="ifsc" value="'.$row_get_bank['ifsc'].'">
+							   	<input type="text" class="input-small" name="ifsc" value="'.$row_get_bank['bank_ifsc'].'">
 							   </td>
 							   <td style="text-align:center" >
-							   	<input type="text" class="input-small" name="micr" value="'.$row_get_bank['micr'].'">
+							    <a href="../idbpanel/documents/banks/'.$row_get_bank['bank_image'].'" download>'.$row_get_bank['bank_image'].'</a>
+							   	
 							   </td>
 							   <td style="text-align:center" >'.$date.'</td>
 					        </tr>';
@@ -337,6 +406,46 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			}
 			quit($data,1);
 		}
+		elseif($req_type=='add')
+		{
+			
+			$data .= '<input type="hidden" name="insert_vendor" value="1" >';
+			
+			
+			
+			$data .= '<div class="control-group">';
+			$data .= '<label for="tasktitel" class="control-label">Name 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input  type="text" placeholder="Enter Full Name" id="vendor_name" name="vendor_name" class="input-large" data-rule-required="true" />';
+			$data .= '</div>';	
+			$data .= '</div>';
+			
+			$data .= '<div class="control-group">';
+			$data .= '<label for="tasktitel" class="control-label">Email 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input placeholder="Enter Email"  type="email" id="vendor_email" name="vendor_email" class="input-large" data-rule-required="true" />';
+			$data .= '</div>';	
+			$data .= '</div>';
+			
+			$data .= '<div class="control-group">';
+			$data .= '<label for="tasktitel" class="control-label">Mobile 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input  type="text" id="vendor_mobile" name="vendor_mobile" placeholder="Enter Mobile Number" class="input-large" data-rule-required="true" maxlength="10" minlength="10" />';
+			$data .= '</div>';	
+			$data .= '</div>';
+			
+			$data .= '<div class="control-group">';
+			$data .= '<div class="controls">';
+			$data .= '<input type="submit"  class="btn-success"  value="Add Vendor" />';
+			$data .= '</div>';	
+			$data .= '</div>';	
+			
+			quit($data,1);	
+		 
+		}
 	}
 	else
 	{
@@ -370,13 +479,13 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 		}
 		if($star_status==1)
 		{
-			$sql_load_data  .= " AND cust_star='".$star_status."' ";
+			$sql_load_data  .= " AND vendor_star='".$star_status."' ";
 		}
 		if($search_text != "")
 		{
-			$sql_load_data .= " and (cust_fname like '%".$search_text."%' or cust_lname like '%".$search_text."%' or cust_email like '%".$search_text."%'";
-			$sql_load_data .= " or cust_mobile_num like '%".$search_text."%' or cust_mobile_status like '%".$search_text."%' or cust_email_status like '%".$search_text."%'";
-			$sql_load_data .= "	or cust_created like '%".$search_text."%' or cust_modified like '%".$search_text."%' or cust_comment like '%".$search_text."%') ";	
+			$sql_load_data .= " and (vendor_name like '%".$search_text."%' or vendor_email like '%".$search_text."%' or vendor_mobile like '%".$search_text."%'";
+			$sql_load_data .= " or vendor_type like '%".$search_text."%' or vendor_created like '%".$search_text."%' or vendor_modified like '%".$search_text."%'";
+			$sql_load_data .= "	) ";	
 		}
 		$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);		
 		$sql_load_data .=" ORDER BY vendor_created DESC LIMIT $start, $per_page ";
@@ -388,25 +497,25 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
     	 	$customers_data .= '<thead>';
     	  	$customers_data .= '<tr>';
          	$customers_data .= '<th style="text-align:center">Sr No.</th>';
-			$edit = checkFunctionalityRight("view_customers.php",1);
+			$edit = checkFunctionalityRight("view_vendors.php",1);
 			if($edit)
 			{
-			$customers_data .= '<th style="text-align:center">Star</th>';
+				$customers_data .= '<th style="text-align:center">Star</th>';
 			}
 			$customers_data .= '<th style="text-align:center">Vendor ID</th>';
 			$customers_data .= '<th style="text-align:center">Vendor Info</th>';
 			$customers_data .= '<th style="text-align:center">Created Date</th>';		
-			$dis = checkFunctionalityRight("view_customers.php",3);
+			$dis = checkFunctionalityRight("view_vendors.php",3);
 			if($dis)
 			{					
 				$customers_data .= '<th style="text-align:center">Status</th>';											
 			}
-			$edit = checkFunctionalityRight("view_customers.php",1);
+			$edit = checkFunctionalityRight("view_vendors.php",1);
 			if($edit)
 			{					
 				$customers_data .= '<th style="text-align:center">Edit</th>';			
 			}	
-			$delete = checkFunctionalityRight("view_customers.php",2);
+			$delete = checkFunctionalityRight("view_vendors.php",2);
 			
 			if($delete)
 			{					
@@ -423,7 +532,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 			{
 	    	  	$customers_data .= '<tr>';				
 				$customers_data .= '<td style="text-align:center">'.++$start_offset.'</td>';
-				$edit = checkFunctionalityRight("view_customers.php",1);
+				$edit = checkFunctionalityRight("view_vendors.php",1);
 				if($edit)
 				{
 					$customers_data .= '<td style="text-align:center"><i id="'.$row_load_data['vendor_id'].'star_status" ';
@@ -438,7 +547,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 					$customers_data .='</td>';
 				}				
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['vendor_id'].'</td>';
-				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['vendor_name']).'" class="btn-link" id="'.$row_load_data['vendor_id'].'" >';
+				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['vendor_name']).'" class="btn-link" id="'.$row_load_data['vendor_id'].'" onclick="addMoreVendor(this.id,\'view\');">';
 				$customers_data .= '<div id="cust_info'.$row_load_data['vendor_id'].'" >';				
 				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['vendor_email'].'</div>';
 				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['vendor_mobile'].'</div>';								
@@ -468,7 +577,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 	           
 				$customers_data .= '<td style="text-align:center">'.date(' j F, Y',$date).'</td>';
 				
-				$dis = checkFunctionalityRight("view_customers.php",3);
+				$dis = checkFunctionalityRight("view_vendors.php",3);
 				if($dis)
 				{					
 					$customers_data .= '<td style="text-align:center">';					
@@ -482,13 +591,13 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 					}
 					$customers_data .= '</td>';	
 				}
-				$edit = checkFunctionalityRight("view_customers.php",1);
+				$edit = checkFunctionalityRight("view_vendors.php",1);
 				if($edit)
 				{				
 						$customers_data .= '<td style="text-align:center">';
 						$customers_data .= '<input type="button" value="Edit" id="'.$row_load_data['vendor_id'].'" class="btn-warning" onclick="addMoreVendor(this.id,\'edit\');"></td>';				
 				}
-				$edit = checkFunctionalityRight("view_customers.php",1);
+				$edit = checkFunctionalityRight("view_vendors.php",1);
 				if($edit)
 				{					
 					$customers_data .= '<td><div class="controls" style="text-align:center">';
@@ -499,7 +608,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				
 				if($edit)
 			    {
-				$customers_data .= '<td>
+				$customers_data .= '<td style="text-align:center">
 				<textarea name="comment_'.$row_load_data['vendor_id'].'" id="comment_'.$row_load_data['vendor_id'].'" onchange="comments('.$row_load_data['vendor_id'].');">'.$row_load_data['vendor_comment'].'</textarea><br>
 				
 </td>';							
@@ -824,4 +933,132 @@ if((isset($obj->update_starstatus)) == "1" && isset($obj->update_starstatus))
 	}
 	echo json_encode($response_array);
 }
+
+
+if(isset($_POST['insert_vendor']) && $_POST['insert_vendor']!='')
+{
+		$data['vendor_type']  	   =  sqlInjection('trader');
+		$data['vendor_email']   	   =  sqlInjection($_POST['vendor_email']);
+		$data['vendor_mobile']       =  sqlInjection($_POST['vendor_mobile']);
+		$data['vendor_name']    	   =  sqlInjection($_POST['vendor_name']);
+		$data['vendor_created']      =  $datetime;
+		$data['vendor_created_by']   =  $uid;
+		
+		
+		
+		$cust_email_query			= " SELECT * FROM tbl_vendor WHERE 1=1 ";
+		$cust_email_status		    = randomString($cust_email_query, 'vendor_emailstatus', 5, 'email');
+		$data['vendor_emailstatus']   = $cust_email_status;
+		$data['vendor_status']   		= 2;
+		
+		
+		
+		$salt   					= generateRandomString(5);
+		$data['vendor_salt']        	= trim($salt);
+		$password                   = generateRandomString(8);
+		$data['vendor_password']   	= trim(md5($password.$salt));
+		
+		$sql_check_user =" SELECT * FROM tbl_vendor WHERE vendor_email='".$data['vendor_email']."' or vendor_mobile='".$data['vendor_mobile']."'";
+	
+		$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
+		$num_check_user = mysqli_num_rows($res_check_user);
+		if($num_check_user==0)
+		{
+			insert('tbl_vendor',$data);
+			// =====================================================================================================
+			// START : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+			$subject		= 'IDB - Email Verification';
+			/* create body for Update mail message */			
+			$message_body = '<table class="" data-module="main Content" height="347" width="100%" bgcolor="#e2e2e2" border="0" cellpadding="0" cellspacing="0">';
+				$message_body .= '<tr>';
+					$message_body .= '<td>';
+						$message_body .= '<table data-bgcolor="BG Color" height="347" width="800" align="center" bgcolor="#EDEFF0" border="0" cellpadding="0" cellspacing="0">';
+							$message_body .= '<tr>';
+								$message_body .= '<td>';
+									$message_body .= '<table data-bgcolor="BG Color 01" height="347" width="600" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">';
+										$message_body .= '<tr>';
+											$message_body .= '<td>';
+												$message_body .= '<table height="347" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
+													$message_body .= '<tr>';
+														$message_body .= '<td data-bgcolor="Line Color" height="1" width="520" bgcolor="#cedcce"></td>';
+													$message_body .= '</tr>';
+													$message_body .= '<tr>';
+														$message_body .= '<td height="345" width="520">';
+															$message_body .= '<table height="300" width="520" align="center" border="0" cellpadding="0" cellspacing="0">';
+																$message_body .= '<tr>';
+																	$message_body .= '<td data-color="Title" data-size="Title" data-min="10" data-max="30" class="td-pad10" style="font-weight:bold; letter-spacing: 0.025em; font-size:20px; color:#494949; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center">  Email Verification. </td>';
+																$message_body .= '</tr>';
+																$message_body .= '<tr>';
+																	$message_body .= '<td data-color="Name" data-size="Name" data-min="8" data-max="30" class="td-pad10" style="font-weight:600; letter-spacing: 0.000em; line-height:20px; font-size:14px; color:#7f7f7f; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="left"> Dear '.ucwords($data[$type.'name']).', <br>';
+																	$message_body .= '</td>';
+																$message_body .= '</tr>';
+																$message_body .= '<tr>';
+																	$message_body .= '<td>';
+																		$message_body .= '<table data-bgcolor="Color Button 01" class="table-button230-center" style="border-radius: 900px;" height="36" width="230" align="center" bgcolor="#5bbc2e" border="0" cellpadding="0" cellspacing="0">';
+																			$message_body .= '<tr>';
+																				$message_body .= '<td style="padding: 5px 5px; font-weight:bold; font-size:15px; color:#ffffff; letter-spacing: 0.005em; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly; text-decoration: none;" valign="middle" align="center"><a align="center" data-color="Text Button 01" data-size="Text Button 01" data-min="6" data-max="20" href="'.$BaseFolder.'/verify/'.$cust_email_status.'" style="font-weight:bold; font-size:15px; color:#ffffff; letter-spacing: 0.005em; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly; text-decoration: none;">Verify your Email</a></td>';
+																			$message_body .= '</tr>';
+																			
+																		$message_body .= '</table>';
+																	$message_body .= '</td>';
+																$message_body .= '</tr>';
+																$message_body .= '<tr>';
+																				$message_body .= '<td style="padding: 5px 5px; font-weight:bold; font-size:15px; color:#; letter-spacing: 0.005em; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly; text-decoration: none;" valign="middle" align="center"> Your Password is '.$password.'</td>';
+																$message_body .= '</tr>';
+															$message_body .= '</table>';
+														$message_body .= '</td>';
+													$message_body .= '</tr>';
+												$message_body .= '</table>';
+											$message_body .= '</td>';
+										$message_body .= '</tr>';			
+										$message_body .= '<tr style="padding-top:10px;">';
+											$message_body .= '<td data-color="Name" data-size="Name" data-min="8" data-max="30" class="td-pad10" style="letter-spacing: 0.000em; line-height:20px; font-size:14px; color:#7f7f7f; font-family:\'Open Sans\', sans-serif; mso-line-height-rule: exactly;" align="center"> We look forward to make your online shopping a wonderful experience';
+											$message_body .= '<br>Please contact us should you have any questions or need further assistance.';
+											$message_body .= '</td>';
+										$message_body .= '</tr>';
+										$message_body .= '<tr>';
+											$message_body .= '<td data-bgcolor="Line Color" height="1" width="520" bgcolor="#cedcce"></td>';
+										$message_body .= '</tr>';						
+									$message_body .= '</table>';
+								$message_body .= '</td>';
+							$message_body .= '</tr>';
+						$message_body .= '</table>';
+					$message_body .= '</td>';
+				$message_body .= '</tr>';
+			$message_body .= '</table>';
+			/* create body for Update mail message */
+			/* create a mail template message*/
+			$message = mail_template_header()."".$message_body."".mail_template_footer();
+			
+			
+			if(sendEmail($data['vendor_email'],$subject,$message))
+			{
+			  
+				$noti['type']			= 'Email_Verification_Mail';
+				$noti['message']		= htmlspecialchars($message, ENT_QUOTES);
+				$noti['user_email']		= $data['vendor_email'];
+				$noti['user_mobile_num']= $data['vendor_mobile'];
+				$noti['created_date']	= $datetime;
+				
+				$noti_data	= insert('tbl_notification',$noti);
+				
+				 
+			}
+			else
+			{
+				quit('Email not sent please try after sometime');
+			}
+			quit('Vendor added successfully...!',1);
+			// =====================================================================================================
+			// END : Sending the mail for Email Validation Dn By Prathamesh On 04092017 
+			// =====================================================================================================
+		}
+		else
+		{
+			quit('Email or Mobile already Exist...!');
+		}
+}
+
+
 ?>
