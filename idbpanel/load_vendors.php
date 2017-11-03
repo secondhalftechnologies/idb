@@ -535,6 +535,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				$edit = checkFunctionalityRight("view_vendors.php",1);
 				if($edit)
 				{
+					
 					$customers_data .= '<td style="text-align:center"><i id="'.$row_load_data['vendor_id'].'star_status" ';
 					if($row_load_data['vendor_star'] == 1)
 					{
@@ -579,17 +580,57 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				
 				$dis = checkFunctionalityRight("view_vendors.php",3);
 				if($dis)
-				{					
-					$customers_data .= '<td style="text-align:center">';					
-					if($row_load_data['vendor_status'] == 1)
+				{		
+					$sql_vload_data  = " SELECT  * ";
+					$sql_vload_data  .= " FROM `tbl_customer` AS tc  ";
+					$sql_vload_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id "; //  Company
+					$sql_vload_data  .= " INNER JOIN tbl_customer_gst as tcg ON tc.cust_id = tcg.gst_userid ";//  GST 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_pan as tcp ON tc.cust_id = tcp.pan_userid ";//  PAN 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_bank_details as tcb ON tc.cust_id = tcb.bank_userid ";//  BANK 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_licenses as tcl ON tc.cust_id = tcl.lic_custid ";//  Lic 
+					$sql_vload_data  .= " WHERE tc.cust_vendorid ='".$row_load_data['vendor_id']."' ";
+					$res_vload_data   = mysqli_query($db_con,$sql_vload_data) or die($db_con);
+					$num_vload_data   = mysqli_num_rows($res_vload_data);
+					
+					$customers_data .= '<td style="text-align:center">';	
+					
+					if($num_vload_data==0)
+					{
+						$customers_data .='Registered';
+					}
+					else
+					{
+						if($row_load_data['vendor_status'] == 1)
+						{
+							$customers_data .= '<input type="button" value="Approved" id="'.$row_load_data['vendor_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
+							
+						}
+						else
+						{
+							$customers_data .= '<input type="button" value="Approve" id="'.$row_load_data['vendor_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+						}
+					}
+					
+					$customers_data .= '</td>';				
+					
+									
+					/*if($row_load_data['vendor_status'] == 2)
+					{
+						$customers_data .='Registered';
+						
+					}
+					elseif($row_load_data['vendor_status'] == 1)
 					{
 						$customers_data .= '<input type="button" value="Approved" id="'.$row_load_data['vendor_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
+						
 					}
 					else
 					{
 						$customers_data .= '<input type="button" value="Approve" id="'.$row_load_data['vendor_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
-					}
-					$customers_data .= '</td>';	
+					}*/
+					
+					
+					
 				}
 				$edit = checkFunctionalityRight("view_vendors.php",1);
 				if($edit)
@@ -672,7 +713,23 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 			$data['created']          = $datetime;
 			$data['created_by']       = $uid;
 			$data['status']           = 1;
-			insert('tbl_cadmin_users',$data);
+			$admin_id = insert('tbl_cadmin_users',$data);
+			
+			$sql_check_rights = " SELECT * FROM tbl_assign_rights WHERE ar_user_owner_id like '".$admin_id."'";
+			$res_check_rights = mysqli_query($db_con,$sql_check_rights) or die(mysqli_error($db_con));
+			$num_check_rights = mysqli_num_rows($res_check_rights);
+			if($num_check_rights==0)
+			{
+				$rdata['ar_user_owner_id'] = $admin_id;
+				$rdata['ar_current_rights'] = '{1:1,1,1,1}*{14:1,1,1,1}*{69:1,1,1,1}*';
+				$rdata['ar_history_rights'] = '{1:1,1,1,1}*{14:1,1,1,1}*{69:1,1,1,1}*';
+				$rdata['createddt']         = $datetime;
+		    	$rdata['createdby']         = $uid;
+				insert('tbl_assign_rights',$rdata);
+			}
+			///=========Start Insertion For Panel Login Satish 24082017==============//
+			
+			
 			
 			$cdata['cust_name']         = $row_check_parent['vendor_name'];
 			$cdata['cust_email']        = $row_check_parent['vendor_email'];
@@ -769,7 +826,7 @@ if((isset($obj->delete_customers)) == "1" && isset($obj->delete_customers))
 	$del_flag 		    = 0; 
 	foreach($ar_customers_id as $cust_id)	
 	{
-		$sql_delete_customers		= " DELETE FROM `tbl_customer` WHERE `cust_id` = '".$cust_id."' ";
+		$sql_delete_customers		= " DELETE FROM `tbl_vendor` WHERE `vendor_id` = '".$cust_id."' ";
 		$result_delete_customers	= mysqli_query($db_con,$sql_delete_customers) or die(mysqli_error($db_con));			
 		if($result_delete_customers)
 		{

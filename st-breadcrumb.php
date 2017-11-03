@@ -34,8 +34,27 @@
                                         </li>
                                     </ul>
                                 </li><!-- /.breadcrumb-nav-holder -->
+                                
+                                
                             </ul>
+                            <!--======================Start : Done By satish 03112017===========================-->
+                            <?php
+								
+								$sql_check_status= "SELECT cust_status  FROM tbl_customer WHERE cust_id ='".$logged_uid."' AND cust_type='trader'";
+								$res_check_status = mysqli_query($db_con,$sql_check_status) or die(mysqli_error($db_con));
+								$row_check_status = mysqli_fetch_array($res_check_status);
+								if($row_check_status['cust_status']==1)
+								{?>
+                                 <div class="fright padding20">
+                                    <a target="_blank" href="idbpanel/redirect.php">Go to Admin</a>
+                                </div>
+						  <?php }
+							
+							?>
+                            <!--======================End : Done By satish 03112017===========================-->
+                            
                         </nav>
+                        <a>dhdsf</a>
                     </div><!-- /.container -->
                 </div><!-- /#top-mega-nav -->
                 <!-- ========================================= BREADCRUMB : END ========================================= -->

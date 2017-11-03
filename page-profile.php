@@ -136,6 +136,23 @@
         <?php include('st-validator-css.php'); ?>
     	<link href="assets/css/bootstrap-select.min.css" rel="stylesheet" title="selectbox">
 		<style type="text/css">
+		    .fleft
+			{
+				float:left;
+			}
+			.fright
+			{
+				float:right;
+			}
+			.padding20
+			{
+				padding:20px;
+				color:#4f7351;
+			}
+			.padding20 a
+			{
+				color:#4f7351;
+			}
 			.cls_mainmenu
 			{
 			display: none;

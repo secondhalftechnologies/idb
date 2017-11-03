@@ -1,6 +1,8 @@
 <?php
 include("include/routines.php");
+
 checkuser();
+
 chkRights(basename($_SERVER['PHP_SELF']));
 
 // This is for dynamic title, bread crum, etc.
@@ -121,63 +123,7 @@ $start_offset = 0;
                             echo $no_of_emp	= getCount('<i style="color:#FFF" class="fa fa-user fa-4x"></i>', 'tbl_employee_master', '', 'Number of Employees')
                         ?>
                         
-                        <?php
-                            echo $no_of_active_org	= getCount('<i style="color:#FFF" class="fa fa-sitemap fa-4x"></i>', 'tbl_oraganisation_master', 'org_status =1', 'Active Organizations')
-                        ?>
-                        
-                        <?php
-                            echo $no_of_inactive_org	= getCount('<i style="color:#FFF" class="fa fa-sitemap fa-4x"></i>', 'tbl_oraganisation_master', 'org_status =0', 'Inactive Organizations')
-                        ?>
-                        
-                        <?php
-                            echo $active_schools	= getCount('<i style="color:#FFF" class="fa fa-id-card fa-4x"></i>', 'tbl_schools', 'status =1', 'Active Schools')
-                        ?>
-                        
-                        <?php
-                            echo $inactive_schools	= getCount('<i style="color:#FFF" class="fa fa-id-card fa-4x"></i>', 'tbl_schools', 'status =0', 'Inactive Schools')
-                        ?>
-                        
-                        <?php
-                            echo $active_classes	= getCount('<i style="color:#FFF" class="fa fa-id-badge fa-4x"></i>', 'tbl_class', 'class_status =1', 'Active Classes')
-                        ?>
-                        
-                        <?php
-                            echo $inactive_classes	= getCount('<i style="color:#FFF" class="fa fa-id-badge fa-4x"></i>', 'tbl_class', 'class_status =0', 'Inactive Classes')
-                        ?>
-                        
-                        <?php
-                            echo $active_brands	= getCount('<i style="color:#FFF" class="fa fa-first-order fa-4x"></i>', 'tbl_brands_master', 'brand_status =1', 'Active Brands')
-                        ?>
-                        
-                        <?php
-                            echo $inactive_brands	= getCount('<i style="color:#FFF" class="fa fa-first-order fa-4x"></i>', 'tbl_brands_master', 'brand_status =0', 'Inactive Brands')
-                        ?>
-                        
-						<?php
-                            echo $active_campaign	= getCount('<i style="color:#FFF" class="fa fa-list-alt fa-4x"></i>', 'tbl_campaign', 'status =1', 'Active Campaigns')
-                        ?>
-                        
-                        <?php
-                            echo $inactive_campaign	= getCount('<i style="color:#FFF" class="fa fa-list-alt fa-4x"></i>', 'tbl_campaign', 'status =0', 'Inactive Campaigns')
-                        ?>
-                        
-                        <?php
-                            echo $complete_orders	= getCount('<i style="color:#FFF" class="fa fa-cart-plus fa-4x"></i>', 'tbl_cart', 'cart_type ="complete"', 'Complete Orders')
-                        ?>
-                        
-                        <?php
-                            echo $incomplete_orders	= getCount('<i style="color:#FFF" class="fa fa-cart-arrow-down fa-4x"></i>', 'tbl_cart', 'cart_type ="incomplete"', 'Incomplete Orders')
-                        ?>
-                        
-                         <?php
-                            echo $student_package_verified	= getCount('<i style="color:#FFF" class="fa fa-gift fa-4x"></i>', 'tbl_student_package', 'student_package_mobile_verify =1', 'Student Package (Verified)')
-                        ?>
-                        
-                        <?php
-                            echo $student_package_not_verified	= getCount('<i style="color:#FFF" class="fa fa-gift fa-4x"></i>', 'tbl_student_package', 'student_package_mobile_verify =0', 'Student Package(Unverified)')
-                        ?>
-                        
-                        </div>
+                      </div>
                       	
     <!--container-fluid-->
    				</div>
@@ -190,7 +136,7 @@ $start_offset = 0;
        
    </div>
 		<style>
-        body { padding-top:20px; }
+        
 		.panel-body .btn:not(.btn-block)
 		 {
 			  width:120px;margin-bottom:10px; 

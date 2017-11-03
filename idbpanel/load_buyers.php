@@ -216,6 +216,17 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			$data .= '</div>';  // Cust PAN
 			
 			
+			$sql_get_tan  =" SELECT * FROM tbl_customer_tan WHERE  ";
+			$sql_get_tan .="  tan_userid='".$cust_id."'";
+			$res_get_tan = mysqli_query($db_con,$sql_get_tan) or die(mysqli_error($db_con));
+			$row_get_tan = mysqli_fetch_array($res_get_tan);
+			$data .= '<div class="control-group">';
+			$data .= '<label for="tasktitel" class="control-label">Tan Number </label>';
+			$data .= '<div class="controls">';
+			$data .= '<input '.$disabled.' type="text" id="cust_tan" name="cust_tan" class="input-large" data-rule-required="true" value="'.$row_get_tan['tan_no'].'" />';
+			$data .= '</div>';
+			$data .= '</div>';  // Cust TAN
+			
 			
 			$sql_get_gst  =" SELECT * FROM tbl_customer_gst WHERE  ";
 			$sql_get_gst .="  gst_userid='".$cust_id."'";
@@ -458,6 +469,33 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 			$data .= '</div>';	
 			$data .= '</div>';
 			
+			//==========================Start : Company Informtaion ===========================//
+			//==========================Start : Company Name ===========================//
+			$data .= '<div class="control-group">';
+			$data .= '<label for="tasktitel" class="control-label">Company Name 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input  type="text" id="comp_name" name="comp_name" placeholder="Company Information " class="input-large" data-rule-required="true"  />';
+			$data .= '</div>';	
+			$data .= '</div>';
+			
+			//==========================Start : Company Website ===========================//
+			$data .= '<div class="control-group span6">';
+			$data .= '<label for="tasktitel" class="control-label">Company Website 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input  type="text" id="comp_website" name="comp_website" placeholder="Company Website " class="input-large" data-rule-required="true"  />';
+			$data .= '</div>';	
+			$data .= '</div>';
+			//==========================Start : Company Establishment ===========================//
+			$data .= '<div class="control-group span6">';
+			$data .= '<label for="tasktitel" class="control-label">Company Establishment 
+			<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
+			$data .= '<div class="controls">';
+			$data .= '<input  type="text" id="comp_establishment" name="comp_establishment" placeholder="Company Establishment " class="input-large" data-rule-required="true"  />';
+			$data .= '</div>';	
+			$data .= '</div>';// Web
+			
 			$data .= '<div class="control-group">';
 			$data .= '<div class="controls">';
 			$data .= '<input type="submit"  class="btn-success"  value="Add Buyer" />';
@@ -579,41 +617,7 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				}				
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['cust_id'].'</td>';
 				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['cust_name']).'" class="btn-link" id="'.$row_load_data['cust_id'].'" onclick="addMoreCustomers(this.id,\'view\');">';
-				/*$customers_data .= '<i class="icon-chevron-down" id="'.$row_load_data['cust_id'].'chevron" onclick="toggleMyDiv(this.id,\'cust_info'.$row_load_data['cust_id'].'\');" style="cursor:pointer;float:right;font-size:20px;margin-right: 10px;"></i>';
-				$customers_data .= '<div id="cust_info'.$row_load_data['cust_id'].'" style="display:none;">';				
-				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['cust_email'].'</div>';
-				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['cust_mobile'].'</div>';								
-				$customers_data .= '<div><b>Created:</b>&nbsp;';
-				if(trim($row_load_data['cust_created']) == "")
-				{
-					$customers_data .= '<span style="color:#F00">Not Available</span>';
-				}
-				else
-				{
-					$customers_data .= $row_load_data['cust_created'];			
-				}
-				$customers_data .= '</div>';
-				$customers_data .= '<div><b>Modified:</b>&nbsp;';
-				if(trim($row_load_data['cust_modified']) == "" || trim($row_load_data['cust_modified']) =='0000-00-00 00:00:00')
-				{
-					$customers_data .= '<span style="color:#F00">Not Available</span>';
-				}
-				else
-				{
-					$customers_data .= $row_load_data['cust_modified'];					
-				}				
-				$customers_data .= '</div>';	
-				$customers_data .= '<div><b>Modified By:</b>';
-				if(trim($row_load_data['name_midified_by']) == "")
-				{
-					$customers_data .= '<span style="color:#F00">Not Available</span>';
-				}
-				else
-				{
-					$customers_data .= $row_load_data['name_midified_by'];					
-				}				
-				$customers_data .= '</div>';
-				$customers_data .= '</div>';*/				
+								
 				$customers_data .= '</td>';
 				$date = strtotime($row_load_data['cust_created']);
 	           
@@ -622,16 +626,37 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				$dis = checkFunctionalityRight("view_buyers.php",3);
 				if($dis)
 				{					
-					$customers_data .= '<td style="text-align:center">';					
-					if($row_load_data['cust_status'] == 1)
+					$sql_vload_data  = " SELECT  * ";
+					$sql_vload_data  .= " FROM `tbl_customer` AS tc  ";
+					$sql_vload_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id "; //  Company
+					$sql_vload_data  .= " INNER JOIN tbl_customer_gst as tcg ON tc.cust_id = tcg.gst_userid ";//  GST 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_pan as tcp ON tc.cust_id = tcp.pan_userid ";//  PAN 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_bank_details as tcb ON tc.cust_id = tcb.bank_userid ";//  BANK 
+					$sql_vload_data  .= " INNER JOIN tbl_customer_licenses as tcl ON tc.cust_id = tcl.lic_custid ";//  Lic 
+					$sql_vload_data  .= " WHERE tc.cust_id ='".$row_load_data['cust_id']."' ";
+					$res_vload_data   = mysqli_query($db_con,$sql_vload_data) or die($db_con);
+					$num_vload_data   = mysqli_num_rows($res_vload_data);
+					
+					$customers_data .= '<td style="text-align:center">';	
+					
+					if($num_vload_data==0)
 					{
-						$customers_data .= '<input type="button" value="Approved" id="'.$row_load_data['cust_id'].'" class="btn-success" onclick="changeStatus(this.id,0);loadCustomersData();">';
+						$customers_data .='Registered';
 					}
 					else
 					{
-						$customers_data .= '<input type="button" value="Approve" id="'.$row_load_data['cust_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);loadCustomersData();">';
+						if($row_load_data['cust_status'] == 1)
+						{
+							$customers_data .= '<input type="button" value="Approved" id="'.$row_load_data['cust_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
+							
+						}
+						else
+						{
+							$customers_data .= '<input type="button" value="Approve" id="'.$row_load_data['cust_id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+						}
 					}
-					$customers_data .= '</td>';	
+					
+					$customers_data .= '</td>';		
 				}
 				$edit = checkFunctionalityRight("view_buyers.php",1);
 				if($edit)

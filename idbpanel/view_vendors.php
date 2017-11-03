@@ -518,7 +518,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{
-								window.location.assign("view_vendor.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_vendors.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							} 
 							else 

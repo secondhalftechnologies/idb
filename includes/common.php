@@ -56,6 +56,8 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 	
 	//quit($data[$type.'password'].'<==>'.$data[$type.'salt'].'<==>'.$data[$type.'password']);
 	
+	
+	
 	$sql_check_user =" SELECT * FROM ".$table_name." WHERE ".$type."email='".$data[$type.'email']."' or ".$type."mobile='".$data[$type.'mobile']."'";
  	$res_check_user = mysqli_query($db_con,$sql_check_user) or die(mysqli_error($db_con));
 	$num_check_user = mysqli_num_rows($res_check_user);
@@ -66,6 +68,22 @@ if(isset($_POST['txt_usergrp']) && $_POST['txt_usergrp'] !='')
 		//if(move_uploaded_file($_FILES['file_license_pdf']['tmp_name'],$dir))
 		//{
 			$cust_id                          			= insert($table_name,$data);
+			//quit($data[$type.'password'].'<==>'.$data[$type.'salt'].'<==>'.$data[$type.'password']);
+			if($txt_user_type=='vendor')
+			{
+				$vdata['cust_name']  			 = $data[$type.'name'];
+				$vdata['cust_email']  			 = $data[$type.'email'];
+				$vdata['cust_emailstatus']		 = $data[$type.'emailstatus'];
+				$vdata['cust_mobile']  			 = $data[$type.'mobile'];
+				$vdata['cust_type']  			 =  'trader';
+				$vdata['cust_password']			 = $data[$type.'password'];
+				$vdata['cust_salt']				 = $data[$type.'salt'];
+				$vdata['cust_status']			 = 2;
+				$vdata['cust_created']			 = $datetime;  
+				$vdata['cust_vendorid'] 		 = $cust_id;
+				insert('tbl_customer',$vdata);
+			}
+			
 			
 			// =====================================================================================================
 			// START : getting fields value for inserting into tbl_customer_login_info Dn By Prathamesh On 04092017 

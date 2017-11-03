@@ -509,9 +509,8 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			e.preventDefault();
 			if ($('#frm_customers_add').valid())
 			{
-				
-					 loading_show();	
-					 $('input[name="reg_submit_add"]').attr('disabled', 'true');				
+				  // loading_show();	
+								
 					$.ajax({
 						url: "load_buyers.php",
 						type: "POST",
@@ -525,7 +524,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 							data = JSON.parse(response);
 							if(data.Success == "Success") 
 							{
-								window.location.assign("view_customers.php?pag=<?php echo $title; ?>");
+								window.location.assign("view_buyers.php?pag=<?php echo $title; ?>");
 								loading_hide();
 							} 
 							else 
