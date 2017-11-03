@@ -89,7 +89,7 @@
                                     	<div class="control-group span6">
                                         	<label for="tasktitel" class="control-label">Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                         	<div class="controls" id="">
-                                            <select data-rule-required="true" onChange="getCat(this.value);getPacking(this.value);getFactor(this.value);productType(this.value);" name="txt_type" id="txt_type"  class = "select2-me input-xlarge" >
+                                            <select data-rule-required="true" onChange="getCat(this.value);getPacking(this.value);getFactor(this.value);productType(this.value);getApplication(this.value);" name="txt_type" id="txt_type"  class = "select2-me input-xlarge" >
                                             <option  value="">Select Category</option>
                                             <?php
 											
@@ -832,6 +832,50 @@
 						if(data.Success == "Success") 
 						{							
 							$('#txt_factor').html(data.resp);
+						} 
+						else 
+						{
+						
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							$('#error_model').modal('toggle');
+							loading_hide();					
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();	
+					}
+				});		
+		
+		
+		   }
+		   
+		    function getApplication(cat_id)
+		    {
+			    if(cat_id=="")
+				{
+					alert('Please select Category...!');
+					return false;
+				}
+				var sendInfo 	= {"cat_id":cat_id,"getApplication":1};
+				var area_status = JSON.stringify(sendInfo);								
+				$.ajax({
+					url: "load_products.php?",
+					type: "POST",
+					data: area_status,
+					contentType: "application/json; charset=utf-8",						
+					success: function(response) 
+					{			
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{							
+							$('#txt_attribute').html(data.resp);
 						} 
 						else 
 						{

@@ -375,4 +375,35 @@
 	}
 	
 	
+	if((isset($obj->getApplication)) == '1' && (isset($obj->getApplication)))
+	{
+		$cat_id  = $obj->cat_id;
+		
+		$sql_get_cats	= " SELECT * FROM `tbl_attribute` ";
+		$sql_get_cats	.= " WHERE `status`='1' ";
+		$sql_get_cats	.= " 	AND `cat_id`='".$cat_id."' ";
+		$sql_get_cats	.= " ORDER BY `attribute_name` ASC ";
+		$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
+		$num_get_cats	= mysqli_num_rows($res_get_cats);
+		
+		$data = '';
+		if($num_get_cats != 0)
+		{
+			$data .='<option  value="">Select Category</option>';
+			while($row_get_cats = mysqli_fetch_array($res_get_cats))
+			{
+				$data .='<option value="'.$row_get_cats['id'].'">';
+				$data .=ucwords($row_get_cats['attribute_name']);
+				$data .='</option>';
+			}
+		}
+		else
+		{
+			$data .='<option value="">No Match Found</option>';
+		}
+		
+		quit($data,1);
+	}
+	
+	
 ?>

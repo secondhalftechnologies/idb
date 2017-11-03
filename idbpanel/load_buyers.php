@@ -512,9 +512,6 @@ if((isset($obj->load_customers_parts)) == "1" && isset($obj->load_customers_part
 	}
 }
 
-
-
-
 if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 {
 	$response_array = array();	
@@ -626,20 +623,20 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				$dis = checkFunctionalityRight("view_buyers.php",3);
 				if($dis)
 				{					
-					$sql_vload_data  = " SELECT  * ";
-					$sql_vload_data  .= " FROM `tbl_customer` AS tc  ";
-					$sql_vload_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id "; //  Company
-					$sql_vload_data  .= " INNER JOIN tbl_customer_gst as tcg ON tc.cust_id = tcg.gst_userid ";//  GST 
-					$sql_vload_data  .= " INNER JOIN tbl_customer_pan as tcp ON tc.cust_id = tcp.pan_userid ";//  PAN 
-					$sql_vload_data  .= " INNER JOIN tbl_customer_bank_details as tcb ON tc.cust_id = tcb.bank_userid ";//  BANK 
-					$sql_vload_data  .= " INNER JOIN tbl_customer_licenses as tcl ON tc.cust_id = tcl.lic_custid ";//  Lic 
-					$sql_vload_data  .= " WHERE tc.cust_id ='".$row_load_data['cust_id']."' ";
-					$res_vload_data   = mysqli_query($db_con,$sql_vload_data) or die($db_con);
-					$num_vload_data   = mysqli_num_rows($res_vload_data);
+					$sql_cload_data  = " SELECT  * ";
+					$sql_cload_data  .= " FROM `tbl_customer` AS tc  ";
+					$sql_cload_data  .= " INNER JOIN tbl_customer_company as tcc ON tc.cust_id = tcc.comp_user_id "; //  Company
+					$sql_cload_data  .= " INNER JOIN tbl_customer_gst as tcg ON tc.cust_id = tcg.gst_userid ";//  GST 
+					$sql_cload_data  .= " INNER JOIN tbl_customer_pan as tcp ON tc.cust_id = tcp.pan_userid ";//  PAN 
+					$sql_cload_data  .= " INNER JOIN tbl_customer_bank_details as tcb ON tc.cust_id = tcb.bank_userid ";//  BANK 
+					$sql_cload_data  .= " INNER JOIN tbl_customer_licenses as tcl ON tc.cust_id = tcl.lic_custid ";//  Lic 
+					$sql_cload_data  .= " WHERE tc.cust_id ='".$row_load_data['cust_id']."' ";
+					$res_cload_data   = mysqli_query($db_con,$sql_cload_data) or die($db_con);
+					$num_cload_data   = mysqli_num_rows($res_cload_data);
 					
 					$customers_data .= '<td style="text-align:center">';	
 					
-					if($num_vload_data==0)
+					if($num_cload_data==0)
 					{
 						$customers_data .='Registered';
 					}
@@ -727,6 +724,7 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 	}				
 }
 
+
 if((isset($obj->delete_customers)) == "1" && isset($obj->delete_customers))
 {
 	$response_array = array();		
@@ -752,6 +750,7 @@ if((isset($obj->delete_customers)) == "1" && isset($obj->delete_customers))
 	}		
 	echo json_encode($response_array);	
 }
+
 
 if((isset($obj->reset_pass)) == "1" && isset($obj->reset_pass))
 {   
@@ -948,6 +947,8 @@ if((isset($obj->get_comments)) == "1" && isset($obj->get_comments))
 	}
 	echo json_encode($response_array);	
 }
+
+
 if((isset($obj->update_comments)) == "1" && isset($obj->update_comments))
 {
     $comment  = $obj->comment;
@@ -965,6 +966,8 @@ if((isset($obj->update_comments)) == "1" && isset($obj->update_comments))
 	}
 	echo json_encode($response_array);
 }
+
+
 if((isset($obj->update_starstatus)) == "1" && isset($obj->update_starstatus))
 {
     $status  = $obj->status;
