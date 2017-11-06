@@ -1,0 +1,2 @@
+[03-Nov-2017 12:05:46 Asia/Kolkata] PHP Fatal error:  Call to undefined function sqlInjection() in /home/kumar7/public_html/idbpanel/load_vendors.php on line 942
+[03-Nov-2017 12:06:11 Asia/Kolkata] PHP Fatal error:  Call to undefined function sqlInjection() in /home/kumar7/public_html/idbpanel/load_vendors.php on line 942
