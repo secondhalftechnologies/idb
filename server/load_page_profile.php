@@ -155,7 +155,7 @@
 				{
 					$row_get_user_info			= mysqli_fetch_array($res_get_user_info);
 					$_SESSION['front_panel']	= $row_get_user_info;
-					quit('Update Successfully', 1);
+					quit('Login Information updated successfully', 1);
 				}
 				else
 				{
@@ -383,7 +383,7 @@
 				
 				if($res_update_user_company)
 				{
-					quit('Information Added Successfully!', 1);
+					quit('Company Information updated Successfully!', 1);
 				}
 				else
 				{
@@ -449,7 +449,7 @@
 			
 			if($res)
 			{
-				quit('Added Successfully...!',1);
+				quit('Pan Information updated Successfully...!',1);
 			}
 			else
 			{
@@ -495,7 +495,7 @@
 				
 				if($res)
 				{
-					quit('Update Successfully...!',1);
+					quit('Pan Information updated Successfully...!',1);
 				}
 				else
 				{
@@ -552,7 +552,7 @@
 			
 			if($res)
 			{
-				quit('Added Successfully...!',1);
+				quit('Tan Information updated successfully...!',1);
 			}
 			else
 			{
@@ -598,7 +598,7 @@
 				
 				if($res)
 				{
-					quit('Update Successfully...!',1);
+					quit('Tan Information updated successfully...!',1);
 				}
 				else
 				{
@@ -732,7 +732,7 @@
 				$res                          = insert('tbl_customer_gst',$data);
 			    if($res)
 				{
-					quit('Added Successfully...!',1);
+					quit('GST Information updated successfully...!',1);
 				}
 				else
 				{
@@ -883,7 +883,7 @@
 		$res                          = update('tbl_customer_gst',$data,$where_arr);
 		if($res)
 		{
-		 	quit('Update Successfully...!',1);
+		 	quit('GST Information updated successfully...!',1);
 		}
 		else
 		{
@@ -936,7 +936,7 @@
 			$res                          = insert('tbl_customer_bank_details',$data);
 			if($res)
 			{
-				quit('Added Successfully...!',1);
+				quit('Bank Information updated successfully...!',1);
 			}
 			else
 			{
@@ -986,7 +986,7 @@
 				
 				if($res)
 				{
-					quit('Update Successfully...!',1);
+					quit('Bank Information updated Successfully...!',1);
 				}
 				else
 				{
@@ -998,7 +998,7 @@
 		else
 		{
 			 update('tbl_customer_bank_details',$data,$where_arr);
-			 quit('Update Successfully...!',1);
+			 quit(' Bank Information updated Successfully...!',1);
 		}
 	}
 	
@@ -1038,7 +1038,7 @@
 			
 			if($res)
 			{
-				quit('Added Successfully...!',1);
+				quit('Lincense Information updated Successfully...!',1);
 			}
 			else
 			{
@@ -1082,7 +1082,7 @@
 				
 				if($res)
 				{
-					quit('Update Successfully...!',1);
+					quit('License Information updated Successfully...!',1);
 				}
 				else
 				{
@@ -1098,7 +1098,7 @@
 		else
 		{
 			 update('tbl_customer_licenses',$data,$where_arr);
-			 quit('Update Successfully...!',1);
+			 quit('License Information updated Successfully...!',1);
 		}
     }
 	
@@ -1148,7 +1148,7 @@
 			$res                          = insert('tbl_customer_licenses',$data);
 			if($res)
 			{
-				quit('Added Successfully...!',1);
+				quit('License Information updated Successfully...!',1);
 			}
 			else
 			{
@@ -1280,7 +1280,7 @@
 		}
 	    if($res)
 		{
-			quit('Update Successfully...!',1);
+			quit('License Information updated Successfully...!',1);
 		}
 		else
 		{
@@ -1382,7 +1382,7 @@
 			if(move_uploaded_file($_FILES['file_lic_20c_image']['tmp_name'],$dir2))
 		    {
 				insert('tbl_customer_licenses',$data);
-				quit('Added Successfully...!',1);
+				quit('License Information updated Successfully...!',1);
 			}
 			else
 			{
@@ -1445,7 +1445,7 @@
 			$res = update('tbl_customer_licenses',$data20B,$where_20B);
 			$res = update('tbl_customer_licenses',$data21B,$where_21B);
 
-			quit('Update Successfully...!',1);
+			quit('License Information updated Successfully...!',1);
 		}
 		///================Insertion And Updation Start here Satish 15092017============//
 		if(isset($_POST['lic_id']))
@@ -1510,7 +1510,7 @@
 				}
 				
 			}// for end
-			quit("Update Successfully...!",1);
+			quit("License Information updated Successfully...!",1);
 		}// if end
 	}
 	
@@ -1602,7 +1602,7 @@
 			}
 			else
 			{
-				quit('Update Successfully...!',1);
+				quit('Signature Information updated Successfully...!',1);
 			}
 		}
 		else
@@ -1628,7 +1628,7 @@
 				if(move_uploaded_file($_FILES['img_sign_info']['tmp_name'],$dir))
 				{
 					$res                          = insert('tbl_customer_sign',$data);
-					quit('Update Successfully...!',1);
+					quit('Signature Information updated Successfully...!',1);
 				}
 				else
 				{

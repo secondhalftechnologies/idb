@@ -354,7 +354,13 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		$data .= '$("#prod_id").select2();';		
 		$data .= '</script>';
 
-
+		$data .= ' <div class="control-group">
+                                        	<label for="tasktitel" class="control-label">Product Id<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                            <div class="controls">
+                                                	<input   type="text" placeholder="Vendor Product ID" id="vprod_id" name="vprod_id" class="input-large" value="'.@$row['vprod_id'].'" data-rule-required="true" />
+                                            </div>
+                                        </div><!--Category=====-->';
+										
 		 ///////========================Product MRP================================//
 		$data .= '<div class="control-group" id="prod_mrp">';
 		$data .= '<label for="tasktitel" class="control-label">Product MRP<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
@@ -477,7 +483,7 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		
 		//======================Start : Sample Request 06112017===============================//
 		$data .= '<div class="control-group">';
-		$data .= '<label for="radio" class="control-label">Status<span style="color:#F00;font-size:20px;">*</span></label>';
+		$data .= '<label for="radio" class="control-label">Sample Required<span style="color:#F00;font-size:20px;">*</span></label>';
 		$data .= '<div class="controls">';
 		$data .= '<input type="radio" name="prod_sample" id="prod_sample" value="1" class="prod_sample css-radio" data-rule-required="true" ';
 		
@@ -485,13 +491,13 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		{
 			$data .= 'checked';
 		}
-		$data .= '> Active ';
+		$data .= '> Yes ';
 		$data .= '<input type="radio" name="prod_sample" id="prod_sample" value="0" class="prod_sample css-radio" data-rule-required="true"';
 		if(isset($row['prod_sample']) && $row['prod_sample']== 0)
 		{
 			$data .= 'checked';
 		}
-		$data .= '> Inactive ';
+		$data .= '> No ';
 			
 		$data .= '<label for="radiotest" class="css-label" ></label>';
 		$data .='<label style="color:red" id="sampleCharge"  name = "radiotest" > ';
@@ -582,7 +588,7 @@ if((isset($obj->getProduct)) == "1" && isset($obj->getProduct))
 	$data .='<option value="" disabled>Select Product</option>';
 	while($row=mysqli_fetch_array($res))
 	{
-		$data .='<option value="'.$row['prod_id'].'">'.ucwords($row['prod_name']).'</option>';
+		$data .='<option value="'.$row['id'].'">'.ucwords($row['prod_name']).'</option>';
 	}
 	
 	quit($data,1);
@@ -604,49 +610,58 @@ if((isset($_POST['add_batch_request'])) == "1" && isset($_POST['add_batch_reques
 	$data['batch_status'] = mysqli_real_escape_string($db_con,$_POST['batch_status']);
 	$data['prod_batch_no'] = mysqli_real_escape_string($db_con,$_POST['prod_batch_no']);
 	$data['prod_disclaimer'] = mysqli_real_escape_string($db_con,$_POST['disclaimer']);
+	$data['prod_sample'] = mysqli_real_escape_string($db_con,$_POST['prod_sample']);
 	
-	
-	
-	if(isset($_FILES['img_coa']) && $_FILES['img_coa']['name']!='')
-	{
-		$coa_size      = $_FILES['img_coa']['size'];
-		if($coa_size > 5242880 &&  $coa_size !=0) // file size
+	$data['vprod_id']      		   = mysqli_real_escape_string($db_con,$_POST['vprod_id']);
+	if(!isExist('tbl_batches' ,array('vprod_id'=>$data['vprod_id'])))
+ 	{
+		if(isset($_FILES['img_coa']) && $_FILES['img_coa']['name']!='')
 		{
-			quit('Document size should be less than 5 MB');
-		}
-		
-		$coa_img               = explode('.',$_FILES['img_coa']['name']);
-		$coa_img               = date('dhyhis').'.'.$coa_img[1];
-		
-		
-		$dir                          = 'documents/coa/'.$coa_img;
-		
-		if(move_uploaded_file($_FILES['img_coa']['tmp_name'],$dir))
-		{
-			$data['prod_coa']      = $coa_img;
+			$coa_size      = $_FILES['img_coa']['size'];
+			if($coa_size > 5242880 &&  $coa_size !=0) // file size
+			{
+				quit('Document size should be less than 5 MB');
+			}
+			
+			$coa_img               = explode('.',$_FILES['img_coa']['name']);
+			$coa_img               = date('dhyhis').'.'.$coa_img[1];
+			
+			
+			$dir                          = 'documents/coa/'.$coa_img;
+			
+			if(move_uploaded_file($_FILES['img_coa']['tmp_name'],$dir))
+			{
+				$data['prod_coa']      = $coa_img;
+			}
+			else
+			{
+				quit('DMF Document not uploaded.!');
+			}
+	
+			$data['batch_created']     = $datetime;;
+			$data['batch_created_by']  = $uid;
+			$data['user_id']  = $uid;
+			$res = insert('tbl_batches',$data);
+			if($res)
+			{
+				quit('Batch Added Successfully',1);
+			}
+			else
+			{
+				quit('Something went wrong...!');
+			}
 		}
 		else
 		{
-			quit('DMF Document not uploaded.!');
-		}
-
-		$data['batch_created']     = $datetime;;
-		$data['batch_created_by']  = $uid;
-		$data['user_id']  = $uid;
-		$res = insert('tbl_batches',$data);
-		if($res)
-		{
-			quit('Batch Added Successfully',1);
-		}
-		else
-		{
-			quit('Something went wrong...!');
+			quit('COA Document required...!');
 		}
 	}
 	else
 	{
-		quit('COA Document required...!');
+		quit('Vendor Product id  already Exist...!');
 	}
+	
+	
 }
 
 

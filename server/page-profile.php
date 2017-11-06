@@ -326,6 +326,8 @@
 					<div class="row">
             			<div class="col-md-12" >
         					<div class="col-md-3">
+                            
+                                
                                 <div class='wrapper-smenu'>
                                     <input id='pictures' type='checkbox'>
                                     <label for='pictures'>
@@ -351,7 +353,7 @@
                                         
                                         </p>
                                         <div class='lil_arrow'></div>
-                                        <div class='content'>
+                                        <div class="content">
                                             <ul>
                                                 <li>
                                                 	<a  href="javascript:void(0);" onclick="showDiv('profile');">Login Information
@@ -949,8 +951,8 @@
                                     </div><!-- Time for pickup -->
                                     
                 					<div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">Time Description<span style="color:#F00">*</span></label>
-                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_timedescription" name="txt_timedescription" data-rule-required="true">
+                                      <label class="col-md-3 col-xs-12" for="name">Time Description</label>
+                                      <textarea class="le-input col-md-9 col-xs-12" id="txt_timedescription" name="txt_timedescription" >
                                           <?php echo @$comp_timedesc; ?>
                                       </textarea>
                                       <div class="clearfix"></div>
@@ -1748,6 +1750,11 @@
 		<script type="text/javascript">
 		var baseurll = '<?php echo $BaseFolder; ?>';
 		
+		$( "#other" ).click(function() {
+		  $( "#target" ).click();
+		});
+		
+		
         function showDiv(divId)
         {
 			$('.cls_mainmenu').removeClass('active');
@@ -1911,7 +1918,7 @@
 							else
 							{
 								$(window).scrollTop(0);
-								$('html,body').animate({scrollTop: $(window).offset().top},'slow');
+							
 								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 								
 							}

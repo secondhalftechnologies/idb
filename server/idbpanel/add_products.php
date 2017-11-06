@@ -173,12 +173,7 @@
                                         </div><!--Image Type-->
                                         
                                         
-                                         <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Product Id<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                                	<input   type="text" placeholder="Product ID" id="vprod_id" name="vprod_id" class="input-xlarge" value="<?php echo @$vprod_id; ?>" data-rule-required="true" />
-                                            </div>
-                                        </div><!--Category=====-->
+                                        
                                         
                                         <div class="control-group span6" >
                                         	<label for="tasktitel" class="control-label">Pharmacopia<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
@@ -362,7 +357,7 @@
                                             </div>
                                         </div>	<!-- Sellable Standard Pack -->
 
-                                        <div class="control-group span6" id="div_shipper" style="display: none">
+                                        <div class="control-group span12" id="div_shipper" style="display: none">
                                         	<label for="tasktitel" class="control-label">Shipper <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                             	<input type="text" placeholder="Shipper" id="txt_shipper" name="txt_shipper" class="input-xlarge" data-rule-required="true" />
@@ -373,7 +368,7 @@
                                         <!-- =============================================================== -->
                                         
                                         
-                                        <div class="control-group span6" >
+                                        <div class="control-group span12" >
                                         	<label for="tasktitel" class="control-label">Tax Class<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
                                             <select name="txt_tax" id="txt_tax"  class = "select2-me input-xlarge"   data-rule-required="true" >
@@ -607,7 +602,7 @@
                                         <div class="control-group span4">
                                         	<label for="tasktitel" class="control-label">Manufactured Licence Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <input placeholder="Manufactured Licence Number" type="text" name="txt_manufactured_lic"  data-rule-required="true"  id="txt_manufactured_lic"  class=" input-large" style="" />
+                                            <input placeholder="Manufactured Licence Number" type="text" name="txt_manufactured_lic"  data-rule-required="true"  id="txt_manufactured_lic"  class=" input-medium" style="" />
                                            </div>
                                         </div><!--Manufactured by -->
                                          
@@ -622,17 +617,7 @@
                                            </div>
                                         </div><!--Manufactured by -->
                                         
-
-                                        <div class="control-group " style="clear: both;">
-                                        	<label for="tasktitel" class="control-label">Meta Keywords<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                           <div class="controls">
-                                            <textarea style="width:50%" rows="4" name="txt_meta" id="txt_meta" data-rule-required="true" ></textarea> 
-                                           </div>
-                                        </div><!--Status -->
-
-                                        
-                                        
-                                        <div class="control-group" style="display: none" id="div_hsn">
+										<div class="control-group" style="display: none" id="div_hsn">
                                         	<label for="tasktitel" class="control-label">HSN Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
                                             <input placeholder="HSN Number" type="text" name="txt_hsn" id="txt_hsn"  class=" input-large" style=""  data-rule-required="true" />
@@ -648,7 +633,7 @@
 										
                                        <!--========================Certificate of Analysis /Authenticity===============================//-->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group" style="clear:both">
                                       	 <label for="tasktitel" class="control-label">Material Handling
                                         <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
@@ -656,14 +641,21 @@
                                             </div>
                                         </div> <!-- Prod_handling -->
                                         
-                                        <div class="control-group span6">
+                                        <div class="control-group">
                                         	<label for="tasktitel" class="control-label">Insurance<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
                                             <input type="radio" name="txt_insurance" value="1" class="css-radio" data-rule-required="true" checked > Active
                                          <input type="radio" name="txt_insurance" value="0" class="css-radio" data-rule-required="true"  > Inactive
                                             </div>
                                         </div><!--Insurance -->
-
+										
+                                        <div class="control-group " style="clear: both;">
+                                        	<label for="tasktitel" class="control-label">Meta Keywords<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                           <div class="controls">
+                                            <textarea style="width:50%" rows="4" name="txt_meta" id="txt_meta" data-rule-required="true" ></textarea> 
+                                           </div>
+                                        </div><!--Meta Keywords -->
+                                        
                                         <div class="control-group " style="clear:both">
                                         	<label for="tasktitel" class="control-label">Status<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
@@ -671,6 +663,8 @@
                                          <input type="radio" name="txt_status" value="0" class="css-radio" data-rule-required="true"  > Inactive 
                                             </div>
                                         </div><!--Status -->
+                                        
+                                        
                                         
                                         
 										 <div class="form-actions" style="clear:both">

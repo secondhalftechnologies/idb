@@ -158,9 +158,9 @@
         $row_get_id = mysqli_fetch_array($res_get_id);
         $data['prod_name'] = mysqli_real_escape_string($db_con,$_POST['prod_name']);
         $data['prod_slug'] = getSlug($data['prod_name']);
-		$data['vprod_id']      		   = mysqli_real_escape_string($db_con,$_POST['vprod_id']);
+		
 
- 		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'],"vprod_id"=>$data['vprod_id'])))
+ 		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'])))
  		{
  			$data['prod_cat']              = mysqli_real_escape_string($db_con,$_POST['txt_cat']);
 			$data['prod_id']               = 'SKU'.($prod_id+$row_get_id['id']);
