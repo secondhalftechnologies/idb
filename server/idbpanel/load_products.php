@@ -58,9 +58,6 @@
          	$prod_data .= '<th class="center-text">Sr. No.</th>';
 			$prod_data .= '<th class="center-text">Prod Id</th>';
 			$prod_data .= '<th class="center-text">Model Number</th>';	
-			$prod_data .= '<th class="center-text">Vendor Product Id</th>';	
-			
-					
 			$prod_data .= '<th class="center-text" style="width:15%;">Product Name</th>';
 			$dis = checkFunctionalityRight("view_products.php",3);
 			if($dis)
@@ -89,8 +86,6 @@
 				$prod_data .= '<td class="center-text">'.$i++.'</td>';
 				$prod_data .= '<td class="center-text">'.$row_load_data['id'].'</td>';
 				$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';			
-				$prod_data .= '<td class="center-text">'.$row_load_data['vprod_id'].'</td>';	
-				
 				$prod_data .= '<td class="center-text" style="width:15%;">'.ucwords($row_load_data['prod_name']).'</td>';
 				$dis = checkFunctionalityRight("view_products.php",3);
 				if($dis)

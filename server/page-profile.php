@@ -999,7 +999,7 @@
 	                                  <input type="hidden" name="hid_userid" id="hid_userid" value="">
 	                                    <div class="field-row">
 	                                      <label class="col-md-3 col-xs-12" for="name">Drug License Number</label>
-	                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true"  minlength="12" maxlength="12" size="12" >
+	                                      <input type="text" value="<?php echo $licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_lic_no" name="txt_lic_no" data-rule-required="true"   >
 	                                      
 	                                      <div class="clearfix"></div>
 	                                    </div><!-- License Number -->
@@ -1061,7 +1061,7 @@
 	                                  <div id="renewal<?php echo $i; ?>">
 	                                   <div class="field-row">
 	                                      <label class="col-md-3 col-xs-12" for="name">Hospital Drug License Number</label>
-	                                      <input type="text" value="<?php echo @$licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+	                                      <input type="text" value="<?php echo @$licRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no" name="txt_hospital_lic_no" data-rule-required="true"  size="12">
 	                                    <div class="clearfix"></div>
 	                                    </div><!-- License Number -->
 	                                    
@@ -1103,7 +1103,7 @@
 											 <div id="renewal<?php echo $i; ?>">
 										   <div class="field-row">
 											  <label class="col-md-3 col-xs-12" for="name">Renewal <?php echo $i; ?> Hospital Drug License Number</label>
-											  <input type="text" value="<?php echo @$row['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no<?php echo $i; ?>" name="txt_hospital_lic_no<?php echo $i; ?>" data-rule-required="true" data-rule-number="true" minlength="12" maxlength="12" size="12">
+											  <input type="text" value="<?php echo @$row['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_hospital_lic_no<?php echo $i; ?>" name="txt_hospital_lic_no<?php echo $i; ?>" maxlength="12" size="12">
 											<div class="clearfix"></div>
 											</div><!-- License Number -->
 											
@@ -1182,7 +1182,7 @@
 								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">20B Drug License Number</label>
-                                      <input type="text" value="<?php echo @$lic20BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic20BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20b_lic_no" name="txt_20b_lic_no" >
                                   
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1219,7 +1219,7 @@
 								   ?>
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21B Drug license  Number</label>
-                                      <input type="text" value="<?php echo @$lic21BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic21BRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_21b_lic_no" name="txt_21b_lic_no" size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1261,7 +1261,7 @@
 								   ?>
                                      <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21C Drug license Number</label>
-                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"  minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"   size="12" >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1315,7 +1315,7 @@
                                     
                                       <div class="field-row">
 										  <label class="col-md-3 col-xs-12" for="name">21C Drug License Expiry Date</label>
-										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date" data-rule-requied="true" readonly>
+										  <input value="<?php echo @$lic20CRow['lic_exipiry_date']; ?>" type="text" class="le-input col-md-9 col-xs-12 datepicker" name="lic_20Cexpiry_date[]" id="lic_20Cexpiry_date"  readonly>
                                       <div class="clearfix"></div>
                                     </div><!-- Expiry  Date -->
                                    <?php
@@ -1439,7 +1439,7 @@
                                   <input type="hidden" name="hid_userid" id="hid_userid" value="<?php echo $logged_uid; ?>">
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">TAN Number</label>
-                                      <input type="text" value="<?php echo @$tanRow['tan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_tan_no" name="txt_tan_no" data-rule-required="true" minlength="10" maxlength="10" size="10">
+                                      <input type="text" value="<?php echo @$tanRow['tan_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_tan_no" name="txt_tan_no" data-rule-required="true">
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- TAN Number -->
@@ -1500,7 +1500,7 @@
                                    
                                     <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">GST Number<span style="color:#F00">*</span></label>
-                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true" maxlength="12" size="12">
+                                      <input type="text" value="<?php echo @$gstRow['gst_no']; ?>" class="le-input col-md-9 col-xs-12" id="txt_gst_no" name="txt_gst_no" data-rule-requied="true"  >
                                       <div class="clearfix"></div>
                                     </div><!-- GST Number -->                    
                 
@@ -1537,7 +1537,7 @@
 									 ?>
                                         
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Image<span style="color:#F00">*</span></label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Quarter 1 Image<span style="color:#F00">*</span></label>
                                       <input type="file" name="file_gst_ack_image" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image" <?php echo $required;?>>
                                      <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image 1 -->
@@ -1556,7 +1556,7 @@
 									 ?>
                                         
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement 2 Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Quarter 2 Image</label>
                                       <input type="file" name="file_gst_ack_image2" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image2">
                                      <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image 2-->
@@ -1575,7 +1575,7 @@
 									 ?>
                                         
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement 3 Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Quarter 3 Image</label>
                                       <input type="file" name="file_gst_ack_image3" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image3" >
                                      <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image 3-->
@@ -1594,7 +1594,7 @@
 									 ?>
                                         
                                     <div class="field-row">
-                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement 4 Image</label>
+                                      <label class="col-md-3 col-xs-12" for="name">GST Acknowledgement Quarter 4 Image</label>
                                       <input type="file" name="file_gst_ack_image4" accept="image/jpeg,image/png,image/jpg" id="file_gst_ack_image4">
                                      <div class="clearfix"></div>
                                     </div><!-- GST Ackg Image 4-->
@@ -1688,7 +1688,7 @@
                              <!--=======================End : Pan Information Dn By Satish 06092017=============================================-->
 
 
-                             <div class="cls_mainmenu" id="sign_info">
+                                <div class="cls_mainmenu" id="sign_info">
                                     <h2 class="text-center padding20">Signature Information</h2>
                                     <?php
 								 //  Check Record and return single row
@@ -1909,6 +1909,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							if(data.resp == 'email_verufication')
@@ -1917,8 +1918,7 @@
 							}
 							else
 							{
-								$(window).scrollTop(0);
-							
+								
 								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 								
 							}
@@ -1950,7 +1950,7 @@
 			}
         });
         
-          $('#frm_sign_info').on('submit', function(e) 
+        $('#frm_sign_info').on('submit', function(e) 
         {
 			e.preventDefault();
 			if($('#frm_sign_info').valid())
@@ -1965,6 +1965,7 @@
 					async:true,						
 					success: function(response) 
 					{   
+						$(window).scrollTop(0);
 						data = JSON.parse(response);
 						if(data.Success == "Success") 
 						{  
@@ -2007,7 +2008,9 @@
 					async:true,						
 					success: function(response) 
 					{   
+						
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							if(data.resp == 'email_verufication')
@@ -2016,7 +2019,7 @@
 							}
 							else
 							{  
-							    $(window).scrollTop(0);
+							    
 								$('#div_success').html('<div class="update_success">'+data.resp+'</div></div>').delay(1200).fadeIn(5000).fadeOut(5000);
 							}
 							
@@ -2072,6 +2075,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2118,6 +2122,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							//window.location.assign('page-profile'); 
@@ -2168,6 +2173,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2214,6 +2220,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							//window.location.assign('page-profile'); 
@@ -2263,6 +2270,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 						    	$('.cls_mainmenu').removeClass('active');
@@ -2305,6 +2313,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2353,6 +2362,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2398,6 +2408,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2445,6 +2456,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2515,6 +2527,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 
@@ -2583,6 +2596,7 @@
 					success: function(response) 
 					{   
 						data = JSON.parse(response);
+						$(window).scrollTop(0);
 						if(data.Success == "Success") 
 						{  
 							 

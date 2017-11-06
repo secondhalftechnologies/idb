@@ -636,7 +636,7 @@
 			quit('GST Number and Image is required...!');
 		}
 		
-		if($_FILES['file_gst_image']['name']=="" || $_FILES['file_gst_ack_image']['name']=="")
+		if($_FILES['file_gst_image']['name']=="" && $_FILES['file_gst_ack_image']['name']=="")
 		{
 			quit('Image is required...!');
 		}
@@ -656,7 +656,7 @@
 		}
 		
 		//======================Start GST acknowledgement 2 Check==========================//
-		if(isset($_FILES['file_gst_ack_image2']['name'])|| $_FILES['file_gst_ack_image2']['name']!="")
+		if(isset($_FILES['file_gst_ack_image2']['name'])&& $_FILES['file_gst_ack_image2']['name']!="")
 		{
 			$gst_ack2_image_size  = $_FILES['file_gst_ack_image2']['size'];
 			if($gst_ack2_image_size > 5242880 &&  $gst_ack2_image_size !=0) // file size
@@ -673,7 +673,7 @@
 		//======================End  GST acknowledgement 2 Check==========================//
 		
 		//======================Start GST acknowledgement 3 Check==========================//
-		if(isset($_FILES['file_gst_ack_image3']['name'])|| $_FILES['file_gst_ack_image3']['name']!="")
+		if(isset($_FILES['file_gst_ack_image3']['name']) && $_FILES['file_gst_ack_image3']['name']!="")
 		{
 			$gst_ack3_image_size  = $_FILES['file_gst_ack_image3']['size'];
 			if($gst_ack3_image_size > 5242880 &&  $gst_ack3_image_size !=0) // file size
@@ -690,7 +690,7 @@
 		//======================End  GST acknowledgement 3 Check==========================//
 		
 		//======================Start GST acknowledgement 4 Check==========================//
-		if(isset($_FILES['file_gst_ack_image4']['name'])|| $_FILES['file_gst_ack_image4']['name']!="")
+		if(isset($_FILES['file_gst_ack_image4']['name']) && $_FILES['file_gst_ack_image4']['name']!="")
 		{
 			$gst_ack4_image_size  = $_FILES['file_gst_ack_image4']['size'];
 			if($gst_ack4_image_size > 5242880 &&  $gst_ack4_image_size !=0) // file size
@@ -723,9 +723,21 @@
 		{
 			if(move_uploaded_file($_FILES['file_gst_ack_image']['tmp_name'],$dir1))
 		    {
-				move_uploaded_file($_FILES['file_gst_ack_image2']['tmp_name'],$dir2);
-				move_uploaded_file($_FILES['file_gst_ack_image3']['tmp_name'],$dir3);
-				move_uploaded_file($_FILES['file_gst_ack_image4']['tmp_name'],$dir4);
+				
+				if(isset($_FILES['file_gst_ack_image2']['name']) && $_FILES['file_gst_ack_image2']['name']!="")
+				{
+					move_uploaded_file($_FILES['file_gst_ack_image2']['tmp_name'],$dir2);
+				}
+				if(isset($_FILES['file_gst_ack_image3']['name']) && $_FILES['file_gst_ack_image3']['name']!="")
+				{
+					move_uploaded_file($_FILES['file_gst_ack_image3']['tmp_name'],$dir3);
+				}
+				if(isset($_FILES['file_gst_ack_image4']['name']) && $_FILES['file_gst_ack_image4']['name']!="")
+				{
+					move_uploaded_file($_FILES['file_gst_ack_image4']['tmp_name'],$dir4);
+				}
+				
+				
 				
 				
 				

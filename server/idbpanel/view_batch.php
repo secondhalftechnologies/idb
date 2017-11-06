@@ -27,6 +27,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 	headerdata($feature_name);
 	/* This function used to call all header data like css files and links */	
 ?>
+<link rel="stylesheet" href="css/plugins/datepicker/datepicker.css" />
 </head>
 <body  class="<?php echo $theme_name;?>" data-theme="<?php echo $theme_name;?>" >
 	<?php 
@@ -995,8 +996,17 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 					$('#spanMsg').html(' ');
 				}
 			});
+			
+			 $( ".datepicker" ).datepicker({
+				changeMonth	: true,
+				changeYear	: true,
+				dateFormat	: 'mm-dd-yy',
+				yearRange 	: 'c:c',//replaced "c+0" with c (for showing years till current year)
+				maxDate		: new Date(),
+					
+			   });
 		</script>
-        
+        <script src="js/plugins/datepicker/bootstrap-datepicker.js"></script>
          <div class="modal fade " tabindex="-1" role="dialog" id="disclaimermodal">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">

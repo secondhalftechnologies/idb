@@ -401,7 +401,7 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		$data .= '<label for="tasktitel" class="control-label">Manufacuring Date
          <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" '.$disabled.' type="text" id="prod_manu_date" name="prod_manu_date"  placeholder="Manufacuring Date " value="'.@$row['prod_manu_date'].'" class="input-large" data-rule-required="true" >' ;
+		$data .= '<input type="text" '.$disabled.' type="text" id="prod_manu_date" name="prod_manu_date"  placeholder="Manufacuring Date " value="'.@$row['prod_manu_date'].'" class="input-large datepicker" data-rule-required="true" >' ;
 		$data .= '</div>';
 		$data .= '</div> <!-- Prod prod_quantity -->';
 
@@ -413,10 +413,17 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		$data .= '<label for="tasktitel" class="control-label">Expiry Date
          <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" '.$disabled.' type="text" id="prod_exp_date" name="prod_exp_date"  placeholder="Expiry Date " value="'.@$row['prod_exp_date'].'" class="input-large" data-rule-required="true" >' ;
+		$data .= '<input type="text" '.$disabled.' type="text" id="prod_exp_date" name="prod_exp_date"  placeholder="Expiry Date " value="'.@$row['prod_exp_date'].'" class="input-large datepicker" data-rule-required="true" >' ;
 		$data .= '</div>';
 		$data .= '</div> <!-- Prod prod_quantity -->';
-
+ 		$data .="<script type=\"text/javascript\">	 $( '.datepicker' ).datepicker({
+		changeMonth	: true,
+		changeYear	: true,
+		format: 'dd-mm-yyyy',
+		yearRange 	: 'c:c',//replaced 'c+0' with c (for showing years till current year)
+		startDate: '+d',
+			
+	   });</script>";
 
 	
 
