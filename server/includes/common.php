@@ -271,7 +271,7 @@ if((isset($obj->login_customer)) == "1" && isset($obj->login_customer))// user l
 			}				
 			else
 			{
-				quit("Incorrect Login Details.1");
+				quit("Incorrect Login Details");
 			}
 		}
 		else

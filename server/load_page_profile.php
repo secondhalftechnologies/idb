@@ -358,7 +358,7 @@
 						{
 							$row_get_user_info			= mysqli_fetch_array($res_get_user_info);
 							$_SESSION['front_panel']	= $row_get_user_info;
-							quit('Update Successfully!', 1);
+							quit('Company Information updated Successfully', 1);
 						}
 						else
 						{
@@ -506,12 +506,11 @@
 			{
 				quit('Something went wrong...!');
 			}
-			
 		}
 		else
 		{
 			 update('tbl_customer_pan',$data,$where_arr);
-			 quit('Update Successfully...!',1);
+			 quit('Pan Information updated Successfully...!',1);
 		}
 	}
 	
@@ -1537,7 +1536,9 @@
 	if((isset($obj->logout))== '1' && (isset($obj->logout)))
 	{
 	   $_SESSION['front_panel']	= array();
+	   session_destroy();
 	    quit('1',1);
+		
 	}
 
     // ===============================================================================

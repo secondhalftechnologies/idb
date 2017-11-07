@@ -53,6 +53,7 @@
 		<script src="<?php echo $BaseFolder; ?>/assets/js/jquery-migrate-1.2.1.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/bootstrap.min.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/bootstrap-hover-dropdown.min.js"></script>
+        <script src="<?php echo $BaseFolder; ?>/assets/js/bootstrap-datepicker.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/owl.carousel.min.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/css_browser_selector.min.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/echo.min.js"></script>
@@ -63,7 +64,7 @@
 	    <script src="<?php echo $BaseFolder; ?>/assets/js/jquery.customSelect.min.js"></script>
 	    <script src="<?php echo $BaseFolder; ?>/assets/js/wow.min.js"></script>
 		<script src="<?php echo $BaseFolder; ?>/assets/js/scripts.js"></script>
-        <script src="<?php echo $BaseFolder; ?>/assets/js/bootstrap-datepicker.js"></script>
+        
         
 
 		<!-- For demo purposes – can be removed on production -->

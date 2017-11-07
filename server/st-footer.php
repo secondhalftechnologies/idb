@@ -54,10 +54,10 @@
                                 <div class="widget">
                                     <h3>Know IDB</h3>
                                     <ul>
-                                        <li><a href="javascript:void(0);">About IDB</a></li>
-                                        <li><a href="javascript:void(0);">Contact Us</a></li>
-                                        <li><a href="javascript:void(0);">Terms &amp; Conditions</a></li>
-                                        <li><a href="javascript:void(0);">Disclaimer</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/page-about">About IDB</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/page-contact">Contact Us</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/terms-and-conditions">Terms &amp; Conditions</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/page-disclaimer">Disclaimer</a></li>
                                     </ul>
                                 </div><!-- /.widget -->
                             </div><!-- /.link-widget -->
@@ -67,10 +67,26 @@
                                 <div class="widget">
                                     <h3>Your Order</h3>
                                     <ul>
-                                        <li><a href="javascript:void(0);">My Account</a></li>
-                                        <li><a href="javascript:void(0);">Order History</a></li>
-                                        <li><a href="javascript:void(0);">Track Order</a></li>
-                                        <li><a href="javascript:void(0);">Login</a></li>
+                                    	<!--=================Start : Check Login Dn by Satish 06112017====================-->
+										<?php
+                                        if(isset($_SESSION['front_panel']))
+                                        {?>
+                                             <li><a href="<?php echo $BaseFolder; ?>/page-profile">My Account</a></li>
+                                            
+                                        <?php
+                                        }
+                                        else
+                                        {?>
+                                            <li><a href="<?php echo $BaseFolder; ?>/page-login">Login</a></li>
+                                        <?php
+                                        }?>
+                                         <li><a href="javascript:void(0);">Order History</a></li>
+                                         <li><a href="<?php echo $BaseFolder; ?>/track-order">Track Order</a></li>
+                                          <li><a href="<?php echo $BaseFolder; ?>/search-list.php">Search Product</a></li>
+                                         <li><a href="<?php echo $BaseFolder; ?>/product-list.php">Product List</a></li>
+                                          <li><a href="<?php echo $BaseFolder; ?>/product-detail.php">Product Detail</a></li>
+                                        
+                                        <!--=================End : Check Login Dn by Satish 06112017====================-->
                                     </ul>
                                 </div><!-- /.widget -->
                             </div><!-- /.link-widget -->
@@ -79,10 +95,10 @@
                                 <div class="widget">
                                     <h3>Information</h3>
                                     <ul>
-                                        <li><a href="javascript:void(0);">Vendor Policy</a></li>
-                                        <li><a href="javascript:void(0);">Buyer Policy</a></li>
-                                        <li><a href="javascript:void(0);">Shipping Policy</a></li>
-                                        <li><a href="javascript:void(0);">FAQs</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/vendor-policy">Vendor Policy</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/buyer-policy">Buyer Policy</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/shipping-policy">Shipping Policy</a></li>
+                                        <li><a href="<?php echo $BaseFolder; ?>/page-faqs">FAQs</a></li>
                                     </ul>
                                 </div><!-- /.widget -->
                             </div><!-- /.link-widget -->
@@ -95,7 +111,7 @@
                     <div class="container">
                         <div class="col-xs-12 col-sm-6 no-margin">
                             <div class="copyright">
-                                &copy; <a href="index.php">Indian Dava Bazar</a> - all rights reserved
+                                &copy; <a href="<?php echo $BaseFolder; ?>">Indian Dava Bazar</a> - all rights reserved
                             </div><!-- /.copyright -->
                         </div>
                         <div class="col-xs-12 col-sm-6 no-margin">

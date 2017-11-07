@@ -359,6 +359,33 @@
                         </div>
                     </div>
                 </div>
+                
+               <div class="container-fluid" id="div_view_image" style="display:none">                
+                    <?php 
+                        /* this function used to add navigation menu to the page*/ 
+                        breadcrumbs($home_url,$home_name,'View Images',$filename,$feature_name); 
+                        /* this function used to add navigation menu to the page*/ 
+                    ?>        
+                    <div class="row-fluid">
+                            <div class="span12">
+                                <div class="box box-color box-bordered">
+                                    <div class="box-title">
+                                        <h3>
+                                            <i class="icon-table"></i>
+                                           View Images <span id="prod_name" style="text-align:center;color:#333"></span>
+                                        </h3>
+                                        <button type="button" class="btn-info_1" style= "float:right" onClick="backToMain('div_view_image','div_view_spec');loadData();" ><i class="icon-arrow-left"></i>&nbsp Back </button>                                          
+                                    </div> <!-- header title-->
+                                    <div class="box-content nopadding">
+                                        <form id="frm_add_image" class="form-horizontal form-bordered form-validate" enctype="multipart/form-data">
+                                            <div id="div_view_image_part">
+                                            </div>                                    
+                                        </form>  
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                </div>  <!--Image-->
             </div>
         </div>
         <?php getloder();?>
@@ -474,7 +501,52 @@
 				
 			}
 			
+		   function viewImages(prod_id)
+		   {
+				//loading_show();
+				var sendInfo 	= {"prod_id":prod_id,"getImages":1};
+				var area_status = JSON.stringify(sendInfo);								
+				$.ajax({
+					url: "load_products.php?",
+					type: "POST",
+					data: area_status,
+					contentType: "application/json; charset=utf-8",						
+					success: function(response) 
+					{			
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{	 
+							$('#div_view_spec').css('display','none');	
+							$('#div_view_image').css('display','block');			
+							$('#div_view_image_part').html(data.resp[0]);
+							$('#prod_name').html(data.resp[1]);
+						} 
+						else 
+						{
+							$('#state_code').select2();
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							$('#error_model').modal('toggle');
+							loading_hide();					
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();	
+					}
+				});		
 			
+		   }
+		function backToMain(div_close,div_show)
+		{
+			$('#'+div_close).css('display','none');
+			$('#'+div_show).css('display','block')
+		}
 		</script>
     </body>
 </html>

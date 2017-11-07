@@ -19,7 +19,7 @@
 		}
 		else
 		{
-			$BaseFolder = "http://192.168.0.13/idb/op2";	
+			$BaseFolder = "http://192.168.0.19/idb/server";	
 		}
 		
 	}
@@ -47,4 +47,60 @@
 	$json 			= file_get_contents('php://input');
 	$obj 			= json_decode($json);
 	$response_array	= array();
+	
+	
+	function breadcrumbs($array)
+	{
+	global $BaseFolder;	
+	global $logged_uid,$db_con;
+	?>
+    
+    <div class="animate-dropdown">
+    <!-- ========================================= BREADCRUMB ========================================= -->
+    <div id="top-mega-nav">
+        <div class="container">
+            <nav>
+                <ul class="inline">
+                  <li class="breadcrumb-nav-holder">
+                        <ul>
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo $BaseFolder; ?>">Home</a>
+                            </li>
+                            <?php
+							
+							foreach($array as $url=>$name)
+							{?>
+                             <li class="breadcrumb-item current gray">
+                                <a href="<?php echo $url; ?>"><?php echo ucwords($name) ?></a>
+                            </li>
+							<?php
+                            }
+							?>
+                           
+                            
+                        </ul>
+                    </li><!-- /.breadcrumb-nav-holder -->
+                </ul>
+                 <!--======================Start : Done By satish 03112017===========================-->
+                <?php
+                    
+                    $sql_check_status= "SELECT cust_status  FROM tbl_customer WHERE cust_id ='".$logged_uid."' AND cust_type='trader'";
+                    $res_check_status = mysqli_query($db_con,$sql_check_status) or die(mysqli_error($db_con));
+                    $row_check_status = mysqli_fetch_array($res_check_status);
+                    if($row_check_status['cust_status']==1)
+                    {?>
+                     <div class="fright padding20">
+                        <a target="_blank" href="idbpanel/redirect.php">Go to Admin</a>
+                    </div>
+              <?php }
+                
+                ?>
+                <!--======================End : Done By satish 03112017===========================-->
+            </nav>
+        </div><!-- /.container -->
+    </div><!-- /#top-mega-nav -->
+                <!-- ========================================= BREADCRUMB : END ========================================= -->
+ </div>
+	<?php
+    }
 ?>

@@ -296,22 +296,27 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		$data .= '<label for="tasktitel" class="control-label">Product Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
 		$data .= '<select '.$disabled.' onChange="getProduct(this.value);" name="prod_type" id="prod_type" placeholder="Select Type" class="select2-me input-large" data-rule-required="true" >';
-		$data .= '<option value="">Select Type</option>';
-		$data .= '<option value="raw"  ';
-
-		if(@$row['prod_type']=='raw')
+		$data .= '<option value="" >Select Type</option>';
+		
+		$sql_get_type ="SELECT * FROM tbl_category WHERE cat_type='parent' AND cat_status=1 ";
+		$res_get_type = mysqli_query($db_con,$sql_get_type) or die(mysqli_error($db_con));
+		$num_get_type = mysqli_num_rows($res_get_type);
+		if($num_get_type !=0)
 		{
-			$data .='selected ="selected"';
-		}
+			while($cat_row = mysqli_fetch_array($res_get_type))
+			{
+				$data .= '<option value="'.$cat_row['cat_id'].'"  ';
 
-		$data .=' > Raw Material</option>';
-		$data .= '<option value="formulation"  ';
-
-		if(@$row['prod_type']=='formulation')
-		{
-			$data .='selected ="selected"';
+				if(@$row['prod_type']==$cat_row['cat_id'])
+				{
+					$data .='selected ="selected"';
+				}
+		
+				$data .=' >'.ucwords($cat_row['cat_name']).'</option>';
+			}
+			
 		}
-		$data .=' > Formulation</option>';
+		
 		$data .= '</select>';
 		$data .= '</div>';
 		$data .= '</div> <!-- prod_type -->';
@@ -370,20 +375,21 @@ if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part)
 		$data .= '</div> <!-- Prod mRP -->';
 
 		///////========================Product MRP================================//
-		$data .= '<div class="control-group span6">';
+		$data .= '<div class="control-group ">';
 		$data .= '<label for="tasktitel" class="control-label">Selling Price / Unit Price
         <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="text" '.$disabled.' type="text" id="prod_price" name="prod_price"  placeholder="Product Price " value="'.@$row['prod_price'].'" class="input-large" data-rule-required="true" >' ;
+		$data .= '<input type="text" '.$disabled.' type="text" id="prod_price" name="prod_price"  placeholder="Product Price " value="'.@$row['prod_price'].'" class="input-large" data-rule-required="true" onChange="getCommission(this.value)"; onkeypress="return numsonly(event);">' ;
+		$data .= '<span id="commission_msg"></span>';
 		$data .= '</div>';
 		$data .= '</div> <!-- Prod Price -->';
 
 		///////========================Product Quantity================================//
-		$data .= '<div class="control-group span6">';
+		$data .= '<div class="control-group">';
 		$data .= '<label for="tasktitel" class="control-label">Quantity
          <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
 		$data .= '<div class="controls">';
-		$data .= '<input type="number" '.$disabled.' type="text" id="prod_quantity" name="prod_quantity"  placeholder="Product Quantity " value="'.@$row['prod_quantity'].'" class="input-large" data-rule-required="true" >' ;
+		$data .= '<input type="number" '.$disabled.' type="text" id="prod_quantity" min="1" name="prod_quantity"  placeholder="Product Quantity " value="'.@$row['prod_quantity'].'" class="input-large" data-rule-required="true" >' ;
 		$data .= '</div>';
 		$data .= '</div> <!-- Prod prod_quantity -->';
 
@@ -760,6 +766,27 @@ if((isset($obj->productRequest)) == "1" && isset($obj->productRequest))
 	}
 }
 
+
+if((isset($obj->getCommission)) == "1" && isset($obj->getCommission))
+{
+	
+	$price		= $obj->price;
+	$prod_id	= $obj->prod_id;
+	$commission_per =0;
+	
+	$row = checkExist('tbl_products',array('id'=>$prod_id));
+	$commission_per = $row['prod_commission'];
+	if($row['prod_commission']=="")
+	{
+		$crow = checkExist('tbl_category',array('cat_id'=>$row['prod_cat']));
+		$commission_per = $crow['cat_commission'];
+	}
+	
+	$commission = $price * ($commission_per/100);
+	$commission_msg = " Commission percentage is ".$commission_per." %. ".$commission." Rs will be charged  ";
+	quit($commission_msg,1);
+	
+}
 
 
 ?>

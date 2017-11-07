@@ -877,7 +877,7 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
         // ******************************************************************************************  
         function getProduct(type)
         {
-			if(type=='raw')
+			if(type==1)
 			{
 				$('#prod_mrp').css('display','none');
 			}
@@ -1005,6 +1005,68 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 				maxDate		: new Date(),
 					
 			   });
+			   
+		 function numsonly(e)
+		 {
+  			  var unicode=e.charCode? e.charCode : e.keyCode
+			 
+			  if (unicode !=8 && unicode !=32)
+			  {  // unicode<48||unicode>57 &&
+				  if (unicode<48||unicode>57)  //if not a number
+				  return false //disable key press
+              }
+		}
+		
+		
+		function getCommission(price)
+		{
+			
+            var prod_id = $('#prod_id').val();
+           
+            if(prod_id == "")
+            {
+                alert('Please select product first...!');
+				return false;
+            }
+            else
+            {
+				 loading_show();
+                var sendInfo    = {"prod_id":prod_id,"price":price, "getCommission":1};
+                var batch_status   = JSON.stringify(sendInfo);                             
+                $.ajax({
+                    url: "load_batch.php?",
+                    type: "POST",
+                    data: batch_status,
+                    contentType: "application/json; charset=utf-8",                     
+                    success: function(response) 
+                    {           
+                        data = JSON.parse(response);
+                        if(data.Success == "Success") 
+                        {                           
+                           $('#commission_msg').html(data.resp);
+                           
+                        } 
+                        else
+                        {
+                            alert(data.resp);                                              
+                         
+                        }
+                    },
+                    error: function (request, status, error) 
+                    {
+                        $("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');                          
+                        $('#error_model').modal('toggle');                      
+                        loading_hide();
+                    },
+                    complete: function()
+                    {
+                        //alert("complete");
+                        loading_hide();
+                    }
+                });                     
+            }
+        
+		}
 		</script>
         <script src="js/plugins/datepicker/bootstrap-datepicker.js"></script>
          <div class="modal fade " tabindex="-1" role="dialog" id="disclaimermodal">

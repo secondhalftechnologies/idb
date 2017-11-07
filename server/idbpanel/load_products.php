@@ -59,6 +59,7 @@
 			$prod_data .= '<th class="center-text">Prod Id</th>';
 			$prod_data .= '<th class="center-text">Model Number</th>';	
 			$prod_data .= '<th class="center-text" style="width:15%;">Product Name</th>';
+			$prod_data .= '<th class="center-text" style="width:15%;">Images</th>';
 			$dis = checkFunctionalityRight("view_products.php",3);
 			if($dis)
 			{					
@@ -87,6 +88,8 @@
 				$prod_data .= '<td class="center-text">'.$row_load_data['id'].'</td>';
 				$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';			
 				$prod_data .= '<td class="center-text" style="width:15%;">'.ucwords($row_load_data['prod_name']).'</td>';
+				$prod_data .= '<td class="center-text">';
+					$prod_data .= '<input type="button" value="Images" id="img'.$row_load_data['id'].'" class="btn-warning" onclick="viewImages('.$row_load_data['id'].');"></td>';
 				$dis = checkFunctionalityRight("view_products.php",3);
 				if($dis)
 				{					
@@ -153,11 +156,13 @@
         $row_get_id = mysqli_fetch_array($res_get_id);
         $data['prod_name'] = mysqli_real_escape_string($db_con,$_POST['prod_name']);
         $data['prod_slug'] = getSlug($data['prod_name']);
+		$data['prod_type'] = $prod_type;
 		
 
  		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'])))
  		{
- 			$data['prod_cat']              = mysqli_real_escape_string($db_con,$_POST['txt_cat']);
+			
+			$data['prod_cat']              = mysqli_real_escape_string($db_con,$_POST['txt_cat']);
 			$data['prod_id']               = 'SKU'.($prod_id+$row_get_id['id']);
 			
 			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
@@ -176,14 +181,15 @@
 	        $data['prod_manufactured']     = mysqli_real_escape_string($db_con,$_POST['txt_manufactured']);
 	        $data['prod_manufactured_number']  = mysqli_real_escape_string($db_con,$_POST['txt_manufactured_lic']);
 	        $data['prod_meta_tags']        = mysqli_real_escape_string($db_con,$_POST['txt_meta']);
+			$data['prod_commission']        = mysqli_real_escape_string($db_con,$_POST['txt_commission']);
 			
 	       
 	        $data['prod_insurance']        = mysqli_real_escape_string($db_con,$_POST['txt_insurance']);
 	        $data['prod_status']          = mysqli_real_escape_string($db_con,$_POST['txt_status']);
-	        
+	        $data['prod_factor'] 		   = mysqli_real_escape_string($db_con,$_POST['txt_factor']);
 			if($prod_type=='raw')
 			{
-				$data['prod_factor'] 		   = mysqli_real_escape_string($db_con,$_POST['txt_factor']);
+				
 			}
 			else
 			{
@@ -235,10 +241,61 @@
 			{
 				$data['prod_status'] = 2;
 			}
-      
+			
+      		
 			$res = insert('tbl_products',$data);
-
-
+			
+			$dir 		= "../images/products/";
+			$prod_dir   = $dir.'prodid_' .$res;
+			if(is_dir($prod_dir) === false)
+			{
+				mkdir($prod_dir);
+			}
+			$sprod_dir = $prod_dir.'/small';
+			if(is_dir($sprod_dir) === false)
+			{
+				mkdir($sprod_dir);
+			}
+			
+			$mprod_dir = $prod_dir.'/medium';
+			if(is_dir($mprod_dir) === false)
+			{
+				mkdir($mprod_dir);
+			}
+			
+			$lprod_dir = $prod_dir.'/large';
+			if(is_dir($lprod_dir) === false)
+			{
+				mkdir($lprod_dir);
+			}
+			
+			$img_order = 1;
+			for($j=0;$j<count($_FILES["prod_img"]["tmp_name"]);$j++)
+            {
+				$temp_file    = $prod_dir."/".$_FILES["prod_img"]["name"][$j];
+				
+				$file_name    = explode('.',$_FILES["prod_img"]["name"][$j]);
+				$file_name    = date('dmyhis').$img_order.$res.'.'.$file_name[1];
+				
+				if(move_uploaded_file($_FILES["prod_img"]["tmp_name"][$j],$temp_file))
+				{
+					make_thumb($temp_file,$sprod_dir.'/'.$file_name,100,100);	
+					make_thumb($temp_file,$mprod_dir.'/'.$file_name,300,300);	
+					make_thumb($temp_file,$lprod_dir.'/'.$file_name,500,500);	
+				}
+				
+				$idata['prod_id']        	= $res;
+				$idata['image_name']        = $file_name;
+				$idata['image_status']      = 1;
+				$idata['image_order']       = $img_order;
+				$idata['image_created']     = $datetime;
+				$idata['image_created_by']  = $uid;
+				insert('tbl_product_images',$idata);
+				
+				$img_order++;
+				unlink($temp_file);
+			}
+			
 			if($res)
 			{
 				quit('Product Added Successfully.!',1);
@@ -247,8 +304,7 @@
 			{
 				quit('Something went wrong..!');
 			}
-
- 		}
+		}
 		else
 		{
 			quit('Product Name already Exist...!');
@@ -398,5 +454,71 @@
 		}
 		
 		quit($data,1);
+	}
+	
+	
+	if((isset($obj->getImages)) == '1' && (isset($obj->getImages)))
+	{
+		$prod_id  = $obj->prod_id;
+		$data       ='';
+		$data  	   .='<input type="hidden" name="batch_id" id="batch_id" value="'.$prod_id.'">';
+		$data .='<input type="hidden" name="addStudent" id="addStudent" value="1">';
+		$data .='<div style="padding:15px;text-align:center">';
+		
+		$data .= '<input  id="" name="prod_img[]" class=""  type="file" multiple="multiple" accept="image/*" />';
+		
+		$data .= '<input value="Add Image" id="" class="btn-success"  type="submit">';
+		
+		$data .= '</div> ';
+		
+		$sql_get_image  = " SELECT * FROM tbl_product_images ";
+		$sql_get_image .= " WHERE  1=1 AND ";
+		$sql_get_image .= "  prod_id='".$prod_id."'";
+		$res_get_image  = mysqli_query($db_con,$sql_get_image) or die(mysqli_error($db_con));
+		
+		if(mysqli_num_rows($res_get_image)!=0)
+		{
+		
+			$data .= '<table id="tbl_user" class="table table-bordered dataTable" style="width:100%;text-align:center">';
+			$data .= '<thead>';
+			$data .= '<tr>';
+			$data .= '<th style="text-align:center">Sr No.</th>';
+			$data .= '<th style="text-align:center">Image</th>';
+			$delete = checkFunctionalityRight("view_products.php",2);
+			if($delete)
+			{			
+				$data .= '<th style="text-align:center">
+				<div style="text-align:center">';
+				$data .= '<input type="button"  value="Delete" onclick="multipleImageDelete('.$prod_id.');" class="btn-danger"/>
+				</div></th>';
+			
+			}
+			
+			$data .= '</tr>';
+			$data .= '</thead>';
+			$data .= '<tbody>';
+			
+			while($row_load_data = mysqli_fetch_array($res_get_image))
+			{
+				$data .= '<tr>';				
+				$data .= '<td style="text-align:center">'.++$start_offset.'</td>';				
+				$data .= '<td style="text-align:center"><img src="../images/products/prodid_'.$row_load_data['prod_id'].'/small/'.$row_load_data['image_name'].'" /></td>';
+				$delete = checkFunctionalityRight("view_products.php",2);
+				if($delete)
+				{					
+					$data .= '<td><div class="controls" align="center">';
+					$data .= '<input type="checkbox" value="'.$row_load_data['image_id'].'" id="student_batch'.$row_load_data['image_id'].'" name="student_batch'.$row_load_data['image_id'].'" class="css-checkbox student_batch">';
+					$data .= '<label for="student_batch'.$row_load_data['image_id'].'" class="css-label"></label>';
+					$data .= '</div></td>';		
+											
+				}
+				$data .= '</tr>';															
+			}	
+			$data .= '</tbody>';
+			$data .= '</table>';
+		}
+		
+		quit(array($data,ucwords($row_get_team['batch_name'])),1);
+
 	}
 ?>

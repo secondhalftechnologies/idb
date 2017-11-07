@@ -7,12 +7,6 @@ $uid				= $_SESSION['panel_user']['id'];
 $utype				= $_SESSION['panel_user']['utype'];
 
 
-
-
-
-
-
-
 if((isset($obj->load_add_faq_part)) != "" && isset($obj->load_add_faq_part))
 {
 	$faq_id 	= $obj->faq_id;
@@ -68,7 +62,7 @@ if((isset($obj->load_add_faq_part)) != "" && isset($obj->load_add_faq_part))
 		
 		
 		
-		$type_array  =array("Planet");
+		$type_array  =array("Vendor","Doctor",'Hospital','Buyer');
 		
 		$data .= '<div class="control-group">';
 		$data .= '<label for="tasktitel" class="control-label">Type <sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>';
@@ -563,12 +557,6 @@ if((isset($obj->change_sort_order)) == "1" && isset($obj->change_sort_order))
 			$response_array = array("Success"=>"fail","resp"=>"Updation Failed.");
 		}
 	}
-		
-	
-	
-	
-	
-	
 	echo json_encode($response_array);	
 }
 

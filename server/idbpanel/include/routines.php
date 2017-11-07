@@ -1727,7 +1727,7 @@ function delete($table ,$where, $not_where_array=array(), $and_like_array=array(
 	}
 }	
 	
-	function checkExist($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
+	function checkExist($table ,$where=array(), $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
 	{
 		global $db_con;
 		if($table=="")

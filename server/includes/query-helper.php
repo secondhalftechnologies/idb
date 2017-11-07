@@ -194,7 +194,7 @@
 	}
 	
 	
-	function getRecord($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array())
+	function getRecord($table ,$where, $not_where_array=array(), $and_like_array=array(), $or_like_array=array(),$order_by = array())
 	{
 		global $db_con;
 		if($table=="")
@@ -225,7 +225,13 @@
 				$sql  .= " AND ".$field2 ."!='".$value2."' ";
 			}
 		}
-		
+		if(!empty($order_by))
+		{
+			foreach($order_by as $col => $order)
+			{   
+				$sql  .= " ORDER BY  ".$col ." ".$order." ";
+			}
+		}
 		$result 		= mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
 		$num            = mysqli_num_rows($result);
 		if($num > 0)

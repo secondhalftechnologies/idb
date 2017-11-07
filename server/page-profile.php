@@ -212,8 +212,14 @@
 			border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 			}
 			.wrapper-smenu li a:hover {
-			background-color: rgba(0, 0, 0, 0.06);
+			background-color:#5e7961;
 			}
+			
+			.wrapper-smenu li .active {
+			background-color:#5e7961;
+			}
+			
+			
 			.wrapper-smenu label:hover {
 			background: rgba(203, 228, 205, 0.6) !important;
 			color: #4f7351;
@@ -260,6 +266,7 @@
 			}
 			.wrapper-smenu input[type="checkbox"]:checked + label > .content {
 			display: block;
+			
 			}
 			.wrapper-smenu input[type="checkbox"]:checked + label > span {
 			display: none;
@@ -314,6 +321,8 @@
 				padding:10px;
 			}
 			
+		
+			
     	</style>
 	</head>
 
@@ -326,6 +335,8 @@
 					<div class="row">
             			<div class="col-md-12" >
         					<div class="col-md-3">
+                            	
+                                
                             
                                 
                                 <div class='wrapper-smenu'>
@@ -356,12 +367,12 @@
                                         <div class="content">
                                             <ul>
                                                 <li>
-                                                	<a  href="javascript:void(0);" onclick="showDiv('profile');">Login Information
+                                                	<a id="1" class="active" href="javascript:void(0);" onclick="showDiv('profile','1');">Login Information
                                                     <i class="fa fa-check" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                	<a  href="javascript:void(0);" onclick="showDiv('comp_info');">
+                                                	<a id="2" href="javascript:void(0);" onclick="showDiv('comp_info','2');">
 														<?php echo $org_menu_title; ?> Information 
                                                          <?php
 													
@@ -374,7 +385,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                	<a  href="javascript:void(0);" onclick="showDiv('urDoc');"> Upload Required Documents 
+                                                	<a id="3"  href="javascript:void(0);" onclick="showDiv('urDoc','3');"> Upload Required Documents 
                                                     <?php
 													
 													if(checkExist('tbl_customer_licenses',array('lic_custid'=>$logged_uid)))
@@ -387,7 +398,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                	<a href="javascript:void(0);" onclick="showDiv('pan_info');"> PAN Information 
+                                                	<a id="4" href="javascript:void(0);" onclick="showDiv('pan_info','4');"> PAN Information 
                                                     <?php
 													
 													if(checkExist('tbl_customer_pan',array('pan_userid'=>$logged_uid)))
@@ -399,7 +410,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                	<a href="javascript:void(0);" onclick="showDiv('tan_info');"> TAN Information
+                                                	<a id="5" href="javascript:void(0);" onclick="showDiv('tan_info','5');"> TAN Information
                                                     <?php
 													
 													if(checkExist('tbl_customer_tan',array('tan_userid'=>$logged_uid)))
@@ -411,7 +422,7 @@
                                                      </a>
                                                 </li>
                                                 <li>
-                                                	<a href="javascript:void(0);" onclick="showDiv('gst_info');"> GST Information
+                                                	<a id="6" href="javascript:void(0);" onclick="showDiv('gst_info','6');"> GST Information
                                                     <?php
 													
 													if(checkExist('tbl_customer_gst',array('gst_userid'=>$logged_uid)))
@@ -424,7 +435,7 @@
                                                      
                                                 </li>
                                                 <li>
-                                                	<a href="javascript:void(0);" onclick="showDiv('bank_info');"> Bank Information
+                                                	<a id="7" href="javascript:void(0);" onclick="showDiv('bank_info','7');"> Bank Information
                                                      <?php
 													
 													if(checkExist('tbl_customer_bank_details',array('bank_userid'=>$logged_uid)))
@@ -437,7 +448,7 @@
                                                 </li>
 
                                                 <li>
-                                                	<a href="javascript:void(0);" onclick="showDiv('sign_info');"> Signature Information
+                                                	<a id="8" href="javascript:void(0);" onclick="showDiv('sign_info','8');"> Signature Information
                                                     <?php
 													
 													if(checkExist('tbl_customer_sign',array('sign_userid'=>$logged_uid)))
@@ -453,11 +464,34 @@
                                         </div>
                                         <span></span>
                                   </label>
+                                  <input id='settings' type='checkbox'>
+                                    <label for='settings'>
+                                    <p>Live Bidding</p>
+                                    <div class='lil_arrow'></div>
+                                    
+                                    <span></span>
+                                    </label>
+                                   <input id='settings1' type='checkbox'>
+                                    <label for='settings1'>
+                                    <p>Order History</p>
+                                    <div class='lil_arrow'></div>
+                                    
+                                    <span></span>
+                                    </label>
+                                   <input id='settings2' type='checkbox'>
+                                    <label for='settings2'>
+                                    <p>Advertisement</p>
+                                    <div class='lil_arrow'></div>
+                                    
+                                    <span></span>
+                                    </label>  
                                    <input id='jobs' type='checkbox'>
                                     <label for='jobs'>
                                       <p onclick="logout();">Logout</p>
                                    
                                     <div class='lil_arrow'></div>
+                                    </label>
+                                    
                                    <!--  <div class='content'>
                                     <ul>
                                     <li>
@@ -1261,7 +1295,7 @@
 								   ?>
                                      <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21C Drug license Number</label>
-                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"   size="12" >
+                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no"   >
                                       
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
@@ -1291,7 +1325,7 @@
                                     <input type="hidden" value="<?php echo $row['license_id']; ?>"  name="lic_id[]">
                                    <div class="field-row">
                                       <label class="col-md-3 col-xs-12" for="name">21C Drug License Number</label>
-                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]"  minlength="12" maxlength="12" size="12" >
+                                      <input type="text" value="<?php echo @$lic20CRow['lic_number']; ?>" class="le-input col-md-9 col-xs-12" id="txt_20c_lic_no" name="txt_20c_lic_no[]"   >
                                       <div class="clearfix"></div>
                                     </div><!-- License Number -->
                                     
@@ -1754,11 +1788,18 @@
 		  $( "#target" ).click();
 		});
 		
+		 $(document).ready(function () {
+		 $('#pictures').prop("checked",true);
+		 });
 		
-        function showDiv(divId)
+        function showDiv(divId,accId)
         {
 			$('.cls_mainmenu').removeClass('active');
 			$('#'+divId).addClass('active');
+			
+			$('.wrapper-smenu li a').removeClass('active');
+			$('#'+accId).addClass('active');
+			
         }
 
         function getCities(state_id, select_id, city_select_id)
@@ -1807,8 +1848,7 @@
         // strat logout
          function logout()
         {
-          	
-        	var sendInfo		= {"logout":1};
+          	var sendInfo		= {"logout":1};
         	var getStateCities	= JSON.stringify(sendInfo); 
 
         	$.ajax({

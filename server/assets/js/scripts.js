@@ -281,11 +281,11 @@
     /*  SHARE THIS BUTTONS
     /*===================================================================================*/
 
-    $(document).ready(function () {
+   /* $(document).ready(function () {
         if($('.social-row').length > 0){
             stLight.options({publisher: "2512508a-5f0b-47c2-b42d-bde4413cb7d8", doNotHash: false, doNotCopy: false, hashAddressBar: false});
         }
-    });
+    });*/
 
     /*===================================================================================*/
     /*  CUSTOM CONTROLS

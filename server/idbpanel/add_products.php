@@ -168,7 +168,7 @@
                                         <div class="control-group span6">
                                         	<label for="tasktitel" class="control-label">Product Image<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                           <input type="file" name="prod_img" accept="image/*">
+                                           <input type="file" name="prod_img[]" id="prod_img" accept="image/*" multiple/>
                                             </div>
                                         </div><!--Image Type-->
                                         
@@ -389,7 +389,7 @@
 												{
 													?>
 													<option value="<?php echo $row_get_gst['gst_id']; ?>">
-														<?php echo ucwords($row_get_gst['gst_name']); ?>
+														<?php echo ucwords($row_get_gst['gst_name']); ?> %
 													</option>
 													<?php
 												}
@@ -583,6 +583,45 @@
 											?>
 												<option  value="">No Match Found</option>
 											<?php
+											}
+											?>
+											</select>
+                                            </div>
+                                        </div><!--Packing Type-->
+                                        
+                                        
+                                         <div class="control-group span12">
+                                        	<label for="tasktitel" class="control-label">Commission</label>
+                                           <div class="controls">
+                                           
+                                            <select name="txt_commission" id="txt_commission"  class = "select2-me input-xlarge"  data-rule-required="true" >
+                                            <?php
+											// Query For getting all categories from the system
+											$sql_get_gst	= " SELECT * FROM `tbl_gst_master` ";
+											$sql_get_gst	.= " WHERE `gst_status`='1' ";
+										    $sql_get_gst	.= " ORDER BY `gst_name` ASC ";
+											$res_get_gst	= mysqli_query($db_con, $sql_get_gst) or die(mysqli_error($db_con));
+											$num_get_gst	= mysqli_num_rows($res_get_gst);
+											
+											if($num_get_gst!= 0)
+											{
+											?>
+                                            <option  value="">Select Commission</option>
+											<?php
+												while($row_get_gst = mysqli_fetch_array($res_get_gst))
+												{
+													?>
+													<option value="<?php echo $row_get_gst['gst_id']; ?>">
+														<?php echo ucwords($row_get_gst['gst_name']); ?> %
+													</option>
+													<?php
+												}
+                                           }
+											else
+											{
+											?>
+                                            	<option  value="">No Match Found</option>
+                                            <?php
 											}
 											?>
 											</select>
