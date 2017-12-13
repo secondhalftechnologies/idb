@@ -5,6 +5,7 @@ $obj = json_decode($json);
 //var_dump($obj = json_decode($json));
 $uid	= $_SESSION['panel_user']['id'];
 $utype	= $_SESSION['panel_user']['utype'];
+$vid    =  $_SESSION['panel_user']['vendorId'];
 
 
 if(isset($_FILES['file']))
@@ -616,8 +617,15 @@ if((isset($_POST['add_batch_request'])) == "1" && isset($_POST['add_batch_reques
 	$data['prod_mrp'] = mysqli_real_escape_string($db_con,$_POST['prod_mrp']);
 	$data['prod_price'] = mysqli_real_escape_string($db_con,$_POST['prod_price']);
 	$data['prod_quantity'] = mysqli_real_escape_string($db_con,$_POST['prod_quantity']);
-	$data['prod_manu_date'] = mysqli_real_escape_string($db_con,$_POST['prod_manu_date']);
-	$data['prod_exp_date'] = mysqli_real_escape_string($db_con,$_POST['prod_exp_date']);
+	
+	$prod_manu_date 		= mysqli_real_escape_string($db_con,$_POST['prod_manu_date']);
+	$prod_manu_date 		= explode('-',$prod_manu_date);
+	$data['prod_manu_date'] = $prod_manu_date[2].'-'.$prod_manu_date[1].'-'.$prod_manu_date[0];
+	
+	$prod_exp_date 		= mysqli_real_escape_string($db_con,$_POST['prod_exp_date']);
+	$prod_exp_date 		= explode('-',$prod_exp_date);
+	$data['prod_exp_date'] = $prod_exp_date[2].'-'.$prod_exp_date[1].'-'.$prod_exp_date[0];
+	
 	$data['prod_origin'] = mysqli_real_escape_string($db_con,$_POST['prod_origin']);
 	$data['prod_handling'] = mysqli_real_escape_string($db_con,$_POST['prod_handling']);
 	$data['batch_status'] = mysqli_real_escape_string($db_con,$_POST['batch_status']);
@@ -651,7 +659,9 @@ if((isset($_POST['add_batch_request'])) == "1" && isset($_POST['add_batch_reques
 				quit('DMF Document not uploaded.!');
 			}
 	
-			$data['batch_created']     = $datetime;;
+			$data['batch_created']     = $datetime;
+			
+			
 			$data['batch_created_by']  = $uid;
 			$data['user_id']  = $uid;
 			$res = insert('tbl_batches',$data);

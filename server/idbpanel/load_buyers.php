@@ -583,6 +583,31 @@ if((isset($obj->load_customers)) == "1" && isset($obj->load_customers))
 				}				
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['cust_id'].'</td>';
 				$customers_data .= '<td><input type="button" value="'.ucwords($row_load_data['cust_name']).'" class="btn-link" id="'.$row_load_data['cust_id'].'" onclick="addMoreCustomers(this.id,\'view\');">';
+				
+				$customers_data .= '<div id="cust_info'.$row_load_data['cust_id'].'" >';				
+				$customers_data .= '<div><b>Email:</b>&nbsp;'.$row_load_data['cust_email'].'</div>';
+				$customers_data .= '<div><b>Mobile Number:</b>&nbsp;'.$row_load_data['cust_mobile'].'</div>';								
+				$customers_data .= '<div><b>Created:</b>&nbsp;';
+				if(trim($row_load_data['cust_created']) == "")
+				{
+					$customers_data .= '<span style="color:#F00">Not Available</span>';
+				}
+				else
+				{
+					$customers_data .= $row_load_data['cust_created'];			
+				}
+				$customers_data .= '</div>';
+				$customers_data .= '<div><b>Created By:</b>&nbsp;';
+				if(trim($row_load_data['cust_modified']) == "")
+				{
+					$customers_data .= '<span style="color:#F00">Not Available</span>';
+				}
+				else
+				{
+					$customers_data .= $row_load_data['cust_modified'];					
+				}				
+				$customers_data .= '</div>';
+				
 				$customers_data .= '</td>';
 				$customers_data .= '<td style="text-align:center">'.$row_load_data['cust_mobile'].'</td>';
 				$date = strtotime($row_load_data['cust_created']);

@@ -168,14 +168,14 @@
 			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
 			$data['prod_pharmacopia']      = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
 	        $data['prod_tax']              = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
-	        $data['prod_attribute']        = mysqli_real_escape_string($db_con,$_POST['txt_attribute']);
+	        $data['prod_attribute']        = implode(',',$_POST['txt_attribute']);
 	        $data['prod_dimension_l']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionl']);
 	        $data['prod_dimension_h']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionh']);
 	        $data['prod_dimension_w']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionw']);
 			
-			$data['prod_nett_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_uoweight']);
-	        $data['prod_gross_weight']     = mysqli_real_escape_string($db_con,$_POST['txt_weight']);
-	        $data['prod_unit_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_weight']);
+			$data['prod_nett_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_nweight']);
+	        $data['prod_gross_weight']     = mysqli_real_escape_string($db_con,$_POST['txt_gweight']);
+	        $data['prod_unit_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_uoweight']);
 
 	        $data['prod_packing']          = mysqli_real_escape_string($db_con,$_POST['txt_packing']);
 	        $data['prod_manufactured']     = mysqli_real_escape_string($db_con,$_POST['txt_manufactured']);
@@ -203,13 +203,14 @@
 			//=====To Check Composition TYpe=================
 			if($data['prod_comp_cat'] !="Combination")
 			{
-				$data['prod_comp']          = mysqli_real_escape_string($db_con,$_POST['txt_cmp']);
+				$data['prod_comp']    =$_POST['txt_cmp'];
 			}
 			else
 			{
-				$data['prod_comp']   = implode(',',mysqli_real_escape_string($db_con,$_POST['txt_cmp']));
+				$data['prod_comp']   = implode(',',$_POST['txt_cmp_type']);
 			}
 
+		
 
 			//=====To Check n upload DMF Document
 			if(isset($_FILES['img_dmf']) && $_FILES['img_dmf']['name'] !='')
@@ -461,17 +462,17 @@
 	{
 		$prod_id  = $obj->prod_id;
 		$data       ='';
-		$data  	   .='<input type="hidden" name="batch_id" id="batch_id" value="'.$prod_id.'">';
-		$data .='<input type="hidden" name="addStudent" id="addStudent" value="1">';
+		$data  	   .='<input type="hidden" name="prod_id" id="prod_id" value="'.$prod_id.'">';
+		$data .='<input type="hidden" name="addImage" id="addImage" value="1">';
 		$data .='<div style="padding:15px;text-align:center">';
 		
-		$data .= '<input  id="" name="prod_img[]" class=""  type="file" multiple="multiple" accept="image/*" />';
+		$data .= '<input  id="" name="prod_img[]" class="" data-rule-required="true"  type="file" multiple="multiple" accept="image/*" />';
 		
 		$data .= '<input value="Add Image" id="" class="btn-success"  type="submit">';
 		
 		$data .= '</div> ';
 		
-		$sql_get_image  = " SELECT * FROM tbl_product_images ";
+		$sql_get_image  = " SELECT tpi.*,(SELECT fullname FROM tbl_cadmin_users WHERE id=tpi.image_created_by) as created_name,(SELECT fullname FROM tbl_cadmin_users WHERE id=tpi.image_modified_by) as modified_name FROM tbl_product_images  tpi";
 		$sql_get_image .= " WHERE  1=1 AND ";
 		$sql_get_image .= "  prod_id='".$prod_id."'";
 		$res_get_image  = mysqli_query($db_con,$sql_get_image) or die(mysqli_error($db_con));
@@ -484,6 +485,13 @@
 			$data .= '<tr>';
 			$data .= '<th style="text-align:center">Sr No.</th>';
 			$data .= '<th style="text-align:center">Image</th>';
+			$data .= '<th style="text-align:center">Sort Order</th>';
+			
+			$data .= '<th style="text-align:center">Created Date</th>';
+			$data .= '<th style="text-align:center">Created By</th>';
+			$data .= '<th style="text-align:center">Modified Date</th>';
+				$data .= '<th style="text-align:center">Modified By</th>';
+			$data .= '<th style="text-align:center">Status</th>';
 			$delete = checkFunctionalityRight("view_products.php",2);
 			if($delete)
 			{			
@@ -491,7 +499,6 @@
 				<div style="text-align:center">';
 				$data .= '<input type="button"  value="Delete" onclick="multipleImageDelete('.$prod_id.');" class="btn-danger"/>
 				</div></th>';
-			
 			}
 			
 			$data .= '</tr>';
@@ -502,13 +509,32 @@
 			{
 				$data .= '<tr>';				
 				$data .= '<td style="text-align:center">'.++$start_offset.'</td>';				
-				$data .= '<td style="text-align:center"><img src="../images/products/prodid_'.$row_load_data['prod_id'].'/small/'.$row_load_data['image_name'].'" /></td>';
+				$data .= '<td style="text-align:center">
+				<img width="100px" height="100px" src="../images/products/prodid_'.$row_load_data['prod_id'].'/small/'.$row_load_data['image_name'].'" /></td>';
+				$data .= '<td class="center-text">';
+				$data .= '<input type="text" style="text-align:center;width:50%" onblur="changeImageOrder('.$prod_id.',this.id,this.value)" id="'.$row_load_data['image_id'].'" value="'.$row_load_data['image_order'].'">';
+				$data .= '</td>';
+				$data .= '<td style="text-align:center">'.$row_load_data['image_created'].'</td>';				
+				$data .= '<td style="text-align:center">'.ucwords($row_load_data['created_name']).'</td>';		
+				$data .= '<td style="text-align:center">'.$row_load_data['image_modified'].'</td>';
+				$data .= '<td style="text-align:center">'.ucwords($row_load_data['modified_name']).'</td>';		
+				
+				$data .= '<td class="center-text">';	
+				if($row_load_data['image_status'] == 1)
+				{
+					$data .= '<input type="button" value="Active" id="'.$row_load_data['image_id'].'" class="btn-success" onclick="changeImageStatus('.$prod_id.',this.id,0);">';
+				}
+				else
+				{
+					$data .= '<input type="button" value="Inactive" id="'.$row_load_data['image_id'].'" class="btn-danger" onclick="changeImageStatus('.$prod_id.',this.id,1);">';
+				}
+				$data .= '</td>';	
 				$delete = checkFunctionalityRight("view_products.php",2);
 				if($delete)
 				{					
 					$data .= '<td><div class="controls" align="center">';
-					$data .= '<input type="checkbox" value="'.$row_load_data['image_id'].'" id="student_batch'.$row_load_data['image_id'].'" name="student_batch'.$row_load_data['image_id'].'" class="css-checkbox student_batch">';
-					$data .= '<label for="student_batch'.$row_load_data['image_id'].'" class="css-label"></label>';
+					$data .= '<input type="checkbox" value="'.$row_load_data['image_id'].'" id="image_batch'.$row_load_data['image_id'].'" name="student_batch'.$row_load_data['image_id'].'" class="css-checkbox image_batch">';
+					$data .= '<label for="image_batch'.$row_load_data['image_id'].'" class="css-label"></label>';
 					$data .= '</div></td>';		
 											
 				}
@@ -520,5 +546,120 @@
 		
 		quit(array($data,ucwords($row_get_team['batch_name'])),1);
 
+	}
+	
+	
+	if(isset($_POST['addImage']) && $_POST['addImage']==1)
+	{
+		$prod_id  = $_POST['prod_id'];
+		$files    = $_FILES['prod_img']["tmp_name"];
+		
+		if(isset($files))
+		{
+			$dir 		= "../images/products/";
+			$prod_dir   = $dir.'prodid_' .$prod_id;
+			if(is_dir($prod_dir) === false)
+			{
+				mkdir($prod_dir);
+			}
+			$sprod_dir = $prod_dir.'/small';
+			if(is_dir($sprod_dir) === false)
+			{
+				mkdir($sprod_dir);
+			}
+			
+			$mprod_dir = $prod_dir.'/medium';
+			if(is_dir($mprod_dir) === false)
+			{
+				mkdir($mprod_dir);
+			}
+			
+			$lprod_dir = $prod_dir.'/large';
+			if(is_dir($lprod_dir) === false)
+			{
+				mkdir($lprod_dir);
+			}
+			
+			$sql_get_order =" SELECT image_order FROM tbl_product_images WHERE prod_id='".$prod_id."' ORDER BY image_order DESC  LIMIT 1";
+			$res_get_order = mysqli_query($db_con,$sql_get_order) or die(mysqli_error($db_con));
+			$row_get_order = mysqli_fetch_array($res_get_order);
+			$img_order     = $row_get_order['image_order'] + 1;
+			for($j=0;$j<count($files);$j++)
+			{
+				$temp_file    = $prod_dir."/".$_FILES["prod_img"]["name"][$j];
+				
+				$file_name    = explode('.',$_FILES["prod_img"]["name"][$j]);
+				$file_name    = date('dmyhis').$img_order.$prod_id.'.'.$file_name[1];
+				
+				if(move_uploaded_file($_FILES["prod_img"]["tmp_name"][$j],$temp_file))
+				{
+					make_thumb($temp_file,$sprod_dir.'/'.$file_name,100,100);	
+					make_thumb($temp_file,$mprod_dir.'/'.$file_name,300,300);	
+					make_thumb($temp_file,$lprod_dir.'/'.$file_name,500,500);	
+				}
+				
+				$idata['prod_id']        	= $prod_id;
+				$idata['image_name']        = $file_name;
+				$idata['image_status']      = 1;
+				$idata['image_order']       = $img_order;
+				$idata['image_created']     = $datetime;
+				$idata['image_created_by']  = $uid;
+				insert('tbl_product_images',$idata);
+				
+				$img_order++;
+				unlink($temp_file);
+			}
+			
+			quit(array('Images added Successfully...!',$prod_id),1);
+		}
+		else
+		{
+			quit('Please select file');
+		}
+	}
+	
+	
+	if(isset($obj->deleteImage)  && $obj->deleteImage ==1)
+	{
+		$batch   = $obj->batch;
+		$prod_id = $obj->prod_id;
+		
+		foreach($batch as $image_id)
+		{
+			$irow = checkExist('tbl_product_images' ,array('image_id'=>$image_id));
+			unlink('../images/products/prodid_'.$prod_id.'/small/'.$irow['image_name']);
+			unlink('../images/products/prodid_'.$prod_id.'/medium/'.$irow['image_name']);
+			unlink('../images/products/prodid_'.$prod_id.'/large/'.$irow['image_name']);
+			delete('tbl_product_images' ,array('image_id'=>$image_id));
+		}
+		
+		quit('Images Deleted Successfully',1);
+	}
+	
+	
+	if(isset($obj->changeImageStatus)  && $obj->changeImageStatus ==1)
+	{
+		$curr_status   = $obj->curr_status;
+		$image_id 	   = $obj->image_id;
+		$prod_id       = $obj->prod_id;
+		
+		$data['image_status']      = $curr_status;
+		$data['image_modified']	   = $datetime;
+		$data['image_modified_by'] = $uid;
+		$res 		   = update('tbl_product_images',$data,array('image_id'=>$image_id));
+		quit(1,1);
+	}
+	
+	if(isset($obj->changeImageOrder)  && $obj->changeImageOrder ==1)
+	{
+		$new_order     = $obj->curr_order;
+		$image_id 	   = $obj->image_id;
+		$prod_id       = $obj->prod_id;
+		
+		$sql_check_self_order	= " SELECT * from tbl_product_images WHERE image_id LIKE '".$image_id."' ";
+		$result_check_self_order= mysqli_query($db_con,$sql_check_self_order) or die(mysqli_error($db_con));	
+		$row_check_self_order	= mysqli_fetch_array($result_check_self_order);
+		
+		
 	}
 ?>

@@ -281,7 +281,7 @@
                                 <th>View Details</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-data">
                             <tr>
                                 <td data-title="Product">
                                     <a href="#">Riboflavine 5mg PhosphateIP</a>
@@ -334,5 +334,54 @@
 		<?php include('st-javascript.php'); ?>
         <?php include('st-validator-js.php'); ?>
 		<!-- For demo purposes – can be removed on production : End -->
+        <script type="text/javascript" >
+		
+		 $(document).ready(function () {
+			
+		 	loadProducts();
+		 });
+		 
+		 function loadProducts()
+		 {
+			
+        	var getProducts	= '1';
+			var sendInfo		= {"getProducts":getProducts};
+        	var getStateCities	= JSON.stringify(sendInfo); 
+
+        	$.ajax({
+					url: "load_search_products.php",
+					type: "POST",
+					data: getStateCities, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							$('#table-data').html(data.resp);
+						} 
+						else 
+						{   
+							alert(data.resp);
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+        
+		 }
+		 
+		</script>
     </body>
 </html>

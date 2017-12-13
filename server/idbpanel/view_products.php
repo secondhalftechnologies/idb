@@ -501,6 +501,11 @@
 				
 			}
 			
+		   
+		   
+		   //============================================================================//
+		   //========================Start :  Image Part Here==================================//
+		   
 		   function viewImages(prod_id)
 		   {
 				//loading_show();
@@ -542,11 +547,194 @@
 				});		
 			
 		   }
-		function backToMain(div_close,div_show)
-		{
-			$('#'+div_close).css('display','none');
-			$('#'+div_show).css('display','block')
-		}
+		   
+		   $('#frm_add_image').on('submit', function(e) 
+		   {
+				e.preventDefault();
+				if ($('#frm_add_image').valid())
+				{
+					
+					$.ajax({
+						url: "load_products.php?",
+						type: "POST",
+						data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+						contentType: false,       // The content type used when sending data to the server.
+						cache: false,             // To unable request pages to be cached
+						processData:false,        // To send DOMDocument or non processed data file it is set to false
+						async:true,					
+						success: function(response) 
+						{
+							//alert(response);
+							data = JSON.parse(response);
+							//alert();
+							if(data.Success == "Success") 
+							{
+								alert(data.resp[0]);
+								viewImages(data.resp[1])
+							} 
+							else 
+							{
+								//alert("Wrong Entries");
+								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+								$('#error_model').modal('toggle');	
+											
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+							$('#error_model').modal('toggle');	
+												
+						},
+						complete: function()
+						{
+						}
+					});
+				}
+			});	
+		   
+		   function multipleImageDelete(prod_id)
+		   {
+			   //	loading_show();		
+				var batch = [];
+				$(".image_batch:checked").each(function ()
+				{
+					batch.push(parseInt($(this).val()));
+				});
+				
+				if (batch.length == 0)
+				{
+					alert("Please select checkbox to delete image");				
+				}
+				else
+				{
+					var sendInfo 	= {"batch":batch,"prod_id":prod_id, "deleteImage":1};
+					var del_branch 	= JSON.stringify(sendInfo);								
+					$.ajax({
+						url: "load_products.php",
+						type: "POST",
+						data: del_branch,
+						contentType: "application/json; charset=utf-8",						
+						success: function(response) 
+						{	
+							data = JSON.parse(response);
+							if(data.Success == "Success") 
+							{						
+								alert(data.resp);
+								viewImages(prod_id);
+								loading_hide();
+							} 
+							else
+							{
+								$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');	
+								loading_hide();												
+							}
+						},
+						error: function (request, status, error) 
+						{
+							$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+							$('#error_model').modal('toggle');						
+							loading_hide();
+						},
+						complete: function()
+						{
+							//alert("complete");
+							loading_hide();
+						}
+					});					
+				}
+		
+		   }
+		   
+		   function changeImageStatus(prod_id,image_id,curr_status)
+		   {
+				loading_show();
+				var sendInfo = {"prod_id":prod_id,"image_id":image_id, "curr_status":curr_status, "changeImageStatus":1};
+				var prod_load = JSON.stringify(sendInfo);
+				$.ajax({
+					url: "load_products.php",
+					type: "POST",
+					data: prod_load,
+					contentType: "application/json; charset=utf-8",
+					success: function(response)
+					{
+						data = JSON.parse(response);
+						if(data.Success == "Success")
+						{
+							viewImages(prod_id);
+						}
+						else if(data.Success == "fail")
+						{
+							$("#container1").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							loading_hide();
+						}
+					},
+					error: function (request, status, error)
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();
+						//alert("complete");
+					}
+				});
+				
+			}
+			
+		   function changeImageOrder(prod_id,image_id,curr_status)
+		   {
+			   
+				//loading_show();
+				var sendInfo = {"prod_id":prod_id,"image_id":image_id, "curr_order":curr_order, "changeImageOrder":1};
+				var prod_load = JSON.stringify(sendInfo);
+				$.ajax({
+					url: "load_products.php",
+					type: "POST",
+					data: prod_load,
+					contentType: "application/json; charset=utf-8",
+					success: function(response)
+					{
+						data = JSON.parse(response);
+						if(data.Success == "Success")
+						{
+							viewImages(prod_id);
+						}
+						else if(data.Success == "fail")
+						{
+							$("#container1").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							loading_hide();
+						}
+					},
+					error: function (request, status, error)
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();
+						//alert("complete");
+					}
+				});
+				
+			
+		   }
+		  
+		   //========================End : Image part Here==================================//
+		   //============================================================================//
+			
+			
+			
+			
+			function backToMain(div_close,div_show)
+			{
+				$('#'+div_close).css('display','none');
+				$('#'+div_show).css('display','block')
+			}
 		</script>
     </body>
 </html>

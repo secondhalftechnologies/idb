@@ -297,7 +297,7 @@
 
 						
                                             <div class="controls" style="display:none;" id="multiple">
-                                            <select multiple="multiple"  id="prod_catid" onChange="console.log($(this).children(":selected").length)" name="txt_cmp_type" id="txt_cmp_type" placeholder="Select Composition"  class = "select2-me input-xlarge"  data-rule-required="true" >
+                                            <select multiple="multiple"  id="prod_catid" onChange="console.log($(this).children(":selected").length)" name="txt_cmp_type[]" id="txt_cmp_type" placeholder="Select Composition"  class = "select2-me input-xlarge"  data-rule-required="true" >
                                             <?php 
 											$res_get_composition	= mysqli_query($db_con, $sql_get_composition) or die(mysqli_error($db_con));
 											while($row_get_composition= mysqli_fetch_array($res_get_composition))

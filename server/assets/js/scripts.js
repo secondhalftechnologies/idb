@@ -7,6 +7,12 @@
 
     $(document).ready(function () {
         new WOW().init();
+
+        $("#shopbycategory").hide();
+        $("#btnshopbycat").click(function(){
+            $("#shopbycategory").toggle();
+        }); 
+                   
     });
 
     /*===================================================================================*/

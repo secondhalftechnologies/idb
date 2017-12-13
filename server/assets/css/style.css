@@ -856,7 +856,7 @@ header {
 .sidemenu-holder {
   width: 21.5% !important; }
   .sidemenu-holder .side-menu .head {
-    padding: 17px;
+    padding: 5px 17px;
     color: #fff;
     border-radius: 5px 5px 0 0;
     text-transform: capitalize;

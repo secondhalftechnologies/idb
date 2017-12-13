@@ -481,21 +481,21 @@
                                 <h2 class="section-title">Category Name</h2>
 
                                 <div class="control-bar">
+                                    <input type="hidden" name="page" id="page" value="1"/>
                                     <div id="popularity-sort" class="le-select" >
-                                        <select data-placeholder="sort by popularity">
-                                            <option value="1">Sort By</option>
-                                            <option value="2">Price H-L</option>
-                                            <option value="3">Price L-H</option>
-                                            <option value="4">Poplarity</option>
-                                            <option value="5">New Arrivals</option>
-                                        </select>
+                                        <select data-placeholder="sort by popularity" onChange="loadProducts()" id="sort_by" name="sort_by">
+                                            <option value="">Sort By</option>
+                                             <option value="1">New Arrivals</option>
+                                            <option value="2">Price L-H</option>
+                                            <option value="3">Price H-L</option>
+                                         </select>
                                     </div>
 
-                                    <div id="item-count" class="le-select">
-                                        <select>
-                                            <option value="1">24 per page</option>
-                                            <option value="2">48 per page</option>
-                                            <option value="3">32 per page</option>
+                                    <div id="item-count" class="le-select"  >
+                                        <select id="per_page" name="per_page" onChange="loadProducts()">
+                                            <option value="24">24 per page</option>
+                                            <option value="48">48 per page</option>
+                                            <option value="32">32 per page</option>
                                         </select>
                                     </div>
 
@@ -507,7 +507,9 @@
                                     </div>
                                 </div><!-- /.control-bar -->
 
-                                <div class="tab-content">
+                                <div class="tab-content" id="prod_content">
+                                
+                                
                                     <div id="grid-view" class="products-grid fade tab-pane ">
 
                                         <div class="product-grid-holder">
@@ -764,7 +766,7 @@
                                     </div><!-- /.products-grid #grid-view -->
 
                                     <div id="list-view" class="products-grid fade tab-pane in active ">
-                                        <div class="products-list">
+                                        <div class="products-list" id="products-list">
 
                                             <div class="product-item product-item-holder">
                                                 <div class="ribbon red"><span>sale</span></div>
@@ -933,7 +935,7 @@
 
                                         </div><!-- /.products-list -->
 
-                                        <div class="pagination-holder">
+                                        <div class="pagination-holder" id="pagination-holder">
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-6 text-left">
                                                     <ul class="pagination">
@@ -967,9 +969,65 @@
             <?php include('st-footer.php'); ?>
             <!-- ============================================================= FOOTER : END ======================================================= -->
         </div><!-- /.wrapper -->
-
+		
 		<?php include('st-javascript.php'); ?>
-        <?php include('st-validator-js.php'); ?>
+       <!-- <?php include('st-validator-js.php'); ?>-->
 		<!-- For demo purposes – can be removed on production : End -->
+        <script type="text/javascript" >
+		
+		 $(document).ready(function () {
+			
+		 	loadProducts();
+		 });
+		 
+		 function loadProducts()
+		 {
+			 
+			var page        = $('#page').val();
+        	var getProducts	= '1';
+			var sort_by     = $('#sort_by').val();
+			var per_page    = $('#per_page').val();
+        	var sendInfo		= {"page":page, "sort_by":sort_by,"per_page":per_page,"getProducts":getProducts};
+        	var getStateCities	= JSON.stringify(sendInfo); 
+
+        	$.ajax({
+					url: "load_page_products.php",
+					type: "POST",
+					data: getStateCities, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+					contentType: false,       // The content type used when sending data to the server.
+					cache: false,             // To unable request pages to be cached
+					processData:false,        // To send DOMDocument or non processed data file it is set to false
+					async:true,						
+					success: function(response) 
+					{   
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{  
+							$('#products-list').html(data.resp[0]);
+							$('#pagination-holder').html(data.resp[1]);
+							
+						} 
+						else 
+						{   
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');							
+							$('#error_model').modal('toggle');	
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');							
+						$('#error_model').modal('toggle');	
+					},
+					complete: function()
+					{
+						//alert("complete");
+						//loading_hide();
+					}
+				});
+        
+		 }
+		 
+		</script>
+        
     </body>
 </html>

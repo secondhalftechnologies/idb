@@ -77,6 +77,11 @@ RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^track-order$ track-order.php [NC,L]
 
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(.+?)-([0-9]+)-(a+)/?$  product-detail.php?batch_id=$2&prod_slug=$1 [NC,L]
+
+
 # C (chained with next rule)
 # CO=cookie (set specified cookie)
 # E=var:value (set environment variable var to value)

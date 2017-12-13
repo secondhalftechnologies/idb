@@ -2,6 +2,61 @@
 <html lang="en">
 <?php include("includes/db_con.php"); ?>
 <?php include("includes/query-helper.php"); ?>
+
+<?php
+function show_full_path($cat_id,$array)
+{
+  	global $db_con;
+	$sql_get_cat = "SELECT * FROM tbl_category WHERE cat_id ='".$cat_id."' AND cat_name !='none'";
+	$res_get_cat = mysqli_query($db_con,$sql_get_cat) or die(mysqli_error($db_con));
+	$num_rows    = mysqli_num_rows($res_get_cat);
+	if($num_rows !=0)
+	{   $row =mysqli_fetch_array($res_get_cat);
+		array_push($array,ucwords($row['cat_name']));
+		if($row['cat_type']!="parent")
+		{
+		  $array = show_full_path($row['cat_type'],$array);
+		}
+	}
+	return $array;
+}
+
+
+if(isset($_REQUEST['batch_id']) && $_REQUEST['batch_id']!='')
+{
+	$brow = checkExist('tbl_batches' ,array('batch_id'=>$_REQUEST['batch_id']));
+	if($brow)
+	{
+		$prow = checkExist('tbl_products' ,array('id'=>$brow['prod_id']));
+		if($prow)
+		{
+			if($prow['prod_slug']==$_REQUEST['prod_slug'])
+			{
+				
+			}
+			else
+			{
+				header("LOCATION:index.php");
+			}
+		}
+		else
+		{
+			header("LOCATION:index.php");
+		}
+	}
+	else
+	{
+		header("LOCATION:index.php");
+	}
+}
+else
+{
+	header("LOCATION:index.php");
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,10 +74,7 @@
 
 		<?php include('st-head.php'); ?>
         
-    	
-        
-      
-		<style type="text/css">
+    	<style type="text/css">
 		    /*==Start Done by satish 03112017=====*/
 		    .fleft
 			{
@@ -211,64 +263,39 @@
                         <div class="product-item-holder size-big single-product-gallery small-gallery">
 
                             <div id="owl-single-product" class="owl-carousel">
-                                <div class="single-product-gallery-item" id="slide1">
-                                    <a data-rel="prettyphoto" href="assets/images/products/product-gallery-01.jpg">
-                                        <img class="img-responsive" alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-gallery-01.jpg" />
+                            <?php
+							
+							
+							  $imageResult = getRecord('tbl_product_images' ,array('prod_id'=>$prow['id']),array(),array(),array(),array('image_order'=>'ASC'));
+								while($imageRow = mysqli_fetch_array($imageResult))
+								{?>
+                               	 <div class="single-product-gallery-item" id="slide<?php echo $imageRow['image_id']; ?>">
+                                    <a data-rel="prettyphoto" href="images/products/prodid_<?php echo $prow['id']; ?>/large/<?php echo $imageRow['image_name']; ?>">
+                                        <img class="img-responsive" alt="" src="images/products/prodid_<?php echo $prow['id']; ?>/large/<?php echo $imageRow['image_name']; ?>" />
                                     </a>
                                 </div><!-- /.single-product-gallery-item -->
-
-                                <div class="single-product-gallery-item" id="slide2">
-                                    <a data-rel="prettyphoto" href="<?php echo $BaseFolder; ?>/assets/images/products/product-gallery-01.jpg">
-                                        <img class="img-responsive" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/product-gallery-01.jpg" />
-                                    </a>
-                                </div><!-- /.single-product-gallery-item -->
-
-                                <div class="single-product-gallery-item" id="slide3">
-                                    <a data-rel="prettyphoto" href="<?php echo $BaseFolder; ?>/assets/images/products/product-gallery-01.jpg">
-                                        <img class="img-responsive" alt="" src="<?php echo $BaseFolder; ?>/assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/product-gallery-01.jpg" />
-                                    </a>
-                                </div><!-- /.single-product-gallery-item -->
+							<?php
+                            	}
+							?>
                             </div><!-- /.single-product-slider -->
 
 
                             <div class="single-product-gallery-thumbs gallery-thumbs">
 
                                 <div id="owl-single-product-thumbnails" class="owl-carousel">
-                                    <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="0" href="#slide1">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
+                                <?php
+                                $imageResult = getRecord('tbl_product_images' ,array('prod_id'=>$prow['id']),array(),array(),array(),array('image_order'=>'ASC'));
+								
+								$i= 0;
+								while($imageRow = mysqli_fetch_array($imageResult))
+								{?>
+                               	  <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="<?php echo $i; ?>" href="#slide<?php echo $imageRow['image_id']; ?>">
+                                        <img width="67" alt="" src="images/products/prodid_<?php echo $prow['id']; ?>/small/<?php echo $imageRow['image_name']; ?>" />
                                     </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="1" href="#slide2">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide3">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="0" href="#slide1">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="1" href="#slide2">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide3">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="0" href="#slide1">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="1" href="#slide2">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
-
-                                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide3">
-                                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $BaseFolder; ?>/assets/images/products/gallery-thumb-01.jpg" />
-                                    </a>
+								<?php
+								$i++;
+                                }
+                                ?>
                                 </div><!-- /#owl-single-product-thumbnails -->
 
                                 <div class="nav-holder left hidden-xs">
@@ -287,8 +314,8 @@
                         <div class="body">
                             <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
 
-                            <div class="title"><a href="#">Riboflavine 5mg PhosphateIP</a></div>
-                            <div class="brand">Brand Name</div>
+                            <div class="title"><a href="#"> <?php echo ucwords($prow['prod_name']); ?></a></div>
+                            <div class="brand"><?php echo ucwords($prow['prod_manufactured']); ?></div>
 
                             <div class="social-row">
                                 <span class="st_facebook_hcount"></span>
@@ -297,14 +324,33 @@
                             </div>
 
                             <div class="excerpt">
-                                <p><strong>Application:</strong> Headache, Pain Killer</p>
-                                <p><strong>Composition:</strong> Composition 01, Composition 02, Composition 03</p>
+                            <?php
+                            	$application        = $prow['prod_attribute'];
+                                if($application!="")
+                                {
+                                    $sql_get_applcation  = "SELECT GROUP_CONCAT(attribute_name separator  ', ') as attribute FROM tbl_attribute WHERE id IN(".$application.")";
+                                    $res_get_application = mysqli_query($db_con,$sql_get_applcation) or die(mysqli_error($db_con));
+                                    $row_get_application = mysqli_fetch_array($res_get_application);
+                                    $application         = ucwords($row_get_application['attribute']);
+                                }
+								
+								$composition        = $prow['prod_comp'];
+								if($composition!="")
+								{
+									$sql_get_composition  = "SELECT GROUP_CONCAT(spec_name separator  ', ') as composition FROM tbl_composition WHERE spec_id IN(".$composition.")";
+									$res_get_composition = mysqli_query($db_con,$sql_get_composition) or die(mysqli_error($db_con));
+									$row_get_composition = mysqli_fetch_array($res_get_composition);
+									$composition         = ucwords($row_get_composition['composition']);
+								}
+							?>
+                                <p><strong>Application:</strong> <?php echo $application; ?></p>
+                                <p><strong>Composition:</strong> <?php echo $composition; ?></p>
                                 <p><strong>* Seller Location:</strong> Mumbai, MH</p>
                             </div>
 
                             <div class="prices">
-                                <div class="price-current">Rs. 120</div>
-                                <div class="price-prev">Rs. 200</div>
+                                <div class="price-current">Rs. <?php echo $brow['prod_price']; ?></div>
+                               <!-- <div class="price-prev">Rs. 200</div>-->
                             </div>
                             
                             <div class="qnt-holder">
@@ -332,38 +378,45 @@
                         <ul class="nav nav-tabs simple" >
                             <li class="active"><a >Additional Information</a></li>
                         </ul><!-- /.nav-tabs -->
-
+						<?php
+							$manufacturing_date = explode('-',$brow['prod_manu_date']);
+							$manufacturing_date = $manufacturing_date[1].'/'.$manufacturing_date[0];
+							
+							$expiry_date        = explode('-',$brow['prod_exp_date']);
+							$expiry_date		= $expiry_date[1].'/'.$expiry_date[0];
+						?>
 						<div class="tab-content">
                             <div class="tab-pane active row">
                                 <div class="col-md-6">
                                     <ul class="tabled-data">
                                         <li>
                                             <label>SKU</label>
-                                            <div class="value">1223434</div>
+                                            <div class="value"><?php echo $prow['prod_id']; ?></div>
                                         </li>
                                         <li>
                                             <label>Batch No</label>
-                                            <div class="value">12ABCD123</div>
+                                            <div class="value"><?php echo $brow['prod_batch_no']; ?></div>
                                         </li>
                                         <li>
                                             <label>Manufacturing Date</label>
-                                            <div class="value">11/04/2017</div>
+                                            <div class="value"><?php echo $manufacturing_date; ?></div>
                                         </li>
                                         <li>
                                             <label>Expiry Date</label>
-                                            <div class="value">30/01/2019</div>
+                                            <div class="value"><?php echo $expiry_date; ?></div>
                                         </li>
                                         <li>
                                             <label>Origin</label>
-                                            <div class="value">Indian</div>
+                                            <div class="value"><?php echo ucwords($brow['prod_origin']); ?></div>
                                         </li>
                                         <li>
                                             <label>Material Handling</label>
-                                            <div class="value">Inflamable</div>
+                                            <div class="value"><?php echo ucwords($brow['prod_handling']) ?></div>
                                         </li>
+                                        
                                         <li>
                                             <label>COA</label>
-                                            <div class="value"><a href="#">View</a></div>
+                                            <div class="value"><a href="<?php echo $BaseFolder; ?>/idbpanel/documents/coa/<?php echo $brow['prod_coa'];  ?>" download>View</a></div>
                                         </li>
                                     </ul><!-- /.tabled-data -->
                                 </div>
@@ -371,7 +424,16 @@
                                     <ul class="tabled-data">
                                         <li>
                                             <label>Category</label>
-                                            <div class="value"><a href="#">Formulation</a>, <a href="#">Pain Killer</a>, <a href="#">Headache</a></div>
+                                            <div class="value">
+                                            
+                                           
+                                            <?php $cat_names =  show_full_path($prow['prod_cat'],array());
+												foreach($cat_names as $cat_name)
+												{
+													echo ' <a href="#">'.$cat_name.'</a> ,';
+												}
+											 ?>
+                                            </div>
                                         </li>
                                         <li>
                                             <label>Keywords</label>
@@ -379,36 +441,60 @@
                                         </li>
                                         <li>
                                             <label>dimensions</label>
-                                            <div class="value">90x60x90 cm</div>
+                                            <div class="value"><?php echo $prow['prod_dimension_l']; ?>x<?php echo $prow['prod_dimension_h']; ?>x<?php echo $prow['prod_dimension_w']; ?> cm</div>
                                         </li>
                                         <li>
                                             <label>Unit weight</label>
-                                            <div class="value">7.25 kg</div>
+                                            <div class="value"><?php echo $prow['prod_nett_weight']; ?> <?php echo $prow['prod_unit_weight']; ?></div>
                                         </li>
                                         <li>
                                             <label>Gross Weight</label>
-                                            <div class="value">10 kg</div>
+                                            <div class="value"><?php echo $prow['prod_gross_weight']; ?> <?php echo $prow['prod_unit_weight']; ?></div>
                                         </li>
+                                        <?php
+											if($brow['prod_mrp']!='')
+											{ 
+										?>
                                         <li>
                                             <label>M.R.P.</label>
-                                            <div class="value">Rs. 150</div>
+                                            <div class="value">Rs. <?php echo $brow['prod_mrp']; ?></div>
                                         </li>
+                                        <?php 
+											}
+										?>
+                                        
+                                        <?php
+											$pcrow = checkExist('tbl_packing' ,array('id'=>$prow['prod_packing']));
+										
+										?>
                                         <li>
                                             <label>Packaging</label>
-                                            <div class="value">Strips</div>
+                                            <div class="value"><?php echo  ucwords($pcrow['packing_name']); ?></div>
                                         </li>
                                         <li>
                                             <label>Manufactured By</label>
-                                            <div class="value">Metlife India Limited</div>
+                                            <div class="value"><?php echo ucwords($prow['prod_manufactured']); ?></div>
                                         </li>
+                                        <?php
+										if($prow['prod_manufactured_number']!="")
+										{
+										?>
                                         <li>
                                             <label>Manufacturer Licence No</label>
-                                            <div class="value">ABCD12345</div>
+                                            <div class="value"><?php echo $prow['prod_manufactured_number']; ?></div>
                                         </li>
+                                        <?php
+										}?>
+                                         <?php
+										if($prow['prod_dmf']!="")
+										{
+										?>
                                         <li>
                                             <label>DMF</label>
-                                            <div class="value"><a href="#">View</a></div>
+                                            <div class="value"><a href="<?php echo $BaseFolder; ?>/idbpanel/documents/dmf/<?php echo $prow['prod_dmf'];  ?>" download>View</a></div>
                                         </li>
+                                        <?php
+										}?>
                                     </ul><!-- /.tabled-data -->
                                 </div>
                             </div><!-- /.tab-pane #description -->

@@ -699,6 +699,7 @@ if((isset($obj->change_status)) == "1" && isset($obj->change_status))
 			$data['created']          = $datetime;
 			$data['created_by']       = $uid;
 			$data['status']           = 1;
+			$data['vendorId']		  = $vendor_id;
 			$admin_id                 = insert('tbl_cadmin_users',$data);
 			
 			$sql_check_rights = " SELECT * FROM tbl_assign_rights WHERE ar_user_owner_id like '".$admin_id."'";

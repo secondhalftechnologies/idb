@@ -131,7 +131,7 @@
 				</div><!-- /.container -->
                 
                 <div class="container-fluid no-padding">
-                	<div class="col-xs-12 col-md-3 no-padding">
+                	<!-- <div class="col-xs-12 col-md-3 no-padding">
 	                  	<li class="dropdown le-dropdown">
 	                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	                                        <i class="fa fa-list"></i> Shop by Category
@@ -143,7 +143,7 @@
                                         
                                     </ul>
 	                                
-	                            <!-- <nav class="yamm megamenu-horizontal" role="navigation">
+	                            <nav class="yamm megamenu-horizontal" role="navigation">
                                 	<ul class="nav">
 
 		                                <li class="dropdown menu-item">
@@ -263,9 +263,141 @@
 	                                        </ul>
 	                                    </li>
 	                                </ul>
-	                            </nav> -->
+	                            </nav>
 	                    </li>
-                  	</div>
+                  	</div> -->
+
+                  	<div class="col-xs-12 col-sm-4 col-md-3 sidemenu-holder" >
+                        <!-- ================================== TOP NAVIGATION ================================== -->
+                        <div class="side-menu animate-dropdown">
+                            <div id="btnshopbycat" class="head" style="cursor: pointer;"><i class="fa fa-list"></i> Shop by Category</div>
+                            <nav id="shopbycategory" class="yamm megamenu-horizontal" role="navigation" style="position: absolute;z-index: 9999">
+                                <ul class="nav">
+                                    <li class="dropdown menu-item">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Raw</a>
+                                        <ul class="dropdown-menu mega-menu">
+                                            <li class="yamm-content">
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="dropdown-banner-holder">
+                                                        <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
+                                                    </div>
+                                                </div>
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                            </li>
+                                        </ul>
+                                    </li><!-- /.menu-item -->
+
+                                    <li class="dropdown menu-item">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formulation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <ul class="dropdown-menu mega-menu">
+                                            <li class="yamm-content">
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="dropdown-banner-holder">
+                                                        <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
+                                                    </div>
+                                                </div>
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                            </li>
+                                        </ul>
+                                    </li><!-- /.menu-item -->
+
+                                    <li class="dropdown menu-item">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surgical</a>
+                                        <ul class="dropdown-menu mega-menu">
+                                            <li class="yamm-content">
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-lg-4">
+                                                        <ul>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                            <li><a href="#">Application</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="dropdown-banner-holder">
+                                                        <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
+                                                    </div>
+                                                </div>
+                                                <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                            </li>
+                                        </ul>
+                                    </li><!-- /.menu-item -->
+                                </ul><!-- /.nav -->
+                            </nav><!-- /.megamenu-horizontal -->
+                        </div><!-- /.side-menu -->
+                        <!-- ================================== TOP NAVIGATION : END ================================== -->
+                    </div><!-- /.sidemenu-holder -->
+
                 	<div class="col-xs-12 col-md-9 no-padding" id="topmenutogggle" >
 	                  	<nav id="top-megamenu-nav" class="megamenu-vertical animate-dropdown">
 						    <div class="yamm navbar" style="min-height:0px;">
