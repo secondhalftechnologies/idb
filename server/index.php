@@ -2,6 +2,7 @@
 
  include("includes/db_con.php");
 
+include("includes/query-helper.php"); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -305,6 +306,7 @@
 
         
 <?php include('st-javascript.php'); ?>
+
     </body>
 
 </html>

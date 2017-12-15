@@ -192,7 +192,19 @@
 		}
 	}
 	
-	
+	function getCatChild($catId_array,$cat_id)
+	{
+		$cat_res = getRecord('tbl_category' ,array('cat_type'=>$cat_id));
+		if($cat_res)
+		{
+			while($cat_row = mysqli_fetch_array($cat_res))
+			{
+				array_push($catId_array,$cat_row['cat_id']);
+				$catId_array = getCatChild($catId_array,$cat_row['cat_id']);
+			}
+		}
+		return $catId_array;
+	}
 	
 	//===================================================================================================================//
 	//==========================Start : Load Products Dn BY satish======================================================//
@@ -211,11 +223,29 @@
 		$page 	   	   	= $page - 1;
 		$start_offset  += $page * $per_page;
 		$start 			= $page * $per_page;
+
+		//=========Start : Filters=====================//
+
+		$cat_id        = $obj->cat_id;
+		$catId_array   = array();
+		if($cat_id !="")
+		{
+			array_push($catId_array,$cat_id);
+			$catId_array  = getCatChild($catId_array,$cat_id);
+		}
+
+		//=========End : Filters========================//
 		
 		$sql            = " SELECT * FROM tbl_batches as tb ";
 		$sql           .= " INNER JOIN tbl_products as tp ON tb.prod_id = tp.id";
 		$sql           .= " INNER JOIN tbl_product_images as ti ON tp.id = ti.prod_id";
 		$sql           .= " WHERE tp.prod_status=1 AND tb.batch_status=1";
+
+		if(!empty($catId_array))
+		{
+			$sql .=' AND prod_cat IN ('.implode(',',$catId_array).') ';
+		}
+
 		$sql           .= " GROUP BY batch_id";
 		if($order_by != "")
 		{
@@ -227,8 +257,14 @@
 				}
 			}
 		}
-		$res            = mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+
 		
+
+		$res       = mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
+		if(mysqli_num_rows($res)==0)
+		{
+			quit(array($data,'<span style="text-align:center">Products not available...!</span>'),1);
+		}
 		while($row = mysqli_fetch_array($res))
 		{
 			$manufacturing_date = explode('-',$row['prod_manu_date']);
@@ -287,7 +323,14 @@
 					</div>';
 		}
 		$data_pagination		= dataPagination($sql,$per_page,$start,$cur_page);
+
+		
 		quit(array($data,$data_pagination),1);
+		
+		
+		
+		
+		
 	}
 	
 	

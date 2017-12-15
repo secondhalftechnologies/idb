@@ -1,5 +1,23 @@
 <?php include("includes/db_con.php"); ?>
 <?php include("includes/query-helper.php"); ?>
+<?php
+
+$cat_name   = "All Category";
+$cat_id     = '';
+if(isset($_REQUEST['cat_id']) && $_REQUEST['cat_id']!="")
+{
+	$cat_id =mysqli_real_escape_string($db_con,$_REQUEST['cat_id']);
+	$cat_row =checkExist('tbl_category' ,array('cat_id'=>$cat_id));
+	if($cat_row)
+	{
+		$cat_id   = $_REQUEST['cat_id'];
+		$cat_name = ucwords($cat_row['cat_name']);
+	}
+	
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -478,7 +496,7 @@
 
                         <section id="gaming">
                             <div class="grid-list-products">
-                                <h2 class="section-title">Category Name</h2>
+                                <h2 class="section-title"><?php echo $cat_name; ?></h2>
 
                                 <div class="control-bar">
                                     <input type="hidden" name="page" id="page" value="1"/>
@@ -982,12 +1000,12 @@
 		 
 		 function loadProducts()
 		 {
-			 
+			var cat_id      = '<?php echo $cat_id; ?>'
 			var page        = $('#page').val();
         	var getProducts	= '1';
 			var sort_by     = $('#sort_by').val();
 			var per_page    = $('#per_page').val();
-        	var sendInfo		= {"page":page, "sort_by":sort_by,"per_page":per_page,"getProducts":getProducts};
+        	var sendInfo		= {"page":page, "sort_by":sort_by,"per_page":per_page,"getProducts":getProducts,'cat_id':cat_id};
         	var getStateCities	= JSON.stringify(sendInfo); 
 
         	$.ajax({

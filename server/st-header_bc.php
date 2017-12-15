@@ -1,8 +1,66 @@
 			<?php
-				function getChild($parent_id)
+				function getChild($parent_id,$html)
 				{
-					
-				}
+					$childresult = getRecord('tbl_category',array('cat_type'=>$parent_id,'cat_status'=>1));
+
+	            	$childNum  = mysqli_num_rows($childresult);
+	            	$child_arr = array();
+	            	
+            		while($child_row = mysqli_fetch_array($childresult))
+	            	{
+	            		array_push($child_arr,$child_row);
+	            	}
+	            	  
+				      $no_of_part = $childNum/3;
+				      $no_of_part = round($no_of_part);
+				      $j        = ($no_of_part * 2);
+				      $k        = $childNum - $j;
+
+	            	
+	                
+	                $html .='<ul class="dropdown-menu mega-menu">
+	                    <li class="yamm-content">
+	                        <div class="row">
+	                            <div class="col-xs-12 col-lg-6">
+	                                <ul>';
+
+	                                for($i=0;$i<$j;$i++)
+	                                {
+	                                  
+	                                  	$html .='<li><a href="product-list.php?cat_id='.$child_arr[$i]['cat_id'].'">'.ucwords($child_arr[$i]['cat_name']).'</a></li>';
+	                                }
+	                                	
+	                             $html .='    </ul>
+	                            </div>';
+
+
+	                            if($k !=0) 
+	                            {
+	                             $html .='<div class="col-xs-12 col-lg-6">
+	                                <ul>';
+	                                   
+	                                    for($i=$i;$i<$childNum;$i++)
+	                                   {
+	                                 $html .='		 <li><a href="#">'.ucwords($child_arr[$i]['cat_name']).'</a></li>';
+	                                	 
+	                                	}
+	                                
+	                             $html .='	   </ul>
+	                            </div>';
+	                            
+	                             }
+	                             
+
+	                          $html .='	 <!--  <div class="dropdown-banner-holder">
+	                                <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
+	                            </div> -->
+	                        </div>
+	                        <!-- ================================== MEGAMENU VERTICAL ================================== -->
+	                    </li>
+	                </ul>';
+	                
+			return $html;
+			}
 			?>
 
 			<header>
@@ -284,12 +342,36 @@
                             	?>
 
                             	<ul class="nav">
+                            	<?php 
+                            	while($row = mysqli_fetch_array($result))
+                            	{
+                            		if(isExist('tbl_category',array('cat_type'=>$row['cat_id'],'cat_status'=>1)));
+                            		{?>
+                            			<li class="dropdown menu-item">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo ucwords($row['cat_name']); ?></a>
+                                        <?php echo getChild($row['cat_id'],$html=""); ?>
+                            		<?php
+                            		}
+                            		?>
+									</li><!-- /.menu-item -->
+
+                            		<?php
+                            		}
+                            		?>
+                                    
+								</ul><!-- /.nav -->
+
+
+                                <?php
+                            	$result = getRecord('tbl_category',array('cat_type'=>'parent','cat_status'=>1));
+                            	?>
+
+                            	<ul class="nav">
                             		<?php 
                             		while($row = mysqli_fetch_array($result))
                             		{?>
 										<li class="dropdown menu-item">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        	<?php echo ucwords($row['cat_name']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo ucwords($row['cat_name']); ?></a>
                                         <?php
 		                            	$childresult = getRecord('tbl_category',array('cat_type'=>$row['cat_id'],'cat_status'=>1));
 
@@ -312,22 +394,20 @@
                                             <li class="yamm-content">
                                                 <!-- ================================== MEGAMENU VERTICAL ================================== -->
                                                 <div class="row">
-                                                    <div class="col-xs-12 col-lg-4">
+                                                    <div class="col-xs-12 col-lg-6">
                                                         <ul>
                                                         	<?php 
                                                         	for($i=0;$i<$j;$i++)
                                                         	{?>
-                                                        		 <li><a href="product-list.php?cat_id=<?php echo $child_arr[$i]['cat_id']; ?>"><?php echo ucwords($child_arr[$i]['cat_name']); ?></a></li>
+                                                        		 	<li><a href="product-list.php?cat_id=<?php echo $child_arr[$i]['cat_id'];?>"><?php echo ucwords($child_arr[$i]['cat_name']);?></a></li>
                                                         	<?php 
                                                         	}
                                                         	?>
                                                         </ul>
                                                     </div>
-
-
                                                     <?php if($k !=0) 
                                                     {?>
-                                                    <div class="col-xs-12 col-lg-4">
+                                                    <div class="col-xs-12 col-lg-6">
                                                         <ul>
                                                             <?php 
                                                             for($i=$i;$i<$childNum;$i++)
@@ -342,10 +422,9 @@
                                                      }
                                                      ?>
 
-                                                    <div class="dropdown-banner-holder">
+                                                     <div class="dropdown-banner-holder">
                                                         <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
                                                     </div> 
-                                                    <div style="clear: both"></div>
                                                 </div>
                                                 <!-- ================================== MEGAMENU VERTICAL ================================== -->
                                             </li>
@@ -357,19 +436,7 @@
                             		}
                             		?>
                                     
-
-                                  
-
-                                   
-                                </ul><!-- /.nav -->
-
-
-                                <ul class="nav">
-                                   
-
-
-                                
-                                </ul><!-- /.nav -->
+								</ul><!-- /.nav -->
                             </nav><!-- /.megamenu-horizontal -->
                         </div><!-- /.side-menu -->
                         <!-- ================================== TOP NAVIGATION : END ================================== -->
