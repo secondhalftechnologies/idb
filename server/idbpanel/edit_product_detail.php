@@ -24,18 +24,25 @@
 	}
 	else
 	{
-		$title	= 'Add Products';	
+		$title	= 'Edit Product';	
 	}
 	$path_parts   		= pathinfo(__FILE__);
 	$filename 	  		= $path_parts['filename'].".php";
 	$sql_feature 		= "select * from tbl_admin_features where af_page_url = '".$filename."'";
 	$result_feature 	= mysqli_query($db_con,$sql_feature) or die(mysqli_error($db_con));
 	$row_feature  		= mysqli_fetch_row($result_feature);
-	$feature_name 		= 'Add Products'; // $row_feature[1];
+	$feature_name 		= 'Edit Product'; // $row_feature[1];
 	$home_name    		= "Home";
 	$home_url 	  		= "view_dashboard.php?pag=Dashboard";
 	$utype				= $_SESSION['panel_user']['utype'];
 	$tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
+
+
+	if(isset($_REQUEST['product_id']) && $_REQUEST['product_id']!="")
+	{
+		$product_id = $_REQUEST['product_id'];
+		$prod_row        = checkExist('tbl_products' ,array('id'=>$product_id));
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,7 +73,7 @@
             	<div class="container-fluid" id="div_view_spec">
 					<?php
                     /* this function used to add navigation menu to the page*/
-                    breadcrumbs($home_url,$home_name,'Add Products',$filename,$feature_name);
+                    breadcrumbs($home_url,$home_name,'Edit Product',$filename,$feature_name);
                     /* this function used to add navigation menu to the page*/
                     ?>
                     <div class="row-fluid">
@@ -87,88 +94,38 @@
                                          <input type="hidden"  value="1" name="add_product_req" id="add_product_req"> 
                                     	
                                     	<div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Category</label>
                                         	<div class="controls" id="">
-                                            <select data-rule-required="true" onChange="getCat(this.value);getPacking(this.value);getFactor(this.value);productType(this.value);getApplication(this.value);" name="txt_type" id="txt_type"  class = "select2-me input-xlarge" >
-                                            <option  value="">Select Category</option>
-                                            <?php
-											
-											$sql = " SELECT * FROM tbl_category WHERE cat_status =1  AND cat_type = 'parent' ";
-											$res = mysqli_query($db_con,$sql) or die(mysqli_error($db_con));
-											while($row = mysqli_fetch_array($res))
-											{
-											  echo '<option value="'.$row['cat_id'].'" ';
-											  if($row['cat_name']=='row')
-											  {
-												  echo ' selected ';
-											  }
-											  echo '>'.ucwords($row['cat_name']).'</option>';
-											}
-											?>
-											</select>
+                                            <?php $cat_name = lookupValue('tbl_category','cat_name',array('cat_id'=>$prod_row['prod_type']));
+                                            echo ucwords($cat_name);
+                                             ?>
                                           </div><!--single-->
                                         </div><!-- Composition TYpe -->
 
                                         <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Sub Category<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        	<label for="tasktitel" class="control-label">Sub Category</label>
                                             <div class="controls">
-                                                 <select name="txt_cat" id="txt_cat" class = "select2-me input-xlarge"   data-rule-required="true" >
-                                            	<?php
-											// Query For getting all categories from the system
-											$sql_get_cats	= " SELECT * FROM `tbl_category` ";
-											$sql_get_cats	.= " WHERE `cat_status`='1' ";
-											$sql_get_cats	.= " 	AND `cat_name`!='none' ";
-											$sql_get_cats	.= " 	AND `cat_type`='parent' ";
-											$sql_get_cats	.= " 	AND `cat_id`='1' ";
-											$sql_get_cats	.= " ORDER BY `cat_name` ASC ";
-											$res_get_cats	= mysqli_query($db_con, $sql_get_cats) or die(mysqli_error($db_con));
-											$num_get_cats	= mysqli_num_rows($res_get_cats);
-											
-											if($num_get_cats != 0)
-											{
-												?>
-												<option  value="">Select Sub Category</option>
-												<?php
-												while($row_get_cats = mysqli_fetch_array($res_get_cats))
-												{
-													?>
-													<option value="<?php echo $row_get_cats['cat_id']; ?>">
-														<?php echo ucwords($row_get_cats['cat_name']); ?>
-													</option>
-													<?php
-													echo getSubCatValue($row_get_cats['cat_id'], 'add');
-												}
-											}
-											else
-											{
-												?>
-												<option value="">No Match Found</option>
-												<?php	
-											}
-											?>
-                                                </select>
-                                            
+                                            <?php 
+                                                 $cat_name = lookupValue('tbl_category','cat_name',array('cat_id'=>$prod_row['prod_cat']));
+                                          		  echo ucwords($cat_name);
+                                             ?>
                                             </div>
                                         </div>	<!-- Product Name -->
                                     
-                                       <!-- 	<div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Model Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        <div class="control-group" style="clear: both">
+                                        	<label for="tasktitel" class="control-label">Product Name</label>
                                             <div class="controls">
-                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large" data-rule-required="true" />
-                                            </div>
-                                        </div>	 --><!-- Product Model Number -->
-                                        
-                                        
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Product Name<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                                	<input   type="text" placeholder="Product Name" id="prod_name" name="prod_name" class="input-xlarge" value="<?php echo @$product_name; ?>" data-rule-required="true" />
+                                                <?php echo @ucwords($prod_row['prod_name']); ?>
                                             </div>
                                         </div><!--Category=====-->
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Product Image<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                        <div class="control-group">
+                                        	<label for="tasktitel" class="control-label">Product Image</label>
                                            <div class="controls">
-                                           <input type="file" name="prod_img[]" id="prod_img" accept="image/*" multiple/>
+                                          <?php
+                                           echo $prod_row['image_name'];
+                                           $image_name = lookupValue('tbl_product_images','image_name',array('prod_id'=>$prod_row['id']));
+                                           ?>
+                                          <img style="height: 100px;width: 100px" src="../images/products/prodid_<?php echo $prod_row['id'] ?>/small/<?php echo $image_name; ?>" alt="" />
                                             </div>
                                         </div><!--Image Type-->
                                         
@@ -194,8 +151,13 @@
 												<?php
 												while($row_get_pharmacopia = mysqli_fetch_array($res_get_pharmacopia))
 												{
+													$selected = '';
+													if($row_get_pharmacopia['pharmacopia_id']==$prod_row['prod_pharmacopia'])
+													{
+														$selected ='selected';
+													}
 													?>
-													<option value="<?php echo $row_get_pharmacopia['pharmacopia_id']; ?>">
+													<option <?php echo $selected; ?> value="<?php echo $row_get_pharmacopia['pharmacopia_id']; ?>">
 														<?php echo ucwords($row_get_pharmacopia['pharmacopia_name']); ?>
 													</option>
 													<?php
@@ -226,13 +188,19 @@
 												
 												if($num_get_factor != 0)
 												{
+													
 													?>
-													<option  value="">Select Form Factor</option>
+													<option   value="">Select Form Factor</option>
 													<?php
 													while($row_get_factor = mysqli_fetch_array($res_get_factor))
 													{
+														$selected = '';
+														if($row_get_factor['cat_id']==$prod_row['prod_factor'])
+														{
+															$selected ='selected';
+														}
 														?>
-														<option value="<?php echo $row_get_factor['cat_id']; ?>">
+														<option <?php echo $selected; ?> value="<?php echo $row_get_factor['cat_id']; ?>">
 															<?php echo ucwords($row_get_factor['form_factor_name']); ?>
 														</option>
 														<?php
@@ -258,10 +226,18 @@
                                         	<div class="controls" id="">
 	                                            <select name="txt_cmp_cat" id="txt_cmp_cat" onChange="showComposition(this.value);"  class = "select2-me input-xlarge"   data-rule-required="true" >
 	                                            <option  value="">Select Composition Type</option>
-	                                            <option value="Generic">Generic</option>
-	                                            <option value="Combination">Combination</option>
-	                                            <option value="Special">Special</option>
-												</select>
+	                                            <?php
+	                                            $ctype_arr = array('Generic','Combination','Special');
+	                                            foreach($ctype_arr as $ctype)
+	                                            {
+	                                            	echo '<option value="'.$ctype.'"';
+	                                            	if($ctype==$prod_row['prod_comp_cat'])
+	                                            	{
+	                                            		echo ' selected ';
+	                                            	}
+	                                            	echo '>'.$ctype.'</option>';
+	                                            }?>
+	                                            </select>
                                           </div><!--single-->
                                         </div><!-- Composition TYpe -->
                                         
@@ -326,23 +302,7 @@
 											 } ?>
                                         </div><!--Composition Type-->
                                         
-                                        
-                                        
-                                      <!--   
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Drug Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                           
-                                            <div class="controls">
-                                            <select name="txt_drug_type" id="txt_drug_type" onChange="showComposition(this.value);"  class = "select2-me input-large" style="width:90%">
-                                            <option  value="">Select Drug Type</option>
-											<option  value="Single">Single</option>
-                                            <option  value="Multiple">Multiple</option>
-                                            <option  value="Specialized">Specialized</option>
-											</select>
-                                            </div>
-                                        </div> --><!--Composition Type-->
-                                        <!-- =============================================================== -->
-                                         <!-- ======================Start For Formulation====================== -->
+                                        <!-- ======================Start For Formulation====================== -->
                                         <div class="control-group span6" id="div_cost_effective_pack" style="display: none">
                                         	<label for="tasktitel" class="control-label">Cost Effective Pack<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
@@ -387,8 +347,13 @@
 											<?php
 												while($row_get_gst = mysqli_fetch_array($res_get_gst))
 												{
+													$selected = '';
+													if($row_get_gst['gst_id']==$prod_row['prod_tax'])
+													{
+														$selected =' selected ';
+													}
 													?>
-													<option value="<?php echo $row_get_gst['gst_id']; ?>">
+													<option <?php echo $selected; ?> value="<?php echo $row_get_gst['gst_id']; ?>">
 														<?php echo ucwords($row_get_gst['gst_name']); ?> %
 													</option>
 													<?php
@@ -408,10 +373,18 @@
                                         <div class="control-group" style="clear: both">
                                         	<label for="tasktitel" class="control-label">Application<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                            <div class="controls">
-                                            <!--<input placeholder="Application" type="text" name="txt_attribute" id="txt_attribute"  data-rule-required="true"   class=" input-xlarge" style="" />-->
+                                           <?php
+                                           	$attribute_arr  = array();
+                                           	$sql_get_attr  = " SELECT attribute_id FROM tbl_product_attributes WHERE product_id ='".$prod_row['id']."'";
+                                           	$res_get_attr  = mysqli_query($db_con,$sql_get_attr) or die(mysqli_error($db_con));
+                                           	while($row_get_attr = mysqli_fetch_array($res_get_attr))
+                                           	{
+                                           		array_push($attribute_arr,$row_get_attr['attribute_id']);
+                                           	}
+                                           ?>
                                            <select multiple="multiple"  id="txt_attribute" onChange="console.log($(this).children(":selected").length)" name="txt_attribute[]" id="txt_attribute"  class = "select2-me input-xlarge"  data-rule-required="true" placeholder="Select Application" >					
                                              
-                                              <?php
+                                            <?php
 											// Query For getting all categories from the system
 											$sql_get_app	= " SELECT * FROM `tbl_attribute` ";
 											$sql_get_app	.= " WHERE `status`='1' ";
@@ -422,8 +395,14 @@
 											if($num_get_app != 0)
 											{
 												while($row_get_app= mysqli_fetch_array($res_get_app))
-												{?>
-													<option value="<?php echo $row_get_app['id']; ?>">
+												{
+													$selected ='';
+													if(in_array($row_get_app['id'],$attribute_arr))
+													{
+														$selected ='selected';
+													}
+													?>
+													<option <?php echo $selected; ?> value="<?php echo $row_get_app['id']; ?>">
 													<?php echo ucwords($row_get_app['attribute_name']); ?>
 													</option>
 												<?php 

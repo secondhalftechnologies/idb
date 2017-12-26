@@ -690,7 +690,7 @@ header {
         display: inline-block; }
       header .top-search-holder .search-area .search-field {
         border: none;
-        width: 80%;
+        width: 70%;
         padding: 11px;
 		float:left; }
       header .top-search-holder .search-area .search-button {
@@ -872,7 +872,9 @@ header {
       border-bottom: 0;
       transition: 0.3s ease; }
       .sidemenu-holder .side-menu nav .nav > li > .mega-menu {
-        padding: 3px 0; }
+        padding: 3px 0;
+        height: 400px;
+      }
       .sidemenu-holder .side-menu nav .nav > li > .sub-menu {
         min-width: 0;
         width: 100%; }

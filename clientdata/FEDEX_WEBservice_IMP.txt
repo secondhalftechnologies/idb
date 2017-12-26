@@ -1,0 +1,15 @@
+https://www.fedex.com/us/developer/WebHelp/ws/2017/html/WebServicesLandingPage.html
+
+Devloper guide:
+https://www.fedex.com/us/developer/WebHelp/ws/2017/html/WebServicesHelp/WSDVG_APAC/index.htm#wsdvg/About_This_Guide.htm
+
+Standard:
+1>Rate Service
+2>Service Availability
+3> CountryService / Locations Service
+4>Track Shipments : Tracking Shipments, Signature Proof of Delivery, Notification
+
+Advanced:
+1>Create Shipment: 
+2>Manage Open Shipping: Create Email Label, Create Open Shipment
+3>Validate Addresses: Address Validation Service

@@ -1,5 +1,6 @@
 <?php
 	include("include/routines.php");
+	//include("include/query-helper.php");
 	$uid 				= $_SESSION['panel_user']['id'];
 	$utype				= $_SESSION['panel_user']['utype'];
 	$tbl_users_owner	= $_SESSION['panel_user']['tbl_users_owner'];
@@ -7,138 +8,137 @@
 	if((isset($obj->load_products)) == '1' && (isset($obj->load_products)))
 	{
 		
-	$response_array	 				= array();	
-	$start_offset   				= 0;
-	
-	$page 							= $obj->page;	
-	$per_page						= $obj->row_limit;
-	$search_text					= $obj->search_text_prod;
-	
-	
-	
-	if($page != "" && $per_page != "")	
-	{
-		$cur_page 		= $page;
-		$page 	   	   	= $page - 1;
-		$start_offset += $page * $per_page;
-		$start 			= $page * $per_page;
-			
-		$sql_load_data  = " SELECT * FROM tbl_products";			
+		$response_array	 				= array();	
+		$start_offset   				= 0;
 		
-
+		$page 							= $obj->page;	
+		$per_page						= $obj->row_limit;
+		$search_text					= $obj->search_text_prod;
 		
-		if($excel == 1)
+		
+		
+		if($page != "" && $per_page != "")	
 		{
+			$cur_page 		= $page;
+			$page 	   	   	= $page - 1;
+			$start_offset += $page * $per_page;
+			$start 			= $page * $per_page;
+				
+			$sql_load_data  = " SELECT * FROM tbl_products";			
 			
-			$response_array	 = exportToXlsx($sql_load_data);
-			//echo json_encode($response_array);exit();
-		}
-		else
-		{	
-			//$response_array = array("Success"=>"fail","resp"=>$sql_load_data);
-			//echo json_encode($response_array);	
-			//exit();
-						
-			$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);	
-			//========Strat : for go to option 16052017 by satish==///
-			$no_of_page = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));
-			$no_of_page =mysqli_num_rows($no_of_page);
-			$no_of_page =$no_of_page/$per_page;
-			//========End for go to option 16052017 by satish==///
+
 			
-			
-			$sql_load_data .=" ORDER by prod_created DESC LIMIT $start, $per_page ";//ORDER by prod_id DESC
-			$result_load_data = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));			
-			if(strcmp($data_count,"0") !== 0)
-			{		
-			$prod_data = "";	
-			$prod_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
-    	 	$prod_data .= '<thead>';
-    	  	$prod_data .= '<tr>';
-         	$prod_data .= '<th class="center-text">Sr. No.</th>';
-			$prod_data .= '<th class="center-text">Prod Id</th>';
-			$prod_data .= '<th class="center-text">Model Number</th>';	
-			$prod_data .= '<th class="center-text" style="width:15%;">Product Name</th>';
-			$prod_data .= '<th class="center-text" style="width:15%;">Images</th>';
-			$dis = checkFunctionalityRight("view_products.php",3);
-			if($dis)
-			{					
-				$prod_data .= '<th class="center-text">Status</th>';						
-			}
-			$edit = checkFunctionalityRight("view_products.php",1);
-			$edit = 1;
-			if($edit)
-			{			
-				$prod_data .= '<th class="center-text">Edit</th>';			
-			}
-			$del = checkFunctionalityRight("view_products.php",2);
-			$del = 1;
-			if($del)
-			{			
-				$prod_data .= '<th class="center-text"><div class="center-text"><input type="button"  value="Delete" onclick="deleteProductSpecification();" class="btn-danger"/></div></th>';
-			}			
-          	$prod_data .= '</tr>';
-      		$prod_data .= '</thead>';
-      		$prod_data .= '<tbody>';
-			$i=1;
-			while($row_load_data = mysqli_fetch_array($result_load_data))
+			if($excel == 1)
 			{
-				$prod_data .= '<tr>';
-				$prod_data .= '<td class="center-text">'.$i++.'</td>';
-				$prod_data .= '<td class="center-text">'.$row_load_data['id'].'</td>';
-				$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';			
-				$prod_data .= '<td class="center-text" style="width:15%;">'.ucwords($row_load_data['prod_name']).'</td>';
-				$prod_data .= '<td class="center-text">';
-					$prod_data .= '<input type="button" value="Images" id="img'.$row_load_data['id'].'" class="btn-warning" onclick="viewImages('.$row_load_data['id'].');"></td>';
+				
+				$response_array	 = exportToXlsx($sql_load_data);
+				//echo json_encode($response_array);exit();
+			}
+			else
+			{	
+				$data_count		= 	dataPagination($sql_load_data,$per_page,$start,$cur_page);	
+				//========Strat : for go to option 16052017 by satish==///
+				$no_of_page = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));
+				$no_of_page =mysqli_num_rows($no_of_page);
+				$no_of_page =$no_of_page/$per_page;
+				//========End for go to option 16052017 by satish==///
+				
+				
+				$sql_load_data .=" ORDER by prod_created DESC LIMIT $start, $per_page ";//ORDER by prod_id DESC
+				$result_load_data = mysqli_query($db_con,$sql_load_data) or die(mysqli_error($db_con));			
+				if(strcmp($data_count,"0") !== 0)
+				{		
+				$prod_data = "";	
+				$prod_data .= '<table id="tbl_user" class="table table-bordered dataTable">';
+	    	 	$prod_data .= '<thead>';
+	    	  	$prod_data .= '<tr>';
+	         	$prod_data .= '<th class="center-text">Sr. No.</th>';
+				$prod_data .= '<th class="center-text">Prod Id</th>';
+				$prod_data .= '<th class="center-text">Model Number</th>';	
+				$prod_data .= '<th class="center-text" style="width:15%;">Product Name</th>';
+				$prod_data .= '<th class="center-text" style="width:15%;">Images</th>';
 				$dis = checkFunctionalityRight("view_products.php",3);
 				if($dis)
 				{					
-					$prod_data .= '<td class="center-text">';	
-
-					if($row_load_data['prod_status'] == 1)
-					{
-						$prod_data .= '<input type="button" value="Active" id="'.$row_load_data['id'].'" class="btn-success" onclick="changeStatus(this.id,0)">';
-					}
-					else
-					{
-						$prod_data .= '<input type="button" value="Inactive" id="'.$row_load_data['id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
-					}
-					$prod_data .= '</td>';	
+					$prod_data .= '<th class="center-text">Status</th>';						
 				}
 				$edit = checkFunctionalityRight("view_products.php",1);
 				$edit = 1;
 				if($edit)
-				{				
-					$prod_data .= '<td class="center-text">';
-					$prod_data .= '<input type="button" value="Edit" id="'.$row_load_data['id'].'" class="btn-warning" onclick="addMoreProductSpecification(this.id,\'edit\');"></td>';				
+				{			
+					$prod_data .= '<th class="center-text">Edit</th>';			
 				}
 				$del = checkFunctionalityRight("view_products.php",2);
 				$del = 1;
 				if($del)
-				{					
-					$prod_data .= '<td><div class="center-text">';
-					$prod_data .= '<input type="checkbox" value="'.$row_load_data['id'].'" id="batch_prod_spec'.$row_load_data['id'].'" name="batch_prod_spec'.$row_load_data['id'].'" class="css-checkbox batch_prod_spec">';
-					$prod_data .= '<label for="batch_prod_spec'.$row_load_data['id'].'" class="css-label"></label>';				
-					$prod_data .= '</div></td>';										
+				{			
+					$prod_data .= '<th class="center-text"><div class="center-text">
+					<input type="button"  value="Delete" onclick="deleteProductSpecification();" class="btn-danger"/></div></th>';
 				}			
-				$prod_data .= '</tr>';	
-			}	
-      		$prod_data .= '</tbody>';
-      		$prod_data .= '</table>';	
-			$prod_data .= $data_count;
-			$response_array = array("Success"=>"Success","resp"=>utf8_encode($prod_data),"query"=>$sql_load_data,"no_of_page"=>$no_of_page);					
-		}
-			else
-			{
-				$response_array = array("Success"=>"fail","resp"=>"No Data Available","Query"=>$sql_load_data);
+	          	$prod_data .= '</tr>';
+	      		$prod_data .= '</thead>';
+	      		$prod_data .= '<tbody>';
+				$i=1;
+				while($row_load_data = mysqli_fetch_array($result_load_data))
+				{
+					$prod_data .= '<tr>';
+					$prod_data .= '<td class="center-text">'.$i++.'</td>';
+					$prod_data .= '<td class="center-text">'.$row_load_data['id'].'</td>';
+					$prod_data .= '<td class="center-text">'.$row_load_data['prod_id'].'</td>';			
+					$prod_data .= '<td class="center-text" style="width:15%;"><a href="view_product_detail.php?pag=Products&product_id='.$row_load_data['id'].'">'.ucwords($row_load_data['prod_name']).'</a></td>';
+					$prod_data .= '<td class="center-text">';
+						$prod_data .= '<input type="button" value="Images" id="img'.$row_load_data['id'].'" class="btn-warning" onclick="viewImages('.$row_load_data['id'].');"></td>';
+					$dis = checkFunctionalityRight("view_products.php",3);
+					if($dis)
+					{					
+						$prod_data .= '<td class="center-text">';	
+
+						if($row_load_data['prod_status'] == 1)
+						{
+							$prod_data .= '<input type="button" value="Active" id="'.$row_load_data['id'].'" class="btn-success" onclick="changeStatus(this.id,0)">';
+						}
+						else
+						{
+							$prod_data .= '<input type="button" value="Inactive" id="'.$row_load_data['id'].'" class="btn-danger" onclick="changeStatus(this.id,1);">';
+						}
+						$prod_data .= '</td>';	
+					}
+					$edit = checkFunctionalityRight("view_products.php",1);
+					$edit = 1;
+					if($edit)
+					{				
+						$prod_data .= '<td class="center-text">';
+						$prod_data .= '
+						<a class="btn-warning" style="color:white" href="edit_product_detail.php?pag=Products&product_id='.$row_load_data['id'].'">Edit</a>
+						</td>';				
+					}
+					$del = checkFunctionalityRight("view_products.php",2);
+					$del = 1;
+					if($del)
+					{					
+						$prod_data .= '<td><div class="center-text">';
+						$prod_data .= '<input type="checkbox" value="'.$row_load_data['id'].'" id="batch_prod_spec'.$row_load_data['id'].'" name="batch_prod_spec'.$row_load_data['id'].'" class="css-checkbox batch_prod_spec">';
+						$prod_data .= '<label for="batch_prod_spec'.$row_load_data['id'].'" class="css-label"></label>';				
+						$prod_data .= '</div></td>';										
+					}			
+					$prod_data .= '</tr>';	
+				}	
+	      		$prod_data .= '</tbody>';
+	      		$prod_data .= '</table>';	
+				$prod_data .= $data_count;
+				$response_array = array("Success"=>"Success","resp"=>utf8_encode($prod_data),"query"=>$sql_load_data,"no_of_page"=>$no_of_page);					
+			}
+				else
+				{
+					$response_array = array("Success"=>"fail","resp"=>"No Data Available","Query"=>$sql_load_data);
+				}
 			}
 		}
-	}
-	else
-	{
-		$response_array = array("Success"=>"fail","resp"=>"No Row Limit and Page Number Specified for Products");
-	}
-	echo json_encode($response_array);	
+		else
+		{
+			$response_array = array("Success"=>"fail","resp"=>"No Row Limit and Page Number Specified for Products");
+		}
+		echo json_encode($response_array);	
    }
 	
 	if((isset($_POST['add_product_req'])) == '1' && (isset($_POST['add_product_req'])))
@@ -162,13 +162,14 @@
  		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'])))
  		{
 			
+			$data['prod_handling'] 		   = mysqli_real_escape_string($db_con,$_POST['prod_handling']);
 			$data['prod_cat']              = mysqli_real_escape_string($db_con,$_POST['txt_cat']);
 			$data['prod_id']               = 'SKU'.($prod_id+$row_get_id['id']);
 			
 			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
 			$data['prod_pharmacopia']      = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
 	        $data['prod_tax']              = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
-	        $data['prod_attribute']        = implode(',',$_POST['txt_attribute']);
+
 	        $data['prod_dimension_l']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionl']);
 	        $data['prod_dimension_h']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionh']);
 	        $data['prod_dimension_w']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionw']);
@@ -201,13 +202,14 @@
 			}
 			
 			//=====To Check Composition TYpe=================
+			$prod_comp_array           = array();
 			if($data['prod_comp_cat'] !="Combination")
 			{
-				$data['prod_comp']    =$_POST['txt_cmp'];
+				array_push($prod_comp_array,$_POST['txt_cmp']);
 			}
 			else
 			{
-				$data['prod_comp']   = implode(',',$_POST['txt_cmp_type']);
+				$prod_comp_array= $_POST['txt_cmp_type'];
 			}
 
 		
@@ -245,6 +247,20 @@
 			
       		
 			$res = insert('tbl_products',$data);
+
+
+			$prod_attributes        = $_POST['txt_attribute'];
+			foreach($prod_attributes as $prod_attribute)
+			{
+				insert('tbl_product_attributes',array('product_id'=>$res,'attribute_id'=>$prod_attribute));
+			}
+
+			$prod_attributes        = $_POST['txt_attribute'];
+			foreach($prod_comp_array as $composition_id)
+			{
+				insert('tbl_product_compositions',array('product_id'=>$res,'composition_id'=>$composition_id));
+			}
+			
 			
 			$dir 		= "../images/products/";
 			$prod_dir   = $dir.'prodid_' .$res;

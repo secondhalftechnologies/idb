@@ -84,7 +84,6 @@
 									}
 									else
 									{
-
 										$batch_array   				= array_unique($_SESSION['offline_cart']);
 										$_SESSION['offline_cart']	= $batch_array;
 										$cart_ids              		= array_unique($batch_array);
@@ -213,10 +212,7 @@
 									      $no_of_part = round($no_of_part);
 									      $j        = ($no_of_part * 2);
 									      $k        = $childNum - $j;
-									      if($j==0)
-									      {
-									      	$j=1;
-									      }
+
 		                            	?>
                                         <ul class="dropdown-menu mega-menu">
                                             <li class="yamm-content">
@@ -230,10 +226,6 @@
                                                         		 <li><a href="product-list.php?cat_id=<?php echo $child_arr[$i]['id']; ?>"><?php echo ucwords($child_arr[$i]['attribute_name']); ?></a></li>
                                                         	<?php 
                                                         	}
-                                                        	  if($j==0)
-														      {
-														      	$i= $i-1;
-														      }
                                                         	?>
                                                         </ul>
                                                     </div>

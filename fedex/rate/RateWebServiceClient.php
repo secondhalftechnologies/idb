@@ -43,7 +43,7 @@ $request['Version'] = array(
 $request['ReturnTransitAndCommit'] = true;
 $request['RequestedShipment']['DropoffType'] = 'REGULAR_PICKUP'; // valid values REGULAR_PICKUP, REQUEST_COURIER, ...
 $request['RequestedShipment']['ShipTimestamp'] = date('c');
-$request['RequestedShipment']['ServiceType'] = 'PRIORITY_OVERNIGHT'; // valid values INTERNATIONAL_PRIORITY, STANDARD_OVERNIGHT, PRIORITY_OVERNIGHT, FEDEX_GROUND, ...
+$request['RequestedShipment']['ServiceType'] = 'INTERNATIONAL_PRIORITY'; // valid values INTERNATIONAL_PRIORITY, STANDARD_OVERNIGHT, PRIORITY_OVERNIGHT, FEDEX_GROUND, ...
 $request['RequestedShipment']['PackagingType'] = 'YOUR_PACKAGING'; // valid values FEDEX_BOX, FEDEX_PAK, FEDEX_TUBE, YOUR_PACKAGING, ...
 $request['RequestedShipment']['TotalInsuredValue']=array(
 	'Amount'=>100,
@@ -122,10 +122,10 @@ function addRecipient(){
 		),
 		'Address' => array(
 			'StreetLines' => array('Chandani Chowk'),
-			'City' => 'Belgaum',
-			'StateOrProvinceCode' => 'KA',
-			'PostalCode' => '590001',
-			'CountryCode' => 'IN'
+			'City' => 'Collierville',
+			'StateOrProvinceCode' => 'TN',
+			'PostalCode' => '38017',
+			'CountryCode' => 'US'
 			
 		)
 	);

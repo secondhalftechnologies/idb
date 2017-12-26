@@ -47,6 +47,9 @@
 	$json 			= file_get_contents('php://input');
 	$obj 			= json_decode($json);
 	$response_array	= array();
+
+	
+	$_SESSION['offline_cart']= array();
 	
 	
 	function breadcrumbs($array)
