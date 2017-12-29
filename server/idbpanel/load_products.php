@@ -15,8 +15,6 @@
 		$per_page						= $obj->row_limit;
 		$search_text					= $obj->search_text_prod;
 		
-		
-		
 		if($page != "" && $per_page != "")	
 		{
 			$cur_page 		= $page;
@@ -139,7 +137,7 @@
 			$response_array = array("Success"=>"fail","resp"=>"No Row Limit and Page Number Specified for Products");
 		}
 		echo json_encode($response_array);	
-   }
+    }
 	
 	if((isset($_POST['add_product_req'])) == '1' && (isset($_POST['add_product_req'])))
 	{
@@ -200,7 +198,8 @@
 				$data['prod_ean']              = mysqli_real_escape_string($db_con,$_POST['txt_ean']);
 	            $data['prod_hsn']              = mysqli_real_escape_string($db_con,$_POST['txt_hsn']);
 			}
-			
+			$data['generic_name']              = @mysqli_real_escape_string($db_con,$_POST['generic_name']);
+	        $data['size_attribute']            = @mysqli_real_escape_string($db_con,$_POST['size_attribute']);
 			//=====To Check Composition TYpe=================
 			$prod_comp_array           = array();
 			if($data['prod_comp_cat'] !="Combination")
@@ -258,7 +257,7 @@
 			$prod_attributes        = $_POST['txt_attribute'];
 			foreach($prod_comp_array as $composition_id)
 			{
-				insert('tbl_product_compositions',array('product_id'=>$res,'composition_id'=>$composition_id));
+				insert('tbl_product_composition',array('product_id'=>$res,'composition_id'=>$composition_id));
 			}
 			
 			
@@ -327,6 +326,225 @@
 			quit('Product Name already Exist...!');
 		}
 	}
+
+	if((isset($_POST['update_product_req'])) == '1' && (isset($_POST['update_product_req'])))
+	{
+		
+
+		$product_id    = $_POST['product_id'];
+
+        $data['prod_name'] = mysqli_real_escape_string($db_con,$_POST['prod_name']);
+        $data['prod_slug'] = getSlug($data['prod_name']);
+		
+		if(!isExist('tbl_products' ,array('prod_name'=>$data['prod_name'],'prod_slug'=>$data['prod_slug'],'id !'=>$product_id)))
+ 		{
+			
+			$data['prod_handling'] 		   = mysqli_real_escape_string($db_con,$_POST['prod_handling']);
+			
+			
+			$data['prod_comp_cat']         = mysqli_real_escape_string($db_con,$_POST['txt_cmp_cat']);
+			$data['prod_pharmacopia']      = mysqli_real_escape_string($db_con,$_POST['txt_pharmacopia']);
+	        $data['prod_tax']              = mysqli_real_escape_string($db_con,$_POST['txt_tax']);
+
+	        $data['prod_dimension_l']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionl']);
+	        $data['prod_dimension_h']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionh']);
+	        $data['prod_dimension_w']      = mysqli_real_escape_string($db_con,$_POST['txt_dimensionw']);
+			
+			$data['prod_nett_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_nweight']);
+	        $data['prod_gross_weight']     = mysqli_real_escape_string($db_con,$_POST['txt_gweight']);
+	        $data['prod_unit_weight']      = mysqli_real_escape_string($db_con,$_POST['txt_uoweight']);
+
+	        $data['prod_packing']          = mysqli_real_escape_string($db_con,$_POST['txt_packing']);
+	        $data['prod_manufactured']     = mysqli_real_escape_string($db_con,$_POST['txt_manufactured']);
+	        $data['prod_manufactured_number']  = mysqli_real_escape_string($db_con,$_POST['txt_manufactured_lic']);
+	        $data['prod_meta_tags']        = mysqli_real_escape_string($db_con,$_POST['txt_meta']);
+			$data['prod_commission']        = mysqli_real_escape_string($db_con,$_POST['txt_commission']);
+			
+	       
+	        $data['prod_insurance']        = mysqli_real_escape_string($db_con,$_POST['txt_insurance']);
+	        $data['prod_status']          = mysqli_real_escape_string($db_con,$_POST['txt_status']);
+	        $data['prod_factor'] 		   = mysqli_real_escape_string($db_con,$_POST['txt_factor']);
+			if($prod_type=='raw')
+			{
+				
+			}
+			else
+			{
+				$data['prod_effective_pack']   = mysqli_real_escape_string($db_con,$_POST['txt_cost_effective_pack']);
+				$data['prod_standard_pack']     = mysqli_real_escape_string($db_con,$_POST['txt_stadard_pack']);
+				$data['prod_shipper']          = mysqli_real_escape_string($db_con,$_POST['txt_shipper']);
+				$data['prod_ean']              = mysqli_real_escape_string($db_con,$_POST['txt_ean']);
+	            $data['prod_hsn']              = mysqli_real_escape_string($db_con,$_POST['txt_hsn']);
+			}
+			
+			$data['generic_name']              = @mysqli_real_escape_string($db_con,$_POST['generic_name']);
+	        $data['size_attribute']            = @mysqli_real_escape_string($db_con,$_POST['size_attribute']);
+
+			//=====To Check Composition TYpe=================
+			$prod_comp_array           = array();
+			if($data['prod_comp_cat'] !="Combination")
+			{
+				array_push($prod_comp_array,$_POST['txt_cmp']);
+			}
+			else
+			{
+				$prod_comp_array= $_POST['txt_cmp_type'];
+			}
+
+		
+
+			//=====To Check n upload DMF Document
+			if(isset($_FILES['img_dmf']) && $_FILES['img_dmf']['name'] !='')
+			{
+		        $dmf_size      = $_FILES['img_dmf']['size'];
+				if($dmf_size > 5242880 &&  $dmf_size !=0) // file size
+				{
+					quit('Image size should be less than 5 MB');
+				}
+				
+				$dmf_img               = explode('.',$_FILES['img_dmf']['name']);
+				$dmf_img               = date('dhyhis').'.'.$dmf_img[1];
+				
+				
+				$dir                          = 'documents/dmf/'.$dmf_img;
+				
+				if(move_uploaded_file($_FILES['img_dmf']['tmp_name'],$dir))
+				{
+					$data['prod_dmf']      = $dmf_img;
+				}
+				else
+				{
+					quit('DMF Document not uploaded.!');
+				}
+			}
+
+
+            if($utype !=1)
+			{
+				$data['prod_status'] = 2;
+			}
+			
+      		
+			$res = update('tbl_products',$data,array('id'=>$product_id));
+
+
+			$prod_attributes        = $_POST['txt_attribute'];
+
+			if(!empty($prod_attributes))
+			{
+				$sql_delete_att         = " DELETE FROM tbl_product_attributes WHERE attribute_id NOT IN ";
+				$sql_delete_att        .= " (".implode(',',$prod_attributes).") AND product_id='".$product_id."'";
+				$res_delete_att			= mysqli_query($db_con,$sql_delete_att) or die(mysqli_error($db_con));
+			}
+			
+			$attr_arr              		= array();
+			$sql_get_att				= " SELECT * FROM tbl_product_attributes WHERE product_id='".$product_id."'";
+			$res_get_att 				= mysqli_query($db_con,$sql_get_att) or die(mysqli_error($db_con));
+			while($row_get_att = mysqli_fetch_array($res_get_att))
+			{
+				array_push($attr_arr,$row_get_att['attribute_id']);
+			}
+
+			foreach($prod_attributes as $prod_attribute)
+			{
+
+				if(!in_array($prod_attribute,$attr_arr))
+				{
+					insert('tbl_product_attributes',array('product_id'=>$product_id,'attribute_id'=>$prod_attribute));
+				}
+				
+			}
+			
+			if(!empty($prod_comp_array))
+			{
+				$sql_delete_comp    = " DELETE FROM tbl_product_composition WHERE composition_id NOT IN ";
+				$sql_delete_comp   .= " (".implode(',',$prod_comp_array).") AND product_id='".$product_id."'";
+				$res_delete_comp    = mysqli_query($db_con,$sql_delete_att) or die(mysqli_error($db_con));
+			}
+			
+			$comp_arr              		= array();
+			$sql_get_comp				= " SELECT * FROM tbl_product_composition WHERE product_id='".$product_id."'";
+			$res_get_comp				= mysqli_query($db_con,$sql_get_comp) or die(mysqli_error($db_con));
+			while($row_get_comp = mysqli_fetch_array($res_get_comp))
+			{
+				array_push($comp_arr,$row_get_comp['composition_id']);
+			}
+
+			foreach($prod_comp_array as $composition_id)
+			{
+				if(!in_array($composition_id,$comp_arr))
+				{
+					insert('tbl_product_composition',array('product_id'=>$product_id,'composition_id'=>$composition_id));
+				}
+			}
+			
+			
+			$dir 		= "../images/products/";
+			$prod_dir   = $dir.'prodid_' .$res;
+			if(is_dir($prod_dir) === false)
+			{
+				mkdir($prod_dir);
+			}
+			$sprod_dir = $prod_dir.'/small';
+			if(is_dir($sprod_dir) === false)
+			{
+				mkdir($sprod_dir);
+			}
+			
+			$mprod_dir = $prod_dir.'/medium';
+			if(is_dir($mprod_dir) === false)
+			{
+				mkdir($mprod_dir);
+			}
+			
+			$lprod_dir = $prod_dir.'/large';
+			if(is_dir($lprod_dir) === false)
+			{
+				mkdir($lprod_dir);
+			}
+			
+			$img_order = 1;
+			for($j=0;$j<count($_FILES["prod_img"]["tmp_name"]);$j++)
+            {
+				$temp_file    = $prod_dir."/".$_FILES["prod_img"]["name"][$j];
+				
+				$file_name    = explode('.',$_FILES["prod_img"]["name"][$j]);
+				$file_name    = date('dmyhis').$img_order.$res.'.'.$file_name[1];
+				
+				if(move_uploaded_file($_FILES["prod_img"]["tmp_name"][$j],$temp_file))
+				{
+					make_thumb($temp_file,$sprod_dir.'/'.$file_name,100,100);	
+					make_thumb($temp_file,$mprod_dir.'/'.$file_name,300,300);	
+					make_thumb($temp_file,$lprod_dir.'/'.$file_name,500,500);	
+				}
+				
+				$idata['prod_id']        	= $res;
+				$idata['image_name']        = $file_name;
+				$idata['image_status']      = 1;
+				$idata['image_order']       = $img_order;
+				$idata['image_created']     = $datetime;
+				$idata['image_created_by']  = $uid;
+				insert('tbl_product_images',$idata);
+				
+				$img_order++;
+				unlink($temp_file);
+			}
+			
+			if($res)
+			{
+				quit('Product Updated Successfully.!',1);
+			}
+			else
+			{
+				quit('Something went wrong..!');
+			}
+		}
+		else
+		{
+			quit('Product Name already Exist...!');
+		}
+	}
+
 	
 	if((isset($obj->getCat)) == '1' && (isset($obj->getCat)))
 	{
@@ -395,6 +613,7 @@
 		
 		quit($data,1);
 	}
+
 	if((isset($obj->getFactor)) == '1' && (isset($obj->getFactor)))
 	{
 		$cat_id  = $obj->cat_id;
@@ -564,7 +783,6 @@
 
 	}
 	
-	
 	if(isset($_POST['addImage']) && $_POST['addImage']==1)
 	{
 		$prod_id  = $_POST['prod_id'];
@@ -675,7 +893,5 @@
 		$sql_check_self_order	= " SELECT * from tbl_product_images WHERE image_id LIKE '".$image_id."' ";
 		$result_check_self_order= mysqli_query($db_con,$sql_check_self_order) or die(mysqli_error($db_con));	
 		$row_check_self_order	= mysqli_fetch_array($result_check_self_order);
-		
-		
 	}
 ?>

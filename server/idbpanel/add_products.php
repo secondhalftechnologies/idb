@@ -77,9 +77,9 @@
                                         <i class="icon-table"></i>
                                         <?php echo $feature_name; ?>
                                     </h3>
-                                    <button type="button" class="btn-info_1" style= "float:right" onClick="window.close()" >
+                                    <a  class="btn-info_1" href="view_products.php?pag=Products" style= "float:right;color:white" onClick="window.close()" >
                                     	<i class="icon-arrow-left"></i>&nbsp; Back
-                                   	</button>
+                                   	</a>
                                 </div>
                                 <div class="box-content nopadding">
                                 
@@ -151,15 +151,7 @@
                                             </div>
                                         </div>	<!-- Product Name -->
                                     
-                                       <!-- 	<div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Model Number<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                            <div class="controls">
-                                            	<input type="text" placeholder="Model Number" id="prod_model_number" name="prod_model_number" class="input-large" data-rule-required="true" />
-                                            </div>
-                                        </div>	 --><!-- Product Model Number -->
-                                        
-                                        
-                                        <div class="control-group span6">
+                                       <div class="control-group span6">
                                         	<label for="tasktitel" class="control-label">Product Name<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
                                                 	<input   type="text" placeholder="Product Name" id="prod_name" name="prod_name" class="input-xlarge" value="<?php echo @$product_name; ?>" data-rule-required="true" />
@@ -327,20 +319,37 @@
                                         </div><!--Composition Type-->
                                         
                                         
-                                        
-                                      <!--   
-                                        <div class="control-group span6">
-                                        	<label for="tasktitel" class="control-label">Drug Type<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
-                                           
+                                        <!-- =============================================================== -->
+                                         <!-- ======================Start For div_generic_name====================== -->
+                                        <div class="control-group span6" id="div_generic_name" style="display: none">
+                                        	<label for="tasktitel" class="control-label">Generic Name<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
                                             <div class="controls">
-                                            <select name="txt_drug_type" id="txt_drug_type" onChange="showComposition(this.value);"  class = "select2-me input-large" style="width:90%">
-                                            <option  value="">Select Drug Type</option>
-											<option  value="Single">Single</option>
-                                            <option  value="Multiple">Multiple</option>
-                                            <option  value="Specialized">Specialized</option>
-											</select>
+                                            	<input type="text" placeholder="Generic Name" id="generic_name" name="generic_name" class="input-xlarge" data-rule-required="true" />
                                             </div>
-                                        </div> --><!--Composition Type-->
+                                        </div>	<!-- Generic Name -->
+
+                                        <div class="control-group span6" id="div_size_attribute" style="display: none">
+                                        	<label for="tasktitel" class="control-label">Size Attribute<sup class="validfield"><span style="color:#F00;font-size:20px;">*</span></sup></label>
+                                            <div class="controls">
+                                            	<?php
+                                           		 $size_att_arr  = array('small','large','xl');
+	                                           	 ?>
+	                                            <select name="size_attribute" id="size_attribute"  class="select2-me input-large"   data-rule-required="true" >
+
+
+	                                            <option>Select Size</option>
+	                                            <?php
+	                                             foreach($size_att_arr as $sz)
+	                                             {
+	                                             	echo '<option value="'.$sz.'" ';
+	                                             	
+	                                             	echo ' >'.ucwords($sz).'</option>';
+	                                             }
+	                                             ?>
+												</select>
+                                            </div>
+                                        </div>	<!-- Size attribute-->
+                                      
                                         <!-- =============================================================== -->
                                          <!-- ======================Start For Formulation====================== -->
                                         <div class="control-group span6" id="div_cost_effective_pack" style="display: none">
@@ -465,9 +474,9 @@
                                            <div class="controls">
                                             <select name="txt_uoweight" id="txt_uoweight"  class="select2-me input-large"   data-rule-required="true" >
                                             <option>Select Unit</option>
-                                            <option value="Kg">Kg</option>
-                                            <option value="Mg">Mg</option>
-                                            <option value="Gms">Gms</option>
+                                            <option value="kg">Kg</option>
+                                            <option value="mg">Mg</option>
+                                            <option value="gms">Gms</option>
 											</select>
                                             </div>
                                         </div><!--Unit of weight Type-->
@@ -708,6 +717,7 @@
                                         
 										 <div class="form-actions" style="clear:both">
                                          <button type="submit" name="reg_submit_add" class="btn-success">Add Product</button>
+                                         <button type="button" name="" onclick="getRate()" class="btn-success">Get Rate</button>
                                         </div>
                                        
                                     </form>
@@ -919,7 +929,7 @@
 		
 		   }
 		   function getApplication(cat_id)
-		    {
+		   {
 			    if(cat_id=="")
 				{
 					alert('Please select Category...!');
@@ -958,8 +968,43 @@
 						loading_hide();	
 					}
 				});		
-		
-		
+		   }
+
+		   function getRate()
+		   {
+			    
+				var sendInfo 	= {"l":108,"h":30,"w":30,"u":'CM',"getApplication":1};
+				$.ajax({
+					url: "fedex/rate/RateWebServiceClient.php?",
+					type: "POST",
+					data: area_status,
+					contentType: "application/json; charset=utf-8",						
+					success: function(response) 
+					{			
+						data = JSON.parse(response);
+						if(data.Success == "Success") 
+						{							
+							$('#txt_attribute').html(data.resp);
+						} 
+						else 
+						{
+						
+							$("#model_body").html('<span style="style="color:#F00;">'+data.resp+'</span>');
+							$('#error_model').modal('toggle');
+							loading_hide();					
+						}
+					},
+					error: function (request, status, error) 
+					{
+						$("#model_body").html('<span style="style="color:#F00;">'+request.responseText+'</span>');
+						$('#error_model').modal('toggle');
+						loading_hide();
+					},
+					complete: function()
+					{
+						loading_hide();	
+					}
+				});		
 		   }
 	   </script>
      <!--======================Start : Javascript Dn By satish 12sep2017=========================-->

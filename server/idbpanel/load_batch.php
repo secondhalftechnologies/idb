@@ -157,7 +157,10 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 		$start_offset += $page * $per_page;
 		$start 			= $page * $per_page;
 		
-		$sql_load_data  = " SELECT *  FROM `tbl_batches` as  tb  ";
+		$sql_load_data  = " SELECT tb.*, ";
+		$sql_load_data .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tb.batch_created_by ) as name_created, ";
+		$sql_load_data .= " (SELECT fullname FROM tbl_cadmin_users WHERE id=tb.batch_modified_by ) as name_modified ";
+		$sql_load_data .= "  FROM `tbl_batches` as  tb  ";
 		$sql_load_data .=" INNER JOIN tbl_products as tp ON tb.prod_id =tp.id  ";
 		$sql_load_data .=" WHERE 1=1 ";
 		if(strcmp($utype,'1')!==0)
@@ -187,7 +190,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 			$branch_data .= '<th style="text-align:center">Created By</th>';
 			$branch_data .= '<th style="text-align:center">Modified</th>';
 			$branch_data .= '<th style="text-align:center">Modified By</th>';
-			/*$dis = checkFunctionalityRight("view_batch.php",3);
+			$dis = checkFunctionalityRight("view_batch.php",3);
 			if($dis)
 			{			
 				$branch_data .= '<th style="text-align:center">Status</th>';						
@@ -205,7 +208,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 				$branch_data .= '<input type="button"  value="Delete" onclick="multipleDelete();" class="btn-danger"/>';
 				$branch_data .= '</div></th>';
 			}
-			$branch_data .= '</tr>';*/
+			$branch_data .= '</tr>';
       		$branch_data .= '</thead>';
       		$branch_data .= '<tbody>';
 			while($row_load_data = mysqli_fetch_array($result_load_data))
@@ -218,14 +221,14 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 				$branch_data .= '<td style="text-align:center">'.$row_load_data['prod_exp_date'].'</td>';
 
 				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['batch_created']).'</td>';
-				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['batch_created_by']).'</td>';
-				$branch_data .= '<td style="text-align:center">'.$row_load_data['branch_modified'].'</td>';
-				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['branch_by_modified']).'</td>';
-				/*$dis = checkFunctionalityRight("view_batch.php",3);
+				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['name_created']).'</td>';
+				$branch_data .= '<td style="text-align:center">'.$row_load_data['batch_modified'].'</td>';
+				$branch_data .= '<td style="text-align:center">'.ucwords($row_load_data['name_modified']).'</td>';
+				$dis = checkFunctionalityRight("view_batch.php",3);
 				if($dis)
 				{				
 					$branch_data .= '<td style="text-align:center">';	
-					if($row_load_data['branch_status'] == 1)
+					if($row_load_data['batch_status'] == 1)
 					{
 						$branch_data .= '<input type="button" value="Active" id="'.$row_load_data['batch_id'].'" class="btn-success" onclick="changeStatus(this.id,0);">';
 					}
@@ -249,7 +252,7 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 					$branch_data .= '<label for="batch'.$row_load_data['batch_id'].'" class="css-label"></label>';
 					$branch_data .= '</div></td>';										
 				}
-	          	$branch_data .= '</tr>';	*/														
+	          	$branch_data .= '</tr>';													
 			}	
       		$branch_data .= '</tbody>';
       		$branch_data .= '</table>';	
@@ -267,6 +270,8 @@ if((isset($obj->load_batch)) == "1" && isset($obj->load_batch))
 	}
 	echo json_encode($response_array);	
 }
+
+
 if((isset($obj->load_add_batch_part)) == "1" && isset($obj->load_add_batch_part))
 {
 	$batch_id 	= $obj->batch_id;
@@ -706,6 +711,7 @@ if((isset($_POST['update_batch_request'])) == "1" && isset($_POST['update_batch_
 	$data['batch_status'] = mysqli_real_escape_string($db_con,$_POST['batch_status']);
 	$data['prod_batch_no'] = mysqli_real_escape_string($db_con,$_POST['prod_batch_no']);
 	$data['prod_disclaimer'] = mysqli_real_escape_string($db_con,$_POST['disclaimer']);
+
 	if(isset($_FILES['img_coa']) && $_FILES['img_coa']['name']!='')
 	{
 		$coa_size      = $_FILES['img_coa']['size'];
@@ -744,6 +750,7 @@ if((isset($_POST['update_batch_request'])) == "1" && isset($_POST['update_batch_
 	}
 	
 }
+
 
 if((isset($obj->productRequest)) == "1" && isset($obj->productRequest))
 {
@@ -799,4 +806,16 @@ if((isset($obj->getCommission)) == "1" && isset($obj->getCommission))
 }
 
 
+if((isset($obj->batchStatus)) == "1" && isset($obj->batchStatus))
+{
+	$batch_status         = $obj->curr_status;
+	$batch_id 			 = $obj->batch_id;
+
+	$data['batch_status']		= $batch_status;
+	$data['batch_modified']		= $datetime;
+	$data['batch_modified_by']	= $uid;
+
+	update('tbl_batches',$data,array('batch_id'=>$batch_id));
+	quit('Success',1);
+}
 ?>

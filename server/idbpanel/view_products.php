@@ -328,7 +328,7 @@
                                         {
                                             ?>
                                          
-                                            	<a href="<?php echo $BaseFolder; ?>add_products.php"  target="_blank"><button class="btn-info ">
+                                            	<a href="<?php echo $BaseFolder; ?>add_products.php" ><button class="btn-info ">
                                             	<i class="icon-plus"></i>&nbsp; Add Products</button> 
                                             </a>
                                          

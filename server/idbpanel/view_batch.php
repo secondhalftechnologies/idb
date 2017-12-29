@@ -411,16 +411,16 @@ $tbl_users_owner 	= $_SESSION['panel_user']['tbl_users_owner'];
 			}
 		}
 
-		function changeStatus(branch_id,curr_status)
+		function changeStatus(batch_id,curr_status)
 		{
 			//loading_show();
-			if(branch_id == "" && curr_status == "")
+			if(batch_id == "" && curr_status == "")
 			{
 				$("#model_body").html('<span style="style="color:#F00;"> User id or Status to change not available</span>');
 			}
 			else
 			{
-				var sendInfo 	= {"branch_id":branch_id, "curr_status":curr_status, "change_status":1};
+				var sendInfo 	= {"batch_id":batch_id, "curr_status":curr_status, "batchStatus":1};
 				var branch_status 	= JSON.stringify(sendInfo);								
 				$.ajax({
 					url: "load_batch.php?",

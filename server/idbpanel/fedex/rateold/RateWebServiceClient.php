@@ -4,11 +4,6 @@
 
 require_once('../include/fedex-common.php');
 
-$length   = @$_POST['l'];
-$height   = @$_POST['h'];
-$width   = @$_POST['w'];
-$unit   = @$_POST['u'];
-
 $newline = "<br />";
 //The WSDL is not included with the sample code.
 //Please include and reference in $path_to_wsdl variable.
@@ -30,14 +25,8 @@ $request['WebAuthenticationDetail'] = array(
 ); 
 $request['ClientDetail'] = array(
 	'AccountNumber' => getProperty('shipaccount'), 
-	'MeterNumber' => getProperty('meter'),
-	'CustomsClearanceDetail' => array(
-					     'CommercialInvoice' => array(
-					       'Purpose' => "SOLD"
-					    )
-					)
+	'MeterNumber' => getProperty('meter')
 );
-
 $request['TransactionDetail'] = array('CustomerTransactionId' => ' *** Rate Request using PHP ***');
 $request['Version'] = array(
 	'ServiceId' => 'crs', 
@@ -48,11 +37,11 @@ $request['Version'] = array(
 $request['ReturnTransitAndCommit'] = true;
 $request['RequestedShipment']['DropoffType'] = 'REGULAR_PICKUP'; // valid values REGULAR_PICKUP, REQUEST_COURIER, ...
 $request['RequestedShipment']['ShipTimestamp'] = date('c');
-$request['RequestedShipment']['ServiceType'] = 'INTERNATIONAL_PRIORITY'; // valid values INTERNATIONAL_PRIORITY, STANDARD_OVERNIGHT, PRIORITY_OVERNIGHT, FEDEX_GROUND, ...
+$request['RequestedShipment']['ServiceType'] = 'INTERNATIONAL_PRIORITY'; // valid values STANDARD_OVERNIGHT, PRIORITY_OVERNIGHT, FEDEX_GROUND, ...
 $request['RequestedShipment']['PackagingType'] = 'YOUR_PACKAGING'; // valid values FEDEX_BOX, FEDEX_PAK, FEDEX_TUBE, YOUR_PACKAGING, ...
 $request['RequestedShipment']['TotalInsuredValue']=array(
-	'Amount'=>100,
-	'Currency'=>'INR'
+	'Ammount'=>100,
+	'Currency'=>'USD'
 );
 $request['RequestedShipment']['Shipper'] = addShipper();
 $request['RequestedShipment']['Recipient'] = addRecipient();
@@ -104,16 +93,16 @@ try {
 function addShipper(){
 	$shipper = array(
 		'Contact' => array(
-			'PersonName' => 'Satish',
-			'CompanyName' => 'Planet Educate',
+			'PersonName' => 'Sender Name',
+			'CompanyName' => 'Sender Company Name',
 			'PhoneNumber' => '9012638716'
 		),
 		'Address' => array(
-			'StreetLines' => array('Worli'),
-			'City' => 'Delhi',
-			'StateOrProvinceCode' => 'DL',
-			'PostalCode' => '110005',
-			'CountryCode' => 'IN'
+			'StreetLines' => array('Address Line 1'),
+			'City' => 'Collierville',
+			'StateOrProvinceCode' => 'TN',
+			'PostalCode' => '38017',
+			'CountryCode' => 'US'
 		)
 	);
 	return $shipper;
@@ -121,20 +110,19 @@ function addShipper(){
 function addRecipient(){
 	$recipient = array(
 		'Contact' => array(
-			'PersonName' => 'Prathmesh',
-			'CompanyName' => 'Edmission',
+			'PersonName' => 'Recipient Name',
+			'CompanyName' => 'Company Name',
 			'PhoneNumber' => '9012637906'
 		),
 		'Address' => array(
-			'StreetLines' => array('Chandani Chowk'),
-			'City' => 'Collierville',
-			'StateOrProvinceCode' => 'TN',
-			'PostalCode' => '38017',
-			'CountryCode' => 'US'
-			
+			'StreetLines' => array('Address Line 1'),
+			'City' => 'Richmond',
+			'StateOrProvinceCode' => 'BC',
+			'PostalCode' => 'V7C4V4',
+			'CountryCode' => 'CA',
+			'Residential' => false
 		)
 	);
-	//'Residential' => false
 	return $recipient;	                                    
 }
 function addShippingChargesPayment(){
@@ -143,7 +131,7 @@ function addShippingChargesPayment(){
 		'Payor' => array(
 			'ResponsibleParty' => array(
 				'AccountNumber' => getProperty('billaccount'),
-				'CountryCode' => 'IN'
+				'CountryCode' => 'US'
 			)
 		)
 	);
@@ -162,7 +150,7 @@ function addSpecialServices(){
 		'SpecialServiceTypes' => array('COD'),
 		'CodDetail' => array(
 			'CodCollectionAmount' => array(
-				'Currency' => 'INR', 
+				'Currency' => 'USD', 
 				'Amount' => 150
 			),
 			'CollectionType' => 'ANY' // ANY, GUARANTEED_FUNDS
@@ -172,17 +160,17 @@ function addSpecialServices(){
 }
 function addPackageLineItem1(){
 	$packageLineItem = array(
-		'SequenceNumber'=>2,
-		'GroupPackageCount'=>2,
+		'SequenceNumber'=>1,
+		'GroupPackageCount'=>1,
 		'Weight' => array(
 			'Value' => 50.0,
 			'Units' => 'LB'
 		),
 		'Dimensions' => array(
-			'Length' => $length,
-			'Width' => $width,
-			'Height' => $height,
-			'Units' => $unit
+			'Length' => 108,
+			'Width' => 5,
+			'Height' => 5,
+			'Units' => 'IN'
 		)
 	);
 	return $packageLineItem;

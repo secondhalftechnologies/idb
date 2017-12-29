@@ -4,11 +4,6 @@
 
 require_once('../include/fedex-common.php');
 
-$length   = @$_POST['l'];
-$height   = @$_POST['h'];
-$width   = @$_POST['w'];
-$unit   = @$_POST['u'];
-
 $newline = "<br />";
 //The WSDL is not included with the sample code.
 //Please include and reference in $path_to_wsdl variable.
@@ -179,10 +174,10 @@ function addPackageLineItem1(){
 			'Units' => 'LB'
 		),
 		'Dimensions' => array(
-			'Length' => $length,
-			'Width' => $width,
-			'Height' => $height,
-			'Units' => $unit
+			'Length' => 108,
+			'Width' => 30,
+			'Height' => 30,
+			'Units' => 'CM'
 		)
 	);
 	return $packageLineItem;
